@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post, Project
+from .models import Post, Project, Category
 
 
 def home(request):
@@ -19,17 +19,51 @@ def about(request):
     return render(request, 'blog/about.html', {'interests': interests})
 
 
-
 def blog_list(request):
     posts = Post.objects.filter(published=True)
-    return render(request, 'blog/blog_list.html', {'posts': posts})
+    categories = Category.objects.all()
+    selected = request.GET.get('category')
+
+    if selected:
+        posts = posts.filter(category__slug=selected)
+
+    return render(request, 'blog/blog_list.html', {
+        'posts': posts,
+        'categories': categories,
+        'selected': selected,
+    })
 
 
 def blog_detail(request, slug):
     post = get_object_or_404(Post, slug=slug, published=True)
-    return render(request, 'blog/blog_detail.html', {'post': post})
+    related = Post.objects.filter(
+        category=post.category,
+        published=True
+    ).exclude(id=post.id)[:3]
+    return render(request, 'blog/blog_detail.html', {
+        'post': post,
+        'related': related,
+    })
+
+
+def category_detail(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    posts = Post.objects.filter(category=category, published=True)
+    categories = Category.objects.all()
+    return render(request, 'blog/blog_list.html', {
+        'posts': posts,
+        'categories': categories,
+        'selected': slug,
+        'category': category,
+    })
 
 
 def projects(request):
     all_projects = Project.objects.all()
     return render(request, 'blog/projects.html', {'all_projects': all_projects})
+
+
+def book_list(request):
+    from .models import BookReview
+    books = BookReview.objects.filter(published=True)
+    return render(request, 'blog/book_list.html', {'books': books})

@@ -1,18 +1,81 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}{{ post.title }} — Indra Harahap{% endblock %}
+{% block title %}{{ post.title }} — Indra Choki{% endblock %}
 
 {% block content %}
 <div class="wrap">
-  <div style="margin-bottom:2rem;">
-    <a href="{% url 'blog:blog_list' %}" style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">← Back to writing</a>
+
+  <!-- Breadcrumb -->
+  <div style="margin-bottom:1.5rem;display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+    <a href="{% url 'blog:blog_list' %}" style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">Writing</a>
+    {% if post.category %}
+    <span style="color:var(--warm-muted);font-size:0.85rem;">/</span>
+    <a href="{% url 'blog:category_detail' post.category.slug %}"
+       style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">
+      {{ post.category.name }}
+    </a>
+    {% endif %}
   </div>
-  <span class="tag" style="margin-bottom:1rem;display:inline-block;">{{ post.tag }}</span>
-  <h1 style="font-family:var(--serif);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:normal;color:var(--warm-text);margin-bottom:1rem;line-height:1.3;">{{ post.title }}</h1>
-  <div class="post-meta" style="margin-bottom:2rem;">{{ post.created_at|date:"F j, Y" }}</div>
+
+  <!-- Tags -->
+  {% if post.tags.all %}
+  <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem;">
+    {% for tag in post.tags.all %}
+    <span class="tag">#{{ tag.name }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Title -->
+  <h1 style="font-family:var(--serif);font-size:clamp(1.6rem,4vw,2.2rem);
+             font-weight:normal;color:var(--warm-text);margin-bottom:1rem;line-height:1.3;">
+    {{ post.title }}
+  </h1>
+
+  <!-- Meta -->
+  <div class="post-meta" style="margin-bottom:2rem;">
+    {{ post.created_at|date:"F j, Y" }}
+    &nbsp;·&nbsp;
+    {{ post.reading_time }}
+    {% if post.category %}
+    &nbsp;·&nbsp;
+    <a href="{% url 'blog:category_detail' post.category.slug %}"
+       style="color:var(--warm-accent);text-decoration:none;">
+      {{ post.category.name }}
+    </a>
+    {% endif %}
+  </div>
+
   <hr style="border:none;border-top:1px solid var(--warm-border);margin-bottom:2rem;">
+
+  <!-- Content -->
   <div class="post-content">
     {{ post.content|linebreaks }}
   </div>
+
+  <!-- Tags footer -->
+  {% if post.tags.all %}
+  <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--warm-border);">
+    <span style="font-size:0.82rem;color:var(--warm-muted);margin-right:0.5rem;">Tagged:</span>
+    {% for tag in post.tags.all %}
+    <span class="tag">#{{ tag.name }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Related posts -->
+  {% if related %}
+  <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--warm-border);">
+    <div class="section-label">More in {{ post.category.name }}</div>
+    {% for r in related %}
+    <a class="post-card" href="{% url 'blog:blog_detail' r.slug %}">
+      <div class="post-meta">{{ r.created_at|date:"F j, Y" }} &nbsp;·&nbsp; {{ r.reading_time }}</div>
+      <h3>{{ r.title }}</h3>
+      <p>{{ r.summary }}</p>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
 </div>
 {% endblock %}
