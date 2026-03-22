@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}Indra Harahap{% endblock %}</title>
+<title>{% block title %}Indra Choki{% endblock %}</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
@@ -133,6 +133,17 @@
   .footer-links a:hover { color: var(--warm-accent); }
   .post-content { font-size: 1.05rem; color: var(--warm-muted); line-height: 1.9; }
   .post-content p { margin-bottom: 1.2rem; }
+  .post-content h1,.post-content h2,.post-content h3 { font-family: var(--serif); font-weight: normal; color: var(--warm-text); margin: 2rem 0 0.8rem; }
+  .post-content h2 { font-size: 1.5rem; }
+  .post-content h3 { font-size: 1.2rem; }
+  .post-content ul,.post-content ol { padding-left: 1.5rem; margin-bottom: 1.2rem; }
+  .post-content li { margin-bottom: 0.4rem; }
+  .post-content blockquote { border-left: 3px solid var(--warm-accent); margin: 1.5rem 0; padding: 0.5rem 1.2rem; color: var(--warm-muted); font-family: var(--serif); font-size: 1.1rem; }
+  .post-content img { max-width: 100%; border-radius: 8px; margin: 1.5rem 0; }
+  .post-content a { color: var(--warm-accent); }
+  .post-content strong { color: var(--warm-text); font-weight: 500; }
+  .star-filled { color: #c2714f; }
+  .star-empty { color: var(--warm-border); }
   h2.page-title {
     font-family: var(--serif);
     font-size: 1.8rem;
@@ -144,10 +155,12 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="{% url 'blog:home' %}">Indra Harahap</a>
+  <a class="nav-logo" href="{% url 'blog:home' %}">Indra Choki</a>
   <ul class="nav-links">
     <li><a href="{% url 'blog:about' %}">About</a></li>
     <li><a href="{% url 'blog:blog_list' %}">Blog</a></li>
+    <li><a href="{% url 'topics:topics_home' %}">Topics</a></li>
+    <li><a href="{% url 'blog:book_list' %}">Books</a></li>
     <li><a href="{% url 'blog:projects' %}">Work</a></li>
   </ul>
 </nav>
@@ -155,9 +168,9 @@
 {% block content %}{% endblock %}
 
 <footer>
-  <p>© 2026 Indra Harahap · <a href="https://github.com/indrahrp" style="color:var(--warm-muted);text-decoration:none;">@indrahrp</a></p>
+  <p>© 2026 Indra Choki</p>
   <div class="footer-links">
-    <a href="https://github.com/indrahrp" rel="me">GitHub</a>
+    <a href="#">Twitter</a>
     <a href="#">Substack</a>
     <a href="#">Email</a>
   </div>

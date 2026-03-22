@@ -1,0 +1,91 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ book.title }} Review — Indra Choki{% endblock %}
+
+{% block content %}
+<div class="wrap">
+
+  <!-- Breadcrumb -->
+  <div style="margin-bottom:1.5rem;">
+    <a href="{% url 'blog:book_list' %}" style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">← Book Reviews</a>
+  </div>
+
+  <!-- Book header -->
+  <div style="display:flex;gap:2rem;align-items:flex-start;margin-bottom:2rem;flex-wrap:wrap;">
+    {% if book.cover_image %}
+    <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
+         style="width:130px;height:190px;object-fit:cover;border-radius:8px;flex-shrink:0;">
+    {% else %}
+    <div style="width:130px;height:190px;background:var(--warm-accent-light);border-radius:8px;
+                flex-shrink:0;display:flex;align-items:center;justify-content:center;
+                font-size:3rem;">📖</div>
+    {% endif %}
+
+    <div style="flex:1;">
+      {% if book.recommended %}
+      <span style="font-size:0.72rem;background:var(--warm-accent);color:#fff;
+                   padding:3px 12px;border-radius:1rem;display:inline-block;margin-bottom:0.8rem;">
+        Recommended
+      </span>
+      {% endif %}
+
+      <h1 style="font-family:var(--serif);font-size:clamp(1.4rem,3vw,2rem);
+                 font-weight:normal;color:var(--warm-text);margin-bottom:0.4rem;line-height:1.3;">
+        {{ book.title }}
+      </h1>
+      <p style="color:var(--warm-muted);margin-bottom:0.8rem;">by {{ book.author }}</p>
+
+      <!-- Stars -->
+      <div style="font-size:1.3rem;margin-bottom:0.8rem;">
+        {% for i in "12345" %}
+          {% if forloop.counter <= book.rating %}
+            <span class="star-filled">★</span>
+          {% else %}
+            <span class="star-empty">★</span>
+          {% endif %}
+        {% endfor %}
+        <span style="font-size:0.85rem;color:var(--warm-muted);margin-left:0.4rem;">{{ book.rating }}/5</span>
+      </div>
+
+      <!-- Category -->
+      {% if book.category %}
+      <span class="tag">{{ book.category.name }}</span>
+      {% endif %}
+
+      <!-- Buy buttons -->
+      <div style="display:flex;gap:0.8rem;margin-top:1.2rem;flex-wrap:wrap;">
+        {% if book.affiliate_link %}
+        <a href="{{ book.affiliate_link }}" target="_blank" rel="noopener"
+           class="btn btn-primary" style="font-size:0.85rem;">
+          Buy on Amazon →
+        </a>
+        {% elif book.buy_link %}
+        <a href="{{ book.buy_link }}" target="_blank" rel="noopener"
+           class="btn btn-primary" style="font-size:0.85rem;">
+          Buy this book →
+        </a>
+        {% endif %}
+      </div>
+
+      {% if book.affiliate_link %}
+      <p style="font-size:0.72rem;color:var(--warm-muted);margin-top:0.6rem;">
+        * Affiliate link — I earn a small commission at no extra cost to you.
+      </p>
+      {% endif %}
+    </div>
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--warm-border);margin-bottom:2rem;">
+
+  <!-- Review content -->
+  <div class="post-content">
+    {{ book.review_content|safe }}
+  </div>
+
+  <!-- Date -->
+  <p style="font-size:0.82rem;color:var(--warm-muted);margin-top:2rem;">
+    Reviewed on {{ book.created_at|date:"F j, Y" }}
+  </p>
+
+</div>
+{% endblock %}

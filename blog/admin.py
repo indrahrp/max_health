@@ -1,13 +1,6 @@
 from django.contrib import admin
+from django_summernote.admin import SummernoteModelAdmin
 from .models import Post, Project, Category, Tag, BookReview
-
-@admin.register(BookReview)
-class BookReviewAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author', 'rating', 'recommended', 'published', 'created_at']
-    list_filter = ['published', 'recommended', 'rating', 'category']
-    search_fields = ['title', 'author', 'review_content']
-    prepopulated_fields = {'slug': ('title',)}
-    list_editable = ['published', 'recommended']
 
 
 @admin.register(Category)
@@ -23,13 +16,24 @@ class TagAdmin(admin.ModelAdmin):
 
 
 @admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(SummernoteModelAdmin):
+    summernote_fields = ('content',)
     list_display = ['title', 'category', 'featured', 'published', 'created_at']
     list_filter = ['published', 'featured', 'category', 'tags']
     search_fields = ['title', 'content']
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['published', 'featured']
     filter_horizontal = ['tags']
+
+
+@admin.register(BookReview)
+class BookReviewAdmin(SummernoteModelAdmin):
+    summernote_fields = ('review_content',)
+    list_display = ['title', 'author', 'rating', 'recommended', 'published', 'created_at']
+    list_filter = ['published', 'recommended', 'rating', 'category']
+    search_fields = ['title', 'author', 'review_content']
+    prepopulated_fields = {'slug': ('title',)}
+    list_editable = ['published', 'recommended']
 
 
 @admin.register(Project)

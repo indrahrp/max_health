@@ -67,3 +67,9 @@ def book_list(request):
     from .models import BookReview
     books = BookReview.objects.filter(published=True)
     return render(request, 'blog/book_list.html', {'books': books})
+
+
+def book_detail(request, slug):
+    from .models import BookReview
+    book = get_object_or_404(BookReview, slug=slug, published=True)
+    return render(request, 'blog/book_detail.html', {'book': book})

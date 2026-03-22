@@ -1,0 +1,87 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Book Reviews — Indra Choki{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <h2 class="page-title">Book Reviews</h2>
+  <p style="color:var(--warm-muted);margin-bottom:2.5rem;font-size:1.05rem;">
+    Books that have shaped how I think about health, science, and human potential. Honest reviews with no fluff.
+  </p>
+
+  <!-- Recommended shelf -->
+  {% with recommended=books|dictsortreversed:"created_at" %}
+  <div class="section-label">Highly recommended</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;margin-bottom:3rem;">
+    {% for book in books %}
+    {% if book.recommended %}
+    <a href="{% url 'blog:book_detail' book.slug %}" style="text-decoration:none;">
+      <div class="project-card" style="display:flex;gap:1rem;align-items:flex-start;">
+        {% if book.cover_image %}
+        <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
+             style="width:70px;height:100px;object-fit:cover;border-radius:6px;flex-shrink:0;">
+        {% else %}
+        <div style="width:70px;height:100px;background:var(--warm-accent-light);border-radius:6px;
+                    flex-shrink:0;display:flex;align-items:center;justify-content:center;
+                    font-family:var(--serif);font-size:1.5rem;color:var(--warm-accent);">📖</div>
+        {% endif %}
+        <div style="flex:1;">
+          <h3 style="font-size:1rem;margin-bottom:0.2rem;">{{ book.title }}</h3>
+          <p style="font-size:0.82rem;color:var(--warm-muted);margin-bottom:0.4rem;">{{ book.author }}</p>
+          <div style="font-size:0.9rem;margin-bottom:0.5rem;">
+            {% for i in "12345" %}
+              {% if forloop.counter <= book.rating %}
+                <span class="star-filled">★</span>
+              {% else %}
+                <span class="star-empty">★</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p style="font-size:0.82rem;color:var(--warm-muted);">{{ book.summary|truncatechars:80 }}</p>
+        </div>
+      </div>
+    </a>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endwith %}
+
+  <!-- All reviews -->
+  <div class="section-label">All reviews</div>
+  {% for book in books %}
+  <a class="post-card" href="{% url 'blog:book_detail' book.slug %}">
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;">
+      {% if book.cover_image %}
+      <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
+           style="width:55px;height:78px;object-fit:cover;border-radius:5px;flex-shrink:0;">
+      {% else %}
+      <div style="width:55px;height:78px;background:var(--warm-accent-light);border-radius:5px;
+                  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+                  font-size:1.2rem;">📖</div>
+      {% endif %}
+      <div style="flex:1;">
+        <div class="post-meta">
+          {{ book.created_at|date:"F j, Y" }}
+          {% if book.category %}&nbsp;·&nbsp;<span style="color:var(--warm-accent);">{{ book.category.name }}</span>{% endif %}
+        </div>
+        <h3>{{ book.title }}</h3>
+        <p style="font-size:0.82rem;color:var(--warm-muted);margin-bottom:0.4rem;">by {{ book.author }}</p>
+        <div style="font-size:0.9rem;margin-bottom:0.4rem;">
+          {% for i in "12345" %}
+            {% if forloop.counter <= book.rating %}
+              <span class="star-filled">★</span>
+            {% else %}
+              <span class="star-empty">★</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <p>{{ book.summary }}</p>
+      </div>
+    </div>
+  </a>
+  {% empty %}
+  <p style="color:var(--warm-muted);">No book reviews yet — check back soon!</p>
+  {% endfor %}
+
+</div>
+{% endblock %}
