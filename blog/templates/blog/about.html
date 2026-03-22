@@ -1,13 +1,13 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}About — Indra Harahap{% endblock %}
+{% block title %}About — Indra Choki{% endblock %}
 
 {% block content %}
 <div class="wrap">
   <div style="display:flex;gap:2rem;align-items:flex-start;margin-bottom:2.5rem;flex-wrap:wrap;">
-    <div style="width:110px;height:110px;flex-shrink:0;border-radius:50%;background:var(--warm-accent-light);border:3px solid var(--warm-accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:2.5rem;color:var(--warm-accent);">IH</div>
+    <div style="width:110px;height:110px;flex-shrink:0;border-radius:50%;background:var(--warm-accent-light);border:3px solid var(--warm-accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:2.5rem;color:var(--warm-accent);">IC</div>
     <div>
-      <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:normal;margin-bottom:0.4rem;">Hi, I'm Indra Harahap</h2>
+      <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:normal;margin-bottom:0.4rem;">Hi, I'm Indra Choki</h2>
       <div style="color:var(--warm-accent);font-size:0.95rem;margin-bottom:0.8rem;">Health Writer & Carnivore Diet Advocate</div>
       <p style="color:var(--warm-muted);font-size:0.95rem;">Passionate about reversing chronic disease through nutrition</p>
     </div>
@@ -18,7 +18,7 @@
     <p>I believe that much of modern chronic illness is driven by what we eat, and that returning to ancestral, animal-based nutrition is one of the most powerful tools we have.</p>
   </div>
   <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem;">
-    {% for interest in "Carnivore diet,Chronic disease prevention,Metabolic health,Ancestral nutrition,Inflammation,Gut health"|split:"," %}
+    {% for interest in interests %}
     <span style="font-size:0.82rem;background:var(--warm-accent-light);color:var(--warm-accent);padding:4px 14px;border-radius:2rem;border:1px solid var(--warm-border);">{{ interest }}</span>
     {% endfor %}
   </div>

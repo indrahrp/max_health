@@ -8,7 +8,16 @@ def home(request):
 
 
 def about(request):
-    return render(request, 'blog/about.html')
+    interests = [
+        'Carnivore diet',
+        'Chronic disease prevention',
+        'Metabolic health',
+        'Ancestral nutrition',
+        'Inflammation',
+        'Gut health',
+    ]
+    return render(request, 'blog/about.html', {'interests': interests})
+
 
 
 def blog_list(request):
