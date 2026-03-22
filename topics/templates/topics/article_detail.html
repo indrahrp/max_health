@@ -1,0 +1,71 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ article.title }} — Indra Choki{% endblock %}
+
+{% block content %}
+<div class="wrap">
+
+  <!-- Breadcrumb -->
+  <div style="margin-bottom:1.5rem;display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+    <a href="{% url 'topics:topics_home' %}" style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">Topics</a>
+    <span style="color:var(--warm-muted);font-size:0.85rem;">/</span>
+    <a href="{% url 'topics:pillar_detail' pillar.slug %}"
+       style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">
+      {{ pillar.icon }} {{ pillar.name }}
+    </a>
+  </div>
+
+  <!-- Title -->
+  <h1 style="font-family:var(--serif);font-size:clamp(1.6rem,4vw,2.2rem);
+             font-weight:normal;color:var(--warm-text);margin-bottom:1rem;line-height:1.3;">
+    {{ article.title }}
+  </h1>
+
+  <!-- Meta -->
+  <div class="post-meta" style="margin-bottom:2rem;">
+    {{ article.reading_time }}
+    &nbsp;·&nbsp; Last updated {{ article.updated_at|date:"F j, Y" }}
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--warm-border);margin-bottom:2rem;">
+
+  <!-- Content -->
+  <div class="post-content">
+    {{ article.content|safe }}
+  </div>
+
+  <!-- Related blog posts -->
+  {% if related_posts %}
+  <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--warm-border);">
+    <div class="section-label">Related blog posts</div>
+    {% for post in related_posts %}
+    <a class="post-card" href="{% url 'blog:blog_detail' post.slug %}">
+      <div class="post-meta">
+        {{ post.created_at|date:"F j, Y" }}
+        {% if post.category %}&nbsp;·&nbsp;
+        <span style="color:var(--warm-accent);">{{ post.category.name }}</span>
+        {% endif %}
+      </div>
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.summary }}</p>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Other articles in this pillar -->
+  {% if other_articles %}
+  <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--warm-border);">
+    <div class="section-label">More in {{ pillar.icon }} {{ pillar.name }}</div>
+    {% for a in other_articles %}
+    <a class="post-card" href="{% url 'topics:article_detail' pillar.slug a.slug %}">
+      <div class="post-meta">{{ a.reading_time }}</div>
+      <h3>{{ a.title }}</h3>
+      <p>{{ a.summary }}</p>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

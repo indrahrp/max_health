@@ -1,0 +1,50 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ pillar.name }} — Topics — Indra Choki{% endblock %}
+
+{% block content %}
+<div class="wrap">
+
+  <!-- Breadcrumb -->
+  <div style="margin-bottom:1.5rem;">
+    <a href="{% url 'topics:topics_home' %}" style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">← All topics</a>
+  </div>
+
+  <!-- Pillar header -->
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;">
+    <span style="font-size:2.5rem;">{{ pillar.icon }}</span>
+    <h2 class="page-title" style="margin-bottom:0;">{{ pillar.name }}</h2>
+  </div>
+  <p style="color:var(--warm-muted);margin-bottom:2.5rem;font-size:1.05rem;">{{ pillar.description }}</p>
+
+  <!-- Other pillars quick nav -->
+  <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2.5rem;">
+    {% for p in all_pillars %}
+    {% if p.slug != pillar.slug %}
+    <a href="{% url 'topics:pillar_detail' p.slug %}"
+       style="font-size:0.82rem;padding:4px 14px;border-radius:2rem;text-decoration:none;
+              border:1px solid var(--warm-border);color:var(--warm-muted);">
+      {{ p.icon }} {{ p.name }}
+    </a>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Articles list -->
+  {% for article in articles %}
+  <a class="post-card" href="{% url 'topics:article_detail' pillar.slug article.slug %}">
+    <div class="post-meta">
+      {{ article.reading_time }}
+      &nbsp;·&nbsp; Last updated {{ article.updated_at|date:"F j, Y" }}
+    </div>
+    <h3>{{ article.title }}</h3>
+    <p>{{ article.summary }}</p>
+  </a>
+  {% empty %}
+  <p style="color:var(--warm-muted);padding:2rem 0;">
+    No articles in this topic yet — check back soon!
+  </p>
+  {% endfor %}
+
+</div>
+{% endblock %}

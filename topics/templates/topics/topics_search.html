@@ -1,0 +1,47 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Search Topics — Indra Choki{% endblock %}
+
+{% block content %}
+<div class="wrap">
+
+  <h2 class="page-title">Search Topics</h2>
+
+  <!-- Search bar -->
+  <form action="{% url 'topics:topics_search' %}" method="get" style="margin-bottom:2rem;">
+    <div style="display:flex;gap:0.5rem;">
+      <input type="text" name="q" value="{{ query }}" placeholder="Search topics..."
+             style="flex:1;padding:0.6rem 1rem;border:1px solid var(--warm-border);
+                    border-radius:2rem;background:var(--warm-surface);
+                    color:var(--warm-text);font-size:0.95rem;outline:none;">
+      <button type="submit" class="btn btn-primary" style="padding:0.6rem 1.2rem;">Search</button>
+    </div>
+  </form>
+
+  {% if query %}
+  <p style="font-size:0.82rem;color:var(--warm-muted);margin-bottom:1.5rem;">
+    {{ results.count }} result{{ results.count|pluralize }} for
+    <strong style="color:var(--warm-text);">"{{ query }}"</strong>
+  </p>
+
+  {% for article in results %}
+  <a class="post-card" href="{% url 'topics:article_detail' article.pillar.slug article.slug %}">
+    <div class="post-meta">
+      {{ article.pillar.icon }} {{ article.pillar.name }}
+      &nbsp;·&nbsp; {{ article.reading_time }}
+    </div>
+    <h3>{{ article.title }}</h3>
+    <p>{{ article.summary }}</p>
+  </a>
+  {% empty %}
+  <p style="color:var(--warm-muted);padding:2rem 0;">
+    No articles found for "{{ query }}" — try a different search term.
+  </p>
+  {% endfor %}
+
+  {% else %}
+  <p style="color:var(--warm-muted);">Enter a search term above to find articles.</p>
+  {% endif %}
+
+</div>
+{% endblock %}

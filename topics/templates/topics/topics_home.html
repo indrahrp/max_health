@@ -1,0 +1,43 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Topics — Indra Choki{% endblock %}
+
+{% block content %}
+<div class="wrap">
+
+  <h2 class="page-title">Topics</h2>
+  <p style="color:var(--warm-muted);margin-bottom:1.5rem;font-size:1.05rem;">
+    Evergreen reference articles organised by subject. Unlike blog posts, these pages are continuously updated as my knowledge grows.
+  </p>
+
+  <!-- Search bar -->
+  <form action="{% url 'topics:topics_search' %}" method="get" style="margin-bottom:2.5rem;">
+    <div style="display:flex;gap:0.5rem;">
+      <input type="text" name="q" placeholder="Search topics..."
+             style="flex:1;padding:0.6rem 1rem;border:1px solid var(--warm-border);
+                    border-radius:2rem;background:var(--warm-surface);
+                    color:var(--warm-text);font-size:0.95rem;outline:none;">
+      <button type="submit" class="btn btn-primary" style="padding:0.6rem 1.2rem;">Search</button>
+    </div>
+  </form>
+
+  <!-- Pillar grid -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;">
+    {% for pillar in pillars %}
+    <a href="{% url 'topics:pillar_detail' pillar.slug %}" style="text-decoration:none;">
+      <div class="project-card" style="height:100%;">
+        <div style="font-size:2rem;margin-bottom:0.8rem;">{{ pillar.icon }}</div>
+        <h3>{{ pillar.name }}</h3>
+        <p style="margin-bottom:1rem;">{{ pillar.description }}</p>
+        <div style="font-size:0.82rem;color:var(--warm-accent);">
+          {{ pillar.article_count }} article{{ pillar.article_count|pluralize }} →
+        </div>
+      </div>
+    </a>
+    {% empty %}
+    <p style="color:var(--warm-muted);">No topics yet — check back soon!</p>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}
