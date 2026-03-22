@@ -1,0 +1,1 @@
+web: gunicorn max_health.wsgi --log-file -
