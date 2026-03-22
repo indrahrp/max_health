@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}Indra Choki{% endblock %}</title>
+<title>{% block title %}Indra Harahap{% endblock %}</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
@@ -144,7 +144,7 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="{% url 'blog:home' %}">Indra Choki</a>
+  <a class="nav-logo" href="{% url 'blog:home' %}">Indra Harahap</a>
   <ul class="nav-links">
     <li><a href="{% url 'blog:about' %}">About</a></li>
     <li><a href="{% url 'blog:blog_list' %}">Blog</a></li>
@@ -155,9 +155,9 @@
 {% block content %}{% endblock %}
 
 <footer>
-  <p>© 2026 Indra Choki</p>
+  <p>© 2026 Indra Harahap · <a href="https://github.com/indrahrp" style="color:var(--warm-muted);text-decoration:none;">@indrahrp</a></p>
   <div class="footer-links">
-    <a href="#">Twitter</a>
+    <a href="https://github.com/indrahrp" rel="me">GitHub</a>
     <a href="#">Substack</a>
     <a href="#">Email</a>
   </div>
