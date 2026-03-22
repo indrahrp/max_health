@@ -7,5 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('summernote/', include('django_summernote.urls')),
     path('', include('blog.urls', namespace='blog')),
-    path('topics/', include('topics.urls', namespace='topics')),
+    # path('topics/', include('topics.urls', namespace='topics')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
