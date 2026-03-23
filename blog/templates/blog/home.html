@@ -3,14 +3,36 @@
 {% block title %}Indra Choki — Health Writer{% endblock %}
 
 {% block content %}
-<div class="wrap" style="text-align:center; padding-top: 5rem;">
+<div class="wrap" style="text-align:center;padding-top:5rem;">
   <div style="width:90px;height:90px;border-radius:50%;background:var(--warm-accent-light);border:3px solid var(--warm-accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:2rem;color:var(--warm-accent);margin:0 auto 1.5rem;">IC</div>
   <h1 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:normal;margin-bottom:0.5rem;">Indra Choki</h1>
-  <p style="font-size:1.1rem;color:var(--warm-muted);margin-bottom:1.5rem;">Health Writer · Carnivore Advocate · Wellness Explorer</p>
+  <p style="font-size:1.1rem;color:var(--warm-muted);margin-bottom:1rem;">Health Writer · Carnivore Advocate · Wellness Explorer</p>
+
+  <!-- Typing animation -->
+  <div style="margin-bottom:1.5rem;">
+    <span style="font-size:0.88rem;color:var(--warm-accent);font-family:monospace;background:var(--warm-accent-light);padding:6px 14px;border-radius:6px;border-left:3px solid var(--warm-accent);" id="typing-el">_</span>
+  </div>
+
   <p style="font-size:1.05rem;color:var(--warm-muted);max-width:500px;margin:0 auto 2rem;">Welcome to my corner of the internet. I write about how the carnivore diet can help prevent and reverse chronic disease — backed by research and lived experience.</p>
-  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;">
     <a class="btn btn-primary" href="{% url 'blog:blog_list' %}">Read my writing</a>
     <a class="btn btn-outline" href="{% url 'blog:about' %}">About me</a>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid" style="max-width:500px;margin:0 auto 3rem;">
+    <div class="stat-card">
+      <div class="stat-num" id="stat-posts">—</div>
+      <div class="stat-label">Articles</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-books">—</div>
+      <div class="stat-label">Books reviewed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-topics">5</div>
+      <div class="stat-label">Topic pillars</div>
+    </div>
   </div>
 </div>
 
@@ -22,20 +44,14 @@
   <a class="post-card" href="{% url 'blog:blog_detail' post.slug %}">
     <div class="post-meta">
       {{ post.created_at|date:"F j, Y" }}
-      &nbsp;·&nbsp;
-      {{ post.reading_time }}
-      {% if post.category %}
-      &nbsp;·&nbsp;
-      <span style="color:var(--warm-accent);">{{ post.category.name }}</span>
-      {% endif %}
+      &nbsp;·&nbsp; {{ post.reading_time }}
+      {% if post.category %}&nbsp;·&nbsp;<span style="color:var(--warm-accent);">{{ post.category.name }}</span>{% endif %}
     </div>
     <h3>{{ post.title }}</h3>
     <p>{{ post.summary }}</p>
     {% if post.tags.all %}
-    <div style="margin-top:0.6rem;display:flex;flex-wrap:wrap;gap:0.4rem;">
-      {% for tag in post.tags.all %}
-      <span class="tag">#{{ tag.name }}</span>
-      {% endfor %}
+    <div style="margin-top:0.6rem;">
+      {% for tag in post.tags.all %}<span class="tag">#{{ tag.name }}</span>{% endfor %}
     </div>
     {% endif %}
   </a>
@@ -43,4 +59,45 @@
   <p style="color:var(--warm-muted);">No posts yet — check back soon!</p>
   {% endfor %}
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Typing animation
+  const phrases = [
+    'Exploring the science of human health',
+    'Decoding chronic disease with nutrition',
+    'Bridging physics, biology and wellness',
+    'Your guide to ancestral health',
+  ];
+  let pi = 0, ci = 0, deleting = false;
+  function typeLoop() {
+    const el = document.getElementById('typing-el');
+    if (!el) return;
+    const phrase = phrases[pi];
+    if (!deleting) {
+      if (ci < phrase.length) { el.textContent = phrase.slice(0, ++ci) + '_'; setTimeout(typeLoop, 55); }
+      else { deleting = true; setTimeout(typeLoop, 1800); }
+    } else {
+      if (ci > 0) { el.textContent = phrase.slice(0, --ci) + '_'; setTimeout(typeLoop, 30); }
+      else { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(typeLoop, 400); }
+    }
+  }
+  setTimeout(typeLoop, 600);
+
+  // Animated stat counters
+  function countUp(id, target, duration) {
+    const el = document.getElementById(id);
+    if (!el || target === 0) { if(el) el.textContent = '0'; return; }
+    let start = 0;
+    const step = target / Math.ceil(duration / 16);
+    const timer = setInterval(() => {
+      start = Math.min(start + step, target);
+      el.textContent = Math.round(start) + (target >= 10 ? '+' : '');
+      if (start >= target) clearInterval(timer);
+    }, 16);
+  }
+  countUp('stat-posts', {{ post_count }}, 800);
+  countUp('stat-books', {{ book_count }}, 800);
+</script>
 {% endblock %}

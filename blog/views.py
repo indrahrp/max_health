@@ -3,8 +3,15 @@ from .models import Post, Project, Category
 
 
 def home(request):
+    from .models import BookReview
     recent_posts = Post.objects.filter(published=True)[:3]
-    return render(request, 'blog/home.html', {'recent_posts': recent_posts})
+    post_count = Post.objects.filter(published=True).count()
+    book_count = BookReview.objects.filter(published=True).count()
+    return render(request, 'blog/home.html', {
+        'recent_posts': recent_posts,
+        'post_count': post_count,
+        'book_count': book_count,
+    })
 
 
 def about(request):

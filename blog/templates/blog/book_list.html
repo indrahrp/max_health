@@ -1,86 +1,74 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Book Reviews — Indra Choki{% endblock %}
+{% block title %}
+  {% if category %}{{ category.name }} — {% endif %}Writing — Indra Choki
+{% endblock %}
 
 {% block content %}
 <div class="wrap">
-  <h2 class="page-title">Book Reviews</h2>
-  <p style="color:var(--warm-muted);margin-bottom:2.5rem;font-size:1.05rem;">
-    Books that have shaped how I think about health, science, and human potential. Honest reviews with no fluff.
-  </p>
 
-  <!-- Recommended shelf -->
-  {% with recommended=books|dictsortreversed:"created_at" %}
-  <div class="section-label">Highly recommended</div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;margin-bottom:3rem;">
-    {% for book in books %}
-    {% if book.recommended %}
-    <a href="{% url 'blog:book_detail' book.slug %}" style="text-decoration:none;">
-      <div class="project-card" style="display:flex;gap:1rem;align-items:flex-start;">
-        {% if book.cover_image %}
-        <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
-             style="width:70px;height:100px;object-fit:cover;border-radius:6px;flex-shrink:0;">
-        {% else %}
-        <div style="width:70px;height:100px;background:var(--warm-accent-light);border-radius:6px;
-                    flex-shrink:0;display:flex;align-items:center;justify-content:center;
-                    font-family:var(--serif);font-size:1.5rem;color:var(--warm-accent);">📖</div>
-        {% endif %}
-        <div style="flex:1;">
-          <h3 style="font-size:1rem;margin-bottom:0.2rem;">{{ book.title }}</h3>
-          <p style="font-size:0.82rem;color:var(--warm-muted);margin-bottom:0.4rem;">{{ book.author }}</p>
-          <div style="font-size:0.9rem;margin-bottom:0.5rem;">
-            {% for i in "12345" %}
-              {% if forloop.counter <= book.rating %}
-                <span class="star-filled">★</span>
-              {% else %}
-                <span class="star-empty">★</span>
-              {% endif %}
-            {% endfor %}
-          </div>
-          <p style="font-size:0.82rem;color:var(--warm-muted);">{{ book.summary|truncatechars:80 }}</p>
-        </div>
-      </div>
+  <h2 class="page-title">
+    {% if category %}{{ category.name }}{% else %}Writing{% endif %}
+  </h2>
+
+  <!-- Live search -->
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" placeholder="Search posts..." id="post-search" oninput="searchPosts(this.value)">
+  </div>
+
+  <!-- Category filter bar -->
+  <div class="cat-filter">
+    <a href="{% url 'blog:blog_list' %}"
+       style="font-size:0.82rem;padding:5px 16px;border-radius:2rem;text-decoration:none;
+              border:1px solid var(--warm-border);
+              {% if not selected %}background:var(--warm-accent);color:#fff;border-color:var(--warm-accent);
+              {% else %}color:var(--warm-muted);{% endif %}">
+      All
     </a>
-    {% endif %}
+    {% for cat in categories %}
+    <a href="{% url 'blog:category_detail' cat.slug %}"
+       style="font-size:0.82rem;padding:5px 16px;border-radius:2rem;text-decoration:none;
+              border:1px solid var(--warm-border);
+              {% if selected == cat.slug %}background:var(--warm-accent);color:#fff;border-color:var(--warm-accent);
+              {% else %}color:var(--warm-muted);{% endif %}">
+      {{ cat.name }}
+    </a>
     {% endfor %}
   </div>
-  {% endwith %}
 
-  <!-- All reviews -->
-  <div class="section-label">All reviews</div>
-  {% for book in books %}
-  <a class="post-card" href="{% url 'blog:book_detail' book.slug %}">
-    <div style="display:flex;gap:1.2rem;align-items:flex-start;">
-      {% if book.cover_image %}
-      <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
-           style="width:55px;height:78px;object-fit:cover;border-radius:5px;flex-shrink:0;">
-      {% else %}
-      <div style="width:55px;height:78px;background:var(--warm-accent-light);border-radius:5px;
-                  flex-shrink:0;display:flex;align-items:center;justify-content:center;
-                  font-size:1.2rem;">📖</div>
+  <!-- Post count -->
+  <p style="font-size:0.82rem;color:var(--warm-muted);margin-bottom:1.5rem;">
+    {{ posts.count }} post{{ posts.count|pluralize }}
+    {% if category %} in {{ category.name }}{% endif %}
+  </p>
+
+  <!-- Post list -->
+  {% for post in posts %}
+  <a class="post-card" href="{% url 'blog:blog_detail' post.slug %}">
+    <div class="post-meta">
+      {{ post.created_at|date:"F j, Y" }}
+      &nbsp;·&nbsp;
+      {{ post.reading_time }}
+      {% if post.category %}
+      &nbsp;·&nbsp;
+      <span style="color:var(--warm-accent);">{{ post.category.name }}</span>
       {% endif %}
-      <div style="flex:1;">
-        <div class="post-meta">
-          {{ book.created_at|date:"F j, Y" }}
-          {% if book.category %}&nbsp;·&nbsp;<span style="color:var(--warm-accent);">{{ book.category.name }}</span>{% endif %}
-        </div>
-        <h3>{{ book.title }}</h3>
-        <p style="font-size:0.82rem;color:var(--warm-muted);margin-bottom:0.4rem;">by {{ book.author }}</p>
-        <div style="font-size:0.9rem;margin-bottom:0.4rem;">
-          {% for i in "12345" %}
-            {% if forloop.counter <= book.rating %}
-              <span class="star-filled">★</span>
-            {% else %}
-              <span class="star-empty">★</span>
-            {% endif %}
-          {% endfor %}
-        </div>
-        <p>{{ book.summary }}</p>
-      </div>
     </div>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.summary }}</p>
+    {% if post.tags.all %}
+    <div style="margin-top:0.6rem;display:flex;flex-wrap:wrap;gap:0.4rem;">
+      {% for tag in post.tags.all %}
+      <span class="tag">#{{ tag.name }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
   </a>
   {% empty %}
-  <p style="color:var(--warm-muted);">No book reviews yet — check back soon!</p>
+  <p style="color:var(--warm-muted);padding:2rem 0;">
+    No posts yet in this category — check back soon!
+  </p>
   {% endfor %}
 
 </div>
