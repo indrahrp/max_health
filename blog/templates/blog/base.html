@@ -130,6 +130,14 @@
   .footer-links { display:flex; gap:1.2rem; }
   .footer-links a { font-size:0.85rem; color:var(--warm-muted); text-decoration:none; }
   .footer-links a:hover { color:var(--warm-accent); }
+
+  /* Hide Google Translate toolbar */
+  .goog-te-banner-frame, .skiptranslate { display:none !important; }
+  body { top:0 !important; }
+  .goog-te-gadget { font-size:0 !important; }
+  .goog-tooltip { display:none !important; }
+  .goog-tooltip:hover { display:none !important; }
+  .goog-text-highlight { background:none !important; box-shadow:none !important; }
 </style>
 </head>
 <body>
@@ -203,7 +211,56 @@
   });
 </script>
 
-{% block extra_js %}{% endblock %}
+<!-- Translation -->
+<div id="translate-bar" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;">
+  <div id="translate-btn" onclick="toggleTranslate()"
+       style="background:var(--warm-accent);color:#fff;border-radius:2rem;padding:8px 16px;
+              font-size:0.82rem;cursor:pointer;display:flex;align-items:center;gap:6px;
+              box-shadow:0 2px 12px rgba(194,113,79,0.3);transition:all 0.2s;">
+    <span style="font-size:14px;">🌐</span>
+    <span id="translate-label">🇮🇩 Translate</span>
+  </div>
+  <div id="google-translate-el" style="display:none;margin-top:0.5rem;"></div>
+</div>
 
+<div id="google_translate_element" style="display:none;"></div>
+
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'id,en',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false
+  }, 'google_translate_element');
+}
+
+function toggleTranslate() {
+  const current = document.documentElement.lang || 'en';
+  const label = document.getElementById('translate-label');
+  const cookie = document.cookie;
+  const isID = cookie.includes('googtrans=/en/id');
+  if (isID) {
+    document.cookie = 'googtrans=/en/en; path=/';
+    document.cookie = 'googtrans=/en/en; path=/; domain=.' + location.hostname;
+    label.textContent = '🇮🇩 Translate';
+    location.reload();
+  } else {
+    document.cookie = 'googtrans=/en/id; path=/';
+    document.cookie = 'googtrans=/en/id; path=/; domain=.' + location.hostname;
+    label.textContent = '🇬🇧 English';
+    location.reload();
+  }
+}
+
+window.addEventListener('load', () => {
+  const isID = document.cookie.includes('googtrans=/en/id');
+  const label = document.getElementById('translate-label');
+  if (label) label.textContent = isID ? '🇬🇧 English' : '🇮🇩 Translate';
+});
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+{% block extra_js %}{% endblock %}
 </body>
 </html>
