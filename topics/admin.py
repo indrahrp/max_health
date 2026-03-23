@@ -19,3 +19,4 @@ class ArticleAdmin(SummernoteModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['published', 'order']
     filter_horizontal = ['related_posts']
+

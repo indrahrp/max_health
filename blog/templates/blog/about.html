@@ -3,24 +3,64 @@
 {% block title %}About — Indra Choki{% endblock %}
 
 {% block content %}
-<div class="wrap">
+<div class="about-wrap">
+
   <div style="display:flex;gap:2rem;align-items:flex-start;margin-bottom:2.5rem;flex-wrap:wrap;">
-    <div style="width:110px;height:110px;flex-shrink:0;border-radius:50%;background:var(--warm-accent-light);border:3px solid var(--warm-accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:2.5rem;color:var(--warm-accent);">IC</div>
+
+    <!-- Photo or initials fallback -->
+    {% if profile and profile.photo %}
+    <img src="{{ profile.photo.url }}" alt="{{ profile.name }}"
+         style="width:120px;height:120px;border-radius:50%;object-fit:cover;
+                border:3px solid var(--warm-accent);flex-shrink:0;">
+    {% else %}
+    <div style="width:120px;height:120px;flex-shrink:0;border-radius:50%;
+                background:var(--warm-accent-light);border:3px solid var(--warm-accent);
+                display:flex;align-items:center;justify-content:center;
+                font-family:var(--serif);font-size:2.5rem;color:var(--warm-accent);">IC</div>
+    {% endif %}
+
     <div>
-      <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:normal;margin-bottom:0.4rem;">Hi, I'm Indra Choki</h2>
-      <div style="color:var(--warm-accent);font-size:0.95rem;margin-bottom:0.8rem;">Health Writer & Carnivore Diet Advocate</div>
-      <p style="color:var(--warm-muted);font-size:0.95rem;">Passionate about reversing chronic disease through nutrition</p>
+      <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:normal;margin-bottom:0.4rem;">
+        {% if profile %}{{ profile.name }}{% else %}Indra Choki{% endif %}
+      </h2>
+      <div style="color:var(--warm-accent);font-size:0.95rem;margin-bottom:0.5rem;">
+        {% if profile and profile.tagline %}{{ profile.tagline }}{% else %}Health Writer & Carnivore Diet Advocate{% endif %}
+      </div>
+      {% if profile and profile.location %}
+      <p style="color:var(--warm-muted);font-size:0.9rem;margin-bottom:0.5rem;">📍 {{ profile.location }}</p>
+      {% endif %}
+      <div style="display:flex;gap:1rem;margin-top:0.8rem;flex-wrap:wrap;">
+        {% if profile and profile.twitter %}
+        <a href="{{ profile.twitter }}" target="_blank" style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">Twitter →</a>
+        {% endif %}
+        {% if profile and profile.substack %}
+        <a href="{{ profile.substack }}" target="_blank" style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">Substack →</a>
+        {% endif %}
+        {% if profile and profile.email %}
+        <a href="mailto:{{ profile.email }}" style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">Email →</a>
+        {% endif %}
+      </div>
     </div>
   </div>
+
   <div class="post-content">
-    <p>I'm a health writer on a mission to share the <strong style="color:var(--warm-text);font-weight:500;">transformative power of the carnivore diet</strong> for preventing and reversing chronic disease. My writing bridges personal experience with emerging nutritional science.</p>
-    <p>After struggling with my own health challenges, I discovered the animal-based diet and experienced results that conventional medicine couldn't provide. That journey sparked a deep curiosity — and eventually a commitment to <strong style="color:var(--warm-text);font-weight:500;">helping others find the same clarity</strong>.</p>
+    {% if profile and profile.bio %}
+    {{ profile.bio|linebreaks }}
+    {% else %}
+    <p>I'm a health writer on a mission to share the <strong>transformative power of the carnivore diet</strong> for preventing and reversing chronic disease. My writing bridges personal experience with emerging nutritional science.</p>
+    <p>After struggling with my own health challenges, I discovered the animal-based diet and experienced results that conventional medicine couldn't provide. That journey sparked a deep curiosity — and eventually a commitment to <strong>helping others find the same clarity</strong>.</p>
     <p>I believe that much of modern chronic illness is driven by what we eat, and that returning to ancestral, animal-based nutrition is one of the most powerful tools we have.</p>
+    {% endif %}
   </div>
+
   <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem;">
     {% for interest in interests %}
-    <span style="font-size:0.82rem;background:var(--warm-accent-light);color:var(--warm-accent);padding:4px 14px;border-radius:2rem;border:1px solid var(--warm-border);">{{ interest }}</span>
+    <span style="font-size:0.82rem;background:var(--warm-accent-light);color:var(--warm-accent);
+                 padding:4px 14px;border-radius:2rem;border:1px solid var(--warm-border);">
+      {{ interest }}
+    </span>
     {% endfor %}
   </div>
+
 </div>
 {% endblock %}

@@ -14,7 +14,10 @@ def home(request):
     })
 
 
+
 def about(request):
+    from .models import Profile
+    profile = Profile.objects.first()
     interests = [
         'Carnivore diet',
         'Chronic disease prevention',
@@ -23,8 +26,10 @@ def about(request):
         'Inflammation',
         'Gut health',
     ]
-    return render(request, 'blog/about.html', {'interests': interests})
-
+    return render(request, 'blog/about.html', {
+        'profile': profile,
+        'interests': interests,
+    })
 
 def blog_list(request):
     posts = Post.objects.filter(published=True)
@@ -86,3 +91,4 @@ def book_detail(request, slug):
     from .models import BookReview
     book = get_object_or_404(BookReview, slug=slug, published=True)
     return render(request, 'blog/book_detail.html', {'book': book})
+

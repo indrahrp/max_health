@@ -53,3 +53,5 @@ class Article(models.Model):
         word_count = len(strip_tags(self.content).split())
         minutes = max(1, round(word_count / 200))
         return f"{minutes} min read"
+
+

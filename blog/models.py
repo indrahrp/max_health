@@ -101,3 +101,16 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+class Profile(models.Model):
+    name = models.CharField(max_length=100)
+    photo = models.ImageField(upload_to='profile/', blank=True, null=True)
+    tagline = models.CharField(max_length=200, blank=True)
+    bio = models.TextField(blank=True)
+    location = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(blank=True)
+    twitter = models.URLField(blank=True)
+    substack = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.name

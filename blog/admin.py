@@ -40,3 +40,10 @@ class BookReviewAdmin(SummernoteModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ['title', 'order']
     list_editable = ['order']
+
+
+from .models import Post, Project, Category, Tag, BookReview, Profile
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['name', 'tagline', 'location']
