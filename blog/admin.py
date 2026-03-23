@@ -29,11 +29,11 @@ class PostAdmin(SummernoteModelAdmin):
 @admin.register(BookReview)
 class BookReviewAdmin(SummernoteModelAdmin):
     summernote_fields = ('review_content',)
-    list_display = ['title', 'author', 'rating', 'recommended', 'published', 'created_at']
-    list_filter = ['published', 'recommended', 'rating', 'category']
+    list_display = ['title', 'author', 'status', 'rating', 'recommended', 'published', 'created_at']
+    list_filter = ['published', 'recommended', 'status', 'rating', 'category']
     search_fields = ['title', 'author', 'review_content']
     prepopulated_fields = {'slug': ('title',)}
-    list_editable = ['published', 'recommended']
+    list_editable = ['published', 'recommended', 'status']
 
 
 @admin.register(Project)

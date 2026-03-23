@@ -72,8 +72,14 @@ def projects(request):
 
 def book_list(request):
     from .models import BookReview
-    books = BookReview.objects.filter(published=True)
-    return render(request, 'blog/book_list.html', {'books': books})
+    currently_reading = BookReview.objects.filter(published=True, status='reading')
+    read = BookReview.objects.filter(published=True, status='read')
+    wishlist = BookReview.objects.filter(published=True, status='wishlist')
+    return render(request, 'blog/book_list.html', {
+        'currently_reading': currently_reading,
+        'read': read,
+        'wishlist': wishlist,
+    })
 
 
 def book_detail(request, slug):
