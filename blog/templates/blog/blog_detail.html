@@ -51,6 +51,76 @@
   </div>
   {% endif %}
 
+  <!-- Comments section -->
+  <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--warm-border);">
+
+    <div class="section-label">
+      {{ comment_count }} comment{{ comment_count|pluralize }}
+    </div>
+
+    <!-- Submitted confirmation -->
+    {% if comment_submitted %}
+    <div style="background:var(--warm-accent-light);border:1px solid var(--warm-border);
+                border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.5rem;
+                font-size:0.92rem;color:var(--warm-accent);">
+      ✓ Thanks for your comment! It will appear after moderation.
+    </div>
+    {% endif %}
+
+    <!-- Existing comments -->
+    {% for comment in comments %}
+    <div style="padding:1.2rem 0;border-bottom:1px solid var(--warm-border);">
+      <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.5rem;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--warm-accent-light);
+                    display:flex;align-items:center;justify-content:center;
+                    font-family:var(--serif);font-size:0.9rem;color:var(--warm-accent);flex-shrink:0;">
+          {{ comment.name|first|upper }}
+        </div>
+        <div>
+          <span style="font-size:0.9rem;font-weight:500;color:var(--warm-text);">{{ comment.name }}</span>
+          <span style="font-size:0.78rem;color:var(--warm-muted);margin-left:0.5rem;">{{ comment.created_at|date:"F j, Y" }}</span>
+        </div>
+      </div>
+      <p style="font-size:0.95rem;color:var(--warm-muted);padding-left:2.8rem;">{{ comment.body }}</p>
+    </div>
+    {% empty %}
+    {% if not comment_submitted %}
+    <p style="color:var(--warm-muted);font-size:0.92rem;margin-bottom:1.5rem;">
+      No comments yet — be the first to share your thoughts!
+    </p>
+    {% endif %}
+    {% endfor %}
+
+    <!-- Comment form -->
+    <div style="margin-top:2rem;">
+      <h3 style="font-family:var(--serif);font-size:1.2rem;font-weight:normal;margin-bottom:1.2rem;">
+        Leave a comment
+      </h3>
+      <form method="post">
+        {% csrf_token %}
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <div>
+            <label style="font-size:0.82rem;color:var(--warm-muted);display:block;margin-bottom:0.4rem;">Name</label>
+            {{ comment_form.name }}
+          </div>
+          <div>
+            <label style="font-size:0.82rem;color:var(--warm-muted);display:block;margin-bottom:0.4rem;">Email</label>
+            {{ comment_form.email }}
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label style="font-size:0.82rem;color:var(--warm-muted);display:block;margin-bottom:0.4rem;">Comment</label>
+          {{ comment_form.body }}
+        </div>
+        <button type="submit" class="btn btn-primary">Post comment</button>
+        <p style="font-size:0.75rem;color:var(--warm-muted);margin-top:0.6rem;">
+          Comments are moderated and will appear after approval.
+        </p>
+      </form>
+    </div>
+
+  </div>
+
   <!-- Related posts -->
   {% if related %}
   <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--warm-border);">

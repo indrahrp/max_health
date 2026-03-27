@@ -14,10 +14,7 @@ def home(request):
     })
 
 
-
 def about(request):
-    from .models import Profile
-    profile = Profile.objects.first()
     interests = [
         'Carnivore diet',
         'Chronic disease prevention',
@@ -26,10 +23,8 @@ def about(request):
         'Inflammation',
         'Gut health',
     ]
-    return render(request, 'blog/about.html', {
-        'profile': profile,
-        'interests': interests,
-    })
+    return render(request, 'blog/about.html', {'interests': interests})
+
 
 def blog_list(request):
     posts = Post.objects.filter(published=True)
@@ -47,14 +42,31 @@ def blog_list(request):
 
 
 def blog_detail(request, slug):
+    from .forms import CommentForm
     post = get_object_or_404(Post, slug=slug, published=True)
     related = Post.objects.filter(
-        category=post.category,
-        published=True
+        category=post.category, published=True
     ).exclude(id=post.id)[:3]
+    comments = post.comments.filter(approved=True)
+    comment_form = CommentForm()
+    comment_submitted = False
+
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.save()
+            comment_submitted = True
+            comment_form = CommentForm()
+
     return render(request, 'blog/blog_detail.html', {
         'post': post,
         'related': related,
+        'comments': comments,
+        'comment_form': comment_form,
+        'comment_submitted': comment_submitted,
+        'comment_count': comments.count(),
     })
 
 
@@ -91,4 +103,3 @@ def book_detail(request, slug):
     from .models import BookReview
     book = get_object_or_404(BookReview, slug=slug, published=True)
     return render(request, 'blog/book_detail.html', {'book': book})
-

@@ -49,3 +49,4 @@ def topics_search(request):
         'query': query,
         'results': results,
     })
+
