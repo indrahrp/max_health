@@ -8,5 +8,4 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('', include('blog.urls', namespace='blog')),
     path('topics/', include('topics.urls', namespace='topics')),
-    path('ai/improve/', views.improve_text, name='ai_improve'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
