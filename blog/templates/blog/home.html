@@ -79,7 +79,7 @@
 
 {% block extra_js %}
 <script>
-  // Typing animation
+  // ── Typing animation ──────────────────────────────────────
   const phrases = [
     'Exploring the science of human health',
     'Decoding chronic disease with nutrition',
@@ -101,7 +101,7 @@
   }
   setTimeout(typeLoop, 600);
 
-  // Animated stat counters
+  // ── Animated stat counters ────────────────────────────────
   function countUp(id, target, duration) {
     const el = document.getElementById(id);
     if (!el || target === 0) { if(el) el.textContent = '0'; return; }
@@ -116,7 +116,6 @@
   countUp('stat-posts', {{ post_count }}, 800);
   countUp('stat-books', {{ book_count }}, 800);
 </script>
-
 
 <script>
   // ── Human digestion + DNA illustration ────────────────────
@@ -150,7 +149,7 @@
       cx.fillStyle='#5a3020';
       cx.beginPath();cx.ellipse(320,28,32,18,0,Math.PI,Math.PI*2);cx.fill();
       cx.fillStyle=skin;
-      cx.beginPath();cx.roundRect(310,88,20,20,3);cx.fill();
+      cx.beginPath();cx.rect(310,88,20,20);cx.fill();
       cx.strokeStyle=skinOut;cx.lineWidth=1;cx.stroke();
       cx.fillStyle=skin;
       cx.beginPath();
@@ -295,5 +294,4 @@
     frame();
   })();
 </script>
-
 {% endblock %}
