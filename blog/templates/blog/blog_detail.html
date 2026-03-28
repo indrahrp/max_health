@@ -156,6 +156,19 @@
   </div>
   {% endif %}
 
+  <!-- Related topics -->
+  {% if related_topics %}
+  <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--warm-border);">
+    <div class="section-label">Deep dive — related topics</div>
+    {% for article in related_topics %}
+    <a class="post-card" href="{% url 'topics:article_detail' article.pillar.slug article.slug %}">
+      <div class="post-meta">{{ article.reading_time }}</div>
+      <h3>{{ article.title }}</h3>
+      <p>{{ article.summary }}</p>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
 

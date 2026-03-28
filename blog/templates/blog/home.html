@@ -1,37 +1,77 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Indra Choki — Health Writer{% endblock %}
+{% block title %}My Health Corner{% endblock %}
 
 {% block content %}
-<div class="wrap" style="text-align:center;padding-top:5rem;">
-  <div style="width:90px;height:90px;border-radius:50%;background:var(--warm-accent-light);border:3px solid var(--warm-accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:2rem;color:var(--warm-accent);margin:0 auto 1.5rem;">IC</div>
-  <h1 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:normal;margin-bottom:0.5rem;">Indra Choki</h1>
-  <p style="font-size:1.1rem;color:var(--warm-muted);margin-bottom:1rem;">Health Writer · Carnivore Advocate · Wellness Explorer</p>
 
-  <div style="margin-bottom:1.5rem;">
-    <span style="font-size:0.88rem;color:var(--warm-accent);font-family:monospace;background:var(--warm-accent-light);padding:6px 14px;border-radius:6px;border-left:3px solid var(--warm-accent);" id="typing-el">_</span>
+<style>
+.hero-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+.hero-left { width: 280px; }
+.hero-right { min-width: 0; }
+@media (max-width: 700px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-left { width: 100%; }
+}
+</style>
+
+<div class="hero-grid">
+
+  <!-- Left: Bauhaus circle pattern -->
+  <div class="hero-left">
+    <canvas id="bc" width="280" height="660"
+            style="width:280px;height:660px;display:block;border-radius:16px;
+                   background:#f5f0e8;border:1px solid rgba(194,113,79,0.2);"></canvas>
   </div>
 
-  <p style="font-size:1.05rem;color:var(--warm-muted);max-width:500px;margin:0 auto 2rem;">Welcome to my corner of the internet. I write about how the carnivore diet can help prevent and reverse chronic disease — backed by research and lived experience.</p>
-  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;">
-    <a class="btn btn-primary" href="{% url 'blog:blog_list' %}">Read my writing</a>
-    <a class="btn btn-outline" href="{% url 'blog:about' %}">About me</a>
+  <!-- Right: content -->
+  <div class="hero-right">
+
+    <!-- Small anatomy thumbnail top right -->
+    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem;">
+      <canvas id="dna-body" width="180" height="110"
+              style="display:block;border-radius:10px;
+                     background:#fdf6f0;border:1px solid rgba(194,113,79,0.15);"></canvas>
+    </div>
+
+    <div style="width:80px;height:80px;border-radius:50%;background:var(--warm-accent-light);border:3px solid var(--warm-accent);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.8rem;color:var(--warm-accent);margin-bottom:1.2rem;">IC</div>
+    <h1 style="font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:normal;margin-bottom:0.4rem;">My Health Corner</h1>
+    <p style="font-size:1rem;color:var(--warm-muted);margin-bottom:1rem;">Health Writing · Ancestral Way Of Eating Advocate · Wellness Explorer</p>
+
+    <div style="margin-bottom:1.2rem;">
+      <span style="font-size:0.85rem;color:var(--warm-accent);font-family:monospace;background:var(--warm-accent-light);padding:5px 12px;border-radius:6px;border-left:3px solid var(--warm-accent);" id="typing-el">_</span>
+    </div>
+
+    <p style="font-size:1rem;color:var(--warm-muted);margin-bottom:1.8rem;line-height:1.8;">Welcome to my corner of the internet. I write about how the achieve maximum health, reverse chronic disease and controversial topic abouth health topics — backed by research and lived experience.</p>
+
+    <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:2rem;">
+      <a class="btn btn-primary" href="{% url 'blog:blog_list' %}">Read my writing</a>
+      <a class="btn btn-outline" href="{% url 'blog:about' %}">About me</a>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-posts">—</div>
+        <div class="stat-label">Articles</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-books">—</div>
+        <div class="stat-label">Books</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-topics">5</div>
+        <div class="stat-label">Topics</div>
+      </div>
+    </div>
   </div>
 
-  <div class="stats-grid" style="max-width:500px;margin:0 auto 3rem;">
-    <div class="stat-card">
-      <div class="stat-num" id="stat-posts">—</div>
-      <div class="stat-label">Articles</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" id="stat-books">—</div>
-      <div class="stat-label">Books reviewed</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" id="stat-topics">5</div>
-      <div class="stat-label">Topic pillars</div>
-    </div>
-  </div>
 </div>
 
 <hr style="max-width:700px;margin:0 auto;border:none;border-top:1px solid var(--warm-border);">
@@ -58,237 +98,201 @@
   {% endfor %}
 </div>
 
-<hr style="max-width:700px;margin:0 auto;border:none;border-top:1px solid var(--warm-border);">
-<div class="wrap" style="padding-top:2rem;padding-bottom:1rem;">
-  <div class="section-label">From food to DNA</div>
-  <p style="color:var(--warm-muted);font-size:0.92rem;margin-bottom:1.5rem;">
-    How nutrition travels through your digestive system and speaks directly to your genes.
-  </p>
-  <canvas id="dna-body" width="640" height="680"
-          style="max-width:100%;display:block;margin:0 auto;border-radius:12px;"></canvas>
-  <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:0.8rem;">
-    <span style="font-size:0.7rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.35rem;"><span style="width:8px;height:8px;border-radius:50%;background:#c2714f;display:inline-block;"></span>Digestive organs</span>
-    <span style="font-size:0.7rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.35rem;"><span style="width:8px;height:8px;border-radius:50%;background:#5DCAA5;display:inline-block;"></span>Nutrient absorption</span>
-    <span style="font-size:0.7rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.35rem;"><span style="width:8px;height:8px;border-radius:50%;background:#7F77DD;display:inline-block;"></span>DNA / Genetics</span>
-    <span style="font-size:0.7rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.35rem;"><span style="width:8px;height:8px;border-radius:50%;background:#F0997B;display:inline-block;"></span>Blood &amp; circulation</span>
-  </div>
-</div>
-
 {% endblock %}
 
 {% block extra_js %}
 <script>
-(function() {
+(function(){
 
   // ── Typing animation ──────────────────────────────────────
-  var phrases = [
-    'Exploring the science of human health',
-    'Decoding chronic disease with nutrition',
-    'Bridging physics, biology and wellness',
-    'Your guide to ancestral health'
-  ];
-  var pi = 0, ci = 0, deleting = false;
-  function typeLoop() {
-    var el = document.getElementById('typing-el');
-    if (!el) return;
-    var phrase = phrases[pi];
-    if (!deleting) {
-      if (ci < phrase.length) { el.textContent = phrase.slice(0, ++ci) + '_'; setTimeout(typeLoop, 55); }
-      else { deleting = true; setTimeout(typeLoop, 1800); }
-    } else {
-      if (ci > 0) { el.textContent = phrase.slice(0, --ci) + '_'; setTimeout(typeLoop, 30); }
-      else { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(typeLoop, 400); }
+  var phrases=['Exploring the science of human health','Decoding chronic disease with nutrition','Bridging physics, biology and wellness','Your guide to a healthier life'];
+  var pi=0,ci=0,deleting=false;
+  function typeLoop(){
+    var el=document.getElementById('typing-el');
+    if(!el)return;
+    var phrase=phrases[pi];
+    if(!deleting){
+      if(ci<phrase.length){el.textContent=phrase.slice(0,++ci)+'_';setTimeout(typeLoop,55);}
+      else{deleting=true;setTimeout(typeLoop,1800);}
+    }else{
+      if(ci>0){el.textContent=phrase.slice(0,--ci)+'_';setTimeout(typeLoop,30);}
+      else{deleting=false;pi=(pi+1)%phrases.length;setTimeout(typeLoop,400);}
     }
   }
-  setTimeout(typeLoop, 600);
+  setTimeout(typeLoop,600);
 
   // ── Stat counters ─────────────────────────────────────────
-  function countUp(id, target, duration) {
-    var el = document.getElementById(id);
-    if (!el || target === 0) { if (el) el.textContent = '0'; return; }
-    var start = 0;
-    var step = target / Math.ceil(duration / 16);
-    var timer = setInterval(function() {
-      start = Math.min(start + step, target);
-      el.textContent = Math.round(start) + (target >= 10 ? '+' : '');
-      if (start >= target) clearInterval(timer);
-    }, 16);
+  function countUp(id,target,dur){
+    var el=document.getElementById(id);
+    if(!el)return;
+    if(target===0){el.textContent='0';return;}
+    var start=0,step=target/Math.ceil(dur/16);
+    var timer=setInterval(function(){
+      start=Math.min(start+step,target);
+      el.textContent=Math.round(start)+(target>=10?'+':'');
+      if(start>=target)clearInterval(timer);
+    },16);
   }
-  countUp('stat-posts', {{ post_count }}, 800);
-  countUp('stat-books', {{ book_count }}, 800);
+  countUp('stat-posts',parseInt('{{ post_count|default:0 }}')||0,800);
+  countUp('stat-books',parseInt('{{ book_count|default:0 }}')||0,800);
 
-  // ── DNA + Body illustration ───────────────────────────────
-  var cv = document.getElementById('dna-body');
-  if (!cv) return;
-  var c = cv.getContext('2d');
-  var W = cv.width, H = cv.height;
-  var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  var mu = dark ? '#a89080' : '#7a6555';
-  var sk = dark ? '#6b4c3a' : '#f5c5a3';
-  var skd = dark ? '#5a3d2e' : '#e8a882';
-  var sko = dark ? '#7a5040' : '#d4956a';
-  var tt = 0;
-  var bp = [['A','T'],['T','A'],['G','C'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['T','A'],['G','C'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G']];
-  var bc = {A:'#c2714f',T:'#5DCAA5',G:'#7F77DD',C:'#F0997B'};
+  // ── Bauhaus circle pattern (left column) ─────────────────
+  var bc2=document.getElementById('bc');
+  if(bc2){
+    var b=bc2.getContext('2d');
+    var BW=280,BH=660;
+    var bt=0;
 
-  function dot(x,y,r,f,s,sw) {
-    c.beginPath(); c.arc(x,y,r,0,Math.PI*2);
-    c.fillStyle=f; c.fill();
-    if(s){c.strokeStyle=s;c.lineWidth=sw||1;c.stroke();}
-  }
-
-  function body() {
-    c.fillStyle=sk;
-    c.beginPath();c.ellipse(320,55,32,38,0,0,Math.PI*2);c.fill();
-    c.strokeStyle=sko;c.lineWidth=1.5;c.stroke();
-    dot(308,48,3,skd); dot(332,48,3,skd);
-    c.beginPath();c.arc(320,60,8,0.2,Math.PI-0.2);c.strokeStyle=skd;c.lineWidth=1.2;c.stroke();
-    c.fillStyle='#5a3020';
-    c.beginPath();c.ellipse(320,28,32,18,0,Math.PI,Math.PI*2);c.fill();
-    c.fillStyle=sk;
-    c.beginPath();c.rect(310,88,20,20);c.fill();
-    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
-    c.fillStyle=sk;
-    c.beginPath();
-    c.moveTo(270,108);c.bezierCurveTo(250,115,245,180,248,260);
-    c.lineTo(392,260);c.bezierCurveTo(395,180,390,115,370,108);
-    c.closePath();c.fill();c.strokeStyle=sko;c.lineWidth=1.5;c.stroke();
-    c.fillStyle=sk;
-    c.beginPath();c.moveTo(250,115);c.bezierCurveTo(220,130,205,200,210,270);
-    c.lineTo(225,270);c.bezierCurveTo(222,200,235,140,268,120);c.closePath();c.fill();
-    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
-    c.beginPath();c.moveTo(390,115);c.bezierCurveTo(420,130,435,200,430,270);
-    c.lineTo(415,270);c.bezierCurveTo(418,200,405,140,372,120);c.closePath();c.fill();
-    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
-    c.fillStyle=sk;
-    c.beginPath();c.moveTo(248,258);c.bezierCurveTo(245,280,248,295,260,300);
-    c.lineTo(380,300);c.bezierCurveTo(392,295,395,280,392,258);c.closePath();c.fill();
-    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
-    c.fillStyle=sk;
-    c.beginPath();c.moveTo(260,298);c.bezierCurveTo(255,340,258,400,262,460);
-    c.lineTo(300,460);c.bezierCurveTo(302,400,300,340,295,298);c.closePath();c.fill();
-    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
-    c.beginPath();c.moveTo(345,298);c.bezierCurveTo(340,340,338,400,342,460);
-    c.lineTo(380,460);c.bezierCurveTo(385,400,386,340,380,298);c.closePath();c.fill();
-    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
-    c.fillStyle=skd;
-    c.beginPath();c.ellipse(281,462,20,8,0,0,Math.PI*2);c.fill();
-    c.beginPath();c.ellipse(361,462,20,8,0,0,Math.PI*2);c.fill();
-  }
-
-  function digest() {
-    c.strokeStyle='rgba(240,153,123,0.8)';c.lineWidth=5;c.lineCap='round';
-    c.beginPath();c.moveTo(320,93);c.lineTo(320,128);c.stroke();
-    var sp=Math.sin(tt*1.2)*2;
-    c.fillStyle='rgba(240,153,123,0.85)';c.strokeStyle='rgba(194,113,79,0.9)';c.lineWidth=1.5;
-    c.beginPath();c.moveTo(305,128);
-    c.bezierCurveTo(275,130+sp,268,155+sp,272,178+sp);
-    c.bezierCurveTo(275,200+sp,295,210+sp,315,208+sp);
-    c.bezierCurveTo(335,206+sp,348,195+sp,348,178+sp);
-    c.bezierCurveTo(348,158+sp,338,132,320,128);
-    c.closePath();c.fill();c.stroke();
-    c.fillStyle='rgba(194,113,79,0.9)';c.font='9px system-ui,sans-serif';c.textAlign='center';
-    c.fillText('Stomach',310,172+sp);
-    c.strokeStyle='rgba(93,202,165,0.75)';c.lineWidth=4;c.lineCap='round';
-    var ys=215;
-    c.beginPath();c.moveTo(315,ys);
-    c.bezierCurveTo(350,ys+5,370,ys+20,365,ys+35);
-    c.bezierCurveTo(360,ys+50,330,ys+55,300,ys+50);
-    c.bezierCurveTo(270,ys+45,255,ys+30,260,ys+15);
-    c.bezierCurveTo(265,ys,285,ys-5,300,ys+5);
-    c.bezierCurveTo(315,ys+15,325,ys+30,320,ys+45);
-    c.bezierCurveTo(315,ys+60,295,ys+65,280,ys+60);
-    c.bezierCurveTo(265,ys+55,258,ys+42,262,ys+30);c.stroke();
-    c.fillStyle='rgba(15,110,86,0.9)';c.font='9px system-ui,sans-serif';c.textAlign='center';
-    c.fillText('Small intestine',310,ys+78);
-    c.strokeStyle='rgba(194,113,79,0.5)';c.lineWidth=6;
-    c.beginPath();c.moveTo(315,ys-2);
-    c.bezierCurveTo(340,ys-10,380,ys,385,ys+40);
-    c.bezierCurveTo(390,ys+80,370,ys+110,340,ys+120);
-    c.bezierCurveTo(320,ys+128,290,ys+128,270,ys+120);
-    c.bezierCurveTo(248,ys+110,242,ys+80,248,ys+40);
-    c.bezierCurveTo(252,ys+10,272,ys-8,300,ys-5);c.stroke();
-    c.fillStyle='rgba(180,100,60,0.7)';
-    c.beginPath();c.ellipse(276,148,28,18,-0.3,0,Math.PI*2);c.fill();
-    c.strokeStyle='rgba(140,70,40,0.8)';c.lineWidth=1;c.stroke();
-    c.fillStyle='rgba(120,60,30,0.9)';c.font='8px system-ui,sans-serif';c.textAlign='center';
-    c.fillText('Liver',276,152);
-    dot(290,166,7,'rgba(93,202,165,0.7)','rgba(15,110,86,0.8)',1);
-    c.fillStyle='rgba(240,153,123,0.6)';
-    c.beginPath();c.ellipse(345,198,22,9,0.5,0,Math.PI*2);c.fill();
-    c.strokeStyle='rgba(194,113,79,0.7)';c.lineWidth=1;c.stroke();
-    c.fillStyle='rgba(140,70,40,0.9)';c.font='8px system-ui,sans-serif';c.textAlign='center';
-    c.fillText('Pancreas',365,202);
-    c.strokeStyle='rgba(194,113,79,0.6)';c.lineWidth=4;
-    c.beginPath();c.moveTo(320,ys+125);c.bezierCurveTo(320,ys+145,318,ys+158,317,ys+168);c.stroke();
-  }
-
-  function blood() {
-    for(var i=0;i<6;i++){
-      var prog=((tt*0.4+i/6)%1);
-      var by=350-prog*180;
-      var al=Math.sin(prog*Math.PI);
-      dot(248+Math.sin(tt+i)*4,by,2.5,'rgba(240,153,123,'+al*0.8+')');
-      dot(392-Math.sin(tt+i)*4,by,2.5,'rgba(240,153,123,'+al*0.8+')');
+    function lighten(hex,amt){
+      var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),bv=parseInt(hex.slice(5,7),16);
+      r=Math.min(255,Math.round(r+(255-r)*amt));
+      g=Math.min(255,Math.round(g+(255-g)*amt));
+      bv=Math.min(255,Math.round(bv+(255-bv)*amt));
+      return 'rgb('+r+','+g+','+bv+')';
     }
-  }
 
-  function dna(dx,y0,y1) {
-    var n=bp.length,sp=(y1-y0)/(n-1),amp=30,off=tt*0.9;
-    c.beginPath();c.strokeStyle='rgba(194,113,79,0.5)';c.lineWidth=1.8;
-    for(var i=0;i<n;i++){var y=y0+i*sp,ph=off+i*(2*Math.PI/n)*1.5,x=dx+amp*Math.sin(ph);i===0?c.moveTo(x,y):c.lineTo(x,y);}c.stroke();
-    c.beginPath();c.strokeStyle='rgba(93,202,165,0.5)';c.lineWidth=1.8;
-    for(var i=0;i<n;i++){var y=y0+i*sp,ph=off+i*(2*Math.PI/n)*1.5+Math.PI,x=dx+amp*Math.sin(ph);i===0?c.moveTo(x,y):c.lineTo(x,y);}c.stroke();
-    for(var i=0;i<n;i++){
-      var y=y0+i*sp,ph=off+i*(2*Math.PI/n)*1.5;
-      var x1=dx+amp*Math.sin(ph),x2=dx+amp*Math.sin(ph+Math.PI);
-      var depth=(Math.sin(ph)+1)/2,al=0.4+depth*0.6;
-      c.beginPath();c.strokeStyle='rgba(180,178,169,'+(al*0.4)+')';c.lineWidth=0.7;c.setLineDash([2,3]);c.moveTo(x1,y);c.lineTo(x2,y);c.stroke();c.setLineDash([]);
-      c.fillStyle=bc[bp[i][0]];c.globalAlpha=al;c.beginPath();c.arc(x1,y,3.5+depth*2.5,0,Math.PI*2);c.fill();
-      c.fillStyle=bc[bp[i][1]];c.beginPath();c.arc(x2,y,3.5+(1-depth)*2.5,0,Math.PI*2);c.fill();
-      c.globalAlpha=1;
+    function drawQuartered(x,y,r,col){
+      var lc=lighten(col,0.4);
+      b.fillStyle=col;
+      b.beginPath();b.moveTo(x,y);b.arc(x,y,r,Math.PI,Math.PI*1.5);b.closePath();b.fill();
+      b.fillStyle=lc;
+      b.beginPath();b.moveTo(x,y);b.arc(x,y,r,Math.PI*1.5,Math.PI*2);b.closePath();b.fill();
+      b.fillStyle=col;
+      b.beginPath();b.moveTo(x,y);b.arc(x,y,r,0,Math.PI*0.5);b.closePath();b.fill();
+      b.fillStyle=lc;
+      b.beginPath();b.moveTo(x,y);b.arc(x,y,r,Math.PI*0.5,Math.PI);b.closePath();b.fill();
     }
-    c.fillStyle='#7F77DD';c.font='bold 9px system-ui,sans-serif';c.textAlign='center';
-    c.fillText('DNA',dx,y0-8);
+
+    function frameBauhaus(){
+      b.clearRect(0,0,BW,BH);
+      b.fillStyle='#f5f0e8';b.fillRect(0,0,BW,BH);
+
+      // connecting lines
+      b.strokeStyle='rgba(100,80,60,0.18)';b.lineWidth=1;
+      b.beginPath();b.moveTo(130,140);b.lineTo(BW,140);b.stroke();
+      b.beginPath();b.moveTo(140,0);b.lineTo(140,BH);b.stroke();
+
+      // large red half circle top left
+      b.fillStyle='#c8453a';
+      b.beginPath();b.moveTo(0,140);b.arc(0,140,130,Math.PI*0.5,Math.PI*1.5);b.closePath();b.fill();
+      b.fillStyle='#d4b8a8';
+      b.beginPath();b.moveTo(0,140);b.arc(0,140,130,Math.PI*1.5,Math.PI*0.5);b.closePath();b.fill();
+
+      // quartered circles
+      drawQuartered(210,75,52,'#4a6a8a');
+      drawQuartered(85,290,62,'#d4872a');
+      drawQuartered(215,410,48,'#4a6a8a');
+      drawQuartered(95,530,44,'#c8453a');
+
+      // overlapping pairs
+      b.fillStyle='rgba(200,185,162,0.85)';
+      b.beginPath();b.arc(190,240,40,0,Math.PI*2);b.fill();
+      b.fillStyle='rgba(74,106,138,0.85)';
+      b.beginPath();b.arc(245,240,40,0,Math.PI*2);b.fill();
+
+      b.fillStyle='rgba(212,135,42,0.75)';
+      b.beginPath();b.arc(165,478,33,0,Math.PI*2);b.fill();
+      b.fillStyle='rgba(200,69,58,0.75)';
+      b.beginPath();b.arc(215,505,33,0,Math.PI*2);b.fill();
+
+      // small accent circles
+      b.fillStyle='rgba(74,106,138,0.55)';
+      b.beginPath();b.arc(248,338,20,0,Math.PI*2);b.fill();
+      b.fillStyle='rgba(200,69,58,0.55)';
+      b.beginPath();b.arc(48,428,16,0,Math.PI*2);b.fill();
+      b.fillStyle='rgba(212,135,42,0.55)';
+      b.beginPath();b.arc(248,590,24,0,Math.PI*2);b.fill();
+      b.fillStyle='rgba(200,185,162,0.6)';
+      b.beginPath();b.arc(200,160,18,0,Math.PI*2);b.fill();
+
+      // connector dots
+      b.fillStyle='#4a6a8a';b.beginPath();b.arc(140,140,7,0,Math.PI*2);b.fill();
+      b.fillStyle='#c8b8a2';b.beginPath();b.arc(140,290,5,0,Math.PI*2);b.fill();
+      b.fillStyle='#c8453a';b.beginPath();b.arc(140,420,5,0,Math.PI*2);b.fill();
+      b.fillStyle='#d4872a';b.beginPath();b.arc(140,560,5,0,Math.PI*2);b.fill();
+
+      // animated pulse ring
+      var pulse=(Math.sin(bt*1.2)+1)*0.5;
+      b.strokeStyle='rgba(200,69,58,'+(0.07+pulse*0.07)+')';
+      b.lineWidth=1.2;
+      b.beginPath();b.arc(0,140,133+pulse*4,0,Math.PI*2);b.stroke();
+
+      // bottom right half circle accent
+      b.fillStyle='rgba(74,106,138,0.45)';
+      b.beginPath();b.moveTo(BW,BH);b.arc(BW,BH,88,Math.PI,Math.PI*1.5);b.closePath();b.fill();
+
+      // top right small quarter
+      b.fillStyle='rgba(212,135,42,0.4)';
+      b.beginPath();b.moveTo(BW,0);b.arc(BW,0,45,Math.PI*0.5,Math.PI);b.closePath();b.fill();
+
+      bt+=0.02;
+      requestAnimationFrame(frameBauhaus);
+    }
+    frameBauhaus();
   }
 
-  function arrows() {
-    var pulse=(Math.sin(tt*1.5)+1)/2,al=0.3+pulse*0.5;
-    c.strokeStyle='rgba(93,202,165,'+al+')';c.lineWidth=1.2;c.setLineDash([4,4]);
-    c.beginPath();c.moveTo(248,310);c.bezierCurveTo(220,380,130,430,100,490);c.stroke();c.setLineDash([]);
-    c.fillStyle='rgba(93,202,165,'+al+')';c.beginPath();c.moveTo(100,492);c.lineTo(96,484);c.lineTo(104,484);c.fill();
-    c.strokeStyle='rgba(194,113,79,'+al+')';c.lineWidth=1.2;c.setLineDash([4,4]);
-    c.beginPath();c.moveTo(392,310);c.bezierCurveTo(420,380,510,430,540,490);c.stroke();c.setLineDash([]);
-    c.fillStyle='rgba(194,113,79,'+al+')';c.beginPath();c.moveTo(540,492);c.lineTo(536,484);c.lineTo(544,484);c.fill();
-    c.fillStyle=mu;c.font='9px system-ui,sans-serif';c.textAlign='center';
-    c.fillText('Epigenetic signals',155,430);c.fillText('Nutrient sensing',485,430);
-  }
+  // ── DNA helix thumbnail (top right) ─────────────────────
+  var cv=document.getElementById('dna-body');
+  if(cv){
+    var c=cv.getContext('2d');
+    var W=180,H=110;
+    var dark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+    var bg=dark?'#1e1510':'#fdf6f0';
+    var mu=dark?'#a89080':'#7a6555';
+    var t=0;
+    var bp=[['A','T'],['T','A'],['G','C'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['T','A'],['G','C'],['C','G']];
+    var bc={A:'#c2714f',T:'#5DCAA5',G:'#7F77DD',C:'#F0997B'};
 
-  function labels() {
-    c.fillStyle=mu;c.font='9px system-ui,sans-serif';c.textAlign='left';
-    c.fillText('Mouth & salivary glands',395,65);
-    c.fillText('Esophagus',395,105);
-    c.fillText('Large intestine',395,280);
-    c.fillText('Rectum & anus',395,390);
-    c.strokeStyle='rgba(180,178,169,0.4)';c.lineWidth=0.7;c.setLineDash([2,3]);
-    c.beginPath();c.moveTo(352,62);c.lineTo(393,62);c.stroke();
-    c.beginPath();c.moveTo(320,100);c.lineTo(393,100);c.stroke();
-    c.beginPath();c.moveTo(388,265);c.lineTo(393,265);c.stroke();
-    c.beginPath();c.moveTo(320,385);c.lineTo(393,385);c.stroke();
-    c.setLineDash([]);
-  }
+    function frameDNA(){
+      c.clearRect(0,0,W,H);
+      c.fillStyle=bg;c.fillRect(0,0,W,H);
 
-  function frame() {
-    c.clearRect(0,0,W,H);
-    body();digest();blood();arrows();
-    dna(90,490,650);dna(550,490,650);
-    labels();
-    c.fillStyle=mu;c.font='10px system-ui,sans-serif';c.textAlign='center';
-    c.fillText('Nutrients from digestion \u2192 bloodstream \u2192 gene expression',W/2,668);
-    tt+=0.025;
-    requestAnimationFrame(frame);
+      // draw 3 side by side helixes
+      var helixes=[{x:38,amp:16},{x:90,amp:16},{x:142,amp:16}];
+      var n=bp.length,y0=8,y1=H-14,sp=(y1-y0)/(n-1);
+
+      for(var h=0;h<helixes.length;h++){
+        var hx=helixes[h].x,amp=helixes[h].amp;
+        var off=t*0.9+h*0.8;
+
+        // strand 1
+        c.beginPath();c.strokeStyle='rgba(194,113,79,0.5)';c.lineWidth=1.5;
+        for(var i=0;i<n;i++){
+          var y=y0+i*sp,ph=off+i*(2*Math.PI/n)*1.5,x=hx+amp*Math.sin(ph);
+          i===0?c.moveTo(x,y):c.lineTo(x,y);
+        }c.stroke();
+
+        // strand 2
+        c.beginPath();c.strokeStyle='rgba(93,202,165,0.5)';c.lineWidth=1.5;
+        for(var i=0;i<n;i++){
+          var y=y0+i*sp,ph=off+i*(2*Math.PI/n)*1.5+Math.PI,x=hx+amp*Math.sin(ph);
+          i===0?c.moveTo(x,y):c.lineTo(x,y);
+        }c.stroke();
+
+        // base pairs and nodes
+        for(var i=0;i<n;i++){
+          var y=y0+i*sp,ph=off+i*(2*Math.PI/n)*1.5;
+          var x1=hx+amp*Math.sin(ph),x2=hx+amp*Math.sin(ph+Math.PI);
+          var depth=(Math.sin(ph)+1)/2,al=0.35+depth*0.65;
+          c.beginPath();c.strokeStyle='rgba(180,160,140,'+(al*0.35)+')';
+          c.lineWidth=0.6;c.setLineDash([2,2]);
+          c.moveTo(x1,y);c.lineTo(x2,y);c.stroke();c.setLineDash([]);
+          c.fillStyle=bc[bp[i][0]];c.globalAlpha=al;
+          c.beginPath();c.arc(x1,y,2.5+depth*1.5,0,Math.PI*2);c.fill();
+          c.fillStyle=bc[bp[i][1]];
+          c.beginPath();c.arc(x2,y,2.5+(1-depth)*1.5,0,Math.PI*2);c.fill();
+          c.globalAlpha=1;
+        }
+      }
+
+      // label
+      c.fillStyle=mu;c.font='7px system-ui';c.textAlign='center';
+      c.fillText('DNA double helix',W/2,H-2);
+      t+=0.025;
+      requestAnimationFrame(frameDNA);
+    }
+    frameDNA();
   }
-  frame();
 
 })();
 </script>

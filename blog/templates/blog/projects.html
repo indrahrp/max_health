@@ -1,20 +1,245 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Work — Indra Harahap{% endblock %}
+{% block title %}Work & Projects — Indra Choki{% endblock %}
 
 {% block content %}
-<div class="wrap">
-  <h2 class="page-title">Work & Projects</h2>
-  {% for project in all_projects %}
-  <div class="project-card">
-    <h3>{{ project.title }}</h3>
-    <p>{{ project.description }}</p>
-    {% if project.link_url %}
-    <a class="project-link" href="{{ project.link_url }}">{{ project.link_label }} →</a>
-    {% endif %}
+
+<style>
+.projects-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 2rem 1.5rem;
+}
+</style>
+
+<div class="projects-hero">
+
+  <!-- Cell illustration banner -->
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <canvas id="cell-canvas" width="480" height="260"
+            style="max-width:100%;display:block;border-radius:14px;
+                   background:#f5f0e0;border:1px solid rgba(194,113,79,0.2);"></canvas>
+    <p style="font-size:0.68rem;color:var(--warm-muted);text-align:center;margin-top:0.5rem;">
+      Human cell — organelles and structures
+    </p>
   </div>
-  {% empty %}
-  <p style="color:var(--warm-muted);">No projects yet — check back soon!</p>
-  {% endfor %}
+
+  <!-- Projects content -->
+  <div>
+    <h2 class="page-title">Work & Projects</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;">
+      {% for project in all_projects %}
+      <div class="project-card">
+        <h3>{{ project.title }}</h3>
+        <p>{{ project.description }}</p>
+        {% if project.link_url %}
+        <a class="project-link" href="{{ project.link_url }}">{{ project.link_label }} →</a>
+        {% endif %}
+      </div>
+      {% empty %}
+      <p style="color:var(--warm-muted);">No projects yet — check back soon!</p>
+      {% endfor %}
+    </div>
+  </div>
+
 </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var cv=document.getElementById('cell-canvas');
+  if(!cv)return;
+  var c=cv.getContext('2d');
+  var W=cv.width,H=cv.height;
+  var scx=W/580,scy=H/500;
+  var sc=Math.min(scx,scy);
+  var ox=(W-580*sc)/2,oy=(H-500*sc)/2;
+  var t=0;
+
+  function leader(x1,y1,x2,y2){
+    c.save();c.strokeStyle='rgba(40,30,20,0.6)';c.lineWidth=0.8;
+    c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();
+    c.fillStyle='rgba(40,30,20,0.6)';
+    c.beginPath();c.arc(x1,y1,2,0,Math.PI*2);c.fill();c.restore();
+  }
+  function lbl(txt,x,y,align,sz){
+    c.save();c.fillStyle='#2a1a08';
+    c.font=(sz||9)+'px system-ui,sans-serif';
+    c.textAlign=align||'left';
+    var lines=txt.split('\n');
+    for(var i=0;i<lines.length;i++) c.fillText(lines[i],x,y+i*12);
+    c.restore();
+  }
+  function drawMitochondria(x,y,w,h,angle){
+    c.save();c.translate(x,y);c.rotate(angle||0);
+    c.fillStyle='#d4782a';
+    c.beginPath();c.ellipse(0,0,w,h,0,0,Math.PI*2);c.fill();
+    c.strokeStyle='#a05010';c.lineWidth=1.5;c.stroke();
+    c.fillStyle='#e8a050';
+    c.beginPath();c.ellipse(0,0,w-4,h-4,0,0,Math.PI*2);c.fill();
+    c.strokeStyle='#c06820';c.lineWidth=1.2;
+    for(var i=-1;i<=1;i++){
+      c.beginPath();c.moveTo(i*8,-h+6);c.bezierCurveTo(i*8+4,-h/2,i*8-4,h/2,i*8,h-6);c.stroke();
+    }
+    c.restore();
+  }
+
+  function frame(){
+    c.clearRect(0,0,W,H);
+    c.fillStyle='#f5f0e0';c.fillRect(0,0,W,H);
+    c.save();c.translate(ox,oy);c.scale(sc,sc);
+
+    var pulse=Math.sin(t*0.8)*2;
+
+    // plasma membrane
+    c.fillStyle='#f0d898';
+    c.beginPath();c.ellipse(290,250,255,225,0,0,Math.PI*2);c.fill();
+    c.strokeStyle='#c8a040';c.lineWidth=5;c.stroke();
+    c.fillStyle='rgba(240,220,160,0.3)';
+    c.beginPath();c.ellipse(290,250,248,218,0,0,Math.PI*2);c.fill();
+
+    // cytoplasm dots
+    c.fillStyle='rgba(200,120,80,0.35)';
+    [[180,150],[420,130],[350,420],[160,380],[450,380],[200,300],[430,280],[290,440],[160,240],[450,180]].forEach(function(d){
+      c.beginPath();c.arc(d[0],d[1],2.5,0,Math.PI*2);c.fill();
+    });
+
+    // microtubules
+    c.strokeStyle='rgba(140,130,120,0.6)';c.lineWidth=2;
+    c.beginPath();c.moveTo(320,100);c.bezierCurveTo(380,140,400,200,420,260);c.stroke();
+    c.beginPath();c.moveTo(350,95);c.bezierCurveTo(400,135,430,195,445,255);c.stroke();
+    c.beginPath();c.moveTo(290,105);c.bezierCurveTo(340,145,360,210,370,280);c.stroke();
+
+    // intermediate filaments
+    c.strokeStyle='rgba(160,130,180,0.55)';c.lineWidth=1.2;
+    c.beginPath();c.moveTo(200,120);c.bezierCurveTo(250,150,300,170,340,200);c.stroke();
+    c.beginPath();c.moveTo(180,160);c.bezierCurveTo(230,185,280,200,330,220);c.stroke();
+    c.strokeStyle='rgba(180,150,190,0.5)';c.lineWidth=1;
+    c.beginPath();c.moveTo(390,300);c.bezierCurveTo(430,320,450,350,440,390);c.stroke();
+    c.beginPath();c.moveTo(400,295);c.bezierCurveTo(440,315,460,345,450,385);c.stroke();
+
+    // mitochondria
+    drawMitochondria(380,125,32,18,-0.3);
+    drawMitochondria(450,148,30,16,0.2);
+    drawMitochondria(440,320,28,15,0.4);
+
+    // rough ER
+    c.strokeStyle='rgba(80,100,180,0.75)';c.lineWidth=3;
+    for(var i=0;i<4;i++){
+      c.beginPath();c.arc(250,230,50+i*18,Math.PI*0.8,Math.PI*2.2);c.stroke();
+    }
+    // ribosomes on RER
+    c.fillStyle='#c03030';
+    [[220,185],[230,175],[242,168],[256,165],[270,166],[283,170],[294,178],[302,188],[307,200],[308,213],[305,226],[225,200],[220,213],[222,225]].forEach(function(r,i){
+      c.beginPath();c.arc(r[0]+Math.sin(t+i)*0.5,r[1],3,0,Math.PI*2);c.fill();
+    });
+
+    // smooth ER
+    c.strokeStyle='rgba(80,100,180,0.5)';c.lineWidth=2.5;
+    c.beginPath();c.moveTo(390,390);
+    c.bezierCurveTo(420,375,440,360,430,340);
+    c.bezierCurveTo(420,320,395,315,380,330);c.stroke();
+
+    // free ribosomes
+    c.fillStyle='#c03030';
+    [[340,155],[360,148],[420,200],[400,220],[180,340],[200,355],[350,320],[420,310]].forEach(function(r){
+      c.beginPath();c.arc(r[0],r[1],2.5,0,Math.PI*2);c.fill();
+    });
+
+    // nucleus
+    c.fillStyle='rgba(160,140,210,0.85)';
+    c.beginPath();c.ellipse(245,245,95,88,0,0,Math.PI*2);c.fill();
+    c.strokeStyle='rgba(80,100,180,0.9)';c.lineWidth=3;c.stroke();
+    // nuclear pores
+    c.fillStyle='rgba(80,100,180,0.6)';
+    [[150,245],[340,245],[245,160],[245,330],[175,190],[315,190],[175,300],[315,300]].forEach(function(p){
+      c.beginPath();c.arc(p[0],p[1],4,0,Math.PI*2);c.fill();
+    });
+    // chromatin
+    c.strokeStyle='rgba(100,80,160,0.5)';c.lineWidth=1;
+    c.beginPath();c.ellipse(240,250,60,50,-0.2,0,Math.PI*2);c.stroke();
+    c.beginPath();c.ellipse(248,242,45,38,0.3,0,Math.PI*2);c.stroke();
+
+    // nucleolus
+    c.fillStyle='rgba(80,60,140,0.9)';
+    c.beginPath();c.ellipse(240+pulse*0.3,248,28,24,0,0,Math.PI*2);c.fill();
+    c.strokeStyle='rgba(60,40,120,0.7)';c.lineWidth=1.5;c.stroke();
+
+    // golgi apparatus
+    c.strokeStyle='rgba(220,140,150,0.85)';
+    [55,50,45,40].forEach(function(w,i){
+      c.lineWidth=[14,12,10,8][i];c.lineCap='round';
+      c.beginPath();c.moveTo(148,348+i*16);
+      c.bezierCurveTo(165,340+i*16,185,342+i*16,195,350+i*16);c.stroke();
+    });
+    c.fillStyle='rgba(220,160,170,0.7)';
+    c.beginPath();c.ellipse(135,365,18,12,0.3,0,Math.PI*2);c.fill();
+    c.beginPath();c.ellipse(140,390,14,10,0.5,0,Math.PI*2);c.fill();
+
+    // lysosomes
+    c.fillStyle='rgba(220,100,120,0.8)';
+    c.strokeStyle='rgba(180,60,80,0.6)';c.lineWidth=1.2;
+    [[420,360,14],[448,375,12],[435,395,11]].forEach(function(l){
+      c.beginPath();c.arc(l[0],l[1],l[2],0,Math.PI*2);c.fill();c.stroke();
+    });
+
+    // centrosome
+    c.fillStyle='rgba(140,130,120,0.7)';
+    c.beginPath();c.rect(378,238,20,30);c.fill();
+    c.strokeStyle='rgba(100,90,80,0.6)';c.lineWidth=0.8;c.stroke();
+    for(var i=0;i<5;i++){c.beginPath();c.moveTo(378,242+i*5);c.lineTo(398,242+i*5);c.stroke();}
+    c.fillStyle='rgba(80,160,80,0.65)';
+    c.beginPath();c.arc(415,240,10,0,Math.PI*2);c.fill();
+    c.strokeStyle='rgba(40,120,40,0.5)';c.lineWidth=1;c.stroke();
+
+    // peroxisomes
+    c.fillStyle='rgba(100,170,100,0.7)';
+    c.strokeStyle='rgba(60,130,60,0.5)';c.lineWidth=1;
+    [[310,410,14],[340,420,12]].forEach(function(p){
+      c.beginPath();c.arc(p[0],p[1],p[2],0,Math.PI*2);c.fill();c.stroke();
+    });
+
+    // vacuole
+    c.fillStyle='rgba(180,200,230,0.65)';
+    c.beginPath();c.ellipse(258,400,35,22,0.2,0,Math.PI*2);c.fill();
+    c.strokeStyle='rgba(140,160,200,0.5)';c.lineWidth=1;c.stroke();
+
+    // secretory vesicle
+    c.fillStyle='rgba(230,160,60,0.7)';
+    c.beginPath();c.arc(398,408,10,0,Math.PI*2);c.fill();
+    c.strokeStyle='rgba(180,120,20,0.5)';c.lineWidth=1;c.stroke();
+
+    // labels
+    leader(248,162,118,82);lbl('Intermediate\nfilament',42,76,'left',8);
+    leader(230,178,118,110);lbl('Ribosomes',42,108,'left',8);
+    leader(200,205,118,140);lbl('Rough endoplasmic\nreticulum',20,138,'left',8);
+    leader(200,245,118,175);lbl('Nucleus',55,173,'left',8);
+    leader(220,255,118,200);lbl('Nucleolus',48,198,'left',8);
+    leader(215,270,118,225);lbl('Chromatin',46,223,'left',8);
+    leader(168,355,118,290);lbl('Golgi\napparatus',30,288,'left',8);
+    leader(140,382,118,320);lbl('Golgi vesicle',28,318,'left',8);
+    leader(220,400,118,355);lbl('Cytoplasm',38,353,'left',8);
+    leader(395,128,465,68);lbl('Mitochondria',468,66,'left',8);
+    leader(460,148,465,95);lbl('Plasma membrane',468,93,'left',8);
+    leader(420,240,465,175);lbl('Microtubule',468,173,'left',8);
+    leader(415,240,465,208);lbl('Centrosome',468,206,'left',8);
+    leader(435,340,465,240);lbl('Microfilament',468,238,'left',8);
+    leader(425,368,465,272);lbl('Lysosome',468,270,'left',8);
+    leader(430,345,465,305);lbl('Smooth ER',468,303,'left',8);
+    leader(398,408,465,338);lbl('Secretory vesicle',468,336,'left',8);
+    leader(325,413,465,370);lbl('Peroxisome',468,368,'left',8);
+    leader(258,416,340,448);lbl('Vacuole',342,450,'left',8);
+
+    c.restore();
+    t+=0.02;
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
 {% endblock %}

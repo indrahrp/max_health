@@ -3,102 +3,347 @@
 {% block title %}Book Reviews — Indra Choki{% endblock %}
 
 {% block content %}
-<div class="wrap">
-  <h2 class="page-title">Books</h2>
-  <p style="color:var(--warm-muted);margin-bottom:2.5rem;font-size:1.05rem;">
-    My reading life — what I'm reading now, what I've reviewed, and what's on my list.
-  </p>
 
-  {% if currently_reading %}
-  <!-- Currently Reading shelf -->
-  <div style="margin-bottom:3rem;">
-    <div class="section-label">📖 Currently reading</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;">
-      {% for book in currently_reading %}
-      <div class="project-card" style="display:flex;gap:1rem;align-items:flex-start;border-left:3px solid var(--warm-accent);border-radius:0 12px 12px 0;">
-        {% if book.cover_image %}
-        <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
-             style="width:65px;height:92px;object-fit:cover;border-radius:5px;flex-shrink:0;">
-        {% else %}
-        <div style="width:65px;height:92px;background:var(--warm-accent-light);border-radius:5px;
-                    flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">📖</div>
-        {% endif %}
-        <div style="flex:1;">
-          <div style="font-size:0.72rem;background:var(--warm-accent);color:#fff;padding:2px 10px;
-                      border-radius:1rem;display:inline-block;margin-bottom:0.5rem;">Reading now</div>
-          <h3 style="font-size:1rem;margin-bottom:0.2rem;">{{ book.title }}</h3>
-          <p style="font-size:0.82rem;color:var(--warm-muted);">by {{ book.author }}</p>
+<style>
+.books-hero {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 2rem;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 2rem 1.5rem;
+}
+@media (max-width: 700px) {
+  .books-hero { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="books-hero">
+
+  <!-- Left: title and intro -->
+  <div>
+    <h2 class="page-title">Books</h2>
+    <p style="color:var(--warm-muted);margin-bottom:2rem;font-size:1.05rem;">
+      Books that have shaped how I think about health, science, and human potential. Honest reviews with no fluff.
+    </p>
+
+    {% if currently_reading %}
+    <div style="margin-bottom:2.5rem;">
+      <div class="section-label">📖 Currently reading</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;">
+        {% for book in currently_reading %}
+        <div class="project-card" style="display:flex;gap:1rem;align-items:flex-start;border-left:3px solid var(--warm-accent);border-radius:0 12px 12px 0;">
+          {% if book.cover_image %}
+          <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
+               style="width:65px;height:92px;object-fit:cover;border-radius:5px;flex-shrink:0;">
+          {% else %}
+          <div style="width:65px;height:92px;background:var(--warm-accent-light);border-radius:5px;
+                      flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">📖</div>
+          {% endif %}
+          <div style="flex:1;">
+            <div style="font-size:0.72rem;background:var(--warm-accent);color:#fff;padding:2px 10px;
+                        border-radius:1rem;display:inline-block;margin-bottom:0.5rem;">Reading now</div>
+            <h3 style="font-size:1rem;margin-bottom:0.2rem;">{{ book.title }}</h3>
+            <p style="font-size:0.82rem;color:var(--warm-muted);">by {{ book.author }}</p>
+          </div>
         </div>
+        {% endfor %}
       </div>
+    </div>
+    {% endif %}
+
+    {% if read %}
+    <div style="margin-bottom:2.5rem;">
+      <div class="section-label">✅ Read & reviewed</div>
+      {% for book in read %}
+      <a class="post-card" href="{% url 'blog:book_detail' book.slug %}">
+        <div style="display:flex;gap:1.2rem;align-items:flex-start;">
+          {% if book.cover_image %}
+          <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
+               style="width:55px;height:78px;object-fit:cover;border-radius:5px;flex-shrink:0;">
+          {% else %}
+          <div style="width:55px;height:78px;background:var(--warm-accent-light);border-radius:5px;
+                      flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">📖</div>
+          {% endif %}
+          <div style="flex:1;">
+            <div class="post-meta">
+              {{ book.created_at|date:"F j, Y" }}
+              {% if book.category %}&nbsp;·&nbsp;<span style="color:var(--warm-accent);">{{ book.category.name }}</span>{% endif %}
+              {% if book.recommended %}&nbsp;·&nbsp;<span style="color:var(--warm-accent);">★ Recommended</span>{% endif %}
+            </div>
+            <h3>{{ book.title }}</h3>
+            <p style="font-size:0.82rem;color:var(--warm-muted);margin-bottom:0.4rem;">by {{ book.author }}</p>
+            <div style="font-size:0.9rem;margin-bottom:0.4rem;">
+              {% for i in "12345" %}
+                {% if forloop.counter <= book.rating %}<span class="star-filled">★</span>
+                {% else %}<span class="star-empty">★</span>{% endif %}
+              {% endfor %}
+            </div>
+            <p>{{ book.summary }}</p>
+          </div>
+        </div>
+      </a>
       {% endfor %}
     </div>
-  </div>
-  {% endif %}
+    {% endif %}
 
-  {% if read %}
-  <!-- Read shelf -->
-  <div style="margin-bottom:3rem;">
-    <div class="section-label">✅ Read & reviewed</div>
-    {% for book in read %}
-    <a class="post-card" href="{% url 'blog:book_detail' book.slug %}">
-      <div style="display:flex;gap:1.2rem;align-items:flex-start;">
-        {% if book.cover_image %}
-        <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
-             style="width:55px;height:78px;object-fit:cover;border-radius:5px;flex-shrink:0;">
-        {% else %}
-        <div style="width:55px;height:78px;background:var(--warm-accent-light);border-radius:5px;
-                    flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">📖</div>
-        {% endif %}
-        <div style="flex:1;">
-          <div class="post-meta">
-            {{ book.created_at|date:"F j, Y" }}
-            {% if book.category %}&nbsp;·&nbsp;<span style="color:var(--warm-accent);">{{ book.category.name }}</span>{% endif %}
-            {% if book.recommended %}&nbsp;·&nbsp;<span style="color:var(--warm-accent);">★ Recommended</span>{% endif %}
-          </div>
-          <h3>{{ book.title }}</h3>
-          <p style="font-size:0.82rem;color:var(--warm-muted);margin-bottom:0.4rem;">by {{ book.author }}</p>
-          <div style="font-size:0.9rem;margin-bottom:0.4rem;">
-            {% for i in "12345" %}
-              {% if forloop.counter <= book.rating %}
-                <span class="star-filled">★</span>
-              {% else %}
-                <span class="star-empty">★</span>
-              {% endif %}
-            {% endfor %}
-          </div>
-          <p>{{ book.summary }}</p>
+    {% if wishlist %}
+    <div style="margin-bottom:2.5rem;">
+      <div class="section-label">🔖 On my wish list</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.8rem;">
+        {% for book in wishlist %}
+        <div class="project-card" style="opacity:0.85;">
+          {% if book.cover_image %}
+          <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
+               style="width:100%;height:130px;object-fit:cover;border-radius:6px;margin-bottom:0.8rem;">
+          {% else %}
+          <div style="width:100%;height:130px;background:var(--warm-accent-light);border-radius:6px;
+                      margin-bottom:0.8rem;display:flex;align-items:center;justify-content:center;font-size:2rem;">📖</div>
+          {% endif %}
+          <h3 style="font-size:0.88rem;margin-bottom:0.2rem;">{{ book.title }}</h3>
+          <p style="font-size:0.75rem;color:var(--warm-muted);">by {{ book.author }}</p>
         </div>
+        {% endfor %}
       </div>
-    </a>
-    {% endfor %}
-  </div>
-  {% endif %}
+    </div>
+    {% endif %}
 
-  {% if wishlist %}
-  <!-- Wish list shelf -->
-  <div style="margin-bottom:3rem;">
-    <div class="section-label">🔖 On my wish list</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.8rem;">
-      {% for book in wishlist %}
-      <div class="project-card" style="opacity:0.8;">
-        {% if book.cover_image %}
-        <img src="{{ book.cover_image.url }}" alt="{{ book.title }}"
-             style="width:100%;height:140px;object-fit:cover;border-radius:6px;margin-bottom:0.8rem;">
-        {% else %}
-        <div style="width:100%;height:140px;background:var(--warm-accent-light);border-radius:6px;
-                    margin-bottom:0.8rem;display:flex;align-items:center;justify-content:center;font-size:2rem;">📖</div>
-        {% endif %}
-        <h3 style="font-size:0.92rem;margin-bottom:0.2rem;">{{ book.title }}</h3>
-        <p style="font-size:0.78rem;color:var(--warm-muted);">by {{ book.author }}</p>
-      </div>
-      {% endfor %}
+    {% if not currently_reading and not read and not wishlist %}
+    <p style="color:var(--warm-muted);">No books yet — check back soon!</p>
+    {% endif %}
+  </div>
+
+  <!-- Right: vascular system illustration -->
+  <div style="position:sticky;top:80px;">
+    <canvas id="books-vascular" width="240" height="420"
+            style="width:240px;height:420px;display:block;border-radius:14px;
+                   background:#fdf8f2;border:1px solid rgba(194,113,79,0.15);"></canvas>
+    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.6rem;justify-content:center;">
+      <span style="font-size:0.6rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.2rem;"><span style="width:14px;height:3px;border-radius:2px;background:#c03030;display:inline-block;"></span>Arteries</span>
+      <span style="font-size:0.6rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.2rem;"><span style="width:14px;height:3px;border-radius:2px;background:#3060a0;display:inline-block;"></span>Veins</span>
+      <span style="font-size:0.6rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.2rem;"><span style="width:6px;height:6px;border-radius:50%;background:#8b2020;display:inline-block;"></span>Liver</span>
+      <span style="font-size:0.6rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.2rem;"><span style="width:6px;height:6px;border-radius:50%;background:#c03030;display:inline-block;"></span>Heart</span>
     </div>
   </div>
-  {% endif %}
-
-  {% if not currently_reading and not read and not wishlist %}
-  <p style="color:var(--warm-muted);">No books yet — check back soon!</p>
-  {% endif %}
 
 </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var cv=document.getElementById('books-vascular');
+  if(!cv)return;
+  var c=cv.getContext('2d');
+  var W=240,H=420,cx=W/2;
+  var sc=240/520;
+  var dark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  var bg=dark?'#1a1208':'#fdf8f2';
+  var sk=dark?'#8a6040':'#e8c090';
+  var skd=dark?'#6a4828':'#d0a070';
+  var sko=dark?'#7a5030':'#c09060';
+  var t=0;
+
+  function lbl(txt,x,y,align,sz,col){
+    c.save();c.fillStyle=col||'#3a2010';
+    c.font=(sz||7)+'px system-ui,sans-serif';
+    c.textAlign=align||'left';c.fillText(txt,x,y);c.restore();
+  }
+  function leader(x1,y1,x2,y2){
+    c.save();c.strokeStyle='rgba(60,40,20,0.4)';c.lineWidth=0.6;
+    c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();
+    c.fillStyle='rgba(60,40,20,0.4)';
+    c.beginPath();c.arc(x1,y1,1.5,0,Math.PI*2);c.fill();c.restore();
+  }
+
+  function frame(){
+    c.clearRect(0,0,W,H);
+    c.fillStyle=bg;c.fillRect(0,0,W,H);
+    c.save();c.scale(sc,sc);
+    var ocx=260;
+
+    // body
+    c.fillStyle=sk;
+    c.beginPath();c.ellipse(ocx,52,32,40,0,0,Math.PI*2);c.fill();
+    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
+    c.fillStyle=skd;c.beginPath();c.ellipse(ocx,34,30,20,0,Math.PI,Math.PI*2);c.fill();
+    c.fillStyle=sk;
+    c.beginPath();c.moveTo(ocx-14,88);c.lineTo(ocx-16,110);c.lineTo(ocx+16,110);c.lineTo(ocx+14,88);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=0.8;c.stroke();
+    c.fillStyle=sk;
+    c.beginPath();
+    c.moveTo(ocx-16,110);c.bezierCurveTo(ocx-62,118,ocx-72,178,ocx-68,295);
+    c.lineTo(ocx+68,295);c.bezierCurveTo(ocx+72,178,ocx+62,118,ocx+16,110);
+    c.closePath();c.fill();c.strokeStyle=sko;c.lineWidth=1;c.stroke();
+    // arms
+    c.fillStyle=sk;
+    c.beginPath();c.moveTo(ocx-60,125);c.bezierCurveTo(ocx-85,140,ocx-95,210,ocx-90,310);
+    c.lineTo(ocx-75,310);c.bezierCurveTo(ocx-80,210,ocx-70,145,ocx-46,130);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=0.8;c.stroke();
+    c.beginPath();c.moveTo(ocx+60,125);c.bezierCurveTo(ocx+85,140,ocx+95,210,ocx+90,310);
+    c.lineTo(ocx+75,310);c.bezierCurveTo(ocx+80,210,ocx+70,145,ocx+46,130);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=0.8;c.stroke();
+    c.fillStyle=skd;
+    c.beginPath();c.ellipse(ocx-82,318,10,14,0,0,Math.PI*2);c.fill();
+    c.beginPath();c.ellipse(ocx+82,318,10,14,0,0,Math.PI*2);c.fill();
+    // pelvis
+    c.fillStyle=sk;
+    c.beginPath();c.moveTo(ocx-68,293);c.bezierCurveTo(ocx-74,312,ocx-70,330,ocx-58,338);
+    c.lineTo(ocx+58,338);c.bezierCurveTo(ocx+70,330,ocx+74,312,ocx+68,293);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=0.8;c.stroke();
+    // legs
+    c.fillStyle=sk;
+    c.beginPath();c.moveTo(ocx-58,336);c.bezierCurveTo(ocx-62,385,ocx-60,440,ocx-56,500);
+    c.lineTo(ocx-30,500);c.bezierCurveTo(ocx-32,440,ocx-30,385,ocx-30,336);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=0.8;c.stroke();
+    c.beginPath();c.moveTo(ocx+30,336);c.bezierCurveTo(ocx+30,385,ocx+32,440,ocx+30,500);
+    c.lineTo(ocx+56,500);c.bezierCurveTo(ocx+60,440,ocx+62,385,ocx+58,336);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=0.8;c.stroke();
+    c.fillStyle=skd;
+    c.beginPath();c.ellipse(ocx-43,508,16,8,0,0,Math.PI*2);c.fill();
+    c.beginPath();c.ellipse(ocx+43,508,16,8,0,0,Math.PI*2);c.fill();
+
+    // brain
+    c.fillStyle='#d0b090';
+    c.beginPath();c.ellipse(ocx,34,22,20,0,0,Math.PI*2);c.fill();
+    c.strokeStyle='#b09070';c.lineWidth=0.8;c.stroke();
+    c.strokeStyle='rgba(150,110,70,0.4)';c.lineWidth=0.6;
+    c.beginPath();c.moveTo(ocx,18);c.lineTo(ocx,50);c.stroke();
+
+    // lungs
+    c.fillStyle='rgba(200,160,120,0.72)';
+    c.beginPath();c.moveTo(ocx-18,148);
+    c.bezierCurveTo(ocx-48,150,ocx-60,172,ocx-57,210);
+    c.bezierCurveTo(ocx-54,232,ocx-38,242,ocx-22,238);
+    c.bezierCurveTo(ocx-10,234,ocx-8,220,ocx-10,205);
+    c.bezierCurveTo(ocx-12,185,ocx-18,165,ocx-18,148);
+    c.fill();c.strokeStyle='rgba(160,110,70,0.4)';c.lineWidth=0.7;c.stroke();
+    c.beginPath();c.moveTo(ocx+4,148);
+    c.bezierCurveTo(ocx+38,150,ocx+60,172,ocx+57,210);
+    c.bezierCurveTo(ocx+54,232,ocx+38,242,ocx+22,238);
+    c.bezierCurveTo(ocx+10,234,ocx+8,220,ocx+10,205);
+    c.bezierCurveTo(ocx+12,185,ocx+18,165,ocx+18,148);
+    c.fill();c.strokeStyle='rgba(160,110,70,0.4)';c.lineWidth=0.7;c.stroke();
+
+    // heart
+    var pulse=Math.sin(t*3)*2;
+    var hx=ocx-10,hy=172;
+    c.fillStyle='#c03030';
+    c.beginPath();c.moveTo(hx,hy+8+pulse);
+    c.bezierCurveTo(hx-20,hy-8+pulse,hx-24,hy+14+pulse,hx,hy+32+pulse);
+    c.bezierCurveTo(hx+24,hy+14+pulse,hx+20,hy-8+pulse,hx,hy+8+pulse);
+    c.fill();c.strokeStyle='#901010';c.lineWidth=1;c.stroke();
+
+    // liver
+    c.fillStyle='#8b2020';
+    c.beginPath();
+    c.moveTo(ocx-8,240);c.bezierCurveTo(ocx-40,238,ocx-58,248,ocx-56,268);
+    c.bezierCurveTo(ocx-54,285,ocx-38,292,ocx-18,290);
+    c.bezierCurveTo(ocx-4,288,ocx+2,278,ocx+4,265);
+    c.bezierCurveTo(ocx+6,252,ocx+2,240,ocx-8,240);
+    c.closePath();c.fill();c.strokeStyle='#6a1010';c.lineWidth=0.8;c.stroke();
+
+    // kidneys
+    c.fillStyle='#a05030';
+    c.beginPath();c.ellipse(ocx-52,272,9,16,0.2,0,Math.PI*2);c.fill();
+    c.strokeStyle='#804020';c.lineWidth=0.7;c.stroke();
+    c.beginPath();c.ellipse(ocx+18,272,9,16,-0.2,0,Math.PI*2);c.fill();c.stroke();
+
+    // AORTA
+    c.strokeStyle='rgba(192,48,48,0.85)';c.lineWidth=5;c.lineCap='round';
+    c.beginPath();c.moveTo(ocx-5,160);c.lineTo(ocx-5,355);c.stroke();
+    c.beginPath();c.moveTo(ocx-5,162);c.bezierCurveTo(ocx-5,148,ocx-18,138,ocx-22,125);c.stroke();
+    c.beginPath();c.moveTo(ocx-5,355);c.bezierCurveTo(ocx-12,368,ocx-25,380,ocx-35,420);c.stroke();
+    c.beginPath();c.moveTo(ocx-5,355);c.bezierCurveTo(ocx+2,368,ocx+15,380,ocx+22,420);c.stroke();
+
+    // VENA CAVA
+    c.strokeStyle='rgba(48,96,160,0.8)';c.lineWidth=4;
+    c.beginPath();c.moveTo(ocx+8,165);c.lineTo(ocx+8,355);c.stroke();
+    c.beginPath();c.moveTo(ocx+8,352);c.bezierCurveTo(ocx+15,368,ocx+28,380,ocx+38,420);c.stroke();
+    c.beginPath();c.moveTo(ocx+8,352);c.bezierCurveTo(ocx+2,368,ocx-10,380,ocx-20,420);c.stroke();
+
+    // CAROTID
+    c.strokeStyle='rgba(192,48,48,0.7)';c.lineWidth=2;
+    c.beginPath();c.moveTo(ocx-14,122);c.bezierCurveTo(ocx-20,110,ocx-20,88,ocx-16,72);c.stroke();
+    c.beginPath();c.moveTo(ocx+6,122);c.bezierCurveTo(ocx+12,110,ocx+12,88,ocx+8,72);c.stroke();
+
+    // JUGULAR
+    c.strokeStyle='rgba(48,96,160,0.65)';c.lineWidth=2;
+    c.beginPath();c.moveTo(ocx-8,122);c.bezierCurveTo(ocx-22,112,ocx-26,90,ocx-22,72);c.stroke();
+    c.beginPath();c.moveTo(ocx+12,122);c.bezierCurveTo(ocx+26,112,ocx+30,90,ocx+26,72);c.stroke();
+
+    // ARM VESSELS
+    c.strokeStyle='rgba(192,48,48,0.6)';c.lineWidth=2;
+    c.beginPath();c.moveTo(ocx-20,128);c.bezierCurveTo(ocx-50,132,ocx-75,150,ocx-82,200);
+    c.bezierCurveTo(ocx-86,240,ocx-84,280,ocx-82,310);c.stroke();
+    c.beginPath();c.moveTo(ocx+20,128);c.bezierCurveTo(ocx+50,132,ocx+75,150,ocx+82,200);
+    c.bezierCurveTo(ocx+86,240,ocx+84,280,ocx+82,310);c.stroke();
+    c.strokeStyle='rgba(48,96,160,0.5)';c.lineWidth=1.5;
+    c.beginPath();c.moveTo(ocx-26,128);c.bezierCurveTo(ocx-56,135,ocx-80,155,ocx-86,205);
+    c.bezierCurveTo(ocx-90,245,ocx-88,285,ocx-86,310);c.stroke();
+    c.beginPath();c.moveTo(ocx+26,128);c.bezierCurveTo(ocx+56,135,ocx+80,155,ocx+86,205);
+    c.bezierCurveTo(ocx+90,245,ocx+88,285,ocx+86,310);c.stroke();
+
+    // PULMONARY
+    c.strokeStyle='rgba(192,48,48,0.6)';c.lineWidth=2.5;
+    c.beginPath();c.moveTo(ocx-5,168);c.bezierCurveTo(ocx-18,165,ocx-35,168,ocx-48,178);c.stroke();
+    c.beginPath();c.moveTo(ocx-5,168);c.bezierCurveTo(ocx+8,165,ocx+25,168,ocx+38,178);c.stroke();
+    c.strokeStyle='rgba(48,96,160,0.6)';c.lineWidth=2;
+    c.beginPath();c.moveTo(ocx+8,172);c.bezierCurveTo(ocx+20,170,ocx+38,172,ocx+50,182);c.stroke();
+    c.beginPath();c.moveTo(ocx+8,172);c.bezierCurveTo(ocx-5,170,ocx-22,172,ocx-35,182);c.stroke();
+
+    // RENAL
+    c.strokeStyle='rgba(192,48,48,0.55)';c.lineWidth=1.5;
+    c.beginPath();c.moveTo(ocx-5,272);c.lineTo(ocx-44,272);c.stroke();
+    c.beginPath();c.moveTo(ocx-5,272);c.lineTo(ocx+10,272);c.stroke();
+
+    // LEG VESSELS
+    c.strokeStyle='rgba(192,48,48,0.6)';c.lineWidth=2;
+    c.beginPath();c.moveTo(ocx-35,420);c.bezierCurveTo(ocx-40,455,ocx-42,475,ocx-40,500);c.stroke();
+    c.beginPath();c.moveTo(ocx+22,420);c.bezierCurveTo(ocx+28,455,ocx+30,475,ocx+28,500);c.stroke();
+    c.strokeStyle='rgba(48,96,160,0.55)';c.lineWidth=1.5;
+    c.beginPath();c.moveTo(ocx-20,420);c.bezierCurveTo(ocx-26,455,ocx-28,475,ocx-26,500);c.stroke();
+    c.beginPath();c.moveTo(ocx+38,420);c.bezierCurveTo(ocx+42,455,ocx+44,475,ocx+42,500);c.stroke();
+
+    // BLOOD PARTICLES aorta
+    for(var i=0;i<5;i++){
+      var prog=((t*0.5+i/5)%1);
+      var py=162+prog*190,al=Math.sin(prog*Math.PI)*0.9;
+      c.beginPath();c.arc(ocx-5,py,2.2,0,Math.PI*2);
+      c.fillStyle='rgba(220,50,50,'+al+')';c.fill();
+    }
+    // vena cava up
+    for(var i=0;i<3;i++){
+      var prog=((t*0.4+i/3)%1);
+      var py2=350-prog*182,al2=Math.sin(prog*Math.PI)*0.8;
+      c.beginPath();c.arc(ocx+8,py2,1.8,0,Math.PI*2);
+      c.fillStyle='rgba(50,80,200,'+al2+')';c.fill();
+    }
+
+    // LABELS (scaled coords)
+    leader(ocx-14,55,ocx-95,42);lbl('Brain',ocx-98,45,'right',8,dark?'#c0a060':'#5a3010');
+    leader(ocx-48,185,ocx-95,185);lbl('Lung',ocx-98,188,'right',8,dark?'#c0a060':'#5a3010');
+    leader(ocx-10,185,ocx-95,205);lbl('Heart',ocx-98,208,'right',8,'#c03030');
+    leader(ocx-35,262,ocx-95,258);lbl('Liver',ocx-98,261,'right',8,'#8b2020');
+    leader(ocx-52,272,ocx-95,278);lbl('Kidney',ocx-98,281,'right',8,dark?'#c0a060':'#5a3010');
+    leader(ocx-5,290,ocx-95,298);lbl('Aorta',ocx-98,301,'right',8,'#c03030');
+    leader(ocx+8,200,ocx+95,175);lbl('Vena cava',ocx+98,178,'left',8,'#3060a0');
+    leader(ocx+18,272,ocx+95,228);lbl('Kidney',ocx+98,231,'left',8,dark?'#a0c0e0':'#5a3010');
+    leader(ocx+22,380,ocx+95,258);lbl('Iliac a.',ocx+98,261,'left',8,'#c03030');
+
+    c.restore();
+
+    // title
+    c.fillStyle=dark?'#c0a060':'#3a2010';
+    c.font='bold 8px system-ui';c.textAlign='center';
+    c.fillText('Human Vascular System',cx,H-5);
+
+    t+=0.02;
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
 {% endblock %}

@@ -47,6 +47,7 @@ def blog_detail(request, slug):
     related = Post.objects.filter(
         category=post.category, published=True
     ).exclude(id=post.id)[:3]
+    related_topics = post.related_articles.filter(published=True)
     comments = post.comments.filter(approved=True)
     comment_form = CommentForm()
     comment_submitted = False

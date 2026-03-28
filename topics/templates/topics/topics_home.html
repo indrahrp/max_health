@@ -3,41 +3,261 @@
 {% block title %}Topics — Indra Choki{% endblock %}
 
 {% block content %}
-<div class="wrap">
 
-  <h2 class="page-title">Topics</h2>
-  <p style="color:var(--warm-muted);margin-bottom:1.5rem;font-size:1.05rem;">
-    Evergreen reference articles organised by subject. Unlike blog posts, these pages are continuously updated as my knowledge grows.
-  </p>
+<style>
+.topics-hero {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 2rem 1.5rem;
+}
+@media (max-width: 750px) {
+  .topics-hero { grid-template-columns: 1fr; }
+}
+</style>
 
-  <!-- Search bar -->
-  <form action="{% url 'topics:topics_search' %}" method="get" style="margin-bottom:2.5rem;">
-    <div style="display:flex;gap:0.5rem;">
-      <input type="text" name="q" placeholder="Search topics..."
-             style="flex:1;padding:0.6rem 1rem;border:1px solid var(--warm-border);
-                    border-radius:2rem;background:var(--warm-surface);
-                    color:var(--warm-text);font-size:0.95rem;outline:none;">
-      <button type="submit" class="btn btn-primary" style="padding:0.6rem 1.2rem;">Search</button>
-    </div>
-  </form>
+<div class="topics-hero">
 
-  <!-- Pillar grid -->
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;">
-    {% for pillar in pillars %}
-    <a href="{% url 'topics:pillar_detail' pillar.slug %}" style="text-decoration:none;">
-      <div class="project-card" style="height:100%;">
-        <div style="font-size:2rem;margin-bottom:0.8rem;">{{ pillar.icon }}</div>
-        <h3>{{ pillar.name }}</h3>
-        <p style="margin-bottom:1rem;">{{ pillar.description }}</p>
-        <div style="font-size:0.82rem;color:var(--warm-accent);">
-          {{ pillar.article_count }} article{{ pillar.article_count|pluralize }} →
-        </div>
+  <!-- Left: title, search, pillars -->
+  <div>
+    <h2 class="page-title">Topics</h2>
+    <p style="color:var(--warm-muted);margin-bottom:1.5rem;font-size:1.05rem;">
+      Evergreen reference articles organised by subject. Unlike blog posts, these pages are continuously updated as my knowledge grows.
+    </p>
+
+    <!-- Search bar -->
+    <form action="{% url 'topics:topics_search' %}" method="get" style="margin-bottom:2rem;">
+      <div style="display:flex;gap:0.5rem;">
+        <input type="text" name="q" placeholder="Search topics..."
+               style="flex:1;padding:0.6rem 1rem;border:1px solid var(--warm-border);
+                      border-radius:2rem;background:var(--warm-surface);
+                      color:var(--warm-text);font-size:0.95rem;outline:none;">
+        <button type="submit" class="btn btn-primary" style="padding:0.6rem 1.2rem;">Search</button>
       </div>
-    </a>
-    {% empty %}
-    <p style="color:var(--warm-muted);">No topics yet — check back soon!</p>
-    {% endfor %}
+    </form>
+
+    <!-- Pillar grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;">
+      {% for pillar in pillars %}
+      <a href="{% url 'topics:pillar_detail' pillar.slug %}" style="text-decoration:none;">
+        <div class="project-card" style="height:100%;">
+          <div style="font-size:1.8rem;margin-bottom:0.6rem;">{{ pillar.icon }}</div>
+          <h3>{{ pillar.name }}</h3>
+          <p style="margin-bottom:0.8rem;">{{ pillar.description }}</p>
+          <div style="font-size:0.82rem;color:var(--warm-accent);">
+            {{ pillar.article_count }} article{{ pillar.article_count|pluralize }} →
+          </div>
+        </div>
+      </a>
+      {% empty %}
+      <p style="color:var(--warm-muted);">No topics yet — check back soon!</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Right: digestive system illustration -->
+  <div style="position:sticky;top:80px;">
+    <canvas id="topics-digest" width="320" height="420"
+            style="width:320px;height:420px;display:block;border-radius:14px;
+                   background:#fff;border:1px solid rgba(194,113,79,0.15);"></canvas>
+    <p style="font-size:0.68rem;color:var(--warm-muted);text-align:center;margin-top:0.5rem;">
+      Human digestive system — hover to explore
+    </p>
+    <!-- legend -->
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;justify-content:center;">
+      <span style="font-size:0.62rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.3rem;"><span style="width:7px;height:7px;border-radius:50%;background:#8b2020;display:inline-block;"></span>Liver</span>
+      <span style="font-size:0.62rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.3rem;"><span style="width:7px;height:7px;border-radius:50%;background:#e8a0a0;display:inline-block;"></span>Stomach</span>
+      <span style="font-size:0.62rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.3rem;"><span style="width:7px;height:7px;border-radius:50%;background:#d07878;display:inline-block;"></span>Large intestine</span>
+      <span style="font-size:0.62rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.3rem;"><span style="width:7px;height:7px;border-radius:50%;background:#e8b0b0;display:inline-block;"></span>Small intestine</span>
+    </div>
   </div>
 
 </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var cv=document.getElementById('topics-digest');
+  if(!cv)return;
+  var c=cv.getContext('2d');
+  var W=320,H=420;
+  var sc=320/520;
+
+  function draw(){
+    c.clearRect(0,0,W,H);
+    c.fillStyle='#fff';c.fillRect(0,0,W,H);
+    c.save();c.scale(sc,sc);
+
+    function leader(x1,y1,x2,y2){
+      c.strokeStyle='rgba(80,60,50,0.55)';c.lineWidth=0.8;
+      c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();
+      c.fillStyle='rgba(80,60,50,0.55)';
+      c.beginPath();c.arc(x1,y1,2,0,Math.PI*2);c.fill();
+    }
+    function lbl(txt,x,y,align,sz){
+      c.fillStyle='#3a2a1a';c.font=(sz||9)+'px system-ui,sans-serif';
+      c.textAlign=align||'left';c.fillText(txt,x,y);
+    }
+
+    // LIVER
+    c.fillStyle='#8b2020';
+    c.beginPath();
+    c.moveTo(200,60);c.bezierCurveTo(160,55,120,65,115,90);
+    c.bezierCurveTo(108,115,120,138,145,148);
+    c.bezierCurveTo(165,158,195,162,215,155);
+    c.bezierCurveTo(235,148,245,138,248,125);
+    c.bezierCurveTo(255,105,250,78,235,68);
+    c.bezierCurveTo(225,60,210,58,200,60);
+    c.closePath();c.fill();
+    c.strokeStyle='#6a1515';c.lineWidth=1;c.stroke();
+    c.fillStyle='rgba(180,60,60,0.25)';
+    c.beginPath();c.ellipse(175,85,35,18,-0.3,0,Math.PI*2);c.fill();
+
+    // GALLBLADDER
+    c.fillStyle='#4a8a3a';
+    c.beginPath();c.ellipse(195,168,10,15,0.2,0,Math.PI*2);c.fill();
+    c.strokeStyle='#2a6a1a';c.lineWidth=0.8;c.stroke();
+    c.strokeStyle='#4a8a3a';c.lineWidth=3;c.lineCap='round';
+    c.beginPath();c.moveTo(195,178);c.bezierCurveTo(195,188,248,192,252,200);c.stroke();
+
+    // STOMACH
+    c.fillStyle='#e8a0a0';
+    c.beginPath();
+    c.moveTo(255,75);c.bezierCurveTo(270,65,300,68,315,82);
+    c.bezierCurveTo(330,96,328,118,318,132);
+    c.bezierCurveTo(308,148,285,155,268,148);
+    c.bezierCurveTo(252,142,245,128,248,110);
+    c.bezierCurveTo(250,92,248,82,255,75);
+    c.closePath();c.fill();
+    c.strokeStyle='#c07070';c.lineWidth=1;c.stroke();
+    c.fillStyle='rgba(255,200,200,0.35)';
+    c.beginPath();c.ellipse(290,100,18,25,-0.2,0,Math.PI*2);c.fill();
+
+    // PANCREAS
+    c.fillStyle='#d4a030';
+    c.beginPath();
+    c.moveTo(255,138);c.bezierCurveTo(268,132,295,130,318,138);
+    c.bezierCurveTo(325,142,322,150,312,152);
+    c.bezierCurveTo(292,156,265,152,255,148);
+    c.closePath();c.fill();
+    c.strokeStyle='#a07020';c.lineWidth=0.8;c.stroke();
+
+    // DUODENUM
+    c.strokeStyle='#c88870';c.lineWidth=8;c.lineCap='round';
+    c.beginPath();c.moveTo(252,200);
+    c.bezierCurveTo(260,210,270,225,265,242);
+    c.bezierCurveTo(260,258,248,262,240,258);c.stroke();
+
+    // TRANSVERSE COLON
+    c.strokeStyle='#d07878';c.lineWidth=14;c.lineCap='round';
+    c.beginPath();c.moveTo(140,255);
+    c.bezierCurveTo(160,248,200,245,240,250);
+    c.bezierCurveTo(280,255,330,252,360,258);c.stroke();
+    c.strokeStyle='#e09898';c.lineWidth=8;
+    c.beginPath();c.moveTo(140,255);
+    c.bezierCurveTo(160,248,200,245,240,250);
+    c.bezierCurveTo(280,255,330,252,360,258);c.stroke();
+
+    // ASCENDING COLON
+    c.strokeStyle='#d07878';c.lineWidth=14;c.lineCap='round';
+    c.beginPath();c.moveTo(360,258);c.bezierCurveTo(368,300,370,350,365,400);c.stroke();
+    c.strokeStyle='#e09898';c.lineWidth=8;
+    c.beginPath();c.moveTo(360,258);c.bezierCurveTo(368,300,370,350,365,400);c.stroke();
+
+    // DESCENDING COLON
+    c.strokeStyle='#d07878';c.lineWidth=14;c.lineCap='round';
+    c.beginPath();c.moveTo(140,255);c.bezierCurveTo(132,300,130,350,138,400);c.stroke();
+    c.strokeStyle='#e09898';c.lineWidth=8;
+    c.beginPath();c.moveTo(140,255);c.bezierCurveTo(132,300,130,350,138,400);c.stroke();
+
+    // SIGMOID COLON
+    c.strokeStyle='#d07878';c.lineWidth=12;c.lineCap='round';
+    c.beginPath();c.moveTo(138,400);
+    c.bezierCurveTo(145,420,180,430,220,428);
+    c.bezierCurveTo(260,426,285,440,280,455);c.stroke();
+    c.strokeStyle='#e09898';c.lineWidth=7;
+    c.beginPath();c.moveTo(138,400);
+    c.bezierCurveTo(145,420,180,430,220,428);
+    c.bezierCurveTo(260,426,285,440,280,455);c.stroke();
+
+    // RECTUM
+    c.strokeStyle='#c06868';c.lineWidth=12;c.lineCap='round';
+    c.beginPath();c.moveTo(280,455);c.bezierCurveTo(278,468,270,478,258,488);c.stroke();
+    c.strokeStyle='#d88888';c.lineWidth=7;
+    c.beginPath();c.moveTo(280,455);c.bezierCurveTo(278,468,270,478,258,488);c.stroke();
+
+    // ANAL CANAL
+    c.strokeStyle='#b05858';c.lineWidth=8;c.lineCap='round';
+    c.beginPath();c.moveTo(258,488);c.lineTo(255,505);c.stroke();
+
+    // SMALL INTESTINE
+    c.strokeStyle='#e8b0b0';c.lineWidth=6;c.lineCap='round';
+    c.beginPath();c.moveTo(240,258);
+    c.bezierCurveTo(270,265,300,275,295,295);
+    c.bezierCurveTo(288,318,258,322,232,318);
+    c.bezierCurveTo(205,314,190,298,196,278);
+    c.bezierCurveTo(202,260,222,255,240,262);
+    c.bezierCurveTo(258,268,270,282,265,298);
+    c.bezierCurveTo(260,315,242,322,225,318);
+    c.bezierCurveTo(208,315,198,302,202,288);
+    c.bezierCurveTo(206,275,218,268,232,270);
+    c.bezierCurveTo(248,272,260,285,255,300);
+    c.bezierCurveTo(250,315,235,322,220,318);
+    c.bezierCurveTo(205,314,198,306,200,295);c.stroke();
+    c.beginPath();c.moveTo(200,295);
+    c.bezierCurveTo(195,318,205,345,228,352);
+    c.bezierCurveTo(252,358,278,348,285,328);
+    c.bezierCurveTo(292,308,282,285,262,278);c.stroke();
+    c.beginPath();c.moveTo(228,352);
+    c.bezierCurveTo(220,368,225,388,248,392);
+    c.bezierCurveTo(272,396,292,378,285,358);c.stroke();
+
+    // CECUM
+    c.fillStyle='#d08080';
+    c.beginPath();c.ellipse(365,412,18,22,0,0,Math.PI*2);c.fill();
+    c.strokeStyle='#b06060';c.lineWidth=1;c.stroke();
+
+    // APPENDIX
+    c.strokeStyle='#c07070';c.lineWidth=5;c.lineCap='round';
+    c.beginPath();c.moveTo(372,430);c.bezierCurveTo(380,445,378,460,368,465);c.stroke();
+
+    // ILEUM
+    c.strokeStyle='#e8b0b0';c.lineWidth=5;c.lineCap='round';
+    c.beginPath();c.moveTo(295,390);c.bezierCurveTo(320,400,348,408,355,412);c.stroke();
+
+    // FLEXURES
+    c.fillStyle='#d07878';
+    c.beginPath();c.ellipse(140,252,16,16,0,0,Math.PI*2);c.fill();
+    c.beginPath();c.ellipse(362,256,16,16,0,0,Math.PI*2);c.fill();
+
+    // LABELS
+    leader(148,88,90,55);lbl('Liver',20,52);
+    leader(193,168,118,188);lbl('Gallbladder',20,186);
+    leader(255,228,118,225);lbl('Duodenum',20,223);
+    leader(242,255,118,258);lbl('Duodenal jejunal',20,253);lbl('junction',20,265);
+    leader(362,330,430,330);lbl('Ascending colon',434,333);
+    leader(365,415,430,415);lbl('Cecum',434,418);
+    leader(372,458,430,458);lbl('Appendix',434,461);
+    leader(255,510,185,530);lbl('Ileum',180,533,'right');
+    leader(255,502,195,520);lbl('Anal canal',190,523,'right');
+    leader(310,95,420,68);lbl('Stomach',424,71);
+    leader(305,142,420,118);lbl('Pancreas',424,121);
+    leader(140,244,420,145);lbl('Left colic flexure',424,148);
+    leader(248,248,420,172);lbl('Transverse colon',424,175);
+    leader(285,300,420,200);lbl('Jejunum',424,203);
+    leader(132,330,420,228);lbl('Descending colon',424,231);
+    leader(220,430,420,258);lbl('Sigmoid colon',424,261);
+    leader(278,470,420,288);lbl('Rectum',424,291);
+
+    c.restore();
+  }
+
+  draw();
+})();
+</script>
 {% endblock %}
