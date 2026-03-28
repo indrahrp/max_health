@@ -47,15 +47,14 @@ function aiImprove(mode) {
   status.textContent = '⏳ Reading editor...';
 
   var content = '';
-  var summernoteDiv = null;
 
-  // Target the exact iframe and div found in debug
+  // READ from the visible note-editable contenteditable div inside the iframe
   try {
     var iframe = document.getElementById('id_content_iframe');
     if (iframe) {
       var iDoc = iframe.contentDocument || iframe.contentWindow.document;
-      summernoteDiv = iDoc.getElementById('summernote');
-      if (summernoteDiv) content = summernoteDiv.innerHTML;
+      var noteEditable = iDoc.querySelector('.note-editable');
+      if (noteEditable) content = noteEditable.innerHTML;
     }
   } catch(e) { console.log('iframe read failed:', e); }
 
@@ -105,21 +104,28 @@ function aiImprove(mode) {
     var result = data.result;
     var done = false;
 
-    // Write directly into the summernote div inside the iframe
+    // WRITE to the visible note-editable contenteditable div inside the iframe
     try {
       var iframe = document.getElementById('id_content_iframe');
       if (iframe) {
         var iDoc = iframe.contentDocument || iframe.contentWindow.document;
-        var sDiv = iDoc.getElementById('summernote');
-        if (sDiv) {
-          sDiv.innerHTML = result;
-          // also sync hidden textarea so it saves correctly
+        var editable = iDoc.querySelector('.note-editable');
+        if (editable) {
+          editable.innerHTML = result;
+          // sync hidden textarea so it saves correctly
           var ta = document.querySelector('textarea[name="content"]');
           if (ta) ta.value = result;
+          // tell Summernote its content changed to keep internal state in sync
+          try {
+            var $sn = jQuery('#id_content');
+            if ($sn && $sn.length && $sn.summernote) {
+              $sn.summernote('code', result);
+            }
+          } catch(e) { console.log('summernote sync skipped:', e); }
           done = true;
         }
       }
-    } catch(e) { console.log('write to summernote div failed:', e); }
+    } catch(e) { console.log('write to note-editable failed:', e); }
 
     // Fallback — update textarea only
     if (!done) {
