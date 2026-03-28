@@ -3,7 +3,7 @@ from django_summernote.admin import SummernoteModelAdmin
 from .models import Post, Project, Category, Tag, BookReview
 from .models import Post, Project, Category, Tag, BookReview, Profile
 from .models import Comment
-rom .models import Post, Project, Category, Tag, BookReview, Profile, Comment
+from .models import Post, Project, Category, Tag, BookReview, Profile, Comment
 
 from django.utils import timezone
 
