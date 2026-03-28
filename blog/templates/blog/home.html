@@ -8,7 +8,6 @@
   <h1 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:normal;margin-bottom:0.5rem;">Indra Choki</h1>
   <p style="font-size:1.1rem;color:var(--warm-muted);margin-bottom:1rem;">Health Writer · Carnivore Advocate · Wellness Explorer</p>
 
-  <!-- Typing animation -->
   <div style="margin-bottom:1.5rem;">
     <span style="font-size:0.88rem;color:var(--warm-accent);font-family:monospace;background:var(--warm-accent-light);padding:6px 14px;border-radius:6px;border-left:3px solid var(--warm-accent);" id="typing-el">_</span>
   </div>
@@ -19,7 +18,6 @@
     <a class="btn btn-outline" href="{% url 'blog:about' %}">About me</a>
   </div>
 
-  <!-- Stats -->
   <div class="stats-grid" style="max-width:500px;margin:0 auto 3rem;">
     <div class="stat-card">
       <div class="stat-num" id="stat-posts">—</div>
@@ -59,19 +57,20 @@
   <p style="color:var(--warm-muted);">No posts yet — check back soon!</p>
   {% endfor %}
 </div>
+
 <hr style="max-width:700px;margin:0 auto;border:none;border-top:1px solid var(--warm-border);">
 <div class="wrap" style="padding-top:2rem;padding-bottom:1rem;">
   <div class="section-label">From food to DNA</div>
   <p style="color:var(--warm-muted);font-size:0.92rem;margin-bottom:1.5rem;">
     How nutrition travels through your digestive system and speaks directly to your genes.
   </p>
-  <canvas id="hd" width="640" height="680"
+  <canvas id="dna-body" width="640" height="680"
           style="max-width:100%;display:block;margin:0 auto;border-radius:12px;"></canvas>
   <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:0.8rem;">
     <span style="font-size:0.7rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.35rem;"><span style="width:8px;height:8px;border-radius:50%;background:#c2714f;display:inline-block;"></span>Digestive organs</span>
     <span style="font-size:0.7rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.35rem;"><span style="width:8px;height:8px;border-radius:50%;background:#5DCAA5;display:inline-block;"></span>Nutrient absorption</span>
     <span style="font-size:0.7rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.35rem;"><span style="width:8px;height:8px;border-radius:50%;background:#7F77DD;display:inline-block;"></span>DNA / Genetics</span>
-    <span style="font-size:0.7rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.35rem;"><span style="width:8px;height:8px;border-radius:50%;background:#F0997B;display:inline-block;"></span>Blood & circulation</span>
+    <span style="font-size:0.7rem;color:var(--warm-muted);display:flex;align-items:center;gap:0.35rem;"><span style="width:8px;height:8px;border-radius:50%;background:#F0997B;display:inline-block;"></span>Blood &amp; circulation</span>
   </div>
 </div>
 
@@ -79,18 +78,20 @@
 
 {% block extra_js %}
 <script>
+(function() {
+
   // ── Typing animation ──────────────────────────────────────
-  const phrases = [
+  var phrases = [
     'Exploring the science of human health',
     'Decoding chronic disease with nutrition',
     'Bridging physics, biology and wellness',
-    'Your guide to ancestral health',
+    'Your guide to ancestral health'
   ];
-  let pi = 0, ci = 0, deleting = false;
+  var pi = 0, ci = 0, deleting = false;
   function typeLoop() {
-    const el = document.getElementById('typing-el');
+    var el = document.getElementById('typing-el');
     if (!el) return;
-    const phrase = phrases[pi];
+    var phrase = phrases[pi];
     if (!deleting) {
       if (ci < phrase.length) { el.textContent = phrase.slice(0, ++ci) + '_'; setTimeout(typeLoop, 55); }
       else { deleting = true; setTimeout(typeLoop, 1800); }
@@ -101,13 +102,13 @@
   }
   setTimeout(typeLoop, 600);
 
-  // ── Animated stat counters ────────────────────────────────
+  // ── Stat counters ─────────────────────────────────────────
   function countUp(id, target, duration) {
-    const el = document.getElementById(id);
-    if (!el || target === 0) { if(el) el.textContent = '0'; return; }
-    let start = 0;
-    const step = target / Math.ceil(duration / 16);
-    const timer = setInterval(() => {
+    var el = document.getElementById(id);
+    if (!el || target === 0) { if (el) el.textContent = '0'; return; }
+    var start = 0;
+    var step = target / Math.ceil(duration / 16);
+    var timer = setInterval(function() {
       start = Math.min(start + step, target);
       el.textContent = Math.round(start) + (target >= 10 ? '+' : '');
       if (start >= target) clearInterval(timer);
@@ -115,183 +116,180 @@
   }
   countUp('stat-posts', {{ post_count }}, 800);
   countUp('stat-books', {{ book_count }}, 800);
-</script>
 
-<script>
-  // ── Human digestion + DNA illustration ────────────────────
-  (function(){
-    const cv = document.getElementById('hd');
-    if (!cv) return;
-    const cx = cv.getContext('2d');
-    const W = cv.width, H = cv.height;
-    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const muted = dark ? '#a89080' : '#7a6555';
-    const skin = dark ? '#6b4c3a' : '#f5c5a3';
-    const skinD = dark ? '#5a3d2e' : '#e8a882';
-    const skinOut = dark ? '#7a5040' : '#d4956a';
-    let t = 0;
+  // ── DNA + Body illustration ───────────────────────────────
+  var cv = document.getElementById('dna-body');
+  if (!cv) return;
+  var c = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var mu = dark ? '#a89080' : '#7a6555';
+  var sk = dark ? '#6b4c3a' : '#f5c5a3';
+  var skd = dark ? '#5a3d2e' : '#e8a882';
+  var sko = dark ? '#7a5040' : '#d4956a';
+  var tt = 0;
+  var bp = [['A','T'],['T','A'],['G','C'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['T','A'],['G','C'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G']];
+  var bc = {A:'#c2714f',T:'#5DCAA5',G:'#7F77DD',C:'#F0997B'};
 
-    const bpairs = [['A','T'],['T','A'],['G','C'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['T','A'],['G','C'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G']];
-    const bc = {'A':'#c2714f','T':'#5DCAA5','G':'#7F77DD','C':'#F0997B'};
+  function dot(x,y,r,f,s,sw) {
+    c.beginPath(); c.arc(x,y,r,0,Math.PI*2);
+    c.fillStyle=f; c.fill();
+    if(s){c.strokeStyle=s;c.lineWidth=sw||1;c.stroke();}
+  }
 
-    function dot(x,y,r,fill,stroke,sw){
-      cx.beginPath();cx.arc(x,y,r,0,Math.PI*2);
-      cx.fillStyle=fill;cx.fill();
-      if(stroke){cx.strokeStyle=stroke;cx.lineWidth=sw||1;cx.stroke();}
+  function body() {
+    c.fillStyle=sk;
+    c.beginPath();c.ellipse(320,55,32,38,0,0,Math.PI*2);c.fill();
+    c.strokeStyle=sko;c.lineWidth=1.5;c.stroke();
+    dot(308,48,3,skd); dot(332,48,3,skd);
+    c.beginPath();c.arc(320,60,8,0.2,Math.PI-0.2);c.strokeStyle=skd;c.lineWidth=1.2;c.stroke();
+    c.fillStyle='#5a3020';
+    c.beginPath();c.ellipse(320,28,32,18,0,Math.PI,Math.PI*2);c.fill();
+    c.fillStyle=sk;
+    c.beginPath();c.rect(310,88,20,20);c.fill();
+    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
+    c.fillStyle=sk;
+    c.beginPath();
+    c.moveTo(270,108);c.bezierCurveTo(250,115,245,180,248,260);
+    c.lineTo(392,260);c.bezierCurveTo(395,180,390,115,370,108);
+    c.closePath();c.fill();c.strokeStyle=sko;c.lineWidth=1.5;c.stroke();
+    c.fillStyle=sk;
+    c.beginPath();c.moveTo(250,115);c.bezierCurveTo(220,130,205,200,210,270);
+    c.lineTo(225,270);c.bezierCurveTo(222,200,235,140,268,120);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
+    c.beginPath();c.moveTo(390,115);c.bezierCurveTo(420,130,435,200,430,270);
+    c.lineTo(415,270);c.bezierCurveTo(418,200,405,140,372,120);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
+    c.fillStyle=sk;
+    c.beginPath();c.moveTo(248,258);c.bezierCurveTo(245,280,248,295,260,300);
+    c.lineTo(380,300);c.bezierCurveTo(392,295,395,280,392,258);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
+    c.fillStyle=sk;
+    c.beginPath();c.moveTo(260,298);c.bezierCurveTo(255,340,258,400,262,460);
+    c.lineTo(300,460);c.bezierCurveTo(302,400,300,340,295,298);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
+    c.beginPath();c.moveTo(345,298);c.bezierCurveTo(340,340,338,400,342,460);
+    c.lineTo(380,460);c.bezierCurveTo(385,400,386,340,380,298);c.closePath();c.fill();
+    c.strokeStyle=sko;c.lineWidth=1;c.stroke();
+    c.fillStyle=skd;
+    c.beginPath();c.ellipse(281,462,20,8,0,0,Math.PI*2);c.fill();
+    c.beginPath();c.ellipse(361,462,20,8,0,0,Math.PI*2);c.fill();
+  }
+
+  function digest() {
+    c.strokeStyle='rgba(240,153,123,0.8)';c.lineWidth=5;c.lineCap='round';
+    c.beginPath();c.moveTo(320,93);c.lineTo(320,128);c.stroke();
+    var sp=Math.sin(tt*1.2)*2;
+    c.fillStyle='rgba(240,153,123,0.85)';c.strokeStyle='rgba(194,113,79,0.9)';c.lineWidth=1.5;
+    c.beginPath();c.moveTo(305,128);
+    c.bezierCurveTo(275,130+sp,268,155+sp,272,178+sp);
+    c.bezierCurveTo(275,200+sp,295,210+sp,315,208+sp);
+    c.bezierCurveTo(335,206+sp,348,195+sp,348,178+sp);
+    c.bezierCurveTo(348,158+sp,338,132,320,128);
+    c.closePath();c.fill();c.stroke();
+    c.fillStyle='rgba(194,113,79,0.9)';c.font='9px system-ui,sans-serif';c.textAlign='center';
+    c.fillText('Stomach',310,172+sp);
+    c.strokeStyle='rgba(93,202,165,0.75)';c.lineWidth=4;c.lineCap='round';
+    var ys=215;
+    c.beginPath();c.moveTo(315,ys);
+    c.bezierCurveTo(350,ys+5,370,ys+20,365,ys+35);
+    c.bezierCurveTo(360,ys+50,330,ys+55,300,ys+50);
+    c.bezierCurveTo(270,ys+45,255,ys+30,260,ys+15);
+    c.bezierCurveTo(265,ys,285,ys-5,300,ys+5);
+    c.bezierCurveTo(315,ys+15,325,ys+30,320,ys+45);
+    c.bezierCurveTo(315,ys+60,295,ys+65,280,ys+60);
+    c.bezierCurveTo(265,ys+55,258,ys+42,262,ys+30);c.stroke();
+    c.fillStyle='rgba(15,110,86,0.9)';c.font='9px system-ui,sans-serif';c.textAlign='center';
+    c.fillText('Small intestine',310,ys+78);
+    c.strokeStyle='rgba(194,113,79,0.5)';c.lineWidth=6;
+    c.beginPath();c.moveTo(315,ys-2);
+    c.bezierCurveTo(340,ys-10,380,ys,385,ys+40);
+    c.bezierCurveTo(390,ys+80,370,ys+110,340,ys+120);
+    c.bezierCurveTo(320,ys+128,290,ys+128,270,ys+120);
+    c.bezierCurveTo(248,ys+110,242,ys+80,248,ys+40);
+    c.bezierCurveTo(252,ys+10,272,ys-8,300,ys-5);c.stroke();
+    c.fillStyle='rgba(180,100,60,0.7)';
+    c.beginPath();c.ellipse(276,148,28,18,-0.3,0,Math.PI*2);c.fill();
+    c.strokeStyle='rgba(140,70,40,0.8)';c.lineWidth=1;c.stroke();
+    c.fillStyle='rgba(120,60,30,0.9)';c.font='8px system-ui,sans-serif';c.textAlign='center';
+    c.fillText('Liver',276,152);
+    dot(290,166,7,'rgba(93,202,165,0.7)','rgba(15,110,86,0.8)',1);
+    c.fillStyle='rgba(240,153,123,0.6)';
+    c.beginPath();c.ellipse(345,198,22,9,0.5,0,Math.PI*2);c.fill();
+    c.strokeStyle='rgba(194,113,79,0.7)';c.lineWidth=1;c.stroke();
+    c.fillStyle='rgba(140,70,40,0.9)';c.font='8px system-ui,sans-serif';c.textAlign='center';
+    c.fillText('Pancreas',365,202);
+    c.strokeStyle='rgba(194,113,79,0.6)';c.lineWidth=4;
+    c.beginPath();c.moveTo(320,ys+125);c.bezierCurveTo(320,ys+145,318,ys+158,317,ys+168);c.stroke();
+  }
+
+  function blood() {
+    for(var i=0;i<6;i++){
+      var prog=((tt*0.4+i/6)%1);
+      var by=350-prog*180;
+      var al=Math.sin(prog*Math.PI);
+      dot(248+Math.sin(tt+i)*4,by,2.5,'rgba(240,153,123,'+al*0.8+')');
+      dot(392-Math.sin(tt+i)*4,by,2.5,'rgba(240,153,123,'+al*0.8+')');
     }
+  }
 
-    function drawBody(){
-      cx.fillStyle=skin;
-      cx.beginPath();cx.ellipse(320,55,32,38,0,0,Math.PI*2);cx.fill();
-      cx.strokeStyle=skinOut;cx.lineWidth=1.5;cx.stroke();
-      dot(308,48,3,skinD);dot(332,48,3,skinD);
-      cx.beginPath();cx.arc(320,60,8,0.2,Math.PI-0.2);cx.strokeStyle=skinD;cx.lineWidth=1.2;cx.stroke();
-      cx.fillStyle='#5a3020';
-      cx.beginPath();cx.ellipse(320,28,32,18,0,Math.PI,Math.PI*2);cx.fill();
-      cx.fillStyle=skin;
-      cx.beginPath();cx.rect(310,88,20,20);cx.fill();
-      cx.strokeStyle=skinOut;cx.lineWidth=1;cx.stroke();
-      cx.fillStyle=skin;
-      cx.beginPath();
-      cx.moveTo(270,108);cx.bezierCurveTo(250,115,245,180,248,260);
-      cx.lineTo(392,260);cx.bezierCurveTo(395,180,390,115,370,108);
-      cx.closePath();cx.fill();cx.strokeStyle=skinOut;cx.lineWidth=1.5;cx.stroke();
-      cx.fillStyle=skin;
-      cx.beginPath();cx.moveTo(250,115);cx.bezierCurveTo(220,130,205,200,210,270);
-      cx.lineTo(225,270);cx.bezierCurveTo(222,200,235,140,268,120);cx.closePath();cx.fill();
-      cx.strokeStyle=skinOut;cx.lineWidth=1;cx.stroke();
-      cx.beginPath();cx.moveTo(390,115);cx.bezierCurveTo(420,130,435,200,430,270);
-      cx.lineTo(415,270);cx.bezierCurveTo(418,200,405,140,372,120);cx.closePath();cx.fill();
-      cx.strokeStyle=skinOut;cx.lineWidth=1;cx.stroke();
-      cx.fillStyle=skin;
-      cx.beginPath();cx.moveTo(248,258);cx.bezierCurveTo(245,280,248,295,260,300);
-      cx.lineTo(380,300);cx.bezierCurveTo(392,295,395,280,392,258);cx.closePath();cx.fill();
-      cx.strokeStyle=skinOut;cx.lineWidth=1;cx.stroke();
-      cx.fillStyle=skin;
-      cx.beginPath();cx.moveTo(260,298);cx.bezierCurveTo(255,340,258,400,262,460);
-      cx.lineTo(300,460);cx.bezierCurveTo(302,400,300,340,295,298);cx.closePath();cx.fill();
-      cx.strokeStyle=skinOut;cx.lineWidth=1;cx.stroke();
-      cx.beginPath();cx.moveTo(345,298);cx.bezierCurveTo(340,340,338,400,342,460);
-      cx.lineTo(380,460);cx.bezierCurveTo(385,400,386,340,380,298);cx.closePath();cx.fill();
-      cx.strokeStyle=skinOut;cx.lineWidth=1;cx.stroke();
-      cx.fillStyle=skinD;
-      cx.beginPath();cx.ellipse(281,462,20,8,0,0,Math.PI*2);cx.fill();
-      cx.beginPath();cx.ellipse(361,462,20,8,0,0,Math.PI*2);cx.fill();
+  function dna(dx,y0,y1) {
+    var n=bp.length,sp=(y1-y0)/(n-1),amp=30,off=tt*0.9;
+    c.beginPath();c.strokeStyle='rgba(194,113,79,0.5)';c.lineWidth=1.8;
+    for(var i=0;i<n;i++){var y=y0+i*sp,ph=off+i*(2*Math.PI/n)*1.5,x=dx+amp*Math.sin(ph);i===0?c.moveTo(x,y):c.lineTo(x,y);}c.stroke();
+    c.beginPath();c.strokeStyle='rgba(93,202,165,0.5)';c.lineWidth=1.8;
+    for(var i=0;i<n;i++){var y=y0+i*sp,ph=off+i*(2*Math.PI/n)*1.5+Math.PI,x=dx+amp*Math.sin(ph);i===0?c.moveTo(x,y):c.lineTo(x,y);}c.stroke();
+    for(var i=0;i<n;i++){
+      var y=y0+i*sp,ph=off+i*(2*Math.PI/n)*1.5;
+      var x1=dx+amp*Math.sin(ph),x2=dx+amp*Math.sin(ph+Math.PI);
+      var depth=(Math.sin(ph)+1)/2,al=0.4+depth*0.6;
+      c.beginPath();c.strokeStyle='rgba(180,178,169,'+(al*0.4)+')';c.lineWidth=0.7;c.setLineDash([2,3]);c.moveTo(x1,y);c.lineTo(x2,y);c.stroke();c.setLineDash([]);
+      c.fillStyle=bc[bp[i][0]];c.globalAlpha=al;c.beginPath();c.arc(x1,y,3.5+depth*2.5,0,Math.PI*2);c.fill();
+      c.fillStyle=bc[bp[i][1]];c.beginPath();c.arc(x2,y,3.5+(1-depth)*2.5,0,Math.PI*2);c.fill();
+      c.globalAlpha=1;
     }
+    c.fillStyle='#7F77DD';c.font='bold 9px system-ui,sans-serif';c.textAlign='center';
+    c.fillText('DNA',dx,y0-8);
+  }
 
-    function drawDigestiveSystem(){
-      cx.strokeStyle='rgba(240,153,123,0.8)';cx.lineWidth=5;cx.lineCap='round';
-      cx.beginPath();cx.moveTo(320,93);cx.lineTo(320,128);cx.stroke();
-      const sp=Math.sin(t*1.2)*2;
-      cx.fillStyle='rgba(240,153,123,0.85)';cx.strokeStyle='rgba(194,113,79,0.9)';cx.lineWidth=1.5;
-      cx.beginPath();cx.moveTo(305,128);
-      cx.bezierCurveTo(275,130+sp,268,155+sp,272,178+sp);
-      cx.bezierCurveTo(275,200+sp,295,210+sp,315,208+sp);
-      cx.bezierCurveTo(335,206+sp,348,195+sp,348,178+sp);
-      cx.bezierCurveTo(348,158+sp,338,132,320,128);
-      cx.closePath();cx.fill();cx.stroke();
-      cx.fillStyle='rgba(194,113,79,0.9)';cx.font='9px system-ui,sans-serif';cx.textAlign='center';
-      cx.fillText('Stomach',310,172+sp);
-      cx.strokeStyle='rgba(93,202,165,0.75)';cx.lineWidth=4;cx.lineCap='round';
-      const ys=215;
-      cx.beginPath();cx.moveTo(315,ys);
-      cx.bezierCurveTo(350,ys+5,370,ys+20,365,ys+35);
-      cx.bezierCurveTo(360,ys+50,330,ys+55,300,ys+50);
-      cx.bezierCurveTo(270,ys+45,255,ys+30,260,ys+15);
-      cx.bezierCurveTo(265,ys+0,285,ys-5,300,ys+5);
-      cx.bezierCurveTo(315,ys+15,325,ys+30,320,ys+45);
-      cx.bezierCurveTo(315,ys+60,295,ys+65,280,ys+60);
-      cx.bezierCurveTo(265,ys+55,258,ys+42,262,ys+30);cx.stroke();
-      cx.fillStyle='rgba(15,110,86,0.9)';cx.font='9px system-ui,sans-serif';cx.textAlign='center';
-      cx.fillText('Small intestine',310,ys+78);
-      cx.strokeStyle='rgba(194,113,79,0.5)';cx.lineWidth=6;
-      cx.beginPath();cx.moveTo(315,ys-2);
-      cx.bezierCurveTo(340,ys-10,380,ys,385,ys+40);
-      cx.bezierCurveTo(390,ys+80,370,ys+110,340,ys+120);
-      cx.bezierCurveTo(320,ys+128,290,ys+128,270,ys+120);
-      cx.bezierCurveTo(248,ys+110,242,ys+80,248,ys+40);
-      cx.bezierCurveTo(252,ys+10,272,ys-8,300,ys-5);cx.stroke();
-      cx.fillStyle='rgba(180,100,60,0.7)';
-      cx.beginPath();cx.ellipse(276,148,28,18,-0.3,0,Math.PI*2);cx.fill();
-      cx.strokeStyle='rgba(140,70,40,0.8)';cx.lineWidth=1;cx.stroke();
-      cx.fillStyle='rgba(120,60,30,0.9)';cx.font='8px system-ui,sans-serif';cx.textAlign='center';
-      cx.fillText('Liver',276,152);
-      dot(290,166,7,'rgba(93,202,165,0.7)','rgba(15,110,86,0.8)',1);
-      cx.fillStyle='rgba(240,153,123,0.6)';
-      cx.beginPath();cx.ellipse(345,198,22,9,0.5,0,Math.PI*2);cx.fill();
-      cx.strokeStyle='rgba(194,113,79,0.7)';cx.lineWidth=1;cx.stroke();
-      cx.fillStyle='rgba(140,70,40,0.9)';cx.font='8px system-ui,sans-serif';cx.textAlign='center';
-      cx.fillText('Pancreas',365,202);
-      cx.strokeStyle='rgba(194,113,79,0.6)';cx.lineWidth=4;
-      cx.beginPath();cx.moveTo(320,ys+125);cx.bezierCurveTo(320,ys+145,318,ys+158,317,ys+168);cx.stroke();
-    }
+  function arrows() {
+    var pulse=(Math.sin(tt*1.5)+1)/2,al=0.3+pulse*0.5;
+    c.strokeStyle='rgba(93,202,165,'+al+')';c.lineWidth=1.2;c.setLineDash([4,4]);
+    c.beginPath();c.moveTo(248,310);c.bezierCurveTo(220,380,130,430,100,490);c.stroke();c.setLineDash([]);
+    c.fillStyle='rgba(93,202,165,'+al+')';c.beginPath();c.moveTo(100,492);c.lineTo(96,484);c.lineTo(104,484);c.fill();
+    c.strokeStyle='rgba(194,113,79,'+al+')';c.lineWidth=1.2;c.setLineDash([4,4]);
+    c.beginPath();c.moveTo(392,310);c.bezierCurveTo(420,380,510,430,540,490);c.stroke();c.setLineDash([]);
+    c.fillStyle='rgba(194,113,79,'+al+')';c.beginPath();c.moveTo(540,492);c.lineTo(536,484);c.lineTo(544,484);c.fill();
+    c.fillStyle=mu;c.font='9px system-ui,sans-serif';c.textAlign='center';
+    c.fillText('Epigenetic signals',155,430);c.fillText('Nutrient sensing',485,430);
+  }
 
-    function drawBloodFlow(){
-      for(let i=0;i<6;i++){
-        const prog=((t*0.4+i/6)%1);
-        const by=350-prog*180;
-        const alpha=Math.sin(prog*Math.PI);
-        dot(248+Math.sin(t+i)*4,by,2.5,`rgba(240,153,123,${alpha*0.8})`);
-        dot(392-Math.sin(t+i)*4,by,2.5,`rgba(240,153,123,${alpha*0.8})`);
-      }
-    }
+  function labels() {
+    c.fillStyle=mu;c.font='9px system-ui,sans-serif';c.textAlign='left';
+    c.fillText('Mouth & salivary glands',395,65);
+    c.fillText('Esophagus',395,105);
+    c.fillText('Large intestine',395,280);
+    c.fillText('Rectum & anus',395,390);
+    c.strokeStyle='rgba(180,178,169,0.4)';c.lineWidth=0.7;c.setLineDash([2,3]);
+    c.beginPath();c.moveTo(352,62);c.lineTo(393,62);c.stroke();
+    c.beginPath();c.moveTo(320,100);c.lineTo(393,100);c.stroke();
+    c.beginPath();c.moveTo(388,265);c.lineTo(393,265);c.stroke();
+    c.beginPath();c.moveTo(320,385);c.lineTo(393,385);c.stroke();
+    c.setLineDash([]);
+  }
 
-    function drawDNAHelix(dnaX,yStart,yEnd){
-      const n=bpairs.length,sp=(yEnd-yStart)/(n-1),amp=30,off=t*0.9;
-      cx.beginPath();cx.strokeStyle='rgba(194,113,79,0.45)';cx.lineWidth=1.8;
-      for(let i=0;i<n;i++){const y=yStart+i*sp,ph=off+i*(2*Math.PI/n)*1.5,x=dnaX+amp*Math.sin(ph);i===0?cx.moveTo(x,y):cx.lineTo(x,y);}cx.stroke();
-      cx.beginPath();cx.strokeStyle='rgba(93,202,165,0.45)';cx.lineWidth=1.8;
-      for(let i=0;i<n;i++){const y=yStart+i*sp,ph=off+i*(2*Math.PI/n)*1.5+Math.PI,x=dnaX+amp*Math.sin(ph);i===0?cx.moveTo(x,y):cx.lineTo(x,y);}cx.stroke();
-      for(let i=0;i<n;i++){
-        const y=yStart+i*sp,ph=off+i*(2*Math.PI/n)*1.5;
-        const x1=dnaX+amp*Math.sin(ph),x2=dnaX+amp*Math.sin(ph+Math.PI);
-        const depth=(Math.sin(ph)+1)/2,alpha=0.35+depth*0.65;
-        cx.beginPath();cx.strokeStyle=`rgba(180,178,169,${alpha*0.35})`;cx.lineWidth=0.7;cx.setLineDash([2,3]);cx.moveTo(x1,y);cx.lineTo(x2,y);cx.stroke();cx.setLineDash([]);
-        cx.fillStyle=bc[bpairs[i][0]];cx.globalAlpha=alpha;cx.beginPath();cx.arc(x1,y,3.5+depth*2.5,0,Math.PI*2);cx.fill();
-        cx.fillStyle=bc[bpairs[i][1]];cx.beginPath();cx.arc(x2,y,3.5+(1-depth)*2.5,0,Math.PI*2);cx.fill();
-        cx.globalAlpha=1;
-      }
-      cx.fillStyle='#7F77DD';cx.font='bold 9px system-ui,sans-serif';cx.textAlign='center';
-      cx.fillText('DNA',dnaX,yStart-8);
-    }
+  function frame() {
+    c.clearRect(0,0,W,H);
+    body();digest();blood();arrows();
+    dna(90,490,650);dna(550,490,650);
+    labels();
+    c.fillStyle=mu;c.font='10px system-ui,sans-serif';c.textAlign='center';
+    c.fillText('Nutrients from digestion \u2192 bloodstream \u2192 gene expression',W/2,668);
+    tt+=0.025;
+    requestAnimationFrame(frame);
+  }
+  frame();
 
-    function drawNutrientArrows(){
-      const pulse=(Math.sin(t*1.5)+1)/2,alpha=0.3+pulse*0.5;
-      cx.strokeStyle=`rgba(93,202,165,${alpha})`;cx.lineWidth=1.2;cx.setLineDash([4,4]);
-      cx.beginPath();cx.moveTo(248,310);cx.bezierCurveTo(220,380,130,430,100,490);cx.stroke();cx.setLineDash([]);
-      cx.fillStyle=`rgba(93,202,165,${alpha})`;cx.beginPath();cx.moveTo(100,492);cx.lineTo(96,484);cx.lineTo(104,484);cx.fill();
-      cx.strokeStyle=`rgba(194,113,79,${alpha})`;cx.lineWidth=1.2;cx.setLineDash([4,4]);
-      cx.beginPath();cx.moveTo(392,310);cx.bezierCurveTo(420,380,510,430,540,490);cx.stroke();cx.setLineDash([]);
-      cx.fillStyle=`rgba(194,113,79,${alpha})`;cx.beginPath();cx.moveTo(540,492);cx.lineTo(536,484);cx.lineTo(544,484);cx.fill();
-      cx.fillStyle=muted;cx.font='9px system-ui,sans-serif';cx.textAlign='center';
-      cx.fillText('Epigenetic signals',155,430);cx.fillText('Nutrient sensing',485,430);
-    }
-
-    function drawLabels(){
-      cx.fillStyle=muted;cx.font='9px system-ui,sans-serif';cx.textAlign='left';
-      cx.fillText('Mouth & salivary glands',395,65);
-      cx.fillText('Esophagus',395,105);
-      cx.fillText('Large intestine',395,280);
-      cx.fillText('Rectum & anus',395,390);
-      cx.strokeStyle='rgba(180,178,169,0.4)';cx.lineWidth=0.7;cx.setLineDash([2,3]);
-      cx.beginPath();cx.moveTo(352,62);cx.lineTo(393,62);cx.stroke();
-      cx.beginPath();cx.moveTo(320,100);cx.lineTo(393,100);cx.stroke();
-      cx.beginPath();cx.moveTo(388,265);cx.lineTo(393,265);cx.stroke();
-      cx.beginPath();cx.moveTo(320,385);cx.lineTo(393,385);cx.stroke();
-      cx.setLineDash([]);
-    }
-
-    function frame(){
-      cx.clearRect(0,0,W,H);
-      drawBody();drawDigestiveSystem();drawBloodFlow();
-      drawNutrientArrows();
-      drawDNAHelix(90,490,650);drawDNAHelix(550,490,650);
-      drawLabels();
-      cx.fillStyle=muted;cx.font='10px system-ui,sans-serif';cx.textAlign='center';
-      cx.fillText('Nutrients from digestion → bloodstream → gene expression',W/2,668);
-      t+=0.025;requestAnimationFrame(frame);
-    }
-    frame();
-  })();
+})();
 </script>
 {% endblock %}
