@@ -3,6 +3,10 @@ from django_summernote.admin import SummernoteModelAdmin
 from .models import Post, Project, Category, Tag, BookReview
 from .models import Post, Project, Category, Tag, BookReview, Profile
 from .models import Comment
+rom .models import Post, Project, Category, Tag, BookReview, Profile, Comment
+
+from django.utils import timezone
+
 
 
 
@@ -50,16 +54,27 @@ class ProjectAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['name', 'tagline', 'location']
 
-from .models import Post, Project, Category, Tag, BookReview, Profile, Comment
-
+f
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['name', 'post', 'created_at', 'approved']
+    list_display = ['name', 'post', 'created_at', 'approved', 'has_reply']
     list_filter = ['approved', 'created_at']
     search_fields = ['name', 'email', 'body']
     list_editable = ['approved']
+    readonly_fields = ['name', 'email', 'body', 'created_at', 'post']
+    fields = ['post', 'name', 'email', 'body', 'created_at', 'approved', 'author_reply']
     actions = ['approve_comments']
+
+    def has_reply(self, obj):
+        return bool(obj.author_reply)
+    has_reply.boolean = True
+    has_reply.short_description = 'Replied'
 
     def approve_comments(self, request, queryset):
         queryset.update(approved=True)
     approve_comments.short_description = 'Approve selected comments'
+
+    def save_model(self, request, obj, form, change):
+        if obj.author_reply and not obj.replied_at:
+            obj.replied_at = timezone.now()
+        super().save_model(request, obj, form, change)

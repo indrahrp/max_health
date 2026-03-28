@@ -70,6 +70,8 @@
     <!-- Existing comments -->
     {% for comment in comments %}
     <div style="padding:1.2rem 0;border-bottom:1px solid var(--warm-border);">
+
+      <!-- Comment -->
       <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.5rem;">
         <div style="width:36px;height:36px;border-radius:50%;background:var(--warm-accent-light);
                     display:flex;align-items:center;justify-content:center;
@@ -82,6 +84,25 @@
         </div>
       </div>
       <p style="font-size:0.95rem;color:var(--warm-muted);padding-left:2.8rem;">{{ comment.body }}</p>
+
+      <!-- Author reply -->
+      {% if comment.author_reply %}
+      <div style="margin-top:1rem;margin-left:2.8rem;padding:1rem 1.2rem;
+                  background:var(--warm-accent-light);border-left:3px solid var(--warm-accent);
+                  border-radius:0 8px 8px 0;">
+        <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem;">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--warm-accent);
+                      display:flex;align-items:center;justify-content:center;
+                      font-family:var(--serif);font-size:0.75rem;color:#fff;flex-shrink:0;">IC</div>
+          <div>
+            <span style="font-size:0.85rem;font-weight:500;color:var(--warm-accent);">Indra Choki</span>
+            <span style="font-size:0.75rem;color:var(--warm-muted);margin-left:0.4rem;">{{ comment.replied_at|date:"F j, Y" }}</span>
+          </div>
+        </div>
+        <p style="font-size:0.92rem;color:var(--warm-muted);">{{ comment.author_reply }}</p>
+      </div>
+      {% endif %}
+
     </div>
     {% empty %}
     {% if not comment_submitted %}
