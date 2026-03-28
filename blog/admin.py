@@ -54,7 +54,7 @@ class ProjectAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['name', 'tagline', 'location']
 
-f
+
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['name', 'post', 'created_at', 'approved', 'has_reply']
