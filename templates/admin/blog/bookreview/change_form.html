@@ -1,0 +1,89 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_field_sets %}
+{{ block.super }}
+<div id="ai-toolbar" style="margin:1rem 0;padding:1rem;background:#fdf8f3;
+     border:1px solid #e0c8a0;border-radius:8px;">
+  <strong style="font-size:0.9rem;">AI Writing Assistant</strong>
+  <div style="display:flex;gap:0.5rem;margin-top:0.6rem;flex-wrap:wrap;">
+    <button type="button" onclick="aiImprove('improve')"
+            style="padding:5px 14px;background:#c2714f;color:#fff;border:none;
+                   border-radius:4px;cursor:pointer;font-size:0.82rem;">
+      ✨ Improve
+    </button>
+    <button type="button" onclick="aiImprove('fix')"
+            style="padding:5px 14px;background:#4a7a5a;color:#fff;border:none;
+                   border-radius:4px;cursor:pointer;font-size:0.82rem;">
+      ✓ Fix grammar
+    </button>
+    <button type="button" onclick="aiImprove('simplify')"
+            style="padding:5px 14px;background:#4a6a8a;color:#fff;border:none;
+                   border-radius:4px;cursor:pointer;font-size:0.82rem;">
+      ↓ Simplify
+    </button>
+    <button type="button" onclick="aiImprove('expand')"
+            style="padding:5px 14px;background:#7a5a8a;color:#fff;border:none;
+                   border-radius:4px;cursor:pointer;font-size:0.82rem;">
+      ↑ Expand
+    </button>
+    <span id="ai-status" style="font-size:0.82rem;color:#7a6555;
+          align-self:center;margin-left:0.5rem;"></span>
+  </div>
+</div>
+
+<script>
+function aiImprove(mode) {
+  var status = document.getElementById('ai-status');
+
+  // get content from summernote
+  var content = '';
+  if (typeof $ !== 'undefined' && $('.django-summernote-widget').length) {
+    content = $('.django-summernote-widget').summernote('code');
+  } else {
+    var textarea = document.querySelector('textarea[name="content"]');
+    if (textarea) content = textarea.value;
+  }
+
+  if (!content || content === '<p><br></p>') {
+    status.textContent = '⚠ No content to improve';
+    return;
+  }
+
+  status.textContent = '⏳ Thinking...';
+
+  // strip HTML for plain text processing
+  var tmp = document.createElement('div');
+  tmp.innerHTML = content;
+  var plainText = tmp.innerText || tmp.textContent;
+
+  fetch('/ai/improve/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)[1]
+    },
+    body: JSON.stringify({ text: plainText, mode: mode })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.result) {
+      // set back into summernote
+      if (typeof $ !== 'undefined' && $('.django-summernote-widget').length) {
+        $('.django-summernote-widget').summernote('code', data.result);
+      } else {
+        var textarea = document.querySelector('textarea[name="content"]');
+        if (textarea) textarea.value = data.result;
+      }
+      status.textContent = '✓ Done!';
+      setTimeout(function(){ status.textContent = ''; }, 3000);
+    } else {
+      status.textContent = '✗ Error: ' + (data.error || 'unknown');
+    }
+  })
+  .catch(function(err) {
+    status.textContent = '✗ Failed — check API key';
+    console.error(err);
+  });
+}
+</script>
+{% endblock %}
