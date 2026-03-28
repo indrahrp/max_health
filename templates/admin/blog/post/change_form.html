@@ -1,138 +1,118 @@
-{% extends "admin/change_form.html" %}
-
-{% block after_field_sets %}
-{{ block.super }}
-<div id="ai-toolbar" style="margin:1rem 0;padding:1rem;background:#fdf8f3;
-     border:1px solid #e0c8a0;border-radius:8px;">
-  <strong style="font-size:0.9rem;">AI Writing Assistant</strong>
-  <div style="display:flex;gap:0.5rem;margin-top:0.6rem;flex-wrap:wrap;">
-    <button type="button" onclick="aiImprove('improve')"
-            style="padding:5px 14px;background:#c2714f;color:#fff;border:none;
-                   border-radius:4px;cursor:pointer;font-size:0.82rem;">✨ Improve</button>
-    <button type="button" onclick="aiImprove('fix')"
-            style="padding:5px 14px;background:#4a7a5a;color:#fff;border:none;
-                   border-radius:4px;cursor:pointer;font-size:0.82rem;">✓ Fix grammar</button>
-    <button type="button" onclick="aiImprove('simplify')"
-            style="padding:5px 14px;background:#4a6a8a;color:#fff;border:none;
-                   border-radius:4px;cursor:pointer;font-size:0.82rem;">↓ Simplify</button>
-    <button type="button" onclick="aiImprove('expand')"
-            style="padding:5px 14px;background:#7a5a8a;color:#fff;border:none;
-                   border-radius:4px;cursor:pointer;font-size:0.82rem;">↑ Expand</button>
-    <span id="ai-status" style="font-size:0.82rem;color:#7a6555;align-self:center;margin-left:0.5rem;"></span>
-  </div>
-</div>
-
 <script>
-function aiImprove(mode) {
-  var status = document.getElementById('ai-status');
-  status.textContent = '⏳ Getting content...';
-
-  // Method 1: Try Summernote jQuery API
-  var content = '';
-  try {
-    var editor = $('.django-summernote-widget');
-    if (editor.length) {
-      content = editor.summernote('code');
-    }
-  } catch(e) {}
-
-  // Method 2: Try finding summernote iframe and reading its body
-  if (!content || content === '<p><br></p>' || content === '') {
-    try {
-      var iframes = document.querySelectorAll('.note-editing-area iframe, iframe.note-editing-area');
-      if (iframes.length) {
-        var iframeDoc = iframes[0].contentDocument || iframes[0].contentWindow.document;
-        content = iframeDoc.body.innerHTML;
-      }
-    } catch(e) {}
-  }
-
-  // Method 3: Try reading the hidden textarea directly
-  if (!content || content === '<p><br></p>' || content === '') {
-    try {
-      var textarea = document.querySelector('textarea[name="content"]');
-      if (textarea) content = textarea.value;
-    } catch(e) {}
-  }
-
-  console.log('Content found:', content);
-
-  if (!content || content.trim() === '' || content === '<p><br></p>') {
-    status.textContent = '⚠ No content found in editor';
-    return;
-  }
-
-  // Strip HTML tags to send plain text to AI
-  var tmp = document.createElement('div');
-  tmp.innerHTML = content;
-  var plainText = tmp.innerText || tmp.textContent || '';
-  plainText = plainText.trim();
-
-  if (!plainText) {
-    status.textContent = '⚠ Editor appears empty';
-    return;
-  }
-
-  status.textContent = '⏳ Asking Claude...';
-
-  // Get CSRF token
-  var csrfToken = '';
-  var csrfCookie = document.cookie.match(/csrftoken=([^;]+)/);
-  if (csrfCookie) csrfToken = csrfCookie[1];
-  if (!csrfToken) {
-    var csrfInput = document.querySelector('[name=csrfmiddlewaretoken]');
-    if (csrfInput) csrfToken = csrfInput.value;
-  }
-
-  fetch('/ai/improve/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken
-    },
-    body: JSON.stringify({ text: plainText, mode: mode })
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    if (data.result) {
-      // Try setting back via Summernote
+    function aiImprove(mode) {
+      var status = document.getElementById('ai-status');
+    
+      // Find the summernote iframe
+      var iframe = document.querySelector('.note-editable');
+      var iframeEl = document.querySelector('.note-editing-area iframe');
+    
+      // Get content directly from the editable div inside iframe
+      var content = '';
+      var editableDiv = null;
+    
       try {
-        var editor = $('.django-summernote-widget');
-        if (editor.length) {
-          editor.summernote('code', data.result);
-          status.textContent = '✓ Done!';
-          setTimeout(function(){ status.textContent = ''; }, 3000);
-          return;
+        // Summernote uses a contenteditable div inside an iframe
+        var noteIframe = document.querySelector('iframe.note-editing-area') ||
+                         document.querySelector('.note-editing-area iframe');
+        if (noteIframe) {
+          var iDoc = noteIframe.contentDocument || noteIframe.contentWindow.document;
+          editableDiv = iDoc.querySelector('.note-editable');
+          if (editableDiv) content = editableDiv.innerHTML;
         }
       } catch(e) {}
-
-      // Fallback: set via iframe
-      try {
-        var iframes = document.querySelectorAll('.note-editing-area iframe, iframe.note-editing-area');
-        if (iframes.length) {
-          var iframeDoc = iframes[0].contentDocument || iframes[0].contentWindow.document;
-          iframeDoc.body.innerHTML = data.result;
-          status.textContent = '✓ Done!';
-          setTimeout(function(){ status.textContent = ''; }, 3000);
+    
+      // Fallback to jQuery summernote API
+      if (!content || content === '<p><br></p>') {
+        try { content = $('.django-summernote-widget').summernote('code'); } catch(e) {}
+      }
+    
+      // Fallback to hidden textarea
+      if (!content || content === '<p><br></p>') {
+        var ta = document.querySelector('textarea[name="content"]');
+        if (ta) content = ta.value;
+      }
+    
+      if (!content || content.trim() === '' || content === '<p><br></p>') {
+        status.textContent = '⚠ Editor is empty';
+        return;
+      }
+    
+      // Strip HTML for plain text
+      var tmp = document.createElement('div');
+      tmp.innerHTML = content;
+      var plainText = (tmp.innerText || tmp.textContent || '').trim();
+    
+      if (!plainText) { status.textContent = '⚠ No text found'; return; }
+    
+      status.textContent = '⏳ Asking Claude...';
+    
+      var csrfToken = '';
+      var csrfCookie = document.cookie.match(/csrftoken=([^;]+)/);
+      if (csrfCookie) csrfToken = csrfCookie[1];
+      if (!csrfToken) {
+        var csrfInput = document.querySelector('[name=csrfmiddlewaretoken]');
+        if (csrfInput) csrfToken = csrfInput.value;
+      }
+    
+      fetch('/ai/improve/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+        body: JSON.stringify({ text: plainText, mode: mode })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.result) {
+          status.textContent = '✗ Error: ' + (data.error || 'unknown');
           return;
         }
-      } catch(e) {}
-
-      // Fallback: set textarea
-      var textarea = document.querySelector('textarea[name="content"]');
-      if (textarea) {
-        textarea.value = data.result;
-        status.textContent = '✓ Done! (refresh to see in editor)';
-        setTimeout(function(){ status.textContent = ''; }, 4000);
-      }
-    } else {
-      status.textContent = '✗ Error: ' + (data.error || 'unknown');
+    
+        var result = data.result;
+        var done = false;
+    
+        // Method 1 — write directly into the iframe contenteditable div
+        try {
+          var noteIframe = document.querySelector('iframe.note-editing-area') ||
+                           document.querySelector('.note-editing-area iframe');
+          if (noteIframe) {
+            var iDoc = noteIframe.contentDocument || noteIframe.contentWindow.document;
+            var editable = iDoc.querySelector('.note-editable');
+            if (editable) {
+              editable.innerHTML = result;
+              // also sync back to hidden textarea
+              var ta = document.querySelector('textarea[name="content"]');
+              if (ta) ta.value = result;
+              done = true;
+            }
+          }
+        } catch(e) { console.log('iframe method failed', e); }
+    
+        // Method 2 — use jQuery summernote API
+        if (!done) {
+          try {
+            $('.django-summernote-widget').summernote('code', result);
+            done = true;
+          } catch(e) { console.log('summernote api failed', e); }
+        }
+    
+        // Method 3 — direct textarea (requires manual refresh)
+        if (!done) {
+          var ta = document.querySelector('textarea[name="content"]');
+          if (ta) {
+            ta.value = result;
+            status.textContent = '✓ Done! (scroll up to see changes)';
+            setTimeout(function(){ status.textContent = ''; }, 4000);
+            return;
+          }
+        }
+    
+        if (done) {
+          status.textContent = '✓ Done!';
+          setTimeout(function(){ status.textContent = ''; }, 3000);
+        }
+      })
+      .catch(function(err) {
+        status.textContent = '✗ Request failed';
+        console.error(err);
+      });
     }
-  })
-  .catch(function(err) {
-    status.textContent = '✗ Request failed';
-    console.error('AI error:', err);
-  });
-}
-</script>
-{% endblock %}
+    </script>
