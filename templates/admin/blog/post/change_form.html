@@ -8,81 +8,130 @@
   <div style="display:flex;gap:0.5rem;margin-top:0.6rem;flex-wrap:wrap;">
     <button type="button" onclick="aiImprove('improve')"
             style="padding:5px 14px;background:#c2714f;color:#fff;border:none;
-                   border-radius:4px;cursor:pointer;font-size:0.82rem;">
-      ✨ Improve
-    </button>
+                   border-radius:4px;cursor:pointer;font-size:0.82rem;">✨ Improve</button>
     <button type="button" onclick="aiImprove('fix')"
             style="padding:5px 14px;background:#4a7a5a;color:#fff;border:none;
-                   border-radius:4px;cursor:pointer;font-size:0.82rem;">
-      ✓ Fix grammar
-    </button>
+                   border-radius:4px;cursor:pointer;font-size:0.82rem;">✓ Fix grammar</button>
     <button type="button" onclick="aiImprove('simplify')"
             style="padding:5px 14px;background:#4a6a8a;color:#fff;border:none;
-                   border-radius:4px;cursor:pointer;font-size:0.82rem;">
-      ↓ Simplify
-    </button>
+                   border-radius:4px;cursor:pointer;font-size:0.82rem;">↓ Simplify</button>
     <button type="button" onclick="aiImprove('expand')"
             style="padding:5px 14px;background:#7a5a8a;color:#fff;border:none;
-                   border-radius:4px;cursor:pointer;font-size:0.82rem;">
-      ↑ Expand
-    </button>
-    <span id="ai-status" style="font-size:0.82rem;color:#7a6555;
-          align-self:center;margin-left:0.5rem;"></span>
+                   border-radius:4px;cursor:pointer;font-size:0.82rem;">↑ Expand</button>
+    <span id="ai-status" style="font-size:0.82rem;color:#7a6555;align-self:center;margin-left:0.5rem;"></span>
   </div>
 </div>
 
 <script>
 function aiImprove(mode) {
   var status = document.getElementById('ai-status');
+  status.textContent = '⏳ Getting content...';
 
-  // get content from summernote
+  // Method 1: Try Summernote jQuery API
   var content = '';
-  if (typeof $ !== 'undefined' && $('.django-summernote-widget').length) {
-    content = $('.django-summernote-widget').summernote('code');
-  } else {
-    var textarea = document.querySelector('textarea[name="content"]');
-    if (textarea) content = textarea.value;
+  try {
+    var editor = $('.django-summernote-widget');
+    if (editor.length) {
+      content = editor.summernote('code');
+    }
+  } catch(e) {}
+
+  // Method 2: Try finding summernote iframe and reading its body
+  if (!content || content === '<p><br></p>' || content === '') {
+    try {
+      var iframes = document.querySelectorAll('.note-editing-area iframe, iframe.note-editing-area');
+      if (iframes.length) {
+        var iframeDoc = iframes[0].contentDocument || iframes[0].contentWindow.document;
+        content = iframeDoc.body.innerHTML;
+      }
+    } catch(e) {}
   }
 
-  if (!content || content === '<p><br></p>') {
-    status.textContent = '⚠ No content to improve';
+  // Method 3: Try reading the hidden textarea directly
+  if (!content || content === '<p><br></p>' || content === '') {
+    try {
+      var textarea = document.querySelector('textarea[name="content"]');
+      if (textarea) content = textarea.value;
+    } catch(e) {}
+  }
+
+  console.log('Content found:', content);
+
+  if (!content || content.trim() === '' || content === '<p><br></p>') {
+    status.textContent = '⚠ No content found in editor';
     return;
   }
 
-  status.textContent = '⏳ Thinking...';
-
-  // strip HTML for plain text processing
+  // Strip HTML tags to send plain text to AI
   var tmp = document.createElement('div');
   tmp.innerHTML = content;
-  var plainText = tmp.innerText || tmp.textContent;
+  var plainText = tmp.innerText || tmp.textContent || '';
+  plainText = plainText.trim();
+
+  if (!plainText) {
+    status.textContent = '⚠ Editor appears empty';
+    return;
+  }
+
+  status.textContent = '⏳ Asking Claude...';
+
+  // Get CSRF token
+  var csrfToken = '';
+  var csrfCookie = document.cookie.match(/csrftoken=([^;]+)/);
+  if (csrfCookie) csrfToken = csrfCookie[1];
+  if (!csrfToken) {
+    var csrfInput = document.querySelector('[name=csrfmiddlewaretoken]');
+    if (csrfInput) csrfToken = csrfInput.value;
+  }
 
   fetch('/ai/improve/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)[1]
+      'X-CSRFToken': csrfToken
     },
     body: JSON.stringify({ text: plainText, mode: mode })
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
     if (data.result) {
-      // set back into summernote
-      if (typeof $ !== 'undefined' && $('.django-summernote-widget').length) {
-        $('.django-summernote-widget').summernote('code', data.result);
-      } else {
-        var textarea = document.querySelector('textarea[name="content"]');
-        if (textarea) textarea.value = data.result;
+      // Try setting back via Summernote
+      try {
+        var editor = $('.django-summernote-widget');
+        if (editor.length) {
+          editor.summernote('code', data.result);
+          status.textContent = '✓ Done!';
+          setTimeout(function(){ status.textContent = ''; }, 3000);
+          return;
+        }
+      } catch(e) {}
+
+      // Fallback: set via iframe
+      try {
+        var iframes = document.querySelectorAll('.note-editing-area iframe, iframe.note-editing-area');
+        if (iframes.length) {
+          var iframeDoc = iframes[0].contentDocument || iframes[0].contentWindow.document;
+          iframeDoc.body.innerHTML = data.result;
+          status.textContent = '✓ Done!';
+          setTimeout(function(){ status.textContent = ''; }, 3000);
+          return;
+        }
+      } catch(e) {}
+
+      // Fallback: set textarea
+      var textarea = document.querySelector('textarea[name="content"]');
+      if (textarea) {
+        textarea.value = data.result;
+        status.textContent = '✓ Done! (refresh to see in editor)';
+        setTimeout(function(){ status.textContent = ''; }, 4000);
       }
-      status.textContent = '✓ Done!';
-      setTimeout(function(){ status.textContent = ''; }, 3000);
     } else {
       status.textContent = '✗ Error: ' + (data.error || 'unknown');
     }
   })
   .catch(function(err) {
-    status.textContent = '✗ Failed — check API key';
-    console.error(err);
+    status.textContent = '✗ Request failed';
+    console.error('AI error:', err);
   });
 }
 </script>
