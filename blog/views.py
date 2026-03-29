@@ -13,8 +13,9 @@ def home(request):
         'book_count': book_count,
     })
 
-
 def about(request):
+    from .models import Profile
+    profile = Profile.objects.first()
     interests = [
         'Carnivore diet',
         'Chronic disease prevention',
@@ -23,7 +24,10 @@ def about(request):
         'Inflammation',
         'Gut health',
     ]
-    return render(request, 'blog/about.html', {'interests': interests})
+    return render(request, 'blog/about.html', {
+        'profile': profile,
+        'interests': interests,
+    })
 
 
 def blog_list(request):
