@@ -24,14 +24,29 @@
   <!-- Left: about content -->
   <div>
     <div style="display:flex;gap:2rem;align-items:flex-start;margin-bottom:2.5rem;flex-wrap:wrap;">
+
+      <!-- Profile photo or initials fallback -->
+      {% if profile.photo %}
+      <img src="{{ profile.photo.url }}" alt="{{ profile.name }}"
+           style="width:110px;height:110px;flex-shrink:0;border-radius:50%;
+                  object-fit:cover;border:3px solid var(--warm-accent);">
+      {% else %}
       <div style="width:110px;height:110px;flex-shrink:0;border-radius:50%;
                   background:var(--warm-accent-light);border:3px solid var(--warm-accent);
                   display:flex;align-items:center;justify-content:center;
                   font-family:var(--serif);font-size:2.5rem;color:var(--warm-accent);">IC</div>
+      {% endif %}
+
       <div>
-        <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:normal;margin-bottom:0.4rem;">Hi, This is Me</h2>
-        <div style="color:var(--warm-accent);font-size:0.95rem;margin-bottom:0.8rem;">Health Writer & Wellness Advocate</div>
-        <p style="color:var(--warm-muted);font-size:0.95rem;">Passionate about reversing chronic disease through nutrition</p>
+        <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:normal;margin-bottom:0.4rem;">
+          {{ profile.name|default:"Hi, This is Me" }}
+        </h2>
+        <div style="color:var(--warm-accent);font-size:0.95rem;margin-bottom:0.8rem;">
+          {{ profile.tagline|default:"Health Writer & Wellness Advocate" }}
+        </div>
+        <p style="color:var(--warm-muted);font-size:0.95rem;">
+          {{ profile.bio|default:"Passionate about reversing chronic disease through nutrition" }}
+        </p>
       </div>
     </div>
 
