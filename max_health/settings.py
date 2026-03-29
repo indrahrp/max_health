@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',   # ← add this BEFORE django.contrib.staticfiles
+    'cloudinary',           # ← add this too
     'django.contrib.staticfiles',
     'django_summernote',
     'blog',
