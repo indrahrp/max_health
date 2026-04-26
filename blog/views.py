@@ -21,12 +21,12 @@ def about(request):
     from .models import Profile
     profile = Profile.objects.first()
     interests = [
-        'Carnivore diet',
-        'Chronic disease prevention',
+        'Large Language Models',
+        'AI & machine learning',
+        'Human genetics',
+        'Molecular biology',
         'Metabolic health',
-        'Ancestral nutrition',
-        'Inflammation',
-        'Gut health',
+        'Chronic disease prevention',
     ]
     return render(request, 'blog/about.html', {
         'profile': profile,

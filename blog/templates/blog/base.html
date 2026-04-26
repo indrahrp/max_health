@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}My Health Corner{% endblock %}</title>
+<title>{% block title %}Essential Topics{% endblock %}</title>
 {% block meta %}
-<meta name="description" content="Health writing on carnivore diet, metabolic health, ancestral nutrition, and chronic disease prevention.">
-<meta property="og:site_name" content="My Health Corner">
-<meta property="og:title" content="{% block og_title %}My Health Corner{% endblock %}">
-<meta property="og:description" content="{% block og_description %}Health writing on carnivore diet, metabolic health, and ancestral nutrition.{% endblock %}">
+<meta name="description" content="Deep dives into Artificial Intelligence, health, biology, and genetics — written with curiosity and care.">
+<meta property="og:site_name" content="Essential Topics">
+<meta property="og:title" content="{% block og_title %}Essential Topics{% endblock %}">
+<meta property="og:description" content="{% block og_description %}Deep dives into AI, health, biology, and genetics.{% endblock %}">
 <meta property="og:type" content="website">
 {% endblock %}
 <style>
   :root {
-    --bg:       #f5f0e7;
-    --surface:  #faf7f2;
+    --bg:       #ffffff;
+    --surface:  #f7f7f5;
     --accent:   #8b1a2e;
     --accent-l: #f2e5e8;
     --text:     #1e1612;
@@ -322,7 +322,7 @@
 
 <div class="subscribe-bar">
   <h3>Stay in the loop.</h3>
-  <p>New posts on carnivore diet, metabolic health &amp; ancestral nutrition — no spam.</p>
+  <p>New posts on AI, health, biology &amp; genetics — no spam, ever.</p>
   <form class="subscribe-form" action="{% url 'blog:subscribe' %}" method="post">
     {% csrf_token %}
     <input type="email" name="email" placeholder="your@email.com" required>

@@ -4,9 +4,9 @@ from .models import Post
 
 
 class LatestPostsFeed(Feed):
-    title = 'My Health Corner'
+    title = 'Essential Topics'
     link = '/blog/'
-    description = 'Health writing on carnivore diet, metabolic health, and ancestral nutrition.'
+    description = 'Deep dives into AI, health, biology, and genetics.'
 
     def items(self):
         return Post.objects.filter(published=True)[:20]
