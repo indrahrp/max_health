@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Subscribed — Indra Choki{% endblock %}
+
+{% block content %}
+<div class="wrap" style="text-align:center;padding-top:5rem;">
+  <div style="font-size:3rem;margin-bottom:1rem;">✓</div>
+  <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:normal;margin-bottom:0.8rem;">You're subscribed!</h2>
+  <p style="color:var(--warm-muted);margin-bottom:2rem;">You'll hear from me when new posts go up. No spam, ever.</p>
+  <a class="btn btn-primary" href="{% url 'blog:home' %}">Back to home</a>
+</div>
+{% endblock %}

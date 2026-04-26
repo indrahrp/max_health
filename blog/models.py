@@ -59,11 +59,24 @@ class BookReview(models.Model):
     def stars_display(self):
         return "★" * self.rating + "☆" * (5 - self.rating)
 
+class Subscriber(models.Model):
+    email = models.EmailField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    confirmed = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.email
+
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     summary = models.TextField(max_length=300)
     content = models.TextField()
+    ai_summary = models.TextField(blank=True)
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,

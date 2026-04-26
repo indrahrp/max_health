@@ -5,9 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-v^%nx7-ox*)u648h9n@5v#j3b#eag&qf20)1vonk8ca^ipgk24'
 
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',') if not DEBUG else ['*']
 
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-765b8.up.railway.app',
@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'cloudinary',           # ← add this too
     'django.contrib.staticfiles',
     'django_summernote',
+    'django.contrib.sitemaps',
     'blog',
     'topics'
 ]

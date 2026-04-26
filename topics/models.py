@@ -39,6 +39,7 @@ class Article(models.Model):
     )
     order = models.PositiveIntegerField(default=0)
     published = models.BooleanField(default=False)
+    ai_summary = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -55,12 +55,12 @@
       <!-- Buy buttons -->
       <div style="display:flex;gap:0.8rem;margin-top:1.2rem;flex-wrap:wrap;">
         {% if book.affiliate_link %}
-        <a href="{{ book.affiliate_link }}" target="_blank" rel="noopener"
+        <a href="{{ book.affiliate_link }}" target="_blank" rel="nofollow sponsored noopener"
            class="btn btn-primary" style="font-size:0.85rem;">
           Buy on Amazon →
         </a>
         {% elif book.buy_link %}
-        <a href="{{ book.buy_link }}" target="_blank" rel="noopener"
+        <a href="{{ book.buy_link }}" target="_blank" rel="noopener nofollow"
            class="btn btn-primary" style="font-size:0.85rem;">
           Buy this book →
         </a>

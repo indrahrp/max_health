@@ -24,9 +24,18 @@
   <!-- Left: title and intro -->
   <div>
     <h2 class="page-title">Books</h2>
-    <p style="color:var(--warm-muted);margin-bottom:2rem;font-size:1.05rem;">
+    <p style="color:var(--warm-muted);margin-bottom:1.5rem;font-size:1.05rem;">
       Books that have shaped how I think about health, science, and human potential. Honest reviews with no fluff.
     </p>
+
+    {% if book_categories %}
+    <div class="cat-filter" style="margin-bottom:1.5rem;">
+      <a href="{% url 'blog:book_list' %}" class="cat-pill {% if not selected_book_cat %}active{% endif %}">All</a>
+      {% for cat in book_categories %}
+      <a href="?category={{ cat.slug }}" class="cat-pill {% if selected_book_cat == cat.slug %}active{% endif %}">{{ cat.name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
 
     {% if currently_reading %}
     <div style="margin-bottom:2.5rem;">

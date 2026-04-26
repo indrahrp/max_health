@@ -1,0 +1,63 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Search: {{ query }} — Indra Choki{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <h2 class="page-title">Search</h2>
+
+  <form action="{% url 'blog:search' %}" method="get" style="margin-bottom:2rem;">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" name="q" value="{{ query }}" placeholder="Search posts and topics...">
+    </div>
+  </form>
+
+  {% if query %}
+    {% with total=post_results|length|add:article_results|length %}
+    <p style="font-size:0.85rem;color:var(--warm-muted);margin-bottom:1.5rem;">
+      {{ total }} result{{ total|pluralize }} for "<strong style="color:var(--warm-text);">{{ query }}</strong>"
+    </p>
+    {% endwith %}
+
+    {% if post_results %}
+    <div class="section-label">Blog Posts</div>
+    {% for post in post_results %}
+    <a class="post-card" href="{% url 'blog:blog_detail' post.slug %}">
+      <div class="post-meta">
+        <span style="font-size:0.7rem;background:var(--warm-accent);color:#fff;padding:1px 8px;border-radius:1rem;margin-right:0.4rem;">Post</span>
+        {{ post.created_at|date:"F j, Y" }} &nbsp;·&nbsp; {{ post.reading_time }}
+        {% if post.category %}&nbsp;·&nbsp;<span style="color:var(--warm-accent);">{{ post.category.name }}</span>{% endif %}
+      </div>
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.summary }}</p>
+    </a>
+    {% endfor %}
+    {% endif %}
+
+    {% if article_results %}
+    <div class="section-label" style="margin-top:2rem;">Topic Articles</div>
+    {% for article in article_results %}
+    <a class="post-card" href="{% url 'topics:article_detail' article.pillar.slug article.slug %}">
+      <div class="post-meta">
+        <span style="font-size:0.7rem;background:var(--warm-accent-light);color:var(--warm-accent);padding:1px 8px;border-radius:1rem;margin-right:0.4rem;border:1px solid var(--warm-border);">Topic</span>
+        {{ article.reading_time }}
+        {% if article.pillar %}&nbsp;·&nbsp;<span style="color:var(--warm-accent);">{{ article.pillar.icon }} {{ article.pillar.name }}</span>{% endif %}
+      </div>
+      <h3>{{ article.title }}</h3>
+      <p>{{ article.summary }}</p>
+    </a>
+    {% endfor %}
+    {% endif %}
+
+    {% if not post_results and not article_results %}
+    <p style="color:var(--warm-muted);padding:2rem 0;">
+      No results found for "{{ query }}". Try a different search term.
+    </p>
+    {% endif %}
+
+  {% else %}
+  <p style="color:var(--warm-muted);">Enter a search term above to find posts and topic articles.</p>
+  {% endif %}
+</div>
+{% endblock %}

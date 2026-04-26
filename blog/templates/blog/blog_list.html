@@ -48,6 +48,18 @@
       {% endfor %}
     </div>
 
+    <!-- Tag filter pills -->
+    {% if tags %}
+    <div class="cat-filter" style="margin-top:0.6rem;">
+      <a href="{% url 'blog:blog_list' %}{% if selected %}?category={{ selected }}{% endif %}"
+         class="cat-pill {% if not selected_tag %}active{% endif %}" style="font-size:0.78rem;">All tags</a>
+      {% for tag in tags %}
+      <a href="?tag={{ tag.slug }}{% if selected %}&category={{ selected }}{% endif %}"
+         class="cat-pill {% if selected_tag == tag.slug %}active{% endif %}" style="font-size:0.78rem;">#{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     <!-- Post count -->
     <p style="font-size:0.82rem;color:var(--warm-muted);margin-top:0.8rem;">
       {{ posts.count }} post{{ posts.count|pluralize }}

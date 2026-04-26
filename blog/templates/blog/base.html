@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %}Indra Choki{% endblock %}</title>
+{% block meta %}
+<meta name="description" content="Health writing on carnivore diet, metabolic health, ancestral nutrition, and chronic disease prevention.">
+<meta property="og:site_name" content="My Health Corner">
+<meta property="og:title" content="{% block og_title %}My Health Corner{% endblock %}">
+<meta property="og:description" content="{% block og_description %}Health writing on carnivore diet, metabolic health, and ancestral nutrition.{% endblock %}">
+<meta property="og:type" content="website">
+{% endblock %}
 <style>
   :root {
     --warm-bg: #fdf8f3;
@@ -131,6 +138,40 @@
   .footer-links a { font-size:0.85rem; color:var(--warm-muted); text-decoration:none; }
   .footer-links a:hover { color:var(--warm-accent); }
 
+  /* NAV SEARCH */
+  .nav-search-form { display:flex; align-items:center; }
+  .nav-search-input { width:0; padding:0; border:none; background:transparent; color:var(--warm-text); font-size:0.88rem; outline:none; transition:width 0.3s,padding 0.3s,border-color 0.3s; }
+  .nav-search-wrap:hover .nav-search-input,
+  .nav-search-wrap:focus-within .nav-search-input { width:140px; padding:4px 10px; border:1px solid var(--warm-border); border-radius:2rem; background:var(--warm-surface); }
+  .nav-search-btn { background:none; border:none; cursor:pointer; color:var(--warm-muted); font-size:15px; padding:4px; transition:color 0.2s; }
+  .nav-search-btn:hover { color:var(--warm-accent); }
+
+  /* SUBSCRIBE */
+  .subscribe-bar { background:var(--warm-surface); border-top:1px solid var(--warm-border); padding:2.5rem 2rem; text-align:center; }
+  .subscribe-bar h3 { font-family:var(--serif); font-size:1.2rem; font-weight:normal; margin-bottom:0.4rem; }
+  .subscribe-bar p { font-size:0.88rem; color:var(--warm-muted); margin-bottom:1rem; }
+  .subscribe-form { display:flex; justify-content:center; max-width:400px; margin:0 auto; }
+  .subscribe-form input { flex:1; padding:0.6rem 1rem; border:1px solid var(--warm-border); border-radius:2rem 0 0 2rem; background:var(--warm-bg); color:var(--warm-text); font-size:0.92rem; outline:none; }
+  .subscribe-form input:focus { border-color:var(--warm-accent); }
+  .subscribe-form button { padding:0.6rem 1.2rem; background:var(--warm-accent); color:#fff; border:none; border-radius:0 2rem 2rem 0; cursor:pointer; font-size:0.88rem; transition:background 0.2s; }
+  .subscribe-form button:hover { background:#a85a38; }
+
+  /* CHAT WIDGET */
+  #chat-bubble { position:fixed; bottom:5rem; right:1.5rem; z-index:200; }
+  #chat-toggle { width:48px; height:48px; border-radius:50%; background:var(--warm-accent); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:20px; box-shadow:0 2px 12px rgba(194,113,79,0.4); transition:transform 0.2s; }
+  #chat-toggle:hover { transform:scale(1.08); }
+  #chat-box { display:none; position:fixed; bottom:9rem; right:1.5rem; width:320px; background:var(--warm-surface); border:1px solid var(--warm-border); border-radius:14px; box-shadow:0 4px 24px rgba(0,0,0,0.15); z-index:200; overflow:hidden; }
+  #chat-header { background:var(--warm-accent); color:#fff; padding:0.8rem 1rem; display:flex; align-items:center; justify-content:space-between; font-size:0.88rem; font-weight:600; }
+  #chat-messages { height:220px; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:0.6rem; }
+  .chat-msg { max-width:85%; padding:0.5rem 0.8rem; border-radius:10px; font-size:0.85rem; line-height:1.5; }
+  .chat-msg.user { align-self:flex-end; background:var(--warm-accent); color:#fff; border-radius:10px 10px 2px 10px; }
+  .chat-msg.bot { align-self:flex-start; background:var(--warm-accent-light); color:var(--warm-text); border-radius:10px 10px 10px 2px; }
+  #chat-input-row { display:flex; border-top:1px solid var(--warm-border); }
+  #chat-input { flex:1; padding:0.6rem 0.8rem; border:none; background:transparent; color:var(--warm-text); font-size:0.88rem; outline:none; }
+  #chat-send { padding:0.6rem 0.8rem; background:var(--warm-accent); color:#fff; border:none; cursor:pointer; font-size:14px; transition:background 0.2s; }
+  #chat-send:hover { background:#a85a38; }
+  #chat-disclaimer { padding:0.4rem 1rem; font-size:0.68rem; color:var(--warm-muted); text-align:center; border-top:1px solid var(--warm-border); }
+
   /* Hide Google Translate toolbar */
   .goog-te-banner-frame, .skiptranslate { display:none !important; }
   body { top:0 !important; }
@@ -154,6 +195,12 @@
       <li><a href="{% url 'blog:book_list' %}">Books</a></li>
       <li><a href="{% url 'blog:projects' %}">Work</a></li>
     </ul>
+    <div class="nav-search-wrap">
+      <form class="nav-search-form" action="{% url 'blog:search' %}" method="get">
+        <input class="nav-search-input" type="text" name="q" placeholder="Search..." aria-label="Search">
+        <button class="nav-search-btn" type="submit" aria-label="Search">🔍</button>
+      </form>
+    </div>
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
       <span class="theme-icon" id="theme-icon">🌙</span>
       <span id="theme-label">Dark</span>
@@ -163,14 +210,44 @@
 
 {% block content %}{% endblock %}
 
+<div class="subscribe-bar">
+  <h3>Stay in the loop</h3>
+  <p>New posts on carnivore, metabolic health, and ancestral nutrition — no spam.</p>
+  <form class="subscribe-form" action="{% url 'blog:subscribe' %}" method="post">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="your@email.com" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</div>
+
 <footer>
   <p>© 2026 I-C-H</p>
   <div class="footer-links">
     <a href="#">Twitter</a>
     <a href="#">Substack</a>
     <a href="#">Email</a>
+    <a href="{% url 'blog_feed' %}">RSS</a>
   </div>
 </footer>
+
+<!-- Health Q&A Chat Widget -->
+<div id="chat-bubble">
+  <button id="chat-toggle" onclick="toggleChat()" title="Ask a health question">💬</button>
+</div>
+<div id="chat-box">
+  <div id="chat-header">
+    <span>Health Q&amp;A</span>
+    <button onclick="toggleChat()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:16px;">✕</button>
+  </div>
+  <div id="chat-messages">
+    <div class="chat-msg bot">Hi! Ask me anything about carnivore diet, metabolic health, or ancestral nutrition.</div>
+  </div>
+  <div id="chat-input-row">
+    <input id="chat-input" type="text" placeholder="Ask a health question..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button id="chat-send" onclick="sendChat()">↑</button>
+  </div>
+  <div id="chat-disclaimer">Not medical advice. Consult a healthcare provider.</div>
+</div>
 
 <script>
   // Dark mode
@@ -262,5 +339,56 @@ window.addEventListener('load', () => {
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 {% block extra_js %}{% endblock %}
+
+<script>
+function toggleChat() {
+  var box = document.getElementById('chat-box');
+  box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+  box.style.flexDirection = 'column';
+  if (box.style.display !== 'none') {
+    document.getElementById('chat-input').focus();
+  }
+}
+
+function sendChat() {
+  var input = document.getElementById('chat-input');
+  var q = input.value.trim();
+  if (!q) return;
+  appendMsg(q, 'user');
+  input.value = '';
+  var thinking = appendMsg('…', 'bot');
+  fetch('{% url "blog:health_chat" %}', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'X-CSRFToken': getCookie('csrftoken')},
+    body: JSON.stringify({question: q})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    thinking.textContent = d.answer || d.error || 'Sorry, something went wrong.';
+    scrollChat();
+  })
+  .catch(function(){ thinking.textContent = 'Connection error. Please try again.'; });
+}
+
+function appendMsg(text, cls) {
+  var msgs = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'chat-msg ' + cls;
+  div.textContent = text;
+  msgs.appendChild(div);
+  scrollChat();
+  return div;
+}
+
+function scrollChat() {
+  var msgs = document.getElementById('chat-messages');
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function getCookie(name) {
+  var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return v ? v[2] : '';
+}
+</script>
 </body>
 </html>

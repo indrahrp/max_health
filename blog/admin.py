@@ -1,13 +1,29 @@
+import os
+import anthropic
 from django.contrib import admin
-from django_summernote.admin import SummernoteModelAdmin
-from .models import Post, Project, Category, Tag, BookReview
-from .models import Post, Project, Category, Tag, BookReview, Profile
-from .models import Comment
-from .models import Post, Project, Category, Tag, BookReview, Profile, Comment
-
 from django.utils import timezone
+from django_summernote.admin import SummernoteModelAdmin
+from .models import Post, Project, Category, Tag, BookReview, Profile, Comment, Subscriber
 
 
+def _ai_generate_summary(queryset, field):
+    client = anthropic.Anthropic(api_key=os.environ.get('ANTHROPIC_API_KEY'))
+    updated = 0
+    for obj in queryset:
+        from django.utils.html import strip_tags
+        text = strip_tags(getattr(obj, field, '') or '')[:4000]
+        if not text.strip():
+            continue
+        msg = client.messages.create(
+            model='claude-sonnet-4-6',
+            max_tokens=300,
+            system='You are a concise summarizer. Return only a 2-3 sentence TL;DR summary.',
+            messages=[{'role': 'user', 'content': f'Summarize this:\n\n{text}'}],
+        )
+        obj.ai_summary = msg.content[0].text
+        obj.save(update_fields=['ai_summary'])
+        updated += 1
+    return updated
 
 
 @admin.register(Category)
@@ -31,6 +47,12 @@ class PostAdmin(SummernoteModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['published', 'featured']
     filter_horizontal = ['tags']
+    actions = ['generate_ai_summary']
+
+    def generate_ai_summary(self, request, queryset):
+        n = _ai_generate_summary(queryset, 'content')
+        self.message_user(request, f'Generated AI summary for {n} post(s).')
+    generate_ai_summary.short_description = 'Generate AI TL;DR summary'
 
 
 @admin.register(BookReview)
@@ -47,7 +69,6 @@ class BookReviewAdmin(SummernoteModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ['title', 'order']
     list_editable = ['order']
-
 
 
 @admin.register(Profile)
@@ -78,3 +99,11 @@ class CommentAdmin(admin.ModelAdmin):
         if obj.author_reply and not obj.replied_at:
             obj.replied_at = timezone.now()
         super().save_model(request, obj, form, change)
+
+
+@admin.register(Subscriber)
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ['email', 'created_at', 'confirmed']
+    list_filter = ['confirmed']
+    search_fields = ['email']
+    readonly_fields = ['email', 'created_at']

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
 from .models import Pillar, Article
+from blog.admin import _ai_generate_summary
 
 
 @admin.register(Pillar)
@@ -19,4 +20,9 @@ class ArticleAdmin(SummernoteModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ['published', 'order']
     filter_horizontal = ['related_posts']
+    actions = ['generate_ai_summary']
 
+    def generate_ai_summary(self, request, queryset):
+        n = _ai_generate_summary(queryset, 'content')
+        self.message_user(request, f'Generated AI summary for {n} article(s).')
+    generate_ai_summary.short_description = 'Generate AI TL;DR summary'

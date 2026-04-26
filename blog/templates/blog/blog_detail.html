@@ -2,6 +2,9 @@
 
 {% block title %}{{ post.title }} — Indra Choki{% endblock %}
 
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.summary }}{% endblock %}
+
 {% block content %}
 <div class="wrap">
 
@@ -32,6 +35,13 @@
 
   <hr style="border:none;border-top:1px solid var(--warm-border);margin-bottom:2rem;">
 
+  {% if post.ai_summary %}
+  <details style="background:var(--warm-surface);border:1px solid var(--warm-border);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.5rem;">
+    <summary style="cursor:pointer;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--warm-accent);font-weight:600;">TL;DR</summary>
+    <p style="margin-top:0.8rem;font-size:0.95rem;color:var(--warm-muted);line-height:1.7;">{{ post.ai_summary }}</p>
+  </details>
+  {% endif %}
+
   <!-- Table of contents (auto-generated) -->
   <div class="toc" id="toc" style="display:none;">
     <div class="toc-title">Contents</div>
@@ -50,6 +60,22 @@
     {% for tag in post.tags.all %}<span class="tag">#{{ tag.name }}</span>{% endfor %}
   </div>
   {% endif %}
+
+  <!-- Share -->
+  <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--warm-border);display:flex;gap:0.8rem;align-items:center;flex-wrap:wrap;">
+    <span style="font-size:0.82rem;color:var(--warm-muted);">Share:</span>
+    <a href="https://twitter.com/intent/tweet?text={{ post.title|urlencode }}&url={{ request.build_absolute_uri }}"
+       target="_blank" rel="noopener nofollow"
+       style="font-size:0.82rem;color:var(--warm-accent);text-decoration:none;border:1px solid var(--warm-border);padding:4px 14px;border-radius:2rem;transition:all 0.2s;"
+       onmouseover="this.style.borderColor='var(--warm-accent)'" onmouseout="this.style.borderColor='var(--warm-border)'">
+      𝕏 Twitter
+    </a>
+    <button onclick="navigator.clipboard.writeText(window.location.href).then(function(){this.textContent='Copied!';setTimeout(function(){document.getElementById('copy-btn').textContent='Copy link'},2000)}.bind(this))"
+            id="copy-btn"
+            style="font-size:0.82rem;color:var(--warm-muted);background:none;border:1px solid var(--warm-border);padding:4px 14px;border-radius:2rem;cursor:pointer;transition:all 0.2s;">
+      Copy link
+    </button>
+  </div>
 
   <!-- Comments section -->
   <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--warm-border);">
