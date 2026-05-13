@@ -13,6 +13,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://web-production-765b8.up.railway.app',
     'https://indrachoki.com',
     'https://www.indrachoki.com',
+    'https://cogitra.com',
+    'https://www.cogitra.com',
 ]
 
 INSTALLED_APPS = [
