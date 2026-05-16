@@ -1,11 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 from .models import Pillar, Article
+from blog.models import Post
 
 
 def topics_home(request):
     pillars = Pillar.objects.all()
-    return render(request, 'topics/topics_home.html', {'pillars': pillars})
+    recent_posts = Post.objects.filter(published=True).order_by('-created_at')[:3]
+    return render(request, 'topics/topics_home.html', {
+        'pillars': pillars,
+        'recent_posts': recent_posts,
+    })
 
 
 def pillar_detail(request, slug):

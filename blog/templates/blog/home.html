@@ -71,7 +71,7 @@
   <div class="hero-actions">
     <a href="{% url 'blog:blog_list' %}" class="hero-btn">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      Journal
+      Blog
     </a>
     <a href="{% url 'blog:book_list' %}" class="hero-btn">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
@@ -120,7 +120,7 @@
   </div>
   {% endif %}
 
-  <div class="section-label">Recent writing</div>
+  <div class="section-label">Latest from the Blog</div>
 
   {% for post in recent_posts %}
   <a class="post-card" href="{% url 'blog:blog_detail' post.slug %}">
