@@ -120,6 +120,23 @@
   </div>
   {% endif %}
 
+  {% if featured_articles %}
+  <div class="section-label">Featured Topics</div>
+  {% for article in featured_articles %}
+  <a class="post-card" href="{% url 'topics:article_detail' article.pillar.slug article.slug %}" style="text-decoration:none;">
+    <div class="post-meta">
+      {{ article.pillar.icon }} {{ article.pillar.name }}
+      &nbsp;·&nbsp; {{ article.reading_time }}
+    </div>
+    <h3>{{ article.title }}</h3>
+    <p>{{ article.summary }}</p>
+  </a>
+  {% endfor %}
+  <div style="margin-top:1rem;margin-bottom:2.5rem;">
+    <a href="{% url 'topics:topics_home' %}" style="font-size:0.85rem;color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px;">All topics →</a>
+  </div>
+  {% endif %}
+
   <div class="section-label">Latest from the Blog</div>
 
   {% for post in recent_posts %}
