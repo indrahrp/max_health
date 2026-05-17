@@ -5,14 +5,17 @@ from .forms import CommentForm, SubscribeForm
 
 
 def home(request):
+    from topics.models import Article
     recent_posts = Post.objects.filter(published=True)[:3]
     post_count = Post.objects.filter(published=True).count()
     book_count = BookReview.objects.filter(published=True).count()
     currently_reading = BookReview.objects.filter(published=True, status='reading').first()
+    featured_articles = Article.objects.filter(published=True).select_related('pillar')[:3]
     return render(request, 'blog/home.html', {
         'recent_posts': recent_posts,
         'post_count': post_count,
         'book_count': book_count,
+        'featured_articles': featured_articles,
         'currently_reading': currently_reading,
     })
 
@@ -21,12 +24,13 @@ def about(request):
     from .models import Profile
     profile = Profile.objects.first()
     interests = [
-        'Large Language Models',
-        'AI & machine learning',
-        'Human genetics',
-        'Molecular biology',
-        'Metabolic health',
-        'Chronic disease prevention',
+        'Biology',
+        'Physics',
+        'Health & metabolism',
+        'Psychiatry',
+        'Human behaviour',
+        'Neuroscience',
+        'Evolutionary science',
     ]
     return render(request, 'blog/about.html', {
         'profile': profile,
