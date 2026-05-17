@@ -3,6 +3,7 @@ anthropic==0.86.0
 anyio==4.13.0
 asgiref==3.11.1
 bleach==6.3.0
+Markdown==3.10.2
 certifi==2026.2.25
 charset-normalizer==3.4.6
 cloudinary==1.44.1
