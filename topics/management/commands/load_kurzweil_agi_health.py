@@ -2,15 +2,14 @@ from django.core.management.base import BaseCommand
 from topics.models import Pillar, Article
 
 PILLAR = {
-    "name": "Longevity",
-    "slug": "longevity",
+    "name": "Artificial Intelligence",
+    "slug": "artificial-intelligence",
     "description": (
-        "Aging, senescence, and the long arithmetic of human time. "
-        "The science of living longer — and what happens when that science goes exponential."
+        "Machine learning, large language models, AGI, and the technologies reshaping science and society."
     ),
-    "icon": "⏳",
-    "color": "amber",
-    "order": 6,
+    "icon": "🤖",
+    "color": "blue",
+    "order": 1,
 }
 
 SVG_ESCAPE_VELOCITY = """
