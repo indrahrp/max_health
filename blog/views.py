@@ -141,6 +141,9 @@ def section_landing(request, key):
     if config.get('is_books'):
         # Books section sources from BookReview instead of Article/Post
         books = list(BookReview.objects.filter(published=True).select_related('category'))
+        # Pin "The Song of the Cell" to the top; stable sort preserves the rest of the order
+        PINNED_FIRST = 'the-song-of-the-cell'
+        books.sort(key=lambda b: b.slug != PINNED_FIRST)
         items = books
     else:
         articles = list(Article.objects.filter(
@@ -182,7 +185,7 @@ def home(request):
     categories = Category.objects.all()
 
     # Health topics — articles from health-related pillars
-    HEALTH_PILLARS = ['cancer', 'species-appropriate-diet', 'cancer-metabolic-health', 'carnivore-diet', 'autoimmune-disease']
+    HEALTH_PILLARS = ['cancer', 'species-appropriate-diet', 'cancer-metabolic-health', 'carnivore-diet', 'autoimmune-disease', 'biology']
     health_articles = (
         Article.objects
         .filter(published=True, pillar__slug__in=HEALTH_PILLARS)
