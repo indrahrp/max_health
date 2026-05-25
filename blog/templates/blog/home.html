@@ -1,168 +1,469 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Essential Topics{% endblock %}
+{% block title %}Cogitra — The sciences that shape what comes next{% endblock %}
 
 {% block content %}
-
 <style>
-  .hero {
-    text-align:center;
-    padding:7rem 2rem 5rem;
-    max-width:760px;
-    margin:0 auto;
-  }
-  .hero-eyebrow {
-    font-size:0.75rem; letter-spacing:0.14em; text-transform:uppercase;
-    color:var(--muted); margin-bottom:1.5rem;
-  }
-  .hero-heading {
-    font-family:var(--serif);
-    font-size:clamp(3rem,8vw,5.5rem);
-    font-style:italic;
-    font-weight:normal;
-    color:var(--accent);
-    line-height:1.08;
-    margin-bottom:1.8rem;
-    letter-spacing:-0.02em;
-  }
-  .hero-sub {
-    font-size:1.05rem;
-    color:var(--muted);
-    line-height:1.75;
-    max-width:520px;
-    margin:0 auto 2.5rem;
-  }
-  .hero-actions {
-    display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;
-  }
+/* ─── Hero ─── */
+.hero {
+  display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--gap);
+  align-items: center;
+  min-height: 580px;
+  padding: 72px 0 96px;
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+}
+.hero-eyebrow .underline {
+  width: 32px; height: 1.5px; background: var(--accent); display: inline-block;
+}
+.hero h1 {
+  font-family: var(--font-sans); font-weight: 500;
+  font-size: clamp(46px, 5.4vw, 84px); line-height: 1.0;
+  letter-spacing: -0.028em;
+  color: var(--fg); margin: 0 0 28px;
+  text-wrap: balance;
+}
+.hero h1 .shape {
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  color: var(--fg-2);
+}
+.hero h1 .accent-dot { color: var(--accent); }
+.hero-dek {
+  font-family: var(--font-serif); font-size: 19px; line-height: 1.55;
+  color: var(--fg-2); max-width: 560px; margin-bottom: 32px;
+}
+.hero-dek em {
+  color: var(--fg); font-style: italic;
+}
+.hero-actions {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.hero-stats {
+  display: flex; gap: 56px; padding-top: 32px;
+  border-top: 1px solid var(--hairline);
+}
+.hero-stats .stat .n {
+  font-family: var(--font-sans); font-weight: 500; font-size: 26px;
+  color: var(--fg); display: block; letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.hero-stats .stat .l {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  margin-top: 4px; display: block;
+}
 
-  /* Stats row */
-  .stats-divider { border:none; border-top:1px solid var(--border); margin:0; }
+/* Hero curve artwork */
+.hero-art {
+  display: flex; justify-content: center; align-items: center;
+  height: 100%; min-height: 460px; position: relative;
+}
+.hero-art svg { width: 100%; max-width: 560px; height: auto; }
 
-  /* Currently reading */
-  .now-reading {
-    display:flex; gap:1rem; align-items:center;
-    background:var(--surface); border:1px solid var(--border);
-    border-left:2px solid var(--accent);
-    border-radius:0 8px 8px 0;
-    padding:0.9rem 1.1rem;
-    margin-bottom:2.5rem;
-  }
-  .now-reading-cover {
-    width:44px; height:63px; object-fit:cover;
-    border-radius:3px; flex-shrink:0;
-  }
-  .now-reading-placeholder {
-    width:44px; height:63px; background:var(--accent-l);
-    border-radius:3px; flex-shrink:0;
-    display:flex; align-items:center; justify-content:center;
-    font-size:1.2rem;
-  }
+/* ─── Categories strip ─── */
+.cats {
+  padding: 32px 0 48px;
+  border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+}
+.cats-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 28px;
+}
+.cats-grid {
+  display: grid; grid-template-columns: repeat(8, 1fr); gap: 14px;
+}
+.cat-col {
+  display: block; text-decoration: none; padding-top: 14px;
+  position: relative; transition: transform .2s;
+}
+.cat-col::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--cat-color);
+  opacity: 0.66; transition: opacity .2s;
+}
+.cat-col:hover { transform: translateY(-2px); }
+.cat-col:hover::before { opacity: 1; }
+.cat-index {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.16em; color: var(--fg-4); margin-bottom: 6px;
+}
+.cat-name {
+  font-family: var(--font-sans); font-weight: 500; font-size: 17px;
+  letter-spacing: -0.012em; color: var(--fg); margin-bottom: 8px;
+  text-wrap: balance; line-height: 1.18;
+}
+.cat-blurb {
+  font-family: var(--font-serif); font-size: 12.5px;
+  color: var(--fg-3); line-height: 1.45; min-height: 36px;
+  opacity: 0.7; transition: opacity .2s;
+}
+.cat-col:hover .cat-blurb { opacity: 1; }
+
+/* ─── Curve divider ─── */
+.curve-div {
+  display: flex; justify-content: center; padding: 56px 0; opacity: 0.5;
+}
+.curve-div svg { width: 200px; height: 24px; }
+
+/* ─── Featured + Popular ─── */
+.featured-section { padding: 32px 0 0; }
+.featured-head {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 40px;
+}
+.featured-head h2 {
+  font-family: var(--font-sans); font-size: 38px; font-weight: 500;
+  letter-spacing: -0.018em; color: var(--fg);
+}
+.featured-head a {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+}
+.featured-grid {
+  display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px;
+}
+
+/* Featured hero card */
+.feat-hero {
+  border: 1px solid var(--hairline); border-radius: 18px;
+  overflow: hidden; background: var(--bg-elev);
+  display: flex; flex-direction: column;
+  transition: border-color .2s;
+}
+.feat-hero:hover { border-color: var(--hairline-strong); }
+.feat-hero-art {
+  height: 280px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(60% 80% at 75% 35%, color-mix(in oklab, var(--accent) 55%, transparent), transparent 70%),
+    linear-gradient(160deg, color-mix(in oklab, var(--cat-color, var(--accent)) 40%, var(--bg-elev)) 0%, var(--bg-elev) 70%);
+}
+.feat-hero-chips {
+  position: absolute; top: 18px; left: 18px;
+  display: flex; gap: 8px;
+}
+.feat-hero-body { padding: 28px 28px 32px; }
+.feat-hero-body h3 {
+  font-family: var(--font-sans); font-size: 30px; font-weight: 500;
+  letter-spacing: -0.018em; line-height: 1.15;
+  color: var(--fg); margin: 14px 0 10px; text-wrap: balance;
+}
+.feat-hero-body p {
+  font-family: var(--font-serif); font-size: 15px;
+  color: var(--fg-2); line-height: 1.6; margin-bottom: 16px;
+}
+.feat-meta {
+  display: flex; gap: 12px; align-items: center;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+}
+
+/* Popular list */
+.popular h3 {
+  font-family: var(--font-sans); font-size: 18px; font-weight: 500;
+  color: var(--fg); margin-bottom: 24px;
+}
+.popular ol { list-style: none; }
+.popular ol li {
+  display: grid; grid-template-columns: 32px 1fr; gap: 14px;
+  padding: 16px 0; border-top: 1px solid var(--hairline);
+  align-items: start;
+}
+.popular ol li:last-child { border-bottom: 1px solid var(--hairline); }
+.popular-idx {
+  font-family: var(--font-mono); font-size: 11px; color: var(--fg-4);
+  letter-spacing: 0.12em;
+}
+.popular-item-title {
+  font-family: var(--font-sans); font-size: 14px; font-weight: 500;
+  color: var(--fg); line-height: 1.4; margin-bottom: 6px;
+  display: block;
+  transition: color .2s;
+}
+.popular-item:hover .popular-item-title { color: var(--accent); }
+.popular-meta {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  display: flex; align-items: center; gap: 6px;
+}
+.popular-meta .dot {
+  width: 6px; height: 6px; border-radius: 999px; background: var(--cat-color, var(--accent));
+}
+
+/* ─── Manifesto ─── */
+.manifesto {
+  position: relative; padding: 96px 0;
+  border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+}
+.manifesto::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(60% 90% at 50% 50%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.manifesto-inner {
+  max-width: 880px; margin: 0 auto; text-align: center;
+  position: relative;
+}
+.manifesto blockquote {
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  font-size: clamp(24px, 2.6vw, 34px); line-height: 1.4;
+  color: var(--fg); margin: 24px 0;
+}
+.manifesto cite {
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--fg-3); font-style: normal;
+}
+
+/* ─── Newsletter ─── */
+.newsletter {
+  margin: 96px 0 0; padding: 56px 64px;
+  border: 1px solid var(--hairline-strong); border-radius: 22px;
+  background: var(--bg-elev);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
+  align-items: center; position: relative; overflow: hidden;
+}
+.newsletter::before {
+  content: ''; position: absolute; top: -20%; right: -10%; width: 60%; height: 140%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--accent) 35%, transparent), transparent 75%);
+  pointer-events: none;
+}
+.newsletter-text { position: relative; z-index: 1; }
+.newsletter-text h2 {
+  font-family: var(--font-sans); font-size: 38px; font-weight: 500;
+  letter-spacing: -0.018em; color: var(--fg); margin: 12px 0 16px;
+}
+.newsletter-text p {
+  font-family: var(--font-serif); font-size: 17px; line-height: 1.55;
+  color: var(--fg-2); max-width: 460px;
+}
+.newsletter-form { position: relative; z-index: 1; }
+.newsletter-form label {
+  display: block; font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  margin-bottom: 8px;
+}
+.newsletter-form .row {
+  display: flex; gap: 12px;
+}
+.newsletter-form input {
+  flex: 1; padding: 14px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 10px; color: var(--fg);
+  font-family: var(--font-sans); font-size: 14px; outline: none;
+  transition: border-color .2s;
+}
+.newsletter-form input:focus { border-color: var(--accent); }
+
+/* ─── Mobile ─── */
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr; padding: 48px 0; }
+  .hero-art { display: none; }
+  .cats-grid { grid-template-columns: repeat(4, 1fr); }
+  .featured-grid { grid-template-columns: 1fr; gap: 40px; }
+  .newsletter { grid-template-columns: 1fr; padding: 40px 32px; }
+  .hero-stats { gap: 32px; flex-wrap: wrap; }
+}
+@media (max-width: 560px) {
+  .cats-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 
-<!-- Hero -->
-<section class="hero">
-  <p class="hero-eyebrow">Artificial Intelligence &nbsp;·&nbsp; Health &nbsp;·&nbsp; Biology &nbsp;·&nbsp; Genetics</p>
-  <h1 class="hero-heading">Essential<br>Topics.</h1>
-  <p class="hero-sub">
-    Deep explorations into the ideas that matter most — from large language models
-    and AI to human biology, genetics, and the science of health.
-  </p>
-  <div class="hero-actions">
-    <a href="{% url 'blog:blog_list' %}" class="hero-btn">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      Blog
-    </a>
-    <a href="{% url 'blog:book_list' %}" class="hero-btn">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-      Reading
-    </a>
-    <a href="{% url 'topics:topics_home' %}" class="hero-btn">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
-      Topics
-    </a>
+<!-- ─── HERO ─── -->
+<section class="wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="underline"></span>
+        <span class="eyebrow">Vol. 04 · Spring 2026</span>
+      </div>
+      <h1>The sciences<br>that <span class="shape">shape</span> what<br>comes next<span class="accent-dot">.</span></h1>
+      <p class="hero-dek">
+        Cogitra reports the frontiers of <em>artificial intelligence, health, biology, and genetics</em> —
+        slowly, in depth, and with the assumption that you have time to read.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{% url 'blog:archive' %}">
+          Explore Articles
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="{% url 'blog:about' %}">About Cogitra</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="n">{{ post_count|default:0 }}</span>
+          <span class="l">Essays · 2026</span>
+        </div>
+        <div class="stat">
+          <span class="n">{{ book_count|default:0 }}</span>
+          <span class="l">Book Reviews</span>
+        </div>
+        <div class="stat">
+          <span class="n">8</span>
+          <span class="l">Sections</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero curve artwork -->
+    <div class="hero-art">
+      <svg viewBox="0 0 200 220" preserveAspectRatio="xMidYMid meet">
+        <path class="draw-curve"
+              d="M 110 20 C 80 60, 130 110, 95 150 C 65 185, 130 195, 160 205"
+              stroke="var(--accent)" stroke-width="3" stroke-linecap="round"
+              fill="none" filter="url(#curve-ink)"/>
+        <circle cx="160" cy="205" r="4" fill="var(--accent)"/>
+      </svg>
+    </div>
   </div>
 </section>
 
-<!-- Stats -->
-<hr class="stats-divider">
-<div class="stats-row">
-  <div>
-    <span class="stat-n" id="stat-posts">{{ post_count }}</span>
-    <span class="stat-l">Articles</span>
+<!-- ─── Sections strip ─── -->
+<section class="wrap">
+  <div class="cats">
+    <div class="cats-head">
+      <span class="eyebrow">Sections</span>
+      <span class="eyebrow">08 fields of study</span>
+    </div>
+    <div class="cats-grid">
+      {% for key, s in sections.items %}
+      <a class="cat-col" href="/{{ key }}/" style="--cat-color: {{ s.accent_hex }};">
+        <div class="cat-index">0{{ s.index }}</div>
+        <div class="cat-name">{{ s.title }}</div>
+        <div class="cat-blurb">{{ s.tagline }}</div>
+      </a>
+      {% endfor %}
+    </div>
   </div>
-  <div>
-    <span class="stat-n" id="stat-books">{{ book_count }}</span>
-    <span class="stat-l">Reviews</span>
-  </div>
-  <div>
-    <span class="stat-n">5</span>
-    <span class="stat-l">Topics</span>
-  </div>
+</section>
+
+<!-- ─── Curve divider ─── -->
+<div class="curve-div">
+  <svg viewBox="0 0 200 24" preserveAspectRatio="none">
+    <path d="M 0 12 Q 50 0, 100 12 T 200 12"
+          stroke="var(--accent)" stroke-width="1.5" fill="none"
+          filter="url(#curve-ink)" opacity="0.7"/>
+  </svg>
 </div>
-<hr class="stats-divider">
 
-<!-- Recent posts -->
-<div class="wrap" style="padding-top:3.5rem;">
+<!-- ─── Featured + Popular ─── -->
+<section class="wrap">
+  <div class="featured-section">
+    <div class="featured-head">
+      <h2>Featured articles</h2>
+      <a href="{% url 'blog:archive' %}">View all articles →</a>
+    </div>
 
-  {% if currently_reading %}
-  <div class="now-reading">
-    {% if currently_reading.cover_image %}
-    <img class="now-reading-cover" src="{{ currently_reading.cover_image.url }}" alt="{{ currently_reading.title }}">
-    {% else %}
-    <div class="now-reading-placeholder">📖</div>
-    {% endif %}
+    <div class="featured-grid">
+      {% if hero_post %}
+      <a class="feat-hero" href="{% url 'blog:blog_detail' hero_post.slug %}"
+         style="--cat-color: {% if hero_post.category.slug == 'ai' or hero_post.category.slug == 'artificial-intelligence' %}#5b6cff{% elif hero_post.category.slug == 'health' %}#2fbf7c{% elif hero_post.category.slug == 'biology' %}#26c2c9{% elif hero_post.category.slug == 'mindset' %}#a387ff{% elif hero_post.category.slug == 'genetics' %}#e0567a{% else %}#5b6cff{% endif %};">
+        <div class="feat-hero-art">
+          <div class="feat-hero-chips">
+            {% if hero_post.category %}
+            <span class="chip"><span class="chip-dot" style="background: var(--cat-color);"></span>{{ hero_post.category.name }}</span>
+            {% endif %}
+            <span class="chip">Long read</span>
+          </div>
+        </div>
+        <div class="feat-hero-body">
+          <div class="feat-meta">{{ hero_post.created_at|date:"M j, Y" }} · {{ hero_post.reading_time }}</div>
+          <h3>{{ hero_post.title }}</h3>
+          <p>{{ hero_post.summary|truncatechars:180 }}</p>
+        </div>
+      </a>
+      {% endif %}
+
+      <div class="popular">
+        <h3>Popular this week</h3>
+        <ol>
+          {% for post in popular_posts %}
+          <li>
+            <span class="popular-idx">0{{ forloop.counter }}</span>
+            <a class="popular-item" href="{% url 'blog:blog_detail' post.slug %}" style="--cat-color: {% if post.category.slug == 'ai' or post.category.slug == 'artificial-intelligence' %}#5b6cff{% elif post.category.slug == 'health' %}#2fbf7c{% elif post.category.slug == 'biology' %}#26c2c9{% elif post.category.slug == 'mindset' %}#a387ff{% elif post.category.slug == 'genetics' %}#e0567a{% else %}#5b6cff{% endif %};">
+              <span class="popular-item-title">{{ post.title|truncatechars:80 }}</span>
+              <div class="popular-meta">
+                <span class="dot"></span>
+                {% if post.category %}{{ post.category.name }} · {% endif %}{{ post.created_at|date:"M j" }}
+              </div>
+            </a>
+          </li>
+          {% empty %}
+          <li style="grid-column:1/-1;font-family:var(--font-serif);font-style:italic;color:var(--fg-3);padding:24px 0;">Popular articles will appear here as readers discover them.</li>
+          {% endfor %}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Health Topics ─── -->
+{% if health_articles %}
+<section class="wrap" style="padding-top:56px;padding-bottom:16px;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;">
     <div>
-      <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:0.25rem;font-weight:600;">Currently reading</div>
-      <div style="font-size:0.95rem;font-family:var(--serif);color:var(--text);margin-bottom:0.15rem;">{{ currently_reading.title }}</div>
-      <div style="font-size:0.8rem;color:var(--muted);">by {{ currently_reading.author }}</div>
+      <span class="eyebrow" style="color:#2fbf7c;">Health</span>
+      <h2 style="font-family:var(--font-sans);font-weight:500;font-size:28px;letter-spacing:-0.02em;color:var(--fg);margin:8px 0 0;">Mechanistic Health Guides</h2>
     </div>
+    <a href="/topics/" style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg-3);text-decoration:none;">All topics →</a>
   </div>
-  {% endif %}
-
-  {% if featured_articles %}
-  <div class="section-label">Featured Topics</div>
-  {% for article in featured_articles %}
-  <a class="post-card" href="{% url 'topics:article_detail' article.pillar.slug article.slug %}" style="text-decoration:none;">
-    <div class="post-meta">
-      {{ article.pillar.icon }} {{ article.pillar.name }}
-      &nbsp;·&nbsp; {{ article.reading_time }}
-    </div>
-    <h3>{{ article.title }}</h3>
-    <p>{{ article.summary }}</p>
-  </a>
-  {% endfor %}
-  <div style="margin-top:1rem;margin-bottom:2.5rem;">
-    <a href="{% url 'topics:topics_home' %}" style="font-size:0.85rem;color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px;">All topics →</a>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+    {% for a in health_articles %}
+    <a href="/topics/{{ a.pillar.slug }}/{{ a.slug }}/"
+       style="display:block;padding:22px 24px;border:1px solid var(--hairline);border-radius:14px;text-decoration:none;transition:border-color .2s;"
+       onmouseover="this.style.borderColor='#2fbf7c40'" onmouseout="this.style.borderColor='var(--hairline)'">
+      <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#2fbf7c;margin-bottom:10px;">{{ a.pillar.name }}</div>
+      <h3 style="font-family:var(--font-sans);font-weight:500;font-size:16px;line-height:1.35;color:var(--fg);margin:0 0 10px;text-wrap:balance;">{{ a.title }}</h3>
+      <p style="font-family:var(--font-serif);font-size:13.5px;line-height:1.5;color:var(--fg-3);margin:0 0 14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ a.summary }}</p>
+      <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-4);">{{ a.reading_time }}</span>
+    </a>
+    {% endfor %}
   </div>
-  {% endif %}
+</section>
+{% endif %}
 
-  <div class="section-label">Latest from the Blog</div>
-
-  {% for post in recent_posts %}
-  <a class="post-card" href="{% url 'blog:blog_detail' post.slug %}">
-    <div class="post-meta">
-      {{ post.created_at|date:"F j, Y" }}
-      &nbsp;·&nbsp; {{ post.reading_time }}
-      {% if post.category %}&nbsp;·&nbsp;<span style="color:var(--accent);">{{ post.category.name }}</span>{% endif %}
-    </div>
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.summary }}</p>
-    {% if post.tags.all %}
-    <div style="margin-top:0.5rem;">
-      {% for tag in post.tags.all %}<span class="tag">#{{ tag.name }}</span>{% endfor %}
-    </div>
-    {% endif %}
-  </a>
-  {% empty %}
-  <p style="color:var(--muted);padding:2rem 0;">No posts yet — check back soon!</p>
-  {% endfor %}
-
-  {% if recent_posts %}
-  <div style="margin-top:2rem;">
-    <a href="{% url 'blog:blog_list' %}" style="font-size:0.85rem;color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px;">All posts →</a>
-  </div>
-  {% endif %}
+<!-- ─── Curve divider ─── -->
+<div class="curve-div">
+  <svg viewBox="0 0 200 24" preserveAspectRatio="none">
+    <path d="M 0 12 Q 50 24, 100 12 T 200 12"
+          stroke="var(--accent)" stroke-width="1.5" fill="none"
+          filter="url(#curve-ink)" opacity="0.7"/>
+  </svg>
 </div>
+
+<!-- ─── Manifesto ─── -->
+<section class="manifesto">
+  <div class="manifesto-inner wrap">
+    <span class="eyebrow eyebrow-accent">From the editor's letter</span>
+    <blockquote>
+      “Cogitra is for readers who haven't given up on the long form — on the idea that
+      a science worth following is worth following slowly, on purpose, with the time
+      a real argument deserves.”
+    </blockquote>
+    <cite>— Sasha Lin, Editor-in-Chief</cite>
+  </div>
+</section>
+
+<!-- ─── Newsletter ─── -->
+<section class="wrap">
+  <div class="newsletter" id="subscribe">
+    <div class="newsletter-text">
+      <span class="eyebrow">Newsletter</span>
+      <h2>The week, considered.</h2>
+      <p>One email a week. The essays we shipped, the work we are watching, and the books worth your time. No noise.</p>
+    </div>
+    <form class="newsletter-form" action="{% url 'blog:subscribe' %}" method="post">
+      {% csrf_token %}
+      <label for="email">Email</label>
+      <div class="row">
+        <input type="email" name="email" id="email" placeholder="you@example.com" required>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </div>
+    </form>
+  </div>
+</section>
 
 {% endblock %}
