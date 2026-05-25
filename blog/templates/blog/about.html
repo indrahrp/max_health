@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load static %}
 
 {% block title %}About — Cogitra{% endblock %}
 {% block meta_description %}Cogitra is an independent science publication built on the assumption that the most interesting work is the work that takes time to read.{% endblock %}
@@ -83,6 +84,12 @@
   align-items: start;
 }
 .ab-letter .who { }
+.ab-letter .who .portrait {
+  width: 120px; height: 120px; border-radius: 50%;
+  object-fit: cover; object-position: center top;
+  display: block; margin-bottom: 14px;
+  border: 2px solid var(--hairline);
+}
 .ab-letter .who .label {
   font-family: var(--font-mono); font-size: 11px;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
@@ -221,6 +228,7 @@
 <section class="wrap">
   <div class="ab-letter">
     <div class="who">
+      <img src="{% static 'blog/profile-photo.jpeg' %}" alt="Editor portrait" class="portrait">
       <div class="label">Editor's letter</div>
       <div class="name">Sasha Lin</div>
       <div class="role">Editor-in-chief</div>
