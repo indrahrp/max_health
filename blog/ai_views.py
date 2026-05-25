@@ -31,6 +31,7 @@ def improve_text(request):
         'expand': f'Expand the following text with more detail and depth. Return only the expanded text:\n\n{text}',
         'fix': f'Fix grammar, spelling and punctuation in the following text. Return only the corrected text:\n\n{text}',
         'tldr': f'Write a 2-3 sentence TL;DR summary of the following content. Return only the summary:\n\n{text}',
+        'voice': f'Convert the following spoken/dictated text into clean, well-written blog prose. Fix grammar, add proper punctuation, structure sentences properly, and remove filler words like "um", "uh", "like", "you know". Preserve all the meaning and ideas. Return only the polished text:\n\n{text}',
     }
 
     system = [

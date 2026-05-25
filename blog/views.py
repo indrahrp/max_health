@@ -5,7 +5,7 @@ from .models import Post, Project, Category, Tag, BookReview
 from .forms import CommentForm, SubscribeForm
 
 
-# Cogitra section system — 8 sections, each with its own accent + curve + typography
+# Cogitra section system — 9 sections, each with its own accent + curve + typography
 # Curve SVG paths are in viewBox 0 0 200 200
 SECTION_CONFIG = {
     'ai': {
@@ -24,10 +24,10 @@ SECTION_CONFIG = {
         'category_slugs': ['ai', 'artificial-intelligence'],
     },
     'health': {
-        'index': 2, 'short': 'Health',
-        'title': 'Health',
-        'tagline': 'Medical advances, wellness, and public-health reporting.',
-        'note': 'Health, properly understood, is mostly other people’s problem. We report on medicine, public policy, and the long argument about what the body owes the world.',
+        'index': 2, 'short': 'Physical',
+        'title': 'Physical Health',
+        'tagline': 'The body, its diseases, the medicine, and the institutions around them.',
+        'note': 'The body is, properly understood, mostly other people’s problem. We report on disease, medicine, public policy, and the long argument about what the body owes the world.',
         'editor': 'Priya Shah',
         'accent_hex': '#2fbf7c',
         'curve': 'M 30 100 L 70 100 L 80 70 L 95 130 L 110 60 L 125 120 L 150 100 L 175 100',
@@ -35,11 +35,40 @@ SECTION_CONFIG = {
         'type_weight': '500',
         'type_style': 'normal',
         'type_tracking': '-0.02em',
-        'pillar_slugs': ['species-appropriate-diet', 'cancer', 'cancer-metabolic-health', 'carnivore-diet', 'autoimmune', 'autoimmune-disease'],
+        'pillar_slugs': ['species-appropriate-diet', 'carnivore-diet', 'autoimmune', 'autoimmune-disease'],
         'category_slugs': ['health'],
+        'subcategories': [
+            {'id': 'autoimmune',     'name': 'Autoimmune Disease',     'short': 'Autoimmune',      'blurb': 'When the immune system mistakes home for elsewhere — lupus, MS, RA, and the long bench of the chronically misread.', 'accent': '#4cc995', 'match_slugs': ['autoimmune', 'autoimmune-disease']},
+            {'id': 'heart-disease',  'name': 'Heart Disease',          'short': 'Heart',           'blurb': 'The most common killer in the developed world — and the most often misframed. Lipids, inflammation, and the metabolic argument.', 'accent': '#34a366', 'match_slugs': ['heart-disease']},
+            {'id': 'diabetes',       'name': 'Diabetes',               'short': 'Diabetes',        'blurb': 'Type 1, type 2, type 1.5 — a family of metabolic diseases whose lines keep moving. The clinical and the dietary literature.', 'accent': '#5ecf86', 'match_slugs': ['diabetes', 'type-1-diabetes']},
+            {'id': 'weight',         'name': 'Weight',                 'short': 'Weight',          'blurb': 'Obesity, GLP-1 drugs, set-point theory, and the long contest over what makes a body store and shed.', 'accent': '#43b878', 'match_slugs': ['weight', 'obesity']},
+            {'id': 'alzheimers',     'name': 'Alzheimer’s Disease','short': 'Alzheimer’s','blurb': 'Amyloid, tau, ApoE, and the slow re-thinking of dementia as a disease of brain metabolism.', 'accent': '#9bdcb6', 'match_slugs': ['alzheimers', 'dementia']},
+            {'id': 'liver-disease',  'name': 'Liver Disease',          'short': 'Liver',           'blurb': 'Fatty liver, fibrosis, and the silent organ that bears the brunt of modern eating.', 'accent': '#2a8a52', 'match_slugs': ['liver-disease']},
+            {'id': 'kidney-disease', 'name': 'Kidney Disease',         'short': 'Kidney',          'blurb': 'Diabetic nephropathy, hypertension, and the slow strangling of the body’s filtration system.', 'accent': '#74d49d', 'match_slugs': ['kidney-disease']},
+            {'id': 'mishaps',        'name': 'Medical System Mishaps', 'short': 'Mishaps',         'blurb': 'When medicine gets it wrong — misdiagnosis, overtreatment, and the institutions that resist correction.', 'accent': '#86d3a6', 'match_slugs': ['medical-mishaps', 'mishaps']},
+        ],
+    },
+    'mental': {
+        'index': 3, 'short': 'Mental',
+        'title': 'Mental Health',
+        'tagline': 'Depression, anxiety, trauma, therapy, psychiatry, and what we now know about caring for the mind.',
+        'note': 'The mind is a long, patient instrument. We cover the clinical literature, the politics of care, and the slow craft of getting better — in whatever sense that turns out to mean.',
+        'editor': 'Dr. Sela Hartmann',
+        'accent_hex': '#5ba896',
+        'curve': 'M 30 110 C 55 60, 80 60, 100 110 C 120 160, 145 160, 170 110 C 178 95, 178 90, 175 80',
+        'type_family': 'var(--font-serif)',
+        'type_weight': '400',
+        'type_style': 'normal',
+        'type_tracking': '-0.01em',
+        'pillar_slugs': ['mental-health'],
+        'category_slugs': ['mental'],
+        'subcategories': [
+            {'id': 'physiological-origin', 'name': 'Mental Illness · Physiological Origin', 'short': 'Physiological', 'blurb': 'The metabolic, inflammatory, and structural roots of mental illness — mitochondria, gut, sleep, hormones.', 'accent': '#7ec0b0', 'match_slugs': ['physiological-origin']},
+            {'id': 'psychological-origin', 'name': 'Mental Illness · Psychological Origin', 'short': 'Psychological', 'blurb': 'Trauma, attachment, cognition, and what the clinical literature still calls the talking cure.', 'accent': '#3d8576', 'match_slugs': ['psychological-origin']},
+        ],
     },
     'biology': {
-        'index': 3, 'short': 'Biology',
+        'index': 4, 'short': 'Biology',
         'title': 'Biology',
         'tagline': 'Cells, evolution, ecology, and biotechnology.',
         'note': 'Life keeps doing improbable things on long enough timescales. We follow cells, ecosystems, and the people doggedly watching them.',
@@ -50,11 +79,15 @@ SECTION_CONFIG = {
         'type_weight': '400',
         'type_style': 'normal',
         'type_tracking': '-0.012em',
-        'pillar_slugs': ['biology'],
+        'pillar_slugs': ['biology', 'cancer', 'cancer-metabolic-health', 'life-of-a-cell'],
         'category_slugs': ['biology'],
+        'subcategories': [
+            {'id': 'origin-of-cancer', 'name': 'Origin of Cancer', 'short': 'Cancer',        'blurb': 'The metabolic theory of cancer, the Warburg effect, and the slow re-thinking of oncology.', 'accent': '#5cd2d8', 'match_slugs': ['cancer', 'cancer-metabolic-health']},
+            {'id': 'life-of-a-cell',   'name': 'Life of a Cell',   'short': 'Cells',         'blurb': 'Mitochondria, signalling, autophagy, and the small economies inside every body.', 'accent': '#1ea5ad', 'match_slugs': ['life-of-a-cell']},
+        ],
     },
     'mindset': {
-        'index': 4, 'short': 'Mindset',
+        'index': 5, 'short': 'Mindset',
         'title': 'Mindset',
         'tagline': 'Cognition, attention, and the inner life of the thinker.',
         'note': 'The inner life resists optimisation. We file dispatches from that resistance — the science of attention, the practice of slowness, the case for thinking on purpose.',
@@ -69,7 +102,7 @@ SECTION_CONFIG = {
         'category_slugs': ['mindset'],
     },
     'genetics': {
-        'index': 5, 'short': 'Genetics',
+        'index': 6, 'short': 'Genetics',
         'title': 'Genetics',
         'tagline': 'Genomics, gene editing, CRISPR, heritability, and beyond.',
         'note': 'We can finally read what we used to guess at. Genomes, edits, ancestry, and the politics of the alphabet our cells were already using.',
@@ -82,9 +115,13 @@ SECTION_CONFIG = {
         'type_tracking': '-0.032em',
         'pillar_slugs': ['genetics'],
         'category_slugs': ['genetics'],
+        'subcategories': [
+            {'id': 'origin-stories-of-dna',   'name': 'The Origin Stories of DNA',          'short': 'Origins',         'blurb': 'Mendel, Watson, Crick, and the long argument about what heredity actually is.', 'accent': '#ec7a96', 'match_slugs': ['origin-stories-of-dna']},
+            {'id': 'dna-ai-future',           'name': 'DNA, AI, and the Future of Humanity','short': 'DNA · AI',   'blurb': 'CRISPR, polygenic prediction, and what we can do now that machines can read at scale.', 'accent': '#c43d62', 'match_slugs': ['dna-ai-future']},
+        ],
     },
     'longevity': {
-        'index': 6, 'short': 'Longevity',
+        'index': 7, 'short': 'Longevity',
         'title': 'Longevity',
         'tagline': 'Aging, senescence, and the long arithmetic of human time.',
         'note': 'The slowest field in biology, in a hurry. We cover the science of ageing and the strange new industries it has started.',
@@ -97,9 +134,14 @@ SECTION_CONFIG = {
         'type_tracking': '-0.008em',
         'pillar_slugs': ['longevity'],
         'category_slugs': ['longevity'],
+        'subcategories': [
+            {'id': 'supporting-biochemistry', 'name': 'Supporting Biochemistry', 'short': 'Biochemistry', 'blurb': 'NAD+, autophagy, mTOR, senolytics — the molecular knobs and what we know about turning them.', 'accent': '#e6b85e', 'match_slugs': ['supporting-biochemistry']},
+            {'id': 'lifestyle',               'name': 'Lifestyle',              'short': 'Lifestyle',    'blurb': 'Sleep, exercise, fasting, sun. The boring interventions that actually have data behind them.',     'accent': '#b8861f', 'match_slugs': ['lifestyle']},
+            {'id': 'longevity-research',      'name': 'Longevity Research',     'short': 'Research',     'blurb': 'The labs, the clinical trials, the strange new industries the field has started.',                'accent': '#c89530', 'match_slugs': ['longevity-research']},
+        ],
     },
     'physics': {
-        'index': 7, 'short': 'Physics',
+        'index': 8, 'short': 'Physics',
         'title': 'Physics',
         'tagline': 'Cosmology, particles, condensed matter, and first principles.',
         'note': 'The interesting questions have moved out of the headlines. We follow them — into solid-state matter, the structure of the vacuum, and the patient instruments measuring both.',
@@ -114,7 +156,7 @@ SECTION_CONFIG = {
         'category_slugs': ['physics'],
     },
     'books': {
-        'index': 8, 'short': 'Books',
+        'index': 9, 'short': 'Books',
         'title': 'Book Review',
         'tagline': 'Long reads on long books — fiction and nonfiction, considered slowly.',
         'note': 'The slow read deserves slow company. We review the books that matter — fiction, science, and the long, patient nonfiction that does not make the news.',
@@ -138,13 +180,21 @@ def section_landing(request, key):
     if not config:
         raise Http404('Unknown section')
 
+    active_topic_id = request.GET.get('topic')
+    # Make a shallow copy so we can attach 'count' without mutating SECTION_CONFIG
+    subcategories = [dict(s) for s in config.get('subcategories', [])]
+    active_topic = None
+    if active_topic_id:
+        for s in subcategories:
+            if s['id'] == active_topic_id:
+                active_topic = s
+                break
+
     if config.get('is_books'):
-        # Books section sources from BookReview instead of Article/Post
         books = list(BookReview.objects.filter(published=True).select_related('category'))
-        # Pin "The Song of the Cell" to the top; stable sort preserves the rest of the order
         PINNED_FIRST = 'the-song-of-the-cell'
         books.sort(key=lambda b: b.slug != PINNED_FIRST)
-        items = books
+        all_items = books
     else:
         articles = list(Article.objects.filter(
             published=True, pillar__slug__in=config['pillar_slugs']
@@ -152,18 +202,43 @@ def section_landing(request, key):
         posts = list(Post.objects.filter(
             published=True, category__slug__in=config['category_slugs']
         ).select_related('category'))
-        items = articles + posts
+        all_items = articles + posts
+
+    # Compute essay count per subcategory (always, regardless of filter)
+    for s in subcategories:
+        match = set(s.get('match_slugs', []))
+        n = 0
+        for it in all_items:
+            slug = getattr(it.pillar, 'slug', None) if hasattr(it, 'pillar') and it.pillar else (
+                getattr(it.category, 'slug', None) if hasattr(it, 'category') and it.category else None
+            )
+            if slug in match:
+                n += 1
+        s['count'] = n
+
+    # Apply topic filter to displayed items
+    if active_topic:
+        match = set(active_topic.get('match_slugs', []))
+        def _match(it):
+            slug = getattr(it.pillar, 'slug', None) if hasattr(it, 'pillar') and it.pillar else (
+                getattr(it.category, 'slug', None) if hasattr(it, 'category') and it.category else None
+            )
+            return slug in match
+        items = [it for it in all_items if _match(it)]
+    else:
+        items = all_items
 
     item_count = len(items)
     hero_item = items[0] if items else None
     grid_items = items[1:11] if len(items) > 1 else []
 
-    # All other sections (for "Other sections" footer)
     other_sections = [(k, v) for k, v in SECTION_CONFIG.items() if k != key]
 
     return render(request, 'blog/section_landing.html', {
         'key': key,
         'config': config,
+        'subcategories': subcategories,
+        'active_topic': active_topic,
         'hero_item': hero_item,
         'grid_items': grid_items,
         'item_count': item_count,
@@ -213,19 +288,14 @@ def home(request):
 
 def about(request):
     from .models import Profile
+    from topics.models import Article
     profile = Profile.objects.first()
-    interests = [
-        'Biology',
-        'Physics',
-        'Health & metabolism',
-        'Psychiatry',
-        'Human behaviour',
-        'Neuroscience',
-        'Evolutionary science',
-    ]
+    essays_this_year = Article.objects.filter(published=True).count() + Post.objects.filter(published=True).count()
+    sections = SECTION_CONFIG  # for masthead
     return render(request, 'blog/about.html', {
         'profile': profile,
-        'interests': interests,
+        'sections': sections,
+        'essays_this_year': essays_this_year,
     })
 
 

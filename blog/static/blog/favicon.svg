@@ -1,21 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Background: rounded square in site accent -->
-  <rect width="32" height="32" rx="7" ry="7" fill="#8b1a2e"/>
+  <!-- Cogitra mark — hand-drawn curve in clay accent on dark background -->
+  <rect width="32" height="32" rx="7" ry="7" fill="#0e0e18"/>
 
-  <!-- Subtle inner highlight -->
-  <rect x="1" y="1" width="30" height="15" rx="6" ry="6" fill="rgba(255,255,255,0.06)"/>
+  <!-- Subtle top highlight -->
+  <rect x="1" y="1" width="30" height="14" rx="6" ry="6" fill="rgba(255,255,255,0.04)"/>
 
-  <!-- Letter C — clean, slightly condensed, white -->
-  <text
-    x="16" y="23"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-size="21"
-    font-weight="700"
-    fill="white"
-    text-anchor="middle"
-    letter-spacing="-0.5"
-  >C</text>
+  <!-- The brand curve — the same shape used in the nav logo, scaled and thickened for legibility at small sizes -->
+  <path d="M 8 7 C 12 17, 18 25, 26 25"
+        stroke="#c4422a"
+        stroke-width="3.4"
+        stroke-linecap="round"
+        fill="none"/>
 
-  <!-- Small dot accent bottom-right — echoes the brand feel -->
-  <circle cx="23.5" cy="25.5" r="2" fill="rgba(255,255,255,0.35)"/>
+  <!-- Resolving dot at the end of the curve — the brand signature -->
+  <circle cx="26" cy="25" r="2.4" fill="#c4422a"/>
 </svg>

@@ -35,6 +35,41 @@
           style="font-size:0.82rem;color:#7a6555;align-self:center;margin-left:0.3rem;"></span>
   </div>
 
+  <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;margin-top:0.6rem;
+              padding-top:0.6rem;border-top:1px solid #e8d4b8;">
+    <button type="button" id="voice-btn" onclick="toggleVoice()"
+            style="padding:6px 16px;background:#8b5e3c;color:#fff;border:none;
+                   border-radius:4px;cursor:pointer;font-size:0.82rem;font-family:system-ui;">
+      🎤 Dictate
+    </button>
+    <span style="font-size:0.78rem;color:#9a7a60;">Speak to compose — Claude will polish your words</span>
+  </div>
+
+  <div id="voice-panel" style="display:none;margin-top:0.6rem;">
+    <div id="voice-preview"
+         style="min-height:3rem;padding:0.6rem 0.8rem;background:#fff;border:1px solid #d4b898;
+                border-radius:4px;font-size:0.85rem;color:#3a2010;line-height:1.5;
+                font-style:italic;white-space:pre-wrap;max-height:8rem;overflow-y:auto;">
+    </div>
+    <div id="voice-actions" style="display:none;margin-top:0.4rem;gap:0.4rem;display:flex;">
+      <button type="button" onclick="polishAndInsert()"
+              style="padding:5px 14px;background:#c2714f;color:#fff;border:none;
+                     border-radius:4px;cursor:pointer;font-size:0.82rem;font-family:system-ui;">
+        ✨ Polish &amp; Insert
+      </button>
+      <button type="button" onclick="insertRaw()"
+              style="padding:5px 14px;background:#7a7a7a;color:#fff;border:none;
+                     border-radius:4px;cursor:pointer;font-size:0.82rem;font-family:system-ui;">
+        Insert as-is
+      </button>
+      <button type="button" onclick="clearVoice()"
+              style="padding:5px 10px;background:#e8e0d8;color:#5a4030;border:none;
+                     border-radius:4px;cursor:pointer;font-size:0.82rem;font-family:system-ui;">
+        Clear
+      </button>
+    </div>
+  </div>
+
   <div style="font-size:0.72rem;color:#a08060;margin-top:0.5rem;">
     Powered by Claude — edits your content directly in the editor
   </div>
@@ -140,6 +175,135 @@ function aiImprove(mode) {
     status.textContent = '✗ Request failed';
     console.error('AI error:', err);
   });
+}
+
+// ── Voice Dictation ────────────────────────────────────────────────────────
+var _voiceRec = null;
+var _voiceText = '';
+var _voiceActive = false;
+
+function toggleVoice() {
+  if (_voiceActive) { _stopVoice(); } else { _startVoice(); }
+}
+
+function _startVoice() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    document.getElementById('ai-status').textContent = '✗ Voice requires Chrome or Edge';
+    return;
+  }
+  _voiceText = '';
+  _voiceRec = new SR();
+  _voiceRec.continuous = true;
+  _voiceRec.interimResults = true;
+  _voiceRec.lang = 'en-US';
+
+  _voiceRec.onresult = function(e) {
+    var interim = '';
+    for (var i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) { _voiceText += e.results[i][0].transcript + ' '; }
+      else { interim += e.results[i][0].transcript; }
+    }
+    document.getElementById('voice-preview').textContent = _voiceText + interim;
+  };
+
+  _voiceRec.onerror = function(e) {
+    document.getElementById('ai-status').textContent = '✗ Mic error: ' + e.error;
+    _setVoiceStopped();
+  };
+
+  _voiceRec.onend = function() {
+    if (_voiceActive) _voiceRec.start();
+  };
+
+  _voiceRec.start();
+  _voiceActive = true;
+  var btn = document.getElementById('voice-btn');
+  btn.textContent = '⏹ Stop';
+  btn.style.background = '#c0392b';
+  document.getElementById('ai-status').textContent = '🔴 Listening…';
+  document.getElementById('voice-panel').style.display = 'block';
+  document.getElementById('voice-actions').style.display = 'none';
+}
+
+function _stopVoice() {
+  _voiceActive = false;
+  if (_voiceRec) { _voiceRec.stop(); _voiceRec = null; }
+  _setVoiceStopped();
+}
+
+function _setVoiceStopped() {
+  var btn = document.getElementById('voice-btn');
+  btn.textContent = '🎤 Dictate';
+  btn.style.background = '#8b5e3c';
+  document.getElementById('ai-status').textContent = '';
+  if (_voiceText.trim()) {
+    document.getElementById('voice-actions').style.display = 'flex';
+  }
+}
+
+function _appendToEditor(text) {
+  var done = false;
+  try {
+    var iframe = document.getElementById('id_content_iframe');
+    if (iframe) {
+      var iDoc = iframe.contentDocument || iframe.contentWindow.document;
+      var editable = iDoc.querySelector('.note-editable');
+      if (editable) {
+        editable.innerHTML += '<p>' + text.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
+        var ta = document.querySelector('textarea[name="content"]');
+        if (ta) ta.value = editable.innerHTML;
+        try { jQuery && jQuery('#id_content').summernote && jQuery('#id_content').summernote('code', editable.innerHTML); } catch(e) {}
+        done = true;
+      }
+    }
+  } catch(e) {}
+  if (!done) {
+    var ta = document.querySelector('textarea[name="content"]');
+    if (ta) { ta.value += '\n\n' + text; done = true; }
+  }
+  return done;
+}
+
+function polishAndInsert() {
+  if (!_voiceText.trim()) return;
+  var status = document.getElementById('ai-status');
+  status.textContent = '⏳ Polishing with Claude…';
+
+  var csrfToken = '';
+  var m = document.cookie.match(/csrftoken=([^;]+)/);
+  if (m) csrfToken = m[1];
+  if (!csrfToken) { var ci = document.querySelector('[name=csrfmiddlewaretoken]'); if (ci) csrfToken = ci.value; }
+
+  fetch('/ai/improve/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+    body: JSON.stringify({ text: _voiceText, mode: 'voice' })
+  })
+  .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  .then(function(data) {
+    if (!data.result) { status.textContent = '✗ ' + (data.error || 'Error'); return; }
+    _appendToEditor(data.result);
+    clearVoice();
+    status.textContent = '✓ Inserted!';
+    setTimeout(function(){ status.textContent = ''; }, 3000);
+  })
+  .catch(function() { status.textContent = '✗ Request failed'; });
+}
+
+function insertRaw() {
+  if (!_voiceText.trim()) return;
+  _appendToEditor(_voiceText.trim());
+  clearVoice();
+  document.getElementById('ai-status').textContent = '✓ Inserted!';
+  setTimeout(function(){ document.getElementById('ai-status').textContent = ''; }, 2000);
+}
+
+function clearVoice() {
+  _voiceText = '';
+  document.getElementById('voice-preview').textContent = '';
+  document.getElementById('voice-actions').style.display = 'none';
+  document.getElementById('voice-panel').style.display = 'none';
 }
 </script>
 

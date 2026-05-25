@@ -1,50 +1,175 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}{{ pillar.name }} — Topics — Indra Choki{% endblock %}
+{% block title %}{{ pillar.name }} — Cogitra{% endblock %}
+{% block meta_description %}{{ pillar.description }}{% endblock %}
+{% block og_title %}{{ pillar.name }} — Cogitra{% endblock %}
+{% block og_description %}{{ pillar.description }}{% endblock %}
 
 {% block content %}
-<div class="wrap">
+<style>
+.pillar-page { --cat-accent: {% if section %}{{ section.accent_hex }}{% else %}#2fbf7c{% endif %}; }
 
-  <!-- Breadcrumb -->
-  <div style="margin-bottom:1.5rem;">
-    <a href="{% url 'topics:topics_home' %}" style="font-size:0.85rem;color:var(--warm-accent);text-decoration:none;">← All topics</a>
-  </div>
+/* Header */
+.pillar-header { padding: 40px 0 48px; border-bottom: 1px solid var(--hairline); position: relative; overflow: hidden; }
+.pillar-header::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(60% 100% at 15% 30%, color-mix(in oklab, var(--cat-accent) 18%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.pillar-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  padding: 8px 14px; border: 1px solid var(--hairline);
+  border-radius: 999px; transition: color .2s, border-color .2s;
+}
+.pillar-back:hover { color: var(--fg); border-color: var(--hairline-strong); }
 
-  <!-- Pillar header -->
-  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;">
-    <span style="font-size:2.5rem;">{{ pillar.icon }}</span>
-    <h2 class="page-title" style="margin-bottom:0;">{{ pillar.name }}</h2>
-  </div>
-  <p style="color:var(--warm-muted);margin-bottom:2.5rem;font-size:1.05rem;">{{ pillar.description }}</p>
+.pillar-head-grid {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--gap);
+  align-items: center; margin-top: 32px; position: relative;
+}
+.pillar-flag { width: 64px; height: 3px; background: var(--cat-accent); margin-bottom: 18px; display: block; }
+.pillar-eyebrows { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 24px; }
+.pillar-icon-big { font-size: 56px; margin-bottom: 12px; display: inline-block; }
+.pillar-h1 {
+  font-family: var(--font-sans); font-weight: 500; letter-spacing: -0.022em;
+  font-size: clamp(40px, 5vw, 72px); line-height: 1.0;
+  color: var(--fg); margin: 0 0 24px; text-wrap: balance;
+}
+.pillar-h1 .accent-period { color: var(--cat-accent); }
+.pillar-blurb {
+  font-family: var(--font-serif); font-size: 19px; line-height: 1.55;
+  color: var(--fg-2); max-width: 560px;
+}
+.pillar-curve {
+  display: flex; align-items: center; justify-content: center; opacity: 0.7;
+}
+.pillar-curve svg { width: 260px; height: 260px; }
 
-  <!-- Other pillars quick nav -->
-  <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2.5rem;">
-    {% for p in all_pillars %}
-    {% if p.slug != pillar.slug %}
-    <a href="{% url 'topics:pillar_detail' p.slug %}"
-       style="font-size:0.82rem;padding:4px 14px;border-radius:2rem;text-decoration:none;
-              border:1px solid var(--warm-border);color:var(--warm-muted);">
-      {{ p.icon }} {{ p.name }}
-    </a>
-    {% endif %}
-    {% endfor %}
-  </div>
+/* Articles list */
+.pillar-articles-wrap { padding: 56px 0 32px; }
+.pillar-articles-head {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;
+  flex-wrap: wrap; gap: 12px;
+}
+.pillar-articles-head h2 { font-family: var(--font-sans); font-size: 20px; font-weight: 500; color: var(--fg); }
 
-  <!-- Articles list -->
-  {% for article in articles %}
-  <a class="post-card" href="{% url 'topics:article_detail' pillar.slug article.slug %}">
-    <div class="post-meta">
-      {{ article.reading_time }}
-      &nbsp;·&nbsp; Last updated {{ article.updated_at|date:"F j, Y" }}
+.pillar-articles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+.pillar-card {
+  display: grid; grid-template-columns: 40px 1fr; gap: 16px;
+  padding: 24px 0; border-top: 1px solid var(--hairline);
+  text-decoration: none; transition: border-color .2s;
+}
+.pillar-card:hover { border-top-color: var(--cat-accent); }
+.pillar-card-idx { font-family: var(--font-mono); font-size: 13px; color: var(--fg-3); transition: color .2s; }
+.pillar-card:hover .pillar-card-idx { color: var(--cat-accent); }
+.pillar-card .kicker {
+  display: flex; gap: 10px; margin-bottom: 12px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+}
+.pillar-card h3 {
+  font-family: var(--font-serif); font-weight: 500; font-size: 22px;
+  line-height: 1.2; color: var(--fg); margin: 0 0 10px; text-wrap: balance;
+}
+.pillar-card p { font-family: var(--font-serif); font-size: 15px; color: var(--fg-2); line-height: 1.55; }
+
+/* Other pillars */
+.other-pillars {
+  border-top: 1px solid var(--hairline); padding: 56px 0;
+}
+.other-pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+.other-pillar-chip {
+  display: block; padding: 18px 22px; border-radius: 12px;
+  border: 1px solid var(--hairline); text-decoration: none;
+  transition: border-color .2s, transform .2s;
+}
+.other-pillar-chip:hover { border-color: var(--hairline-strong); transform: translateY(-2px); }
+.other-pillar-chip .icon { font-size: 24px; margin-bottom: 6px; }
+.other-pillar-chip .name { font-family: var(--font-sans); font-weight: 500; font-size: 15px; color: var(--fg); }
+
+@media (max-width: 900px) {
+  .pillar-head-grid { grid-template-columns: 1fr; }
+  .pillar-curve { display: none; }
+  .pillar-articles-grid { grid-template-columns: 1fr; gap: 0; }
+  .other-pillars-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<div class="pillar-page">
+
+<section class="pillar-header">
+  <div class="wrap">
+    <a href="{% if section_key %}/{{ section_key }}/{% else %}{% url 'blog:home' %}{% endif %}" class="pillar-back">← Back to {% if section %}{{ section.title }}{% else %}Cogitra{% endif %}</a>
+
+    <div class="pillar-head-grid">
+      <div>
+        <div class="pillar-flag"></div>
+        <div class="pillar-eyebrows">
+          <span class="eyebrow"><b style="color:var(--fg-2);font-weight:500;">{% if section %}{{ section.title }}{% endif %} · {{ pillar.name }}</b></span>
+          <span class="eyebrow">{{ articles.count }} {% if articles.count == 1 %}article{% else %}articles{% endif %}</span>
+        </div>
+        <span class="pillar-icon-big">{{ pillar.icon }}</span>
+        <h1 class="pillar-h1">{{ pillar.name }}<span class="accent-period">.</span></h1>
+        <p class="pillar-blurb">{{ pillar.description }}</p>
+      </div>
+
+      <div class="pillar-curve">
+        <svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+          <path class="draw-curve"
+                d="{% if section %}{{ section.curve }}{% else %}M 50 50 C 80 60, 90 110, 60 130 C 30 150, 80 170, 130 160 C 170 152, 165 130, 160 110{% endif %}"
+                stroke="var(--cat-accent)" stroke-width="2.4" stroke-linecap="round"
+                fill="none" filter="url(#curve-ink)"/>
+        </svg>
+      </div>
     </div>
-    <h3>{{ article.title }}</h3>
-    <p>{{ article.summary }}</p>
-  </a>
-  {% empty %}
-  <p style="color:var(--warm-muted);padding:2rem 0;">
-    No articles in this topic yet — check back soon!
-  </p>
-  {% endfor %}
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="pillar-articles-wrap">
+    <div class="pillar-articles-head">
+      <h2>Articles in this collection</h2>
+    </div>
+
+    {% if articles %}
+    <div class="pillar-articles-grid">
+      {% for article in articles %}
+      <a class="pillar-card" href="{% url 'topics:article_detail' pillar.slug article.slug %}">
+        <span class="pillar-card-idx">{{ forloop.counter|stringformat:"02d" }}</span>
+        <div>
+          <div class="kicker">
+            <span>{{ article.reading_time }}</span>
+            <span>· Updated {{ article.updated_at|date:"M j, Y" }}</span>
+          </div>
+          <h3>{{ article.title }}</h3>
+          <p>{{ article.summary|truncatechars:180 }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p style="font-family:var(--font-serif);font-style:italic;color:var(--fg-3);padding:32px 0;">No articles in this collection yet.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% if all_pillars %}
+<section class="other-pillars">
+  <div class="wrap">
+    <span class="eyebrow">Other collections</span>
+    <div class="other-pillars-grid">
+      {% for p in all_pillars %}{% if p.slug != pillar.slug %}
+      <a href="{% url 'topics:pillar_detail' p.slug %}" class="other-pillar-chip">
+        <div class="icon">{{ p.icon }}</div>
+        <div class="name">{{ p.name }}</div>
+      </a>
+      {% endif %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
 
 </div>
 {% endblock %}

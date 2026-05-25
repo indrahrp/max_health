@@ -1,0 +1,459 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ config.title }} — Cogitra{% endblock %}
+{% block meta_description %}{{ config.tagline }} {{ config.note }}{% endblock %}
+{% block og_title %}{{ config.title }} — Cogitra{% endblock %}
+{% block og_description %}{{ config.tagline }}{% endblock %}
+{% block og_url %}https://cogitra.com/{{ key }}/{% endblock %}
+
+{% block content %}
+<style>
+.section-page {
+  --cat-accent: {{ config.accent_hex }};
+}
+
+/* ─── Section header ─── */
+.sec-header {
+  position: relative; padding: 40px 0 56px;
+  border-bottom: 1px solid var(--hairline);
+  overflow: hidden;
+}
+.sec-header::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(60% 100% at 15% 30%, color-mix(in oklab, var(--cat-accent) 22%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.sec-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  padding: 8px 14px; border: 1px solid var(--hairline);
+  border-radius: 999px; transition: color .2s, border-color .2s;
+}
+.sec-back:hover { color: var(--fg); border-color: var(--hairline-strong); }
+
+.sec-head-grid {
+  display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--gap);
+  align-items: center; margin-top: 32px; position: relative;
+}
+.sec-flag {
+  width: 64px; height: 3px; background: var(--cat-accent);
+  margin-bottom: 18px; display: block;
+}
+.sec-eyebrows {
+  display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.sec-eyebrows .eyebrow b { font-weight: 500; color: var(--fg-2); }
+
+.sec-h1 {
+  font-family: {{ config.type_family }};
+  font-weight: {{ config.type_weight }};
+  font-style: {{ config.type_style }};
+  letter-spacing: {{ config.type_tracking }};
+  font-size: clamp(48px, 6vw, 92px); line-height: 0.95;
+  color: var(--fg); margin: 0 0 24px; text-wrap: balance;
+}
+.sec-h1 .accent-period { color: var(--cat-accent); }
+
+.sec-blurb {
+  font-family: var(--font-serif); font-size: 21px; line-height: 1.5;
+  color: var(--fg-2); max-width: 560px;
+}
+
+.sec-curve {
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.sec-curve svg { width: 320px; height: 320px; }
+
+/* ─── Editor note ─── */
+.editor-note {
+  max-width: 880px; margin: 0 auto; padding: 48px 0 64px;
+  display: grid; grid-template-columns: 160px 1fr; gap: var(--gap);
+}
+.editor-note .label {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+}
+.editor-note .name {
+  font-family: var(--font-sans); font-weight: 500; font-size: 15px;
+  color: var(--fg-2); margin-top: 6px;
+}
+.editor-note .body {
+  font-family: var(--font-serif); font-style: italic; font-size: 19px;
+  line-height: 1.55; color: var(--fg-2);
+}
+
+/* ─── Topics block ─── */
+.topics-wrap { padding: 16px 0 56px; }
+.topics-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
+}
+.topics-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+}
+.topic-card {
+  position: relative; display: block; text-decoration: none;
+  padding: 22px 24px 24px;
+  background: rgba(255,255,255,0.012);
+  border: 1px solid var(--hairline); border-radius: 14px;
+  transition: border-color .2s, transform .2s, background .2s;
+}
+.topic-card:hover { border-color: color-mix(in oklab, var(--topic-accent) 40%, transparent); transform: translateY(-2px); }
+.topic-card.active {
+  border-color: color-mix(in oklab, var(--topic-accent) 67%, transparent);
+  background: color-mix(in oklab, var(--topic-accent) 9%, transparent);
+}
+.topic-flag {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--topic-accent);
+  opacity: 0.72; transition: opacity .2s;
+  border-radius: 14px 14px 0 0;
+}
+.topic-card:hover .topic-flag, .topic-card.active .topic-flag { opacity: 1; }
+.topic-card-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.10em; text-transform: uppercase;
+}
+.topic-idx { color: var(--fg-4); }
+.topic-count { color: var(--topic-accent); }
+.topic-name {
+  font-family: {{ config.type_family }};
+  font-weight: {{ config.type_weight }};
+  font-style: {{ config.type_style }};
+  letter-spacing: {{ config.type_tracking }};
+  font-size: 22px; line-height: 1.2;
+  color: var(--fg); margin: 0 0 10px; text-wrap: balance;
+}
+.topic-blurb {
+  font-family: var(--font-serif); font-size: 14px;
+  line-height: 1.5; color: var(--fg-3); margin-bottom: 14px;
+}
+.topic-cta {
+  font-family: var(--font-sans); font-size: 13px;
+  color: var(--fg-2); transition: color .2s;
+}
+.topic-card.active .topic-cta { color: var(--topic-accent); }
+.topic-clear {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 16px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  padding: 6px 14px; border: 1px solid var(--hairline);
+  border-radius: 999px; transition: color .2s, border-color .2s;
+}
+.topic-clear:hover { color: var(--fg); border-color: var(--hairline-strong); }
+
+@media (max-width: 980px) { .topics-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .topics-grid { grid-template-columns: 1fr; } }
+
+/* ─── Latest hero ─── */
+.latest-wrap { padding: 24px 0 64px; }
+.eyebrow.section-color { color: var(--cat-accent); }
+
+.feat-hero-section {
+  border: 1px solid var(--hairline); border-radius: 18px;
+  overflow: hidden; background: var(--bg-elev);
+  display: block; text-decoration: none; margin-top: 24px;
+  transition: border-color .2s;
+}
+.feat-hero-section:hover { border-color: var(--cat-accent); }
+.feat-hero-section .art {
+  height: 280px;
+  background:
+    radial-gradient(60% 80% at 70% 35%, color-mix(in oklab, var(--cat-accent) 55%, transparent), transparent 70%),
+    linear-gradient(160deg, color-mix(in oklab, var(--cat-accent) 35%, var(--bg-elev)) 0%, var(--bg-elev) 75%);
+  position: relative;
+}
+.feat-hero-section .body { padding: 32px 36px; }
+.feat-hero-section h3 {
+  font-family: {{ config.type_family }};
+  font-weight: {{ config.type_weight }};
+  font-style: {{ config.type_style }};
+  letter-spacing: {{ config.type_tracking }};
+  font-size: 32px; line-height: 1.15;
+  color: var(--fg); margin: 14px 0 12px; text-wrap: balance;
+}
+.feat-hero-section p {
+  font-family: var(--font-serif); font-size: 16px;
+  color: var(--fg-2); line-height: 1.6; margin-bottom: 16px;
+}
+
+/* ─── More in section grid ─── */
+.more-grid {
+  padding: 32px 0 64px;
+}
+.more-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-top: 24px; }
+.more-card {
+  display: grid; grid-template-columns: 40px 1fr; gap: 16px;
+  padding: 24px 0; border-top: 1px solid var(--hairline);
+  text-decoration: none; transition: border-color .2s;
+}
+.more-card:hover { border-top-color: var(--cat-accent); }
+.more-card-idx {
+  font-family: var(--font-mono); font-size: 13px;
+  color: var(--fg-3); transition: color .2s;
+}
+.more-card:hover .more-card-idx { color: var(--cat-accent); }
+.more-card .kicker {
+  display: flex; gap: 10px; margin-bottom: 12px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+}
+.more-card h3 {
+  font-family: {{ config.type_family }};
+  font-weight: {{ config.type_weight }};
+  font-style: {{ config.type_style }};
+  letter-spacing: {{ config.type_tracking }};
+  font-size: 24px; line-height: 1.18;
+  color: var(--fg); margin: 0 0 12px; text-wrap: balance;
+}
+.more-card p {
+  font-family: var(--font-serif); font-size: 15px;
+  color: var(--fg-2); line-height: 1.55; margin-bottom: 12px;
+}
+.more-card .byline {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+}
+
+/* ─── Other sections ─── */
+.other-sections {
+  border-top: 1px solid var(--hairline); padding: 64px 0;
+}
+.other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px; }
+.other-card {
+  display: block; text-decoration: none;
+  padding: 22px 24px; border-radius: 12px;
+  border: 1px solid var(--hairline);
+  transition: border-color .2s, transform .2s;
+}
+.other-card:hover { border-color: var(--other-color, var(--hairline-strong)); transform: translateY(-2px); }
+.other-card .row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.other-card .row .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--other-color); }
+.other-card .row .num { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); letter-spacing: 0.12em; }
+.other-card .name { font-family: var(--font-sans); font-weight: 500; font-size: 18px; color: var(--fg); margin-bottom: 6px; }
+.other-card .blurb { font-family: var(--font-serif); font-size: 13px; color: var(--fg-3); line-height: 1.5; }
+
+/* Empty state */
+.empty-section {
+  padding: 80px 32px; border: 1px solid var(--hairline); border-radius: 18px;
+  text-align: center; background: var(--bg-elev); margin-top: 32px;
+}
+.empty-section h3 {
+  font-family: {{ config.type_family }}; font-weight: {{ config.type_weight }};
+  font-style: {{ config.type_style }}; font-size: 28px;
+  color: var(--fg); margin-bottom: 12px;
+}
+.empty-section p {
+  font-family: var(--font-serif); font-size: 16px;
+  color: var(--fg-2); max-width: 480px; margin: 0 auto 20px;
+}
+
+@media (max-width: 900px) {
+  .sec-head-grid { grid-template-columns: 1fr; }
+  .sec-curve { display: none; }
+  .editor-note { grid-template-columns: 1fr; gap: 16px; }
+  .more-list { grid-template-columns: 1fr; }
+  .other-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="section-page">
+
+<!-- ─── Section header ─── -->
+<section class="sec-header">
+  <div class="wrap">
+    <a href="{% url 'blog:home' %}" class="sec-back">← Back to Cogitra</a>
+
+    <div class="sec-head-grid">
+      <div>
+        <div class="sec-flag"></div>
+        <div class="sec-eyebrows">
+          <span class="eyebrow"><b>Section 0{{ config.index }} of 08</b></span>
+          <span class="eyebrow">{{ item_count }} {% if item_count == 1 %}essay{% else %}essays{% endif %} · Spring 2026</span>
+        </div>
+        <h1 class="sec-h1">{{ config.title }}<span class="accent-period">.</span></h1>
+        <p class="sec-blurb">{{ config.tagline }}</p>
+      </div>
+
+      <div class="sec-curve">
+        <svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+          <path class="draw-curve" d="{{ config.curve }}"
+                stroke="var(--cat-accent)" stroke-width="2.4" stroke-linecap="round"
+                fill="none" filter="url(#curve-ink)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Editor note ─── -->
+<div class="wrap">
+  <div class="editor-note">
+    <div>
+      <div class="label">Section editor</div>
+      <div class="name">{{ config.editor }}</div>
+    </div>
+    <div class="body">{{ config.note }}</div>
+  </div>
+</div>
+
+{% if subcategories %}
+<!-- ─── Topics block ─── -->
+<section class="wrap">
+  <div class="topics-wrap">
+    <div class="topics-head">
+      <span class="eyebrow section-color">Topics in {{ config.title|lower }}</span>
+      <span class="eyebrow">{{ subcategories|length }} ongoing</span>
+    </div>
+    <div class="topics-grid">
+      {% for s in subcategories %}
+      <a href="?topic={{ s.id }}" class="topic-card {% if active_topic.id == s.id %}active{% endif %}" style="--topic-accent: {{ s.accent }};">
+        <div class="topic-flag"></div>
+        <div class="topic-card-head">
+          <span class="topic-idx">Topic · {{ forloop.counter|stringformat:"02d" }}</span>
+          <span class="topic-count">{% if s.count %}{{ s.count }} essay{{ s.count|pluralize }}{% else %}—{% endif %}</span>
+        </div>
+        <h3 class="topic-name">{{ s.name }}</h3>
+        <p class="topic-blurb">{{ s.blurb }}</p>
+        <span class="topic-cta">{% if active_topic.id == s.id %}Showing only this ·{% else %}Browse this topic →{% endif %}</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% if active_topic %}
+    <a href="/{{ key }}/" class="topic-clear">← Show all topics</a>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% if hero_item %}
+<!-- ─── Latest ─── -->
+<section class="wrap">
+  <div class="latest-wrap">
+    <span class="eyebrow section-color">{% if active_topic %}Latest in {{ active_topic.name|lower }}{% else %}Latest{% endif %}</span>
+
+    {% if config.is_books %}
+    <a class="feat-hero-section feat-book-hero" href="{% url 'blog:book_detail' hero_item.slug %}">
+      <div class="book-hero-inner">
+        {% if hero_item.cover_image %}
+          <img class="book-cover" src="{{ hero_item.cover_image.url }}" alt="{{ hero_item.title }} cover">
+        {% else %}
+          <div class="book-cover book-cover-placeholder">{{ hero_item.title|first }}</div>
+        {% endif %}
+        <div class="book-hero-text">
+          <div class="kicker" style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg-3);margin-bottom:8px;">Review · {{ hero_item.author }}</div>
+          <h3 style="margin-top:0;">{{ hero_item.title }}</h3>
+          <p>{{ hero_item.summary|truncatechars:240 }}</p>
+        </div>
+      </div>
+    </a>
+    <style>
+      .feat-book-hero { padding: 32px; background:
+        radial-gradient(60% 90% at 75% 50%, color-mix(in oklab, var(--cat-accent) 22%, transparent), transparent 70%),
+        linear-gradient(135deg, color-mix(in oklab, var(--cat-accent) 14%, var(--bg-elev)) 0%, var(--bg-elev) 75%);
+      }
+      .feat-book-hero .book-hero-inner { display: grid; grid-template-columns: 220px 1fr; gap: 36px; align-items: center; }
+      .feat-book-hero .book-cover {
+        width: 100%; height: auto; max-height: 320px; object-fit: contain;
+        border-radius: 6px; box-shadow: 0 12px 32px -10px rgba(0,0,0,0.6);
+        background: var(--bg);
+      }
+      .feat-book-hero .book-cover-placeholder {
+        height: 320px; display: flex; align-items: center; justify-content: center;
+        font-family: var(--font-serif); font-size: 72px; color: var(--cat-accent);
+        background: color-mix(in oklab, var(--cat-accent) 12%, var(--bg-elev));
+      }
+      .feat-book-hero .book-hero-text { padding-right: 16px; }
+      @media (max-width: 700px) {
+        .feat-book-hero .book-hero-inner { grid-template-columns: 1fr; text-align: center; }
+        .feat-book-hero .book-cover { max-width: 200px; margin: 0 auto; }
+      }
+    </style>
+    {% else %}
+    <a class="feat-hero-section" href="{% if hero_item.pillar %}{% url 'topics:article_detail' hero_item.pillar.slug hero_item.slug %}{% else %}{% url 'blog:blog_detail' hero_item.slug %}{% endif %}">
+      <div class="art"></div>
+      <div class="body">
+        <div class="kicker" style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg-3);">{{ hero_item.created_at|date:"M j, Y" }} · {{ hero_item.reading_time }}</div>
+        <h3>{{ hero_item.title }}</h3>
+        <p>{{ hero_item.summary|truncatechars:200 }}</p>
+      </div>
+    </a>
+    {% endif %}
+  </div>
+</section>
+
+{% if grid_items %}
+<!-- ─── More in section ─── -->
+<section class="wrap">
+  <div class="more-grid">
+    <span class="eyebrow section-color">More in {% if active_topic %}{{ active_topic.name }}{% else %}{{ config.title }}{% endif %}</span>
+    <div class="more-list">
+      {% for item in grid_items %}
+      {% if config.is_books %}
+      <a class="more-card" href="{% url 'blog:book_detail' item.slug %}">
+        <span class="more-card-idx">0{{ forloop.counter|add:1 }}</span>
+        <div>
+          <div class="kicker">
+            <span>Review</span>
+            <span>· {{ item.author }}</span>
+          </div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.summary|truncatechars:140 }}</p>
+        </div>
+      </a>
+      {% else %}
+      <a class="more-card" href="{% if item.pillar %}{% url 'topics:article_detail' item.pillar.slug item.slug %}{% else %}{% url 'blog:blog_detail' item.slug %}{% endif %}">
+        <span class="more-card-idx">0{{ forloop.counter|add:1 }}</span>
+        <div>
+          <div class="kicker">
+            <span>{{ item.created_at|date:"M j, Y" }}</span>
+            <span>· {{ item.reading_time }}</span>
+          </div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.summary|truncatechars:140 }}</p>
+        </div>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% else %}
+<div class="wrap">
+  <div class="empty-section">
+    <span class="eyebrow section-color">Coming soon</span>
+    <h3 style="margin-top:16px;">{{ config.title }} dispatches are in production.</h3>
+    <p>{{ config.note }}</p>
+    <a href="{% url 'blog:home' %}" class="btn btn-ghost">Back to home</a>
+  </div>
+</div>
+{% endif %}
+
+<!-- ─── Other sections ─── -->
+<section class="other-sections">
+  <div class="wrap">
+    <span class="eyebrow">Other sections</span>
+    <div class="other-grid">
+      {% for k, s in other_sections %}
+      <a class="other-card" href="/{{ k }}/" style="--other-color: {{ s.accent_hex }};">
+        <div class="row">
+          <span class="dot"></span>
+          <span class="num">0{{ s.index }}</span>
+        </div>
+        <div class="name">{{ s.title }}</div>
+        <div class="blurb">{{ s.tagline }}</div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+</div><!-- /.section-page -->
+{% endblock %}

@@ -1,195 +1,223 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}
-  {% if category %}{{ category.name }} — {% endif %}Writing — Indra Choki
-{% endblock %}
+{% block title %}Archive — Cogitra{% endblock %}
+{% block meta_description %}The full Cogitra back catalogue, most recent dispatches first. Filter by section.{% endblock %}
+{% block og_title %}The Archive — Cogitra{% endblock %}
+{% block og_description %}Every essay, by date. {{ total_count }} dispatches across eight sections.{% endblock %}
 
 {% block content %}
-
 <style>
-.blog-hero {
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: 2rem;
-  align-items: center;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 3rem 2rem 1.5rem;
+/* ─── Archive header ─── */
+.arc-header {
+  padding: 40px 0 56px;
+  border-bottom: 1px solid var(--hairline);
 }
-@media (max-width: 700px) {
-  .blog-hero { grid-template-columns: 1fr; }
+.arc-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  padding: 8px 14px; border: 1px solid var(--hairline);
+  border-radius: 999px; transition: color .2s, border-color .2s;
+  margin-bottom: 32px;
+}
+.arc-back:hover { color: var(--fg); border-color: var(--hairline-strong); }
+
+.arc-flag-row {
+  display: flex; gap: 4px; margin-bottom: 28px; opacity: 0.85;
+}
+.arc-flag-row .bar {
+  flex: 1; height: 3px; border-radius: 1px;
+}
+
+.arc-head-row {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 20px; margin-bottom: 24px;
+}
+
+.arc-h1 {
+  font-family: var(--font-sans); font-weight: 500;
+  font-size: clamp(48px, 6vw, 92px); line-height: 0.95;
+  letter-spacing: -0.028em; color: var(--fg); margin: 0 0 24px;
+  text-wrap: balance;
+}
+.arc-h1 .by-date {
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  color: var(--fg-2);
+}
+.arc-h1 .accent-period { color: var(--accent); }
+.arc-sub {
+  font-family: var(--font-serif); font-size: 21px; line-height: 1.5;
+  color: var(--fg-2); max-width: 600px;
+}
+
+/* ─── Filter chips (sticky) ─── */
+.arc-filter {
+  position: sticky; top: 64px; z-index: 50;
+  background: rgba(7,7,13,0.86); backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--hairline);
+  padding: 16px 0;
+}
+.arc-filter-inner {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+}
+.filter-label {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  margin-right: 4px;
+}
+.filter-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--hairline);
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  color: var(--fg-2); transition: all .2s; text-decoration: none;
+}
+.filter-chip:hover { color: var(--fg); border-color: var(--hairline-strong); }
+.filter-chip .dot {
+  width: 8px; height: 8px; border-radius: 999px; background: var(--cat);
+}
+.filter-chip.active {
+  background: color-mix(in oklab, var(--cat, var(--accent)) 22%, transparent);
+  border-color: color-mix(in oklab, var(--cat, var(--accent)) 50%, transparent);
+  color: var(--fg);
+}
+
+/* ─── List ─── */
+.arc-list { padding: 48px 0 32px; }
+.month-group {
+  display: grid; grid-template-columns: 180px 1fr; gap: 32px;
+  padding: 24px 0;
+}
+.month-label {
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  position: sticky; top: 160px; align-self: start;
+}
+.month-rows {}
+
+.arc-row {
+  display: grid; grid-template-columns: 120px 1fr; gap: 32px;
+  padding: 20px 0; border-top: 1px solid var(--hairline);
+  text-decoration: none; transition: border-color .2s;
+  align-items: start;
+}
+.arc-row:first-child { border-top-color: var(--hairline-strong); }
+.arc-row:hover { border-top-color: var(--accent); }
+.arc-row .date {
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.10em; text-transform: uppercase; color: var(--fg-3);
+  padding-top: 4px;
+}
+.arc-row .pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-2);
+  margin-bottom: 10px;
+}
+.arc-row .pill .dot {
+  width: 7px; height: 7px; border-radius: 999px; background: var(--row-cat, var(--accent));
+}
+.arc-row .row-title {
+  font-size: 22px; line-height: 1.2; color: var(--fg);
+  margin: 0 0 10px; text-wrap: balance;
+}
+.arc-row .row-meta {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+}
+
+/* Empty */
+.arc-empty {
+  padding: 80px 32px; text-align: center;
+  font-family: var(--font-serif); font-style: italic; font-size: 17px;
+  color: var(--fg-3);
+}
+
+@media (max-width: 760px) {
+  .month-group { grid-template-columns: 1fr; gap: 12px; }
+  .month-label { position: relative; top: auto; }
+  .arc-row { grid-template-columns: 80px 1fr; gap: 18px; }
 }
 </style>
 
-<div class="blog-hero">
+<!-- ─── Archive header ─── -->
+<section class="arc-header">
+  <div class="wrap">
+    <a href="{% url 'blog:home' %}" class="arc-back">← Back to Cogitra</a>
 
-  <!-- Left: title and filter -->
-  <div>
-    <h2 class="page-title">
-      {% if category %}{{ category.name }}{% else %}Writing{% endif %}
-    </h2>
-
-    <!-- Live search -->
-    <div class="search-wrap" style="margin-bottom:1.2rem;">
-      <span class="search-icon">🔍</span>
-      <input class="search-input" type="text" placeholder="Search posts..."
-             id="post-search" oninput="searchPosts(this.value)">
+    <div class="arc-flag-row">
+      {% for k, s in sections.items %}
+      <span class="bar" style="background: {{ s.accent_hex }};"></span>
+      {% endfor %}
     </div>
 
-    <!-- Category filter pills -->
-    <div class="cat-filter">
-      <a href="{% url 'blog:blog_list' %}"
-         class="cat-pill {% if not selected %}active{% endif %}">All</a>
-      {% for cat in categories %}
-      <a href="{% url 'blog:category_detail' cat.slug %}"
-         class="cat-pill {% if selected == cat.slug %}active{% endif %}">
-        {{ cat.name }}
+    <div class="arc-head-row">
+      <span class="eyebrow">The Archive</span>
+      <span class="eyebrow">{{ total_count }} {% if total_count == 1 %}essay{% else %}essays{% endif %} · eight sections</span>
+    </div>
+
+    <h1 class="arc-h1">Every essay,<br><span class="by-date">by date</span><span class="accent-period">.</span></h1>
+    <p class="arc-sub">The full back catalogue, most recent dispatches first. Filter by section if you came looking for one.</p>
+  </div>
+</section>
+
+<!-- ─── Filter chips (sticky) ─── -->
+<section class="arc-filter">
+  <div class="wrap">
+    <div class="arc-filter-inner">
+      <span class="filter-label">Filter</span>
+      <a href="{% url 'blog:archive' %}" class="filter-chip {% if not selected %}active{% endif %}">All</a>
+      {% for k, s in sections.items %}
+      <a href="?section={{ k }}" class="filter-chip {% if selected == k %}active{% endif %}" style="--cat: {{ s.accent_hex }};">
+        <span class="dot" style="background: {{ s.accent_hex }};"></span>{{ s.short }}
       </a>
       {% endfor %}
     </div>
-
-    <!-- Tag filter pills -->
-    {% if tags %}
-    <div class="cat-filter" style="margin-top:0.6rem;">
-      <a href="{% url 'blog:blog_list' %}{% if selected %}?category={{ selected }}{% endif %}"
-         class="cat-pill {% if not selected_tag %}active{% endif %}" style="font-size:0.78rem;">All tags</a>
-      {% for tag in tags %}
-      <a href="?tag={{ tag.slug }}{% if selected %}&category={{ selected }}{% endif %}"
-         class="cat-pill {% if selected_tag == tag.slug %}active{% endif %}" style="font-size:0.78rem;">#{{ tag.name }}</a>
-      {% endfor %}
-    </div>
-    {% endif %}
-
-    <!-- Post count -->
-    <p style="font-size:0.82rem;color:var(--warm-muted);margin-top:0.8rem;">
-      {{ posts.count }} post{{ posts.count|pluralize }}
-      {% if category %} in {{ category.name }}{% endif %}
-    </p>
   </div>
+</section>
 
-  <!-- Right: DNA helix illustration -->
-  <div style="display:flex;flex-direction:column;align-items:center;">
-    <canvas id="blog-anatomy" width="220" height="320"
-            style="width:220px;height:320px;display:block;border-radius:12px;
-                   background:#fdf6f0;border:1px solid rgba(194,113,79,0.2);"></canvas>
-    <p style="font-size:0.65rem;color:var(--warm-muted);margin-top:0.5rem;text-align:center;">
-      DNA double helix
-    </p>
-  </div>
-
-</div>
-
-<hr style="max-width:700px;margin:0 auto;border:none;border-top:1px solid var(--warm-border);">
-
-<div class="wrap" style="padding-top:2rem;">
-  <!-- Post list -->
-  {% for post in posts %}
-  <a class="post-card" href="{% url 'blog:blog_detail' post.slug %}">
-    <div class="post-meta">
-      {{ post.created_at|date:"F j, Y" }}
-      &nbsp;·&nbsp; {{ post.reading_time }}
-      {% if post.category %}
-      &nbsp;·&nbsp;<span style="color:var(--warm-accent);">{{ post.category.name }}</span>
-      {% endif %}
-    </div>
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.summary }}</p>
-    {% if post.tags.all %}
-    <div style="margin-top:0.6rem;display:flex;flex-wrap:wrap;gap:0.4rem;">
-      {% for tag in post.tags.all %}
-      <span class="tag">#{{ tag.name }}</span>
+<!-- ─── Grouped list ─── -->
+<section class="wrap">
+  <div class="arc-list">
+    {% if grouped_entries %}
+      {% for month, entries in grouped_entries %}
+      <div class="month-group">
+        <div class="month-label">{{ month }}</div>
+        <div class="month-rows">
+          {% for e in entries %}
+          <a class="arc-row" href="{{ e.url|default:'#' }}" style="--row-cat: {% if e.section %}{{ e.section.accent_hex }}{% else %}var(--accent){% endif %};">
+            <div class="date">{{ e.date|date:"M j" }}</div>
+            <div>
+              {% if e.section %}
+              <div class="pill">
+                <span class="dot"></span>{{ e.section.title }}
+              </div>
+              {% elif e.category_name %}
+              <div class="pill">
+                <span class="dot"></span>{{ e.category_name }}
+              </div>
+              {% endif %}
+              <h3 class="row-title"
+                  style="font-family: {% if e.section %}{{ e.section.type_family }}{% else %}var(--font-sans){% endif %};
+                         font-weight: {% if e.section %}{{ e.section.type_weight }}{% else %}500{% endif %};
+                         font-style: {% if e.section %}{{ e.section.type_style }}{% else %}normal{% endif %};
+                         letter-spacing: {% if e.section %}{{ e.section.type_tracking }}{% else %}-0.018em{% endif %};">
+                {{ e.title }}
+              </h3>
+              <div class="row-meta">{{ e.reading_time }}</div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
       {% endfor %}
-    </div>
+    {% else %}
+      <div class="arc-empty">No essays found{% if selected %} in this section yet{% endif %}.</div>
     {% endif %}
-  </a>
-  {% empty %}
-  <p style="color:var(--warm-muted);padding:2rem 0;">
-    No posts yet in this category — check back soon!
-  </p>
-  {% endfor %}
-</div>
+  </div>
+</section>
 
-{% endblock %}
-
-{% block extra_js %}
-<script>
-function searchPosts(q) {
-  var term = q.toLowerCase();
-  document.querySelectorAll('.post-card').forEach(function(card) {
-    card.style.display = card.innerText.toLowerCase().includes(term) ? 'block' : 'none';
-  });
-}
-
-(function(){
-  var cv = document.getElementById('blog-anatomy');
-  if(!cv) return;
-  var c = cv.getContext('2d');
-  var W = 220, H = 320, cx = W/2;
-  var dark = window.matchMedia('(prefers-color-scheme:dark)').matches;
-  var bg = dark ? '#1e1510' : '#fdf6f0';
-  var mu = dark ? '#a89080' : '#7a6555';
-  var t = 0;
-  var bp = [['A','T'],['T','A'],['G','C'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['T','A'],['G','C'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G'],['A','T'],['G','C'],['T','A'],['C','G']];
-  var bc = {A:'#c2714f',T:'#5DCAA5',G:'#7F77DD',C:'#F0997B'};
-
-  function frame(){
-    c.clearRect(0,0,W,H);
-    c.fillStyle = bg; c.fillRect(0,0,W,H);
-
-    var n = bp.length;
-    var y0 = 16, y1 = H-24;
-    var sp = (y1-y0)/(n-1);
-    var amp = 55;
-    var off = t * 0.9;
-
-    // strand 1
-    c.beginPath(); c.strokeStyle='rgba(194,113,79,0.5)'; c.lineWidth=2;
-    for(var i=0;i<n;i++){
-      var y=y0+i*sp, ph=off+i*(2*Math.PI/n)*1.5, x=cx+amp*Math.sin(ph);
-      i===0?c.moveTo(x,y):c.lineTo(x,y);
-    } c.stroke();
-
-    // strand 2
-    c.beginPath(); c.strokeStyle='rgba(93,202,165,0.5)'; c.lineWidth=2;
-    for(var i=0;i<n;i++){
-      var y=y0+i*sp, ph=off+i*(2*Math.PI/n)*1.5+Math.PI, x=cx+amp*Math.sin(ph);
-      i===0?c.moveTo(x,y):c.lineTo(x,y);
-    } c.stroke();
-
-    // base pairs and nodes
-    for(var i=0;i<n;i++){
-      var y=y0+i*sp, ph=off+i*(2*Math.PI/n)*1.5;
-      var x1=cx+amp*Math.sin(ph), x2=cx+amp*Math.sin(ph+Math.PI);
-      var depth=(Math.sin(ph)+1)/2, al=0.35+depth*0.65;
-      c.beginPath(); c.strokeStyle='rgba(180,160,140,'+(al*0.35)+')';
-      c.lineWidth=0.8; c.setLineDash([2,3]);
-      c.moveTo(x1,y); c.lineTo(x2,y); c.stroke(); c.setLineDash([]);
-      c.fillStyle=bc[bp[i][0]]; c.globalAlpha=al;
-      c.beginPath(); c.arc(x1,y,4+depth*3,0,Math.PI*2); c.fill();
-      c.fillStyle=bc[bp[i][1]];
-      c.beginPath(); c.arc(x2,y,4+(1-depth)*3,0,Math.PI*2); c.fill();
-      c.globalAlpha=1;
-    }
-
-    // base pair labels on a few nodes
-    var labelPairs=[{i:2,label:'A-T'},{i:6,label:'G-C'},{i:12,label:'T-A'},{i:18,label:'C-G'}];
-    for(var l=0;l<labelPairs.length;l++){
-      var li=labelPairs[l].i;
-      var ly=y0+li*sp, lph=off+li*(2*Math.PI/n)*1.5;
-      var lx1=cx+amp*Math.sin(lph), lx2=cx+amp*Math.sin(lph+Math.PI);
-      var side = Math.sin(lph)>0 ? 1 : -1;
-      c.fillStyle=mu; c.font='7px system-ui'; c.textAlign= side>0?'left':'right';
-      c.fillText(labelPairs[l].label, side>0?Math.max(lx1,lx2)+8:Math.min(lx1,lx2)-8, ly+3);
-    }
-
-    // bottom label
-    c.fillStyle=mu; c.font='7px system-ui'; c.textAlign='center';
-    c.fillText('DNA double helix', cx, H-6);
-
-    t += 0.025;
-    requestAnimationFrame(frame);
-  }
-  frame();
-})();
-</script>
 {% endblock %}

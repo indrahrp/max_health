@@ -23,9 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',   # ← add this BEFORE django.contrib.staticfiles
-    'cloudinary',           # ← add this too
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',   # MUST be before cloudinary_storage so Django's collectstatic wins
+    'cloudinary_storage',
+    'cloudinary',
     'django_summernote',
     'django.contrib.sitemaps',
     'blog',
@@ -43,9 +43,12 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
+
+# Whitenoise: skip compression post-processing — admin manifest references files that aren't on disk after collectstatic
+WHITENOISE_MANIFEST_STRICT = False
 
 # DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
@@ -131,7 +134,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Legacy alias for django-cloudinary-storage 0.3.0 collectstatic compatibility
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
