@@ -2,15 +2,14 @@ from django.core.management.base import BaseCommand
 from topics.models import Pillar, Article
 
 PILLAR = {
-    "name": "Life of a Cell",
-    "slug": "life-of-a-cell",
+    "name": "Cancer",
+    "slug": "cancer-metabolic-health",
     "description": (
-        "How cells — the fundamental units of life — arise, specialize, renew, and fail. "
-        "Exploring stem cell biology, cellular aging, gene editing, and the frontier of cellular medicine."
+        "The biology of cancer — its origins, metabolic theory, immune evasion, and the treatments rewriting oncology."
     ),
-    "icon": "🧬",
-    "color": "blue",
-    "order": 7,
+    "icon": "🔬",
+    "color": "red",
+    "order": 3,
 }
 
 SVG_CHECKPOINT = """
