@@ -230,7 +230,7 @@ def section_landing(request, key):
 
     item_count = len(items)
     hero_item = items[0] if items else None
-    grid_items = items[1:11] if len(items) > 1 else []
+    grid_items = items[1:] if len(items) > 1 else []
 
     other_sections = [(k, v) for k, v in SECTION_CONFIG.items() if k != key]
 
