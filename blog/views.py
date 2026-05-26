@@ -113,7 +113,7 @@ SECTION_CONFIG = {
         'type_weight': '600',
         'type_style': 'normal',
         'type_tracking': '-0.032em',
-        'pillar_slugs': ['genetics'],
+        'pillar_slugs': ['genetics', 'origin-stories-of-dna', 'dna-ai-future'],
         'category_slugs': ['genetics'],
         'subcategories': [
             {'id': 'origin-stories-of-dna',   'name': 'The Origin Stories of DNA',          'short': 'Origins',         'blurb': 'Mendel, Watson, Crick, and the long argument about what heredity actually is.', 'accent': '#ec7a96', 'match_slugs': ['origin-stories-of-dna']},
