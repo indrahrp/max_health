@@ -118,6 +118,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Case series from Paleomedicina Hungary document lupus patients achieving sustained clinical remission on the Paleolithic Ketogenic Diet. In one published case, a 23-year-old woman with biopsy-confirmed lupus nephritis — on hydroxychloroquine and mycophenolate — achieved normalization of all renal parameters and negative anti-dsDNA titers within six months of adopting PKD, subsequently tapering all medication. Complement C3 and C4, chronically suppressed, normalized. The mechanism proposed is elimination of the gut permeability that continuously feeds antigenic material into the systemic circulation.</p>
+
+<h2>A life with this condition</h2>
+<p>Sarah was 23 when her face swelled overnight — both cheeks flushed in a butterfly pattern that her GP photographed and sent to a dermatologist the same afternoon. Before that she had been dizzy for two weeks and had lost four kilograms without trying. The blood tests came back showing her kidneys were inflamed; she was started on hydroxychloroquine and told to avoid sunlight. For the next three years, every spring flare arrived on schedule, triggered by an afternoon in a garden or a weekend at the coast.</p>
+<p>What no one explained clearly was that her immune system had decided her own DNA was an invader. She discovered this only after reading her own pathology reports and learning that the anti-dsDNA antibodies circulating in her blood were bound to fragments of her own nucleus — lodging in the smallest vessels of her kidneys, in the capillaries of her skin, in the lining of her lungs. The butterfly rash was visible. The kidney damage was the threat. She had been treating the mirror and ignoring what was happening inside.</p>
 ''',
 })
 
@@ -191,6 +195,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Paleomedicina case series include patients with relapsing-remitting MS who achieved sustained remission — no new MRI lesions, no clinical relapses — on the PKD protocol. In several cases, patients who had been on disease-modifying therapy (interferon beta, glatiramer acetate) were able to taper and discontinue medication under clinical supervision after MRI stability was established. The PKD's elimination of gluten, dairy, and processed foods removes the peripheral antigenic triggers while the animal-fat-rich diet provides the cholesterol and saturated fatty acids required for myelin synthesis and repair.</p>
+
+<h2>A life with this condition</h2>
+<p>James first noticed something wrong when his right foot stopped lifting properly on long runs. He was 31 and training for a half-marathon. By the time he saw a neurologist six weeks later, his right leg felt wrapped in cotton wool and his left eye had given him a week of blurred vision he had attributed to fatigue. The MRI showed nine lesions — white spots scattered through the white matter of his brain and along his cervical spine. The largest was in the right motor cortex.</p>
+<p>He was diagnosed with relapsing-remitting MS on a Thursday. His neurologist was calm and factual; James sat in the car for an hour afterward unable to drive. What the lesions represented — T-cells that had crossed his blood-brain barrier and stripped insulation from his nerve fibres — was something he would come to understand only gradually, as he learned why rest reliably restored function that exercise took away, and why heat made everything worse. Each relapse left a new scar. Each scar was permanent.</p>
 ''',
 })
 
@@ -257,6 +265,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>A child with juvenile idiopathic arthritis (the paediatric form of RA) is among the Paleomedicina published case series: joint swelling and pain resolved within weeks of initiating the Paleolithic Ketogenic Diet, and inflammatory markers normalised. Adult RA patients on PKD have reported significant reduction in disease activity scores. The mechanism is thought to involve removal of dietary lectins that trigger Prevotella and Porphyromonas activity, combined with the anti-inflammatory ketone body beta-hydroxybutyrate, which directly inhibits the NLRP3 inflammasome responsible for IL-1 beta secretion.</p>
+
+<h2>A life with this condition</h2>
+<p>For Maya, the first sign was her hands in the morning — both of them, which she later learned was important. One stiff hand might be an injury; both at once, mirror-image, was the immune system. She was 38, an architect, and she began arriving an hour early to work to let the stiffness pass before she needed to use a mouse. Her rheumatologist took one look at her knuckles — swollen symmetrically, tender on lateral squeeze — and ordered the anti-CCP antibody test.</p>
+<p>It came back strongly positive. The antibodies had probably been circulating for years before her joints became the target, forming against citrullinated proteins in a silent priming phase that precedes the joint invasion by years. She was told her disease had been active "for a while." The synovial lining of her joints was already thick with inflammatory tissue — a pannus, her rheumatologist called it — that was consuming the cartilage cushioning her metacarpals. Her hands, the tools of her profession, were the battlefield.</p>
 ''',
 })
 
@@ -323,6 +335,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Paleomedicina's most dramatic published case involves a young man with severe Crohn's disease facing bowel resection surgery who achieved complete endoscopic and histological remission on the PKD within months, avoiding surgery entirely. The protocol's complete elimination of plant-based foods removes all sources of intestinal permeability-promoting lectins and phytates while providing the L-glutamine and butyrate precursors the gut lining requires for repair. Multiple Crohn's patients have been documented reaching drug-free remission with negative CRP and calprotectin on PKD.</p>
+
+<h2>A life with this condition</h2>
+<p>Daniel spent three years diagnosed with IBS before his gastroenterologist inserted a camera and said "that's not IBS" within seconds of reaching the terminal ileum. The ulcers were deep — not erosions but craters punched through all layers of the gut wall. He had lost eleven kilograms over the preceding year and attributed it to stress. What he actually had was a fistula forming between two loops of bowel that a CT scan had already detected but a previous doctor had called "non-specific."</p>
+<p>He had been eating through pain for months, because eating caused pain but not eating caused weakness. The mechanism his gastroenterologist explained — macrophages forming granulomas around gut bacteria they could no longer tolerate — was abstract against the concrete reality of a perianal abscess that required surgical drainage at two in the morning on a Wednesday. The disease had been burning through his gut wall slowly and silently for years before it became impossible to ignore.</p>
 ''',
 })
 
@@ -393,6 +409,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Elimination of fermentable fibre and plant compounds on the PKD removes the substrates driving pathological dysbiosis. Several UC patients in Paleomedicina's case series achieved mucosal healing confirmed by colonoscopy — the gold standard endpoint — while on PKD, reducing or eliminating 5-aminosalicylate and corticosteroid dependence. The mechanism is restoration of colonocyte energy metabolism through ketone bodies (which partly substitute for the butyrate deficit) and elimination of the permeability-promoting dietary factors that perpetuate the mucosal injury cycle.</p>
+
+<h2>A life with this condition</h2>
+<p>Elena knew something was wrong the fourth time she needed to use the bathroom in three hours at work. The bleeding had started three weeks earlier — intermittent at first, then constant. She told herself it was haemorrhoids for longer than she should have. By the time she saw her GP she was anaemic, losing enough blood daily to require supplementation.</p>
+<p>The colonoscopy showed continuous inflammation from rectum to splenic flexure — left-sided colitis, uniformly red, the surface raw and friable, bleeding on contact with the scope. She was 29. The gastroenterologist explained that her colon's mucosal surface was in a state of permanent siege: the crypts packed with neutrophils, the goblet cells that produce protective mucus nearly gone. She was started on mesalazine and told to monitor for any worsening. For the next decade the question was not whether she would flare, but when.</p>
 ''',
 })
 
@@ -461,6 +481,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Paleomedicina's case series includes children with new-onset T1D whose C-peptide — the marker of residual beta cell function — was preserved and in some cases increased on the PKD, suggesting that when the autoimmune attack is halted early, beta cell regeneration may occur. In longer-standing T1D, the protocol typically results in dramatically reduced insulin requirements due to the near-zero dietary carbohydrate load, with no further autoimmune progression. The PKD's elimination of dairy, wheat, and all permeability-promoting foods removes the antigens driving the molecular mimicry that sustains the autoimmune attack.</p>
+
+<h2>A life with this condition</h2>
+<p>Liam was 14 when his parents took him to the emergency department. He had been drinking water constantly for three weeks and losing weight despite eating normally. His breath smelled sweet in a way his mother found alarming. His blood glucose was 34 mmol/L and he was in diabetic ketoacidosis. The diagnosis took six minutes.</p>
+<p>He was told he had type 1 diabetes, that his immune system had destroyed the insulin-making cells in his pancreas, and that he would need insulin injections for the rest of his life. What no one mentioned was the years of silent destruction that preceded that night — the insulitis, the slow march of T-cells through his islets, the progressive depletion of beta cells down to the 10% remaining mass that finally failed to maintain glucose control. The crisis was the last chapter of a long autoimmune story that had been running since before his first birthday.</p>
 ''',
 })
 
@@ -528,6 +552,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Paleomedicina case series document Hashimoto's patients tapering and eventually discontinuing levothyroxine after antibody normalisation on the PKD. In one published case, a woman with 16 years of Hashimoto's thyroiditis and dependence on thyroid supplementation achieved normal TSH, T3, and T4 levels without medication after eight months on PKD, with anti-TPO declining from several hundred to within normal range. The mechanism is removal of all dietary triggers for gut permeability and thyroid-cross-reactive immune activation.</p>
+
+<h2>A life with this condition</h2>
+<p>Claire had been told she was depressed for two years before her new GP ordered a thyroid panel. She was not depressed. She was cold when no one else was cold, exhausted after eight hours of sleep, and gaining weight on a diet that should have maintained her. Her brain felt like it was running through mud. She had seen two psychiatrists and been offered antidepressants she refused because she did not feel sad — she felt broken in a different, more physical way.</p>
+<p>Her TSH came back at 18, nearly four times the upper limit. Her anti-TPO antibodies were 640 IU/mL. The thyroid ultrasound showed a gland with the heterogeneous, moth-eaten texture of established Hashimoto's thyroiditis. The lymphocytes had been infiltrating for years; the gland was fibrotic, working itself to exhaustion to meet the demand of an increasingly impaired hormone synthesis pathway. She had not been depressed. She had had a slowly failing organ, and had been sent to psychiatrists instead of endocrinologists.</p>
 ''',
 })
 
@@ -593,6 +621,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Graves' disease is less extensively studied in the PKD literature than Hashimoto's, but Paleomedicina has documented cases of TSI normalisation and hyperthyroidism remission in patients adopting the PKD. The diet eliminates the dietary triggers of both permeability and Th2 immune skewing while providing the nutrient density (selenium, zinc, iodine through seafood and organ meats) required for normal thyroid function. Several patients have avoided radioiodine ablation or thyroidectomy by achieving immunological remission through dietary intervention.</p>
+
+<h2>A life with this condition</h2>
+<p>Tom was 45 when his wife asked why his eyes looked different. He had noticed his heart racing but attributed it to caffeine. He had dropped six kilograms in two months while eating more than usual, which he had found gratifying. The hand tremor was harder to explain. His optometrist noticed the proptosis during a routine visit — both eyes slightly prominent, the lids retracted — and referred him immediately to an endocrinologist.</p>
+<p>His T3 and T4 were both markedly elevated. TSH was undetectable. The TSI antibody test was strongly positive. The mechanism his endocrinologist described was precise: antibodies that mimicked TSH but never released from the receptor, driving continuous thyroid stimulation regardless of how high the hormone levels climbed. His body had been running at the metabolic equivalent of a sustained sprint he could not stop. He had felt energetic. He had actually been burning himself from the inside.</p>
 ''',
 })
 
@@ -655,6 +687,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Case reports and series document dramatic clearance of psoriatic plaques on the PKD, with some patients achieving complete skin clearance within weeks of eliminating grains, legumes, and processed foods. The mechanism is dual: removal of the gut permeability drivers that fuel the IL-23/Th17 axis, combined with the direct anti-inflammatory effect of ketone bodies on NLRP3-mediated IL-1 and IL-18 release. Psoriatic arthritis has shown parallel improvement in the same patients, confirming shared upstream drivers.</p>
+
+<h2>A life with this condition</h2>
+<p>Amara noticed the first plaques at 22, on her elbows. She recognised them from pictures — the silvery scale, the well-defined border, the way they bled slightly if she picked at them. She waited three months before seeing a doctor, embarrassed by what they looked like and hoping they would clear. By then her scalp was involved and she had started wearing her hair differently to cover the scale at her hairline.</p>
+<p>What her dermatologist showed her on a diagram changed how she understood what was happening. Normal skin takes 28 days to renew. Her affected patches were completing the cycle in three. The IL-17 flooding her dermis had locked her keratinocytes into hyperproliferation — cells unable to stop dividing fast enough to mature. The scale was not the disease; the scale was the skin's failed attempt to shed what it was producing too fast to control. Understanding the mechanism did not make it less visible. But it made it less shameful.</p>
 ''',
 })
 
@@ -721,6 +757,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Unlike most autoimmune conditions, celiac disease has an established, guideline-recommended dietary treatment: strict lifelong gluten elimination. Mucosal healing confirmed by repeat biopsy occurs in 80–95% of patients who achieve complete dietary compliance. The PKD, which eliminates all grains by design, achieves this as a baseline. In Paleomedicina patients with co-existing celiac and another autoimmune condition, both conditions have been shown to respond simultaneously to the PKD protocol.</p>
+
+<h2>A life with this condition</h2>
+<p>Noah had anaemia from age 11. His paediatrician treated it with iron supplements that never held — his ferritin would rise and then fall again within weeks. He was tired, not thriving in sports, shorter than both his parents had been at his age. At 14, a new paediatrician ran an anti-tTG IgA test as part of a general anaemia workup and called his mother the same day.</p>
+<p>The biopsy showed total villous atrophy — the finger-like projections lining the small intestine flattened entirely, the absorptive surface reduced to a fraction of normal. Every nutrient he ate had been passing through an intestine that could barely capture it. His immune system had been mounting a cytotoxic attack against his own intestinal cells every time he ate a piece of bread — and he had been eating bread with every meal for as long as he could remember. He stopped eating wheat completely. Within a year he was in the 60th percentile for height. His ferritin stayed normal without supplementation for the first time in his life.</p>
 ''',
 })
 
@@ -786,6 +826,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Sjögren's syndrome is less frequently reported in the PKD case series than conditions like RA or Crohn's, but patients with secondary Sjögren's (occurring alongside another autoimmune condition) have shown improvement in sicca symptoms when the primary condition responds to PKD. The rationale is reduction in systemic immune activation — the reduction in anti-Ro and anti-La titres parallels the reduction seen in anti-dsDNA in lupus patients, suggesting the same upstream permeability-driven priming mechanism is being addressed.</p>
+
+<h2>A life with this condition</h2>
+<p>Patricia was 52 when she started keeping a water bottle on her desk, then a second one at her bedside, then a third in her car. Her mouth was always dry — not thirsty-dry but structurally dry, her saliva barely coating the surface, food sticking to the roof of her mouth. Her dentist was alarmed by three new cavities in one year in a patient with no history of dental problems. Her eyes felt gritty by three in the afternoon, as if she had been in a dusty room all day.</p>
+<p>Her rheumatologist found anti-Ro/SSA antibodies on the ANA panel and referred her for a lip biopsy — a small incision in the inner lower lip to sample minor salivary glands. The pathologist counted 47 lymphocytes surrounding each gland duct. The immune cells had been patiently replacing her secretory tissue with scar, year by year, gland by gland. She would not produce more saliva than she currently had. The disease had been running long before she noticed the thirst. She had simply attributed the dryness to age, to air conditioning, to anything except an immune system quietly dismantling her glands.</p>
 ''',
 })
 
@@ -847,6 +891,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>The low-starch diet was pioneered specifically for AS by Alan Ebringer at King's College London, based on the Klebsiella hypothesis. Clinical trials demonstrated significant reduction in acute-phase reactants and disease activity scores. The PKD, which is zero-starch by design, represents the maximally effective implementation of this principle. Paleomedicina patients with AS have shown MRI improvement in sacroiliac joint inflammation and reduction in BASDAI (disease activity) scores, with some achieving complete clinical remission.</p>
+
+<h2>A life with this condition</h2>
+<p>Marcus was 26 when the lower back pain began. His GP diagnosed a muscle strain and recommended rest. But rest made it worse — he was stiffest after long nights in bed, loosening up only after an hour of movement in the morning. He described his mornings as "rusting open." Three years and two physiotherapists later, an X-ray showed the first syndesmophytes bridging his lower lumbar vertebrae.</p>
+<p>The MRI of his sacroiliac joints lit up with bone marrow oedema — the signature of enthesitis, inflammation at the insertion points of the ligaments where they meet bone. What was happening was not wear and tear. His immune system was attacking the entheses, and his repair response was building new bone to replace what it had inflamed — slowly fusing his spine from the bottom up. His rheumatologist told him that without a DMARD he would likely have a bamboo spine by 50. He was 29 at the time. Every morning he counted the vertebrae he could still move freely.</p>
 ''',
 })
 
@@ -915,6 +963,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>Vitiligo is among the more difficult autoimmune conditions to reverse because melanocytes, once destroyed, must be replaced by migration from hair follicle reservoirs — a slow process. Early-stage vitiligo, before complete melanocyte depletion in affected areas, shows the best response to immune intervention. Patients adopting PKD with active vitiligo have reported stabilisation of existing lesions and some repigmentation, particularly in areas with remaining follicular melanocytes. The mechanism is reduction in IFN-gamma-driven CXCL9/CXCL10 chemokine expression that maintains the cytotoxic T-cell homing to skin.</p>
+
+<h2>A life with this condition</h2>
+<p>Priya was 17 when she noticed a pale patch above her left eyebrow. Her mother had vitiligo on her hands; she knew what it was immediately. What she did not expect was how quickly it spread — both wrists within six months, patches around both eyes, a streak of white appearing in her dark hair above the right temple.</p>
+<p>The patches were painless. That was the strange cruelty of it: an immune assault visible to anyone who looked at her that she felt not at all. Her CD8+ T-cells had identified something in her melanocytes — the tyrosinase enzyme, her dermatologist explained — and were systematically eliminating the cells responsible for her skin's colour. Each white patch was a cleared zone, meticulously produced by an immune system that had confused harmless pigment-makers for a threat that did not exist. She carried the evidence of the confusion on her face every day.</p>
 ''',
 })
 
@@ -988,6 +1040,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>MG is less frequently documented in the PKD literature, reflecting the rarer presentation of thymoma-associated cases. However, ocular MG — the limited form affecting only eye muscles — and generalised MG in patients without thymoma have shown improvement in disease activity scores on anti-inflammatory diets. The primary therapeutic value of dietary intervention is reduction of the systemic inflammatory drive that maintains AChR-directed B cell activity, potentially reducing antibody titres and disease severity over time.</p>
+
+<h2>A life with this condition</h2>
+<p>Fiona first noticed her left eyelid drooping on a photograph. She was 41. Within a week she was wearing an eye patch to drive because the double vision was too disorienting, and by the end of the month she had been seen by a neurologist who performed an edrophonium test — injecting a drug that briefly reverses MG — and watched her eyelid lift completely for ninety seconds before falling again.</p>
+<p>The mechanism her neurologist described was almost offensively mechanical: antibodies sitting in the docking ports of her muscle receptors, physically blocking the acetylcholine trying to land. Her nerves were firing normally. The messages were arriving. There was simply nowhere to deliver them. By evening every day, her muscles had exhausted their limited receptor capacity and she could barely lift her arms above her head. By morning, after rest, they worked again. The disease was most present at the end of the day, when she had already used up whatever the morning had given her.</p>
 ''',
 })
 
@@ -1054,6 +1110,10 @@ ARTICLES.append({
 
 <h2>What the clinical data shows</h2>
 <p>APS management typically requires long-term anticoagulation with warfarin or direct oral anticoagulants (DOACs) — drugs that manage the thrombotic risk but do not address the underlying aPL antibody production. Dietary intervention targeting the gut permeability and dysbiosis that drives aPL production is an emerging complement to pharmacological management. Several APS patients in clinical practice have shown declining aPL titres on anti-inflammatory dietary protocols, suggesting that the immunological driver is accessible to dietary modification, even when pharmacological management of thrombotic risk remains necessary.</p>
+
+<h2>A life with this condition</h2>
+<p>Kezia was 34 when she had her third miscarriage, all in the second trimester. Each one had been explained individually — chromosomal abnormality, cervical incompetence, suboptimal luteal support. No single explanation fully satisfied her. After the third loss, her obstetrician ordered a thrombophilia screen.</p>
+<p>The antiphospholipid antibodies came back positive on all three markers: lupus anticoagulant, anti-cardiolipin IgG, and anti-beta-2-GPI — confirmed on two separate tests twelve weeks apart. The syndrome that had caused her three miscarriages had probably also been responsible for a brief episode of left arm numbness she had had at 29 and attributed to a trapped nerve. Her immune system had been producing antibodies that turned her blood vessels into clot-forming surfaces. She had been one thrombotic event away from a stroke for years and had not known it. She started anticoagulation the same week.</p>
 ''',
 })
 
