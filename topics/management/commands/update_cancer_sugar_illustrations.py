@@ -312,18 +312,15 @@ SVG_PET = """
 
 # ── Insertion markers ─────────────────────────────────────────────────────────
 
-# Insert Warburg SVG after the paragraph ending "...producing only a fraction of the energy..."
-WARBURG_ANCHOR = (
-    "This became known as the <strong>Warburg Effect</strong>, or aerobic fermentation. "
-    "It is inefficient — producing only a fraction of the energy that oxidative phosphorylation "
-    "generates — but it is fast, and it gives cancer cells a growth advantage because it produces "
-    "the carbon building blocks needed for rapid cell division."
-)
+# Insert Warburg SVG after the Warburg Effect paragraph
+WARBURG_ANCHOR = "cancer is running on sugar</strong>.</p>"
 
-# Insert PET SVG after the paragraph ending "...treating cancer."
+# Insert PET SVG after the PET scan section paragraph
 PET_ANCHOR = (
-    "The medical community uses this fact daily to detect cancer — while the mainstream research "
-    "and treatment paradigm has been slow to act on its implications for <em>treating</em> cancer."
+    "The FDG-PET scan injects radioactive glucose into the patient. Cancer cells absorb it far faster "
+    "than surrounding healthy tissue — tumours light up like beacons. Physicians use this daily "
+    "to detect cancer. What it reveals every single time is that cancer cells are consuming glucose "
+    "at an abnormally elevated rate.</p>"
 )
 
 
