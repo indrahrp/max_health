@@ -5,6 +5,146 @@ from .models import Post, Project, Category, Tag, BookReview
 from .forms import CommentForm, SubscribeForm
 
 
+# SVG illustrations for Physical Health topic cards — each conveys the disease process at a glance
+_HEALTH_ILLUS = {
+    'autoimmune': (
+        '<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        '<circle cx="60" cy="40" r="17" stroke="currentColor" stroke-width="1.5"/>'
+        '<circle cx="60" cy="40" r="6" fill="currentColor" fill-opacity=".25"/>'
+        '<circle cx="13" cy="22" r="7" stroke="currentColor" stroke-width="1.3" stroke-opacity=".85"/>'
+        '<line x1="13" y1="15" x2="13" y2="9" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<line x1="18" y1="17" x2="22" y2="12" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<line x1="8" y1="17" x2="4" y2="12" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<line x1="20" y1="26" x2="41" y2="35" stroke="currentColor" stroke-width="1.3" stroke-opacity=".9"/>'
+        '<polygon points="38,31 45,36 39,40" fill="currentColor" fill-opacity=".9"/>'
+        '<circle cx="107" cy="20" r="7" stroke="currentColor" stroke-width="1.3" stroke-opacity=".85"/>'
+        '<line x1="107" y1="13" x2="107" y2="7" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<line x1="112" y1="15" x2="116" y2="10" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<line x1="102" y1="15" x2="98" y2="10" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<line x1="101" y1="25" x2="80" y2="35" stroke="currentColor" stroke-width="1.3" stroke-opacity=".9"/>'
+        '<polygon points="82,31 75,36 81,40" fill="currentColor" fill-opacity=".9"/>'
+        '<circle cx="18" cy="68" r="7" stroke="currentColor" stroke-width="1.3" stroke-opacity=".85"/>'
+        '<line x1="18" y1="75" x2="18" y2="80" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<line x1="13" y1="72" x2="9" y2="77" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<line x1="23" y1="72" x2="27" y2="77" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<line x1="24" y1="62" x2="43" y2="51" stroke="currentColor" stroke-width="1.3" stroke-opacity=".9"/>'
+        '<polygon points="41,48 48,53 43,56" fill="currentColor" fill-opacity=".9"/>'
+        '</svg>'
+    ),
+    'heart-disease': (
+        '<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        '<circle cx="60" cy="40" r="34" stroke="currentColor" stroke-width="1.5" stroke-opacity=".45"/>'
+        '<circle cx="60" cy="40" r="27" stroke="currentColor" stroke-width="1" stroke-dasharray="3 2" stroke-opacity=".35"/>'
+        '<path d="M38 20 Q55 11 76 18 Q90 24 89 38 Q90 56 72 62 Q55 66 40 57 Q24 46 38 20Z" fill="currentColor" fill-opacity=".28" stroke="currentColor" stroke-width="1.3"/>'
+        '<path d="M40 22 Q57 15 76 22 Q87 29 86 40" stroke="currentColor" stroke-width="1.6" stroke-opacity=".65"/>'
+        '<circle cx="75" cy="48" r="11" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-width="1" stroke-opacity=".45"/>'
+        '<ellipse cx="75" cy="45" rx="5" ry="3" fill="currentColor" fill-opacity=".45"/>'
+        '<ellipse cx="81" cy="52" rx="5" ry="3" fill="currentColor" fill-opacity=".38"/>'
+        '<ellipse cx="69" cy="52" rx="4" ry="2.5" fill="currentColor" fill-opacity=".38"/>'
+        '</svg>'
+    ),
+    'diabetes': (
+        '<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        '<rect x="28" y="14" width="64" height="52" rx="16" stroke="currentColor" stroke-width="1.5"/>'
+        '<ellipse cx="60" cy="40" rx="14" ry="10" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="1"/>'
+        '<rect x="87" y="28" width="10" height="22" rx="3" stroke="currentColor" stroke-width="1.4"/>'
+        '<line x1="89" y1="34" x2="95" y2="46" stroke="currentColor" stroke-width="1.6" stroke-opacity=".9"/>'
+        '<line x1="95" y1="34" x2="89" y2="46" stroke="currentColor" stroke-width="1.6" stroke-opacity=".9"/>'
+        '<path d="M5 20 L11 14 L19 14 L23 20 L19 26 L11 26Z" stroke="currentColor" stroke-width="1.2" stroke-opacity=".85"/>'
+        '<path d="M100 8 L106 2 L114 2 L118 8 L114 14 L106 14Z" stroke="currentColor" stroke-width="1.2" stroke-opacity=".85"/>'
+        '<path d="M3 52 L9 46 L17 46 L21 52 L17 58 L9 58Z" stroke="currentColor" stroke-width="1.2" stroke-opacity=".6"/>'
+        '<line x1="109" y1="34" x2="109" y2="25" stroke="currentColor" stroke-width="1.3" stroke-opacity=".7"/>'
+        '<line x1="109" y1="25" x2="105" y2="19" stroke="currentColor" stroke-width="1.3" stroke-opacity=".7"/>'
+        '<line x1="109" y1="25" x2="113" y2="19" stroke="currentColor" stroke-width="1.3" stroke-opacity=".7"/>'
+        '<circle cx="109" cy="34" r="2.5" fill="currentColor" fill-opacity=".7"/>'
+        '<line x1="98" y1="39" x2="107" y2="39" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2" stroke-opacity=".6"/>'
+        '</svg>'
+    ),
+    'weight': (
+        '<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        '<circle cx="38" cy="42" r="30" stroke="currentColor" stroke-width="1.5"/>'
+        '<circle cx="36" cy="40" r="21" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="1" stroke-dasharray="3 2"/>'
+        '<circle cx="51" cy="25" r="7" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="25" cy="31" r="5" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="22" cy="55" r="6" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="1"/>'
+        '<ellipse cx="57" cy="58" rx="4" ry="3" fill="currentColor" fill-opacity=".55"/>'
+        '<line x1="74" y1="42" x2="82" y2="42" stroke="currentColor" stroke-width="1.2" stroke-opacity=".45"/>'
+        '<polygon points="80,39 85,42 80,45" fill="currentColor" fill-opacity=".45"/>'
+        '<circle cx="98" cy="42" r="16" stroke="currentColor" stroke-width="1.3" stroke-opacity=".7"/>'
+        '<circle cx="97" cy="41" r="9" fill="currentColor" fill-opacity=".15" stroke="currentColor" stroke-width="1" stroke-opacity=".6"/>'
+        '<ellipse cx="104" cy="52" rx="3" ry="2" fill="currentColor" fill-opacity=".5"/>'
+        '</svg>'
+    ),
+    'alzheimers': (
+        '<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        '<circle cx="16" cy="40" r="12" stroke="currentColor" stroke-width="1.4"/>'
+        '<circle cx="16" cy="40" r="5" fill="currentColor" fill-opacity=".3"/>'
+        '<line x1="16" y1="28" x2="12" y2="14" stroke="currentColor" stroke-width="1.2" stroke-opacity=".65"/>'
+        '<line x1="16" y1="28" x2="20" y2="14" stroke="currentColor" stroke-width="1.2" stroke-opacity=".65"/>'
+        '<line x1="8" y1="36" x2="2" y2="26" stroke="currentColor" stroke-width="1.2" stroke-opacity=".65"/>'
+        '<line x1="28" y1="40" x2="47" y2="40" stroke="currentColor" stroke-width="1.6"/>'
+        '<circle cx="59" cy="38" r="5" fill="currentColor" fill-opacity=".38" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="65" cy="44" r="5" fill="currentColor" fill-opacity=".38" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="55" cy="44" r="4.5" fill="currentColor" fill-opacity=".38" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="63" cy="34" r="4" fill="currentColor" fill-opacity=".38" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="57" cy="34" r="4" fill="currentColor" fill-opacity=".38" stroke="currentColor" stroke-width="1"/>'
+        '<line x1="49" y1="36" x2="54" y2="44" stroke="currentColor" stroke-width="1.8" stroke-opacity=".75"/>'
+        '<line x1="54" y1="36" x2="49" y2="44" stroke="currentColor" stroke-width="1.8" stroke-opacity=".75"/>'
+        '<line x1="73" y1="40" x2="92" y2="40" stroke="currentColor" stroke-width="1.6"/>'
+        '<circle cx="104" cy="40" r="12" stroke="currentColor" stroke-width="1.4"/>'
+        '<circle cx="104" cy="40" r="5" fill="currentColor" fill-opacity=".3"/>'
+        '<line x1="104" y1="28" x2="108" y2="14" stroke="currentColor" stroke-width="1.2" stroke-opacity=".65"/>'
+        '<line x1="104" y1="28" x2="100" y2="14" stroke="currentColor" stroke-width="1.2" stroke-opacity=".65"/>'
+        '<line x1="112" y1="36" x2="118" y2="26" stroke="currentColor" stroke-width="1.2" stroke-opacity=".65"/>'
+        '<path d="M6 52 Q10 58 7 64 Q4 70 9 74" stroke="currentColor" stroke-width="1.3" stroke-dasharray="2.5 1.5" stroke-opacity=".75"/>'
+        '</svg>'
+    ),
+    'liver-disease': (
+        '<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        '<polygon points="60,4 88,20 88,60 60,76 32,60 32,20" stroke="currentColor" stroke-width="1.5"/>'
+        '<circle cx="48" cy="27" r="9" fill="currentColor" fill-opacity=".28" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="68" cy="23" r="7" fill="currentColor" fill-opacity=".28" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="76" cy="39" r="10" fill="currentColor" fill-opacity=".28" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="54" cy="46" r="11" fill="currentColor" fill-opacity=".28" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="42" cy="55" r="8" fill="currentColor" fill-opacity=".28" stroke="currentColor" stroke-width="1"/>'
+        '<circle cx="68" cy="58" r="8" fill="currentColor" fill-opacity=".28" stroke="currentColor" stroke-width="1"/>'
+        '<ellipse cx="55" cy="36" rx="4" ry="3" fill="currentColor" fill-opacity=".65"/>'
+        '<circle cx="10" cy="30" r="5" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 1.5" stroke-opacity=".7"/>'
+        '<circle cx="108" cy="26" r="4" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 1.5" stroke-opacity=".6"/>'
+        '<circle cx="14" cy="60" r="5" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 1.5" stroke-opacity=".6"/>'
+        '</svg>'
+    ),
+    'kidney-disease': (
+        '<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        '<circle cx="60" cy="40" r="30" stroke="currentColor" stroke-width="1.4" stroke-opacity=".6"/>'
+        '<path d="M60 18 C72 20 82 28 84 40 C86 54 76 64 60 66 C44 68 32 58 30 44 C26 30 40 20 60 18" stroke="currentColor" stroke-width="1.6" stroke-opacity=".8" fill="none"/>'
+        '<path d="M60 24 C68 27 74 34 72 44 C70 54 62 58 52 54 C42 50 40 42 44 34 C48 26 54 23 60 24" stroke="currentColor" stroke-width="1.2" stroke-opacity=".5" fill="none"/>'
+        '<line x1="50" y1="28" x2="56" y2="37" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-opacity=".85"/>'
+        '<line x1="64" y1="34" x2="70" y2="45" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-opacity=".85"/>'
+        '<line x1="47" y1="48" x2="55" y2="55" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-opacity=".85"/>'
+        '<circle cx="30" cy="22" r="2.5" fill="currentColor" fill-opacity=".65"/>'
+        '<circle cx="22" cy="38" r="2" fill="currentColor" fill-opacity=".55"/>'
+        '<circle cx="28" cy="58" r="2.5" fill="currentColor" fill-opacity=".65"/>'
+        '<circle cx="90" cy="18" r="2" fill="currentColor" fill-opacity=".55"/>'
+        '<circle cx="94" cy="62" r="2.5" fill="currentColor" fill-opacity=".65"/>'
+        '</svg>'
+    ),
+    'mishaps': (
+        '<svg viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        '<rect x="22" y="16" width="52" height="58" rx="5" stroke="currentColor" stroke-width="1.5"/>'
+        '<rect x="38" y="12" width="20" height="9" rx="4" stroke="currentColor" stroke-width="1.4"/>'
+        '<line x1="30" y1="32" x2="64" y2="32" stroke="currentColor" stroke-width="1" stroke-opacity=".55"/>'
+        '<line x1="30" y1="40" x2="64" y2="40" stroke="currentColor" stroke-width="1" stroke-opacity=".55"/>'
+        '<line x1="30" y1="48" x2="52" y2="48" stroke="currentColor" stroke-width="1" stroke-opacity=".55"/>'
+        '<line x1="30" y1="57" x2="44" y2="68" stroke="currentColor" stroke-width="2.2" stroke-opacity=".9"/>'
+        '<line x1="44" y1="57" x2="30" y2="68" stroke="currentColor" stroke-width="2.2" stroke-opacity=".9"/>'
+        '<path d="M90 18 L108 58 L72 58Z" stroke="currentColor" stroke-width="1.5" stroke-opacity=".85" fill="none"/>'
+        '<line x1="90" y1="30" x2="90" y2="46" stroke="currentColor" stroke-width="2.2" stroke-opacity=".9"/>'
+        '<circle cx="90" cy="52" r="2" fill="currentColor" fill-opacity=".9"/>'
+        '</svg>'
+    ),
+}
+
 # Cogitra section system — 9 sections, each with its own accent + curve + typography
 # Curve SVG paths are in viewBox 0 0 200 200
 SECTION_CONFIG = {
@@ -38,14 +178,14 @@ SECTION_CONFIG = {
         'pillar_slugs': ['species-appropriate-diet', 'carnivore-diet', 'autoimmune', 'autoimmune-disease'],
         'category_slugs': ['health'],
         'subcategories': [
-            {'id': 'autoimmune',     'name': 'Autoimmune Disease',     'short': 'Autoimmune',      'blurb': 'When the immune system mistakes home for elsewhere — lupus, MS, RA, and the long bench of the chronically misread.', 'accent': '#4cc995', 'match_slugs': ['autoimmune', 'autoimmune-disease']},
-            {'id': 'heart-disease',  'name': 'Heart Disease',          'short': 'Heart',           'blurb': 'The most common killer in the developed world — and the most often misframed. Lipids, inflammation, and the metabolic argument.', 'accent': '#34a366', 'match_slugs': ['heart-disease']},
-            {'id': 'diabetes',       'name': 'Diabetes',               'short': 'Diabetes',        'blurb': 'Type 1, type 2, type 1.5 — a family of metabolic diseases whose lines keep moving. The clinical and the dietary literature.', 'accent': '#5ecf86', 'match_slugs': ['diabetes', 'type-1-diabetes']},
-            {'id': 'weight',         'name': 'Weight',                 'short': 'Weight',          'blurb': 'Obesity, GLP-1 drugs, set-point theory, and the long contest over what makes a body store and shed.', 'accent': '#43b878', 'match_slugs': ['weight', 'obesity']},
-            {'id': 'alzheimers',     'name': 'Alzheimer’s Disease','short': 'Alzheimer’s','blurb': 'Amyloid, tau, ApoE, and the slow re-thinking of dementia as a disease of brain metabolism.', 'accent': '#9bdcb6', 'match_slugs': ['alzheimers', 'dementia']},
-            {'id': 'liver-disease',  'name': 'Liver Disease',          'short': 'Liver',           'blurb': 'Fatty liver, fibrosis, and the silent organ that bears the brunt of modern eating.', 'accent': '#2a8a52', 'match_slugs': ['liver-disease']},
-            {'id': 'kidney-disease', 'name': 'Kidney Disease',         'short': 'Kidney',          'blurb': 'Diabetic nephropathy, hypertension, and the slow strangling of the body’s filtration system.', 'accent': '#74d49d', 'match_slugs': ['kidney-disease']},
-            {'id': 'mishaps',        'name': 'Medical System Mishaps', 'short': 'Mishaps',         'blurb': 'When medicine gets it wrong — misdiagnosis, overtreatment, and the institutions that resist correction.', 'accent': '#86d3a6', 'match_slugs': ['medical-mishaps', 'mishaps']},
+            {'id': 'autoimmune',     'name': 'Autoimmune Disease',     'short': 'Autoimmune',      'blurb': 'When the immune system mistakes home for elsewhere — lupus, MS, RA, and the long bench of the chronically misread.', 'accent': '#4cc995', 'match_slugs': ['autoimmune', 'autoimmune-disease'], 'illustration': _HEALTH_ILLUS['autoimmune']},
+            {'id': 'heart-disease',  'name': 'Heart Disease',          'short': 'Heart',           'blurb': 'The most common killer in the developed world — and the most often misframed. Lipids, inflammation, and the metabolic argument.', 'accent': '#34a366', 'match_slugs': ['heart-disease'], 'illustration': _HEALTH_ILLUS['heart-disease']},
+            {'id': 'diabetes',       'name': 'Diabetes',               'short': 'Diabetes',        'blurb': 'Type 1, type 2, type 1.5 — a family of metabolic diseases whose lines keep moving. The clinical and the dietary literature.', 'accent': '#5ecf86', 'match_slugs': ['diabetes', 'type-1-diabetes'], 'illustration': _HEALTH_ILLUS['diabetes']},
+            {'id': 'weight',         'name': 'Weight',                 'short': 'Weight',          'blurb': 'Obesity, GLP-1 drugs, set-point theory, and the long contest over what makes a body store and shed.', 'accent': '#43b878', 'match_slugs': ['weight', 'obesity'], 'illustration': _HEALTH_ILLUS['weight']},
+            {'id': 'alzheimers',     'name': 'Alzheimer’s Disease','short': 'Alzheimer’s','blurb': 'Amyloid, tau, ApoE, and the slow re-thinking of dementia as a disease of brain metabolism.', 'accent': '#9bdcb6', 'match_slugs': ['alzheimers', 'dementia'], 'illustration': _HEALTH_ILLUS['alzheimers']},
+            {'id': 'liver-disease',  'name': 'Liver Disease',          'short': 'Liver',           'blurb': 'Fatty liver, fibrosis, and the silent organ that bears the brunt of modern eating.', 'accent': '#2a8a52', 'match_slugs': ['liver-disease'], 'illustration': _HEALTH_ILLUS['liver-disease']},
+            {'id': 'kidney-disease', 'name': 'Kidney Disease',         'short': 'Kidney',          'blurb': 'Diabetic nephropathy, hypertension, and the slow strangling of the body’s filtration system.', 'accent': '#74d49d', 'match_slugs': ['kidney-disease'], 'illustration': _HEALTH_ILLUS['kidney-disease']},
+            {'id': 'mishaps',        'name': 'Medical System Mishaps', 'short': 'Mishaps',         'blurb': 'When medicine gets it wrong — misdiagnosis, overtreatment, and the institutions that resist correction.', 'accent': '#86d3a6', 'match_slugs': ['medical-mishaps', 'mishaps'], 'illustration': _HEALTH_ILLUS['mishaps']},
         ],
     },
     'mental': {
@@ -60,7 +200,7 @@ SECTION_CONFIG = {
         'type_weight': '400',
         'type_style': 'normal',
         'type_tracking': '-0.01em',
-        'pillar_slugs': ['mental-health'],
+        'pillar_slugs': ['mental-health', 'physiological-origin', 'psychological-origin'],
         'category_slugs': ['mental'],
         'subcategories': [
             {'id': 'physiological-origin', 'name': 'Mental Illness · Physiological Origin', 'short': 'Physiological', 'blurb': 'The metabolic, inflammatory, and structural roots of mental illness — mitochondria, gut, sleep, hormones.', 'accent': '#7ec0b0', 'match_slugs': ['physiological-origin']},
