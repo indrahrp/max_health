@@ -310,6 +310,224 @@ SVG_PET = """
 <figcaption style="font-size:0.78rem;color:#64748b;margin-top:0.5em;text-align:center;">Every FDG-PET scan performed in oncology departments worldwide is direct proof of the Warburg Effect — tumours reveal themselves by their abnormal hunger for glucose.</figcaption>
 </figure>"""
 
+# ── SVG 3: Liver Cancer PET Scan (person in scanner) ─────────────────────────
+
+SVG_PET_LIVER = """
+<figure style="margin:1.5em 0 2.5em;">
+<svg viewBox="0 0 720 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:16px;" role="img" aria-label="Person lying in a PET scanner with liver cancer cells lit up by radioactive glucose absorption">
+  <defs>
+    <linearGradient id="pl-scanner-ring" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a5f"/>
+      <stop offset="50%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e3a5f"/>
+    </linearGradient>
+    <radialGradient id="pl-tumor-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#fbbf24" stop-opacity="1"/>
+      <stop offset="40%"  stop-color="#f97316" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#dc2626" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pl-liver-bg" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#1a3a22"/>
+      <stop offset="100%" stop-color="#0a1a10"/>
+    </radialGradient>
+    <radialGradient id="pl-body-bg" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#0d1f38"/>
+      <stop offset="100%" stop-color="#060e1c"/>
+    </radialGradient>
+    <filter id="pl-glow">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="pl-soft">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="pl-arr-b" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#60a5fa"/></marker>
+    <marker id="pl-arr-y" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#fbbf24"/></marker>
+    <marker id="pl-arr-o" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f97316"/></marker>
+    <linearGradient id="pl-bed" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="pl-scale" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#0d1f38"/>
+      <stop offset="45%"  stop-color="#1a4a3a"/>
+      <stop offset="70%"  stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="440" fill="#090d1a" rx="16"/>
+
+  <!-- Title -->
+  <text x="360" y="26" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#f1f5f9" font-weight="700">PET Scan: Detecting Liver Cancer Through Its Sugar Craving</text>
+  <text x="360" y="43" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10.5" fill="#475569">Radioactive glucose flows through bloodstream → liver cancer cells consume it far faster → tumour glows</text>
+
+  <!-- ══ LEFT PANEL: PATIENT IN SCANNER ════════════════════════════════════════ -->
+
+  <!-- Scanner bed -->
+  <rect x="22" y="278" width="360" height="12" rx="4" fill="url(#pl-bed)" stroke="#334155" stroke-width="1"/>
+  <rect x="14" y="288" width="376" height="7" rx="3" fill="#0a1020" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- PET scanner gantry housing -->
+  <rect x="124" y="133" width="172" height="14" rx="4" fill="#1e3a5f" stroke="#2563eb" stroke-width="1" opacity="0.75"/>
+  <rect x="124" y="295" width="172" height="12" rx="4" fill="#1e3a5f" stroke="#2563eb" stroke-width="1" opacity="0.75"/>
+  <rect x="116" y="140" width="14" height="158" rx="3" fill="#1e3a5f" stroke="#2563eb" stroke-width="1" opacity="0.75"/>
+  <rect x="290" y="140" width="14" height="158" rx="3" fill="#1e3a5f" stroke="#2563eb" stroke-width="1" opacity="0.75"/>
+
+  <!-- Scanner ring (thick ellipse, detector array) -->
+  <ellipse cx="210" cy="235" rx="90" ry="96" fill="none" stroke="url(#pl-scanner-ring)" stroke-width="26" opacity="0.95"/>
+  <ellipse cx="210" cy="235" rx="90" ry="96" fill="none" stroke="#60a5fa" stroke-width="1.5" opacity="0.35"/>
+  <!-- Inner detector dots -->
+  <ellipse cx="210" cy="235" rx="78" ry="84" fill="none" stroke="#1e40af" stroke-width="1" stroke-dasharray="5 4" opacity="0.4"/>
+
+  <!-- Scanner active light -->
+  <circle cx="296" cy="158" r="4" fill="#22c55e" opacity="0.9"/>
+  <circle cx="296" cy="158" r="7" fill="none" stroke="#22c55e" stroke-width="1" opacity="0.35"/>
+  <text x="304" y="162" font-family="system-ui,sans-serif" font-size="7.5" fill="#22c55e" font-weight="600">SCAN</text>
+
+  <!-- Patient body (horizontal) -->
+  <!-- Torso -->
+  <rect x="28" y="220" width="356" height="50" rx="20" fill="url(#pl-body-bg)" stroke="#1e3a5f" stroke-width="1.2"/>
+  <!-- Head -->
+  <ellipse cx="46" cy="245" rx="24" ry="20" fill="#0d1f38" stroke="#1e3a5f" stroke-width="1.2"/>
+  <!-- Hair suggestion -->
+  <ellipse cx="46" cy="228" rx="18" ry="8" fill="#0a1628" stroke="#1e2a4a" stroke-width="1"/>
+  <!-- Neck -->
+  <rect x="66" y="236" width="14" height="18" fill="#0d1f38"/>
+  <!-- Legs/feet (right side emerging) -->
+  <rect x="352" y="226" width="44" height="38" rx="10" fill="#0a1628" stroke="#1e293b" stroke-width="1"/>
+  <!-- Foot shape -->
+  <ellipse cx="396" cy="255" rx="12" ry="9" fill="#060e1c" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- IV line (FDG injection in arm) -->
+  <path d="M 80 220 Q 78 190, 72 165 Q 68 148, 60 140" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4 2"/>
+  <circle cx="60" cy="138" r="5" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>
+  <line x1="60" y1="133" x2="60" y2="108" stroke="#60a5fa" stroke-width="1.2"/>
+  <!-- IV bag -->
+  <rect x="44" y="90" width="32" height="18" rx="4" fill="#0d1625" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="60" y="101" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.5" fill="#60a5fa" font-weight="700">FDG</text>
+  <text x="60" y="110" text-anchor="middle" font-family="system-ui,sans-serif" font-size="6.5" fill="#475569">radioactive</text>
+  <text x="60" y="119" text-anchor="middle" font-family="system-ui,sans-serif" font-size="6.5" fill="#475569">glucose</text>
+
+  <!-- Bloodstream flow lines through body -->
+  <path d="M 88 235 Q 140 228, 200 238 Q 260 248, 310 238" fill="none" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3 4" opacity="0.4"/>
+  <path d="M 88 252 Q 150 260, 200 252 Q 255 243, 300 252" fill="none" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3 4" opacity="0.3"/>
+
+  <!-- Liver hotspot on body -->
+  <ellipse cx="244" cy="241" rx="20" ry="13" fill="url(#pl-tumor-glow)" filter="url(#pl-glow)" opacity="0.75"/>
+  <ellipse cx="244" cy="241" rx="12" ry="8" fill="#f97316" opacity="0.9"/>
+  <ellipse cx="244" cy="241" rx="23" ry="16" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.6"/>
+
+  <!-- Gamma rays from hotspot toward scanner ring -->
+  <line x1="244" y1="230" x2="222" y2="148" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3 3" opacity="0.55"/>
+  <line x1="244" y1="252" x2="222" y2="318" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3 3" opacity="0.55"/>
+  <line x1="258" y1="240" x2="300" y2="215" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3 3" opacity="0.45"/>
+  <line x1="228" y1="240" x2="132" y2="212" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3 3" opacity="0.45"/>
+
+  <!-- Liver location callout -->
+  <line x1="244" y1="228" x2="244" y2="185" stroke="#f97316" stroke-width="1" stroke-dasharray="3 2"/>
+  <rect x="188" y="162" width="112" height="24" rx="4" fill="#1a0a00" stroke="#f97316" stroke-width="1"/>
+  <text x="244" y="173" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8.5" fill="#fb923c" font-weight="700">Liver — cancer hotspot</text>
+  <text x="244" y="182" text-anchor="middle" font-family="system-ui,sans-serif" font-size="7.5" fill="#7c3917">high FDG uptake</text>
+
+  <!-- Scanner label -->
+  <text x="210" y="378" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#475569">PET Scanner</text>
+  <text x="210" y="390" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#334155">γ rays detected → tumour mapped</text>
+
+  <!-- ══ RIGHT PANEL: LIVER ZOOM ════════════════════════════════════════════════ -->
+
+  <!-- Zoom lines from body hotspot to liver panel -->
+  <line x1="264" y1="232" x2="408" y2="155" stroke="#f97316" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+  <line x1="264" y1="250" x2="408" y2="340" stroke="#f97316" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+
+  <!-- Liver panel frame -->
+  <rect x="408" y="58" width="294" height="340" rx="10" fill="#06090f" stroke="#1e293b" stroke-width="1.5"/>
+  <text x="555" y="78" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#475569" letter-spacing="0.08em">LIVER — ENLARGED VIEW</text>
+
+  <!-- Liver organ (wedge/lobe shape) -->
+  <path d="M 448 215 Q 446 148, 498 130 Q 548 115, 598 132 Q 648 148, 664 183 Q 678 216, 664 255 Q 650 285, 614 298 Q 570 312, 524 305 Q 486 298, 463 274 Q 444 252, 448 215 Z"
+        fill="url(#pl-liver-bg)" stroke="#1a4a2a" stroke-width="1.5"/>
+  <!-- Gallbladder hint -->
+  <ellipse cx="540" cy="305" rx="14" ry="9" fill="#0a2015" stroke="#1a4a2a" stroke-width="1" opacity="0.6"/>
+  <!-- Portal vein suggestion -->
+  <path d="M 520 215 Q 530 230, 525 250" fill="none" stroke="#0f3020" stroke-width="3" opacity="0.5"/>
+  <path d="M 525 215 Q 540 208, 560 215" fill="none" stroke="#0f3020" stroke-width="2" opacity="0.4"/>
+
+  <!-- Healthy hepatocyte cells (dim green dots) -->
+  <circle cx="616" cy="162" r="6"  fill="#1a4a3a" opacity="0.55"/>
+  <circle cx="646" cy="200" r="5"  fill="#1a4a3a" opacity="0.5"/>
+  <circle cx="638" cy="248" r="6"  fill="#1a4a3a" opacity="0.45"/>
+  <circle cx="600" cy="278" r="5"  fill="#1a4a3a" opacity="0.45"/>
+  <circle cx="556" cy="290" r="5"  fill="#1a4a3a" opacity="0.45"/>
+  <circle cx="594" cy="160" r="4"  fill="#1a4a3a" opacity="0.4"/>
+
+  <!-- Cancer tumour core glow -->
+  <circle cx="506" cy="205" r="42" fill="url(#pl-tumor-glow)" filter="url(#pl-glow)" opacity="0.7"/>
+  <circle cx="506" cy="205" r="22" fill="#f97316" opacity="0.95"/>
+  <circle cx="506" cy="205" r="12" fill="#fbbf24" opacity="1"/>
+  <!-- Tumour irregular border (cancer not perfectly round) -->
+  <path d="M 506 183 Q 522 179, 528 192 Q 534 205, 526 218 Q 518 230, 504 228 Q 488 226, 480 213 Q 473 200, 480 188 Q 487 178, 506 183 Z"
+        fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.55"/>
+
+  <!-- FDG glucose molecules rushing toward tumor (small yellow circles + trails) -->
+  <circle cx="468" cy="178" r="4.5" fill="#fbbf24" filter="url(#pl-soft)" opacity="0.9"/>
+  <line x1="456" y1="172" x2="470" y2="180" stroke="#fbbf24" stroke-width="1.2" opacity="0.6"/>
+
+  <circle cx="474" cy="228" r="4"   fill="#fbbf24" filter="url(#pl-soft)" opacity="0.85"/>
+  <line x1="462" y1="235" x2="476" y2="227" stroke="#fbbf24" stroke-width="1.2" opacity="0.6"/>
+
+  <circle cx="540" cy="172" r="4.5" fill="#fbbf24" filter="url(#pl-soft)" opacity="0.9"/>
+  <line x1="550" y1="164" x2="539" y2="174" stroke="#fbbf24" stroke-width="1.2" opacity="0.6"/>
+
+  <circle cx="548" cy="230" r="3.5" fill="#fbbf24" filter="url(#pl-soft)" opacity="0.8"/>
+  <line x1="558" y1="238" x2="547" y2="229" stroke="#fbbf24" stroke-width="1.2" opacity="0.6"/>
+
+  <!-- FDG arrows converging on tumour -->
+  <line x1="460" y1="190" x2="483" y2="200" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#pl-arr-y)" opacity="0.85"/>
+  <line x1="536" y1="174" x2="520" y2="190" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#pl-arr-y)" opacity="0.85"/>
+  <line x1="542" y1="222" x2="522" y2="212" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#pl-arr-y)" opacity="0.85"/>
+  <line x1="464" y1="220" x2="484" y2="212" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#pl-arr-y)" opacity="0.85"/>
+
+  <!-- FDG label -->
+  <rect x="416" y="136" width="76" height="28" rx="4" fill="#1a1200" stroke="#fbbf24" stroke-width="1"/>
+  <text x="454" y="148" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8.5" fill="#fcd34d" font-weight="600">FDG glucose</text>
+  <text x="454" y="160" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#92400e">flooding in</text>
+
+  <!-- Gamma ray emissions from tumour -->
+  <line x1="492" y1="186" x2="462" y2="156" stroke="#c4b5fd" stroke-width="1" stroke-dasharray="3 2" opacity="0.65"/>
+  <line x1="520" y1="186" x2="550" y2="156" stroke="#c4b5fd" stroke-width="1" stroke-dasharray="3 2" opacity="0.65"/>
+  <text x="427" y="153" font-family="system-ui,sans-serif" font-size="7.5" fill="#8b5cf6" opacity="0.85">γ rays</text>
+  <text x="427" y="163" font-family="system-ui,sans-serif" font-size="7.5" fill="#8b5cf6" opacity="0.85">emitted</text>
+
+  <!-- Cancer tumour label callout -->
+  <line x1="526" y1="192" x2="598" y2="152" stroke="#f97316" stroke-width="1" stroke-dasharray="3 2"/>
+  <rect x="598" y="130" width="92" height="32" rx="5" fill="#1a0a00" stroke="#f97316" stroke-width="1.2"/>
+  <text x="644" y="143" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#fb923c" font-weight="700">Liver cancer cells</text>
+  <text x="644" y="155" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#7c3917">absorb glucose 5–10×</text>
+  <text x="644" y="165" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#7c3917">faster than normal</text>
+
+  <!-- Healthy hepatocyte label -->
+  <line x1="642" y1="202" x2="668" y2="202" stroke="#334155" stroke-width="1" stroke-dasharray="2 2"/>
+  <text x="672" y="198" font-family="system-ui,sans-serif" font-size="7.5" fill="#475569">Healthy</text>
+  <text x="672" y="208" font-family="system-ui,sans-serif" font-size="7.5" fill="#475569">hepatocytes</text>
+  <text x="672" y="218" font-family="system-ui,sans-serif" font-size="7.5" fill="#334155">(low FDG uptake)</text>
+
+  <!-- Colour scale -->
+  <rect x="426" y="326" width="180" height="8" rx="3" fill="url(#pl-scale)"/>
+  <text x="426" y="347" font-family="system-ui,sans-serif" font-size="7.5" fill="#334155">Low uptake</text>
+  <text x="606" y="347" text-anchor="end" font-family="system-ui,sans-serif" font-size="7.5" fill="#fb923c">Tumour hotspot</text>
+
+  <!-- Bottom note -->
+  <rect x="10" y="408" width="700" height="24" rx="5" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+  <text x="360" y="421" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8.5" fill="#64748b">Cancer cells cannot stop consuming glucose — this metabolic compulsion is what makes them visible.</text>
+  <text x="360" y="432" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8.5" fill="#64748b">Every FDG-PET scan performed in oncology is <tspan fill="#f97316" font-weight="600">direct proof of the Warburg Effect</tspan> — the tumour betrays itself through its hunger.</text>
+</svg>
+<figcaption style="font-size:0.78rem;color:#64748b;margin-top:0.5em;text-align:center;">A patient with liver cancer undergoing FDG-PET imaging. The injected radioactive glucose accumulates preferentially in cancer cells — which consume it far faster than surrounding healthy liver tissue — making the tumour glow on the scan.</figcaption>
+</figure>"""
+
+
 # ── Insertion markers ─────────────────────────────────────────────────────────
 
 # Insert Warburg SVG after the Warburg Effect paragraph
@@ -336,7 +554,7 @@ class Command(BaseCommand):
 
         content = article.content
 
-        if SVG_WARBURG in content and SVG_PET in content:
+        if SVG_WARBURG in content and SVG_PET in content and SVG_PET_LIVER in content:
             self.stdout.write("Illustrations already present — nothing to do.")
             return
 
@@ -359,6 +577,17 @@ class Command(BaseCommand):
             self.stdout.write("Inserted PET scan illustration.")
         else:
             self.stderr.write("WARNING: PET anchor not found or SVG already present.")
+
+        # Insert liver cancer PET illustration before the existing abstract PET SVG
+        LIVER_ANCHOR = '<figure style="margin:1.5em 0 2.5em;">\n<svg viewBox="0 0 720 380"'
+        if LIVER_ANCHOR in content and SVG_PET_LIVER not in content:
+            content = content.replace(
+                LIVER_ANCHOR,
+                SVG_PET_LIVER + "\n\n" + LIVER_ANCHOR,
+            )
+            self.stdout.write("Inserted liver cancer PET scan illustration.")
+        else:
+            self.stderr.write("WARNING: liver PET anchor not found or SVG already present.")
 
         article.content = content
         article.save()
