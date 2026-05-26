@@ -5,8 +5,9 @@ from topics.models import Pillar, Article
 
 def svg(disease_title, accent, stage1_label, stage2_label, stage3_label,
         stage1_shapes, stage2_shapes, stage3_shapes,
-        stage1_note='', stage2_note='', stage3_note=''):
-    """Build a 3-stage disease-process SVG (720×400, dark bg)."""
+        stage1_note='', stage2_note='', stage3_note='',
+        bg='#090d1a', panel_fill='#111827'):
+    """Build a 3-stage disease-process SVG (720×370, tinted dark bg)."""
     arrow = (
         '<defs>'
         f'<marker id="ar{accent[1:]}" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">'
@@ -18,10 +19,10 @@ def svg(disease_title, accent, stage1_label, stage2_label, stage3_label,
 
     def panel(cx, label, shapes, note, step_num):
         num_circle = f'<circle cx="{cx-80}" cy="52" r="12" fill="{accent}"/><text x="{cx-80}" y="57" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="white" font-weight="700">{step_num}</text>'
-        bg = f'<circle cx="{cx}" cy="200" r="100" fill="#111827" stroke="{accent}" stroke-width="1.2" stroke-opacity=".55"/>'
+        pbg = f'<circle cx="{cx}" cy="200" r="100" fill="{panel_fill}" stroke="{accent}" stroke-width="1.2" stroke-opacity=".55"/>'
         lbl = f'<text x="{cx}" y="325" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#e2e8f0" font-weight="600">{label}</text>'
         nt = f'<text x="{cx}" y="342" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#64748b">{note}</text>' if note else ''
-        return num_circle + bg + shapes + lbl + nt
+        return num_circle + pbg + shapes + lbl + nt
 
     p1 = panel(120, stage1_label, stage1_shapes, stage1_note, '1')
     p2 = panel(360, stage2_label, stage2_shapes, stage2_note, '2')
@@ -41,7 +42,7 @@ def svg(disease_title, accent, stage1_label, stage2_label, stage3_label,
         f'<figure style="margin:1.5em 0 2.5em;">'
         f'<svg viewBox="0 0 720 370" xmlns="http://www.w3.org/2000/svg" '
         f'style="width:100%;border-radius:16px;" role="img" aria-label="{disease_title} disease process diagram">'
-        f'<rect width="720" height="370" fill="#090d1a" rx="16"/>'
+        f'<rect width="720" height="370" fill="{bg}" rx="16"/>'
         + arrow + title_svg + p1 + arrows + p2 + p3 +
         f'</svg></figure>'
     )
@@ -95,6 +96,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#818cf8">Complexes deposit in glomerulus</text>'
         ),
         'Normal DNA in nucleus', 'DNA fragments escape; B cells make antibodies', 'Immune complexes trigger organ inflammation',
+        bg='#06061e', panel_fill='#0e0e2e',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Systemic lupus erythematosus begins when the immune system fails to clear dying cells efficiently. Fragments of DNA and nuclear proteins from apoptotic cells enter the circulation, and B cells — primed by a loss of tolerance — begin producing antibodies directed at those fragments. The most specific are anti-double-stranded DNA antibodies (anti-dsDNA), which serve as the key diagnostic marker of the disease.</p>
@@ -180,6 +182,7 @@ ARTICLES.append({
             '<text x="574" y="180" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#dc2626">sclerotic plaques</text>'
         ),
         'Intact myelin, fast conduction', 'Autoreactive T-cells cross BBB, attack myelin', 'Demyelination, scarring, signal failure',
+        bg='#1a1100', panel_fill='#261900',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>The central nervous system is normally protected from immune surveillance by the blood-brain barrier — a tightly sealed endothelium that prevents most immune cells from crossing into brain tissue. In MS, that barrier fails at focal points. Autoreactive CD4+ and CD8+ T-cells — primed in the periphery to recognise myelin antigens, particularly myelin basic protein (MBP) — cross into the CNS and initiate an inflammatory cascade.</p>
@@ -256,6 +259,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#fca5a5">Bone eroded by pannus</text>'
         ),
         'Cartilage cushions bone', 'Macrophages, T-cells flood synovium', 'Pannus invades, erodes bone',
+        bg='#1a0404', panel_fill='#280808',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Rheumatoid arthritis begins not in the joint but in the systemic immune system. The disease is characterised by the production of rheumatoid factor (RF) and anti-citrullinated protein antibodies (ACPA) — antibodies that target citrullinated proteins, which are normal proteins altered by an enzyme called peptidylarginine deiminase. ACPA can appear in the bloodstream years before any joint symptoms, marking the period of immune system priming that precedes clinical disease.</p>
@@ -332,6 +336,7 @@ ARTICLES.append({
             '<text x="600" y="265" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#fdba74">Fistula / abscess</text>'
         ),
         'Mucosa → submucosa → muscle intact', 'Macrophages cluster → granuloma in all layers', 'Full-thickness ulcer, fistula formation',
+        bg='#1a0a00', panel_fill='#271500',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Crohn's disease is defined by its transmural character: the inflammation does not stay on the surface of the intestinal lining but penetrates through every layer of the gut wall — mucosa, submucosa, muscularis propria, and serosa. This distinguishes it sharply from ulcerative colitis, which remains mucosal. The transmural spread is why Crohn's produces fistulas (abnormal tunnels connecting loops of bowel or bowel to bladder, vagina, or skin) and abscesses, while UC does not.</p>
@@ -411,6 +416,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#fca5a5">Raw, bleeding mucosa</text>'
         ),
         'Tall crypts, intact epithelium', 'Neutrophils invade crypts (crypt abscess)', 'Crypt destruction, mucosal ulcers, bleeding',
+        bg='#170404', panel_fill='#260707',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Ulcerative colitis is a disease of the colon's mucosal surface. Unlike Crohn's disease, which can strike anywhere in the gastrointestinal tract and penetrates all layers of the gut wall, UC is confined to the mucosa and submucosa of the large intestine, always beginning at the rectum and extending proximally in a continuous, uninterrupted pattern. Proctitis affects only the rectum; left-sided colitis extends to the splenic flexure; pancolitis reaches the caecum.</p>
@@ -490,6 +496,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#a8a29e">Islet destroyed, no insulin output</text>'
         ),
         'Beta cells secrete insulin', 'T-cells enter islet (insulitis)', 'Beta cell mass eliminated, T1D onset',
+        bg='#001a0e', panel_fill='#002818',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>The pancreas contains clusters of hormone-producing cells called islets of Langerhans. Within each islet, beta cells are responsible for synthesising and secreting insulin in response to rising blood glucose. In type 1 diabetes, these beta cells are specifically targeted and destroyed by autoreactive CD8+ cytotoxic T-cells in a process called insulitis — immune cell infiltration of the islet.</p>
@@ -565,6 +572,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#a8a29e">Fibrotic gland, low T4/T3</text>'
         ),
         'Follicles produce T3 and T4', 'Germinal centres form, TPO antibodies', 'Follicle destruction, fibrosis, hypothyroid',
+        bg='#001a18', panel_fill='#002826',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>The thyroid gland is organised into spherical follicles, each lined with thyrocytes and filled with colloid — a gel containing thyroglobulin, the precursor from which T3 and T4 are cleaved. In Hashimoto's, this architecture is progressively dismantled by lymphocytic infiltration. Both CD4+ helper T-cells and CD8+ cytotoxic T-cells accumulate within the gland, forming germinal centres — the organised lymphoid structures normally found in lymph nodes — within the thyroid tissue itself.</p>
@@ -638,6 +646,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#a3e635">Enlarged, overactive thyroid</text>'
         ),
         'Pulsatile TSH briefly stimulates', 'TSI antibody binds, cannot be cleared', 'Continuous hormone excess, goitre',
+        bg='#0a1800', panel_fill='#132500',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>The thyroid gland is regulated by a feedback loop: the pituitary secretes TSH, which binds to TSH receptors on thyrocytes, stimulates hormone synthesis, then releases. Circulating T3 and T4 feed back to suppress TSH when levels are adequate. In Graves' disease, the immune system produces thyroid-stimulating immunoglobulins (TSI) — antibodies that bind the TSH receptor in the same site as TSH but cannot be cleared by the normal feedback mechanism.</p>
@@ -711,6 +720,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#f9a8d4">Plaque: 3-day cycle, thick scale</text>'
         ),
         'Normal 28-day keratinocyte cycle', 'IL-23 activates Th17 → IL-17 flood', 'Hyperproliferation → silvery plaque',
+        bg='#1a0009', panel_fill='#280012',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Psoriasis begins not in the skin but in the dendritic cells of the dermis. Plasmacytoid dendritic cells, activated by self-DNA or microbial triggers, produce interferon-alpha and IL-12/IL-23. IL-23 drives the differentiation of naive T-cells into Th17 cells, which secrete IL-17A, IL-17F, and IL-22. These cytokines act on keratinocytes — the cells that form the skin's outer layers — and trigger a profound shift in their behaviour.</p>
@@ -786,6 +796,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#fcd34d">Flat mucosa, malabsorption</text>'
         ),
         'Finger-like villi, high surface area', 'Gliadin → tTG deamidation → IgA anti-tTG', 'Villous flattening, crypt hyperplasia',
+        bg='#130e00', panel_fill='#201700',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>In celiac disease, the immune trigger is precisely identified: alpha-gliadin, a protein in wheat (and related prolamins in rye and barley). In genetically susceptible individuals carrying HLA-DQ2 or HLA-DQ8 — present in 98% of celiac patients — gliadin peptides that survive digestion enter the lamina propria through a leaky epithelial barrier. There, the enzyme tissue transglutaminase (tTG) deamidates gliadin peptides, converting glutamine residues to glutamate and increasing their affinity for HLA-DQ2/DQ8 molecules on antigen-presenting cells.</p>
@@ -860,6 +871,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#a8a29e">Fibrosis, xerostomia, xerophthalmia</text>'
         ),
         'Acinar cells produce fluid', 'Lymphocytic periductal infiltration', 'Acinar loss, dry mouth and dry eyes',
+        bg='#00101a', panel_fill='#001828',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Sjögren's syndrome is classified as an exocrinopathy — a disease of exocrine glands. The salivary glands (parotid, submandibular, sublingual) and lacrimal glands are the primary targets, but any exocrine gland can be involved, including the pancreatic exocrine glands, bronchial mucous glands, and vaginal glands. The glands fill with periductal lymphocytic infiltrates — characteristic foci of 50 or more lymphocytes surrounding each duct — that progressively replace secretory acinar tissue with fibrosis.</p>
@@ -930,6 +942,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#d8b4fe">Syndesmophyte bridges joint</text>'
         ),
         'Cartilage cushions SI joint', 'Enthesitis: inflammation at bone insertion', 'New bone bridges gap → ankylosis',
+        bg='#08001a', panel_fill='#120029',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Ankylosing spondylitis begins at the entheses — the sites where ligaments, tendons, and joint capsules attach to bone. The sacroiliac joints are the initial target in over 90% of cases, producing the characteristic buttock pain and morning stiffness that may precede diagnosis by years. The entheseal inflammation (enthesitis) is driven by IL-17, IL-23, and TNF-alpha, produced by innate-like lymphocytes (ILC3 cells and MAIT cells) that reside at entheseal sites and respond to microbial signals from the gut.</p>
@@ -1009,6 +1022,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#c4b5fd">No melanocytes, no pigment</text>'
         ),
         'Melanocytes produce melanin', 'IFN-γ activates CD8+ T-cells vs TYRP1/2', 'Melanocytes eliminated, white patch forms',
+        bg='#07001a', panel_fill='#0f0028',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Melanocytes are the pigment-producing cells of the skin's basal layer, responsible for synthesising melanin and transferring it to keratinocytes. In vitiligo, CD8+ cytotoxic T-cells recognise melanocyte-specific antigens — particularly tyrosinase, TYRP1, and TYRP2 — and eliminate melanocytes from discrete patches of skin. The T-cells are activated by IFN-gamma signalling and express the CXCR3 receptor, homing to skin in response to the CXCL9 and CXCL10 chemokines produced by keratinocytes under IFN-gamma stimulation.</p>
@@ -1092,6 +1106,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#67e8f9">Signal fails → fatigable weakness</text>'
         ),
         'Vesicles release ACh → muscle fires', 'IgG anti-AChR blocks, degrades receptor', 'Reduced receptor density → fatigue on use',
+        bg='#001318', panel_fill='#001f28',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Voluntary muscle contraction requires a reliable chain of communication from nerve to muscle. At the neuromuscular junction (NMJ), a motor nerve terminal releases acetylcholine (ACh) vesicles into the synaptic cleft when an action potential arrives. ACh diffuses across the cleft and binds to acetylcholine receptors (AChR) on the muscle end-plate, triggering the ion flux that initiates muscle contraction. In myasthenia gravis, IgG antibodies directed against the AChR's alpha subunit — the ACh binding site — occupy and block those receptors. They also activate complement at the NMJ, degrading the receptor density of the post-synaptic membrane over time.</p>
@@ -1167,6 +1182,7 @@ ARTICLES.append({
             '<text x="600" y="255" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#fda4af">Clot occludes vessel lumen</text>'
         ),
         'Endothelium repels clotting', 'aPL activates endothelium and platelets', 'Arterial or venous thrombosis',
+        bg='#180006', panel_fill='#26000f',
     ) + '''
 <h2>What is happening in the body</h2>
 <p>Antiphospholipid syndrome (APS) is caused by autoantibodies — antiphospholipid antibodies (aPL) — that target phospholipid-binding plasma proteins, most importantly beta-2 glycoprotein I (β2-GPI) and prothrombin. β2-GPI is a natural anticoagulant protein that binds to phospholipids exposed on cell membranes under conditions of cellular stress. When aPL antibodies bind β2-GPI on endothelial cells, monocytes, and platelets, they trigger an activation cascade: endothelial cells upregulate tissue factor and adhesion molecules; monocytes produce procoagulant microparticles; platelets aggregate. The net effect is a shift from the normal anticoagulant surface of blood vessels to a prothrombotic one.</p>
