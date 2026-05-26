@@ -60,7 +60,7 @@ SECTION_CONFIG = {
         'type_weight': '400',
         'type_style': 'normal',
         'type_tracking': '-0.01em',
-        'pillar_slugs': ['mental-health'],
+        'pillar_slugs': ['mental-health', 'physiological-origin', 'psychological-origin'],
         'category_slugs': ['mental'],
         'subcategories': [
             {'id': 'physiological-origin', 'name': 'Mental Illness · Physiological Origin', 'short': 'Physiological', 'blurb': 'The metabolic, inflammatory, and structural roots of mental illness — mitochondria, gut, sleep, hormones.', 'accent': '#7ec0b0', 'match_slugs': ['physiological-origin']},
