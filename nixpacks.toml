@@ -2,5 +2,6 @@
 cmds = [
   "python manage.py collectstatic --noinput",
   "python manage.py migrate",
-  "python manage.py load_autoimmune_diseases"
+  "python manage.py load_autoimmune_diseases",
+  "python manage.py load_eagleman_brain_mind"
 ]
