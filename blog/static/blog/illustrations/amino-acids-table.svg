@@ -1,0 +1,346 @@
+<svg viewBox="0 0 720 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:16px;" role="img" aria-label="The 20 amino acids — the building blocks of every protein, grouped by chemical property">
+<defs>
+  <radialGradient id="aa-bg" cx="50%" cy="40%" r="75%">
+    <stop offset="0%" stop-color="#0e1a2e"/>
+    <stop offset="100%" stop-color="#060c16"/>
+  </radialGradient>
+  <!-- property glows -->
+  <radialGradient id="g-np"  cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#d4a23a" stop-opacity="0.22"/><stop offset="100%" stop-color="#d4a23a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="g-ar"  cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#a387ff" stop-opacity="0.22"/><stop offset="100%" stop-color="#a387ff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="g-po"  cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#26c2c9" stop-opacity="0.22"/><stop offset="100%" stop-color="#26c2c9" stop-opacity="0"/></radialGradient>
+  <radialGradient id="g-neg" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#c43d62" stop-opacity="0.22"/><stop offset="100%" stop-color="#c43d62" stop-opacity="0"/></radialGradient>
+  <radialGradient id="g-pos" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#5b6cff" stop-opacity="0.22"/><stop offset="100%" stop-color="#5b6cff" stop-opacity="0"/></radialGradient>
+  <filter id="aa-glow"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="aa-glow-strong"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+
+<style>
+  /* ── card reveal: stagger in, hold, stagger out ── */
+  @keyframes card-in {
+    0%,4%    { opacity:0; transform:translateY(12px) scale(0.9); }
+    18%,78%  { opacity:1; transform:translateY(0)    scale(1);   }
+    92%,100% { opacity:0; transform:translateY(12px) scale(0.9); }
+  }
+  /* ── property row scan: each row brightens in turn ── */
+  @keyframes row-scan {
+    0%,35%   { filter:brightness(1)   drop-shadow(0 0 0px transparent); }
+    40%,55%  { filter:brightness(1.5) drop-shadow(0 0 8px currentColor); }
+    65%,100% { filter:brightness(1)   drop-shadow(0 0 0px transparent); }
+  }
+  /* ── single letter pulse ── */
+  @keyframes letter-pulse {
+    0%,100% { opacity:0.85; }
+    50%     { opacity:1;    }
+  }
+  /* ── scan line ── */
+  @keyframes scan-move {
+    0%,15%  { transform:translateY(-8px); opacity:0; }
+    22%,27% { transform:translateY(0);   opacity:0.6; }
+    33%,38% { transform:translateY(80px); opacity:0.6; }
+    44%,49% { transform:translateY(160px); opacity:0.6; }
+    55%,60% { transform:translateY(240px); opacity:0.6; }
+    72%,100%{ transform:translateY(320px); opacity:0; }
+  }
+  /* ── title shimmer ── */
+  @keyframes title-glow {
+    0%,100% { opacity:0.7; }
+    50%     { opacity:1;   }
+  }
+
+  /* card delays — 20 cards × 0.12s stagger, duration 10s */
+  .c0  { animation: card-in 10s ease-in-out infinite 0.00s; }
+  .c1  { animation: card-in 10s ease-in-out infinite 0.12s; }
+  .c2  { animation: card-in 10s ease-in-out infinite 0.24s; }
+  .c3  { animation: card-in 10s ease-in-out infinite 0.36s; }
+  .c4  { animation: card-in 10s ease-in-out infinite 0.48s; }
+  .c5  { animation: card-in 10s ease-in-out infinite 0.60s; }
+  .c6  { animation: card-in 10s ease-in-out infinite 0.72s; }
+  .c7  { animation: card-in 10s ease-in-out infinite 0.84s; }
+  .c8  { animation: card-in 10s ease-in-out infinite 0.96s; }
+  .c9  { animation: card-in 10s ease-in-out infinite 1.08s; }
+  .c10 { animation: card-in 10s ease-in-out infinite 1.20s; }
+  .c11 { animation: card-in 10s ease-in-out infinite 1.32s; }
+  .c12 { animation: card-in 10s ease-in-out infinite 1.44s; }
+  .c13 { animation: card-in 10s ease-in-out infinite 1.56s; }
+  .c14 { animation: card-in 10s ease-in-out infinite 1.68s; }
+  .c15 { animation: card-in 10s ease-in-out infinite 1.80s; }
+  .c16 { animation: card-in 10s ease-in-out infinite 1.92s; }
+  .c17 { animation: card-in 10s ease-in-out infinite 2.04s; }
+  .c18 { animation: card-in 10s ease-in-out infinite 2.16s; }
+  .c19 { animation: card-in 10s ease-in-out infinite 2.28s; }
+
+  /* property row scans — starts after all cards visible */
+  .row-np  { animation: row-scan 10s ease-in-out infinite 0s; }
+  .row-ar  { animation: row-scan 10s ease-in-out infinite 0.9s; }
+  .row-po  { animation: row-scan 10s ease-in-out infinite 1.8s; }
+  .row-ch  { animation: row-scan 10s ease-in-out infinite 2.7s; }
+
+  .letter  { animation: letter-pulse 3s ease-in-out infinite; }
+  .scan-line { animation: scan-move 10s ease-in-out infinite; }
+  .title-text { animation: title-glow 4s ease-in-out infinite; }
+</style>
+
+<!-- Background -->
+<rect width="720" height="500" fill="url(#aa-bg)" rx="16"/>
+
+<!-- Ambient property glows per row -->
+<rect x="18" y="68"  width="684" height="72" rx="8" fill="url(#g-np)"  opacity="0.7"/>
+<rect x="18" y="148" width="684" height="72" rx="8" fill="url(#g-ar)"  opacity="0.7"/>
+<rect x="18" y="228" width="684" height="72" rx="8" fill="url(#g-po)"  opacity="0.7"/>
+<rect x="18" y="308" width="684" height="72" rx="8" fill="url(#g-neg)" opacity="0.5"/>
+<rect x="388" y="308" width="314" height="72" rx="8" fill="url(#g-pos)" opacity="0.5"/>
+
+<!-- Title -->
+<text class="title-text" x="360" y="30" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" fill="#f1f5f9" font-weight="700" letter-spacing="-0.2">The 20 Amino Acids — Building Blocks of Every Protein</text>
+<text x="360" y="50" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10.5" fill="#475569">AlphaFold reads the sequence of these 20 letters to predict 3D structure</text>
+
+<!-- Scan line (sweeps across each row) -->
+<rect class="scan-line" x="18" y="68" width="684" height="2" rx="1" fill="#ffffff" opacity="0.08"/>
+
+<!-- ═══════════════════════════════════════════
+     ROW 0 — Nonpolar aliphatic  #d4a23a
+════════════════════════════════════════════ -->
+
+<!-- G · Glycine -->
+<g class="c0 row-np" style="transform-origin:84px 104px;">
+  <rect x="18"  y="68" width="126" height="72" rx="7" fill="rgba(212,162,58,0.09)" stroke="#d4a23a" stroke-width="1.2"/>
+  <rect x="18"  y="68" width="4"   height="72" rx="2" fill="#d4a23a" opacity="0.9"/>
+  <text x="54"  y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#d4a23a" filter="url(#aa-glow)" class="letter">G</text>
+  <text x="107" y="95"  text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Gly</text>
+  <text x="107" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Glycine</text>
+  <text x="107" y="127" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#d4a23a" letter-spacing="0.04em">Nonpolar</text>
+</g>
+
+<!-- A · Alanine -->
+<g class="c1 row-np" style="transform-origin:221px 104px;">
+  <rect x="153" y="68" width="126" height="72" rx="7" fill="rgba(212,162,58,0.09)" stroke="#d4a23a" stroke-width="1.2"/>
+  <rect x="153" y="68" width="4"   height="72" rx="2" fill="#d4a23a" opacity="0.9"/>
+  <text x="189" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#d4a23a" filter="url(#aa-glow)" class="letter">A</text>
+  <text x="242" y="95"  text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Ala</text>
+  <text x="242" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Alanine</text>
+  <text x="242" y="127" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#d4a23a" letter-spacing="0.04em">Nonpolar</text>
+</g>
+
+<!-- V · Valine -->
+<g class="c2 row-np" style="transform-origin:356px 104px;">
+  <rect x="288" y="68" width="126" height="72" rx="7" fill="rgba(212,162,58,0.09)" stroke="#d4a23a" stroke-width="1.2"/>
+  <rect x="288" y="68" width="4"   height="72" rx="2" fill="#d4a23a" opacity="0.9"/>
+  <text x="324" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#d4a23a" filter="url(#aa-glow)" class="letter">V</text>
+  <text x="377" y="95"  text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Val</text>
+  <text x="377" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Valine</text>
+  <text x="377" y="127" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#d4a23a" letter-spacing="0.04em">Nonpolar</text>
+</g>
+
+<!-- L · Leucine -->
+<g class="c3 row-np" style="transform-origin:491px 104px;">
+  <rect x="423" y="68" width="126" height="72" rx="7" fill="rgba(212,162,58,0.09)" stroke="#d4a23a" stroke-width="1.2"/>
+  <rect x="423" y="68" width="4"   height="72" rx="2" fill="#d4a23a" opacity="0.9"/>
+  <text x="459" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#d4a23a" filter="url(#aa-glow)" class="letter">L</text>
+  <text x="512" y="95"  text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Leu</text>
+  <text x="512" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Leucine</text>
+  <text x="512" y="127" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#d4a23a" letter-spacing="0.04em">Nonpolar</text>
+</g>
+
+<!-- I · Isoleucine -->
+<g class="c4 row-np" style="transform-origin:626px 104px;">
+  <rect x="558" y="68" width="144" height="72" rx="7" fill="rgba(212,162,58,0.09)" stroke="#d4a23a" stroke-width="1.2"/>
+  <rect x="558" y="68" width="4"   height="72" rx="2" fill="#d4a23a" opacity="0.9"/>
+  <text x="594" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#d4a23a" filter="url(#aa-glow)" class="letter">I</text>
+  <text x="648" y="95"  text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Ile</text>
+  <text x="648" y="112" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Isoleucine</text>
+  <text x="648" y="127" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#d4a23a" letter-spacing="0.04em">Nonpolar</text>
+</g>
+
+<!-- ═══════════════════════════════════════════
+     ROW 1 — Aromatic &amp; Special  #a387ff
+════════════════════════════════════════════ -->
+
+<!-- F · Phenylalanine -->
+<g class="c5 row-ar" style="transform-origin:84px 184px;">
+  <rect x="18"  y="148" width="126" height="72" rx="7" fill="rgba(163,135,255,0.09)" stroke="#a387ff" stroke-width="1.2"/>
+  <rect x="18"  y="148" width="4"   height="72" rx="2" fill="#a387ff" opacity="0.9"/>
+  <text x="54"  y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#a387ff" filter="url(#aa-glow)" class="letter">F</text>
+  <text x="107" y="175" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Phe</text>
+  <text x="107" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Phenylalanine</text>
+  <text x="107" y="207" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#a387ff" letter-spacing="0.04em">Aromatic</text>
+</g>
+
+<!-- W · Tryptophan -->
+<g class="c6 row-ar" style="transform-origin:221px 184px;">
+  <rect x="153" y="148" width="126" height="72" rx="7" fill="rgba(163,135,255,0.09)" stroke="#a387ff" stroke-width="1.2"/>
+  <rect x="153" y="148" width="4"   height="72" rx="2" fill="#a387ff" opacity="0.9"/>
+  <text x="189" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#a387ff" filter="url(#aa-glow)" class="letter">W</text>
+  <text x="242" y="175" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Trp</text>
+  <text x="242" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Tryptophan</text>
+  <text x="242" y="207" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#a387ff" letter-spacing="0.04em">Aromatic</text>
+</g>
+
+<!-- P · Proline -->
+<g class="c7 row-ar" style="transform-origin:356px 184px;">
+  <rect x="288" y="148" width="126" height="72" rx="7" fill="rgba(163,135,255,0.09)" stroke="#a387ff" stroke-width="1.2"/>
+  <rect x="288" y="148" width="4"   height="72" rx="2" fill="#a387ff" opacity="0.9"/>
+  <text x="324" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#a387ff" filter="url(#aa-glow)" class="letter">P</text>
+  <text x="377" y="175" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Pro</text>
+  <text x="377" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Proline</text>
+  <text x="377" y="207" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#a387ff" letter-spacing="0.04em">Special</text>
+</g>
+
+<!-- M · Methionine -->
+<g class="c8 row-ar" style="transform-origin:491px 184px;">
+  <rect x="423" y="148" width="126" height="72" rx="7" fill="rgba(163,135,255,0.09)" stroke="#a387ff" stroke-width="1.2"/>
+  <rect x="423" y="148" width="4"   height="72" rx="2" fill="#a387ff" opacity="0.9"/>
+  <text x="459" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#a387ff" filter="url(#aa-glow)" class="letter">M</text>
+  <text x="512" y="175" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Met</text>
+  <text x="512" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Methionine</text>
+  <text x="512" y="207" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#a387ff" letter-spacing="0.04em">Special · start</text>
+</g>
+
+<!-- C · Cysteine -->
+<g class="c9 row-ar" style="transform-origin:626px 184px;">
+  <rect x="558" y="148" width="144" height="72" rx="7" fill="rgba(163,135,255,0.09)" stroke="#a387ff" stroke-width="1.2"/>
+  <rect x="558" y="148" width="4"   height="72" rx="2" fill="#a387ff" opacity="0.9"/>
+  <text x="594" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#a387ff" filter="url(#aa-glow)" class="letter">C</text>
+  <text x="648" y="175" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Cys</text>
+  <text x="648" y="192" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Cysteine</text>
+  <text x="648" y="207" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#a387ff" letter-spacing="0.04em">Special · S-S bond</text>
+</g>
+
+<!-- ═══════════════════════════════════════════
+     ROW 2 — Polar uncharged  #26c2c9
+════════════════════════════════════════════ -->
+
+<!-- S · Serine -->
+<g class="c10 row-po" style="transform-origin:84px 264px;">
+  <rect x="18"  y="228" width="126" height="72" rx="7" fill="rgba(38,194,201,0.09)" stroke="#26c2c9" stroke-width="1.2"/>
+  <rect x="18"  y="228" width="4"   height="72" rx="2" fill="#26c2c9" opacity="0.9"/>
+  <text x="54"  y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#26c2c9" filter="url(#aa-glow)" class="letter">S</text>
+  <text x="107" y="255" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Ser</text>
+  <text x="107" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Serine</text>
+  <text x="107" y="287" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#26c2c9" letter-spacing="0.04em">Polar</text>
+</g>
+
+<!-- T · Threonine -->
+<g class="c11 row-po" style="transform-origin:221px 264px;">
+  <rect x="153" y="228" width="126" height="72" rx="7" fill="rgba(38,194,201,0.09)" stroke="#26c2c9" stroke-width="1.2"/>
+  <rect x="153" y="228" width="4"   height="72" rx="2" fill="#26c2c9" opacity="0.9"/>
+  <text x="189" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#26c2c9" filter="url(#aa-glow)" class="letter">T</text>
+  <text x="242" y="255" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Thr</text>
+  <text x="242" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Threonine</text>
+  <text x="242" y="287" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#26c2c9" letter-spacing="0.04em">Polar</text>
+</g>
+
+<!-- N · Asparagine -->
+<g class="c12 row-po" style="transform-origin:356px 264px;">
+  <rect x="288" y="228" width="126" height="72" rx="7" fill="rgba(38,194,201,0.09)" stroke="#26c2c9" stroke-width="1.2"/>
+  <rect x="288" y="228" width="4"   height="72" rx="2" fill="#26c2c9" opacity="0.9"/>
+  <text x="324" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#26c2c9" filter="url(#aa-glow)" class="letter">N</text>
+  <text x="377" y="255" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Asn</text>
+  <text x="377" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Asparagine</text>
+  <text x="377" y="287" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#26c2c9" letter-spacing="0.04em">Polar</text>
+</g>
+
+<!-- Q · Glutamine -->
+<g class="c13 row-po" style="transform-origin:491px 264px;">
+  <rect x="423" y="228" width="126" height="72" rx="7" fill="rgba(38,194,201,0.09)" stroke="#26c2c9" stroke-width="1.2"/>
+  <rect x="423" y="228" width="4"   height="72" rx="2" fill="#26c2c9" opacity="0.9"/>
+  <text x="459" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#26c2c9" filter="url(#aa-glow)" class="letter">Q</text>
+  <text x="512" y="255" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Gln</text>
+  <text x="512" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Glutamine</text>
+  <text x="512" y="287" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#26c2c9" letter-spacing="0.04em">Polar</text>
+</g>
+
+<!-- Y · Tyrosine -->
+<g class="c14 row-po" style="transform-origin:626px 264px;">
+  <rect x="558" y="228" width="144" height="72" rx="7" fill="rgba(38,194,201,0.09)" stroke="#26c2c9" stroke-width="1.2"/>
+  <rect x="558" y="228" width="4"   height="72" rx="2" fill="#26c2c9" opacity="0.9"/>
+  <text x="594" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#26c2c9" filter="url(#aa-glow)" class="letter">Y</text>
+  <text x="648" y="255" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Tyr</text>
+  <text x="648" y="272" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Tyrosine</text>
+  <text x="648" y="287" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#26c2c9" letter-spacing="0.04em">Polar · aromatic</text>
+</g>
+
+<!-- ═══════════════════════════════════════════
+     ROW 3 — Charged  (negative: pink, positive: blue)
+════════════════════════════════════════════ -->
+
+<!-- D · Aspartic acid  (−) -->
+<g class="c15 row-ch" style="transform-origin:84px 344px;">
+  <rect x="18"  y="308" width="126" height="72" rx="7" fill="rgba(196,61,98,0.09)" stroke="#c43d62" stroke-width="1.2"/>
+  <rect x="18"  y="308" width="4"   height="72" rx="2" fill="#c43d62" opacity="0.9"/>
+  <text x="54"  y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#c43d62" filter="url(#aa-glow)" class="letter">D</text>
+  <text x="107" y="335" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Asp</text>
+  <text x="107" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Aspartic acid</text>
+  <text x="107" y="367" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#c43d62" letter-spacing="0.04em">Negative −</text>
+</g>
+
+<!-- E · Glutamic acid  (−) -->
+<g class="c16 row-ch" style="transform-origin:221px 344px;">
+  <rect x="153" y="308" width="126" height="72" rx="7" fill="rgba(196,61,98,0.09)" stroke="#c43d62" stroke-width="1.2"/>
+  <rect x="153" y="308" width="4"   height="72" rx="2" fill="#c43d62" opacity="0.9"/>
+  <text x="189" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#c43d62" filter="url(#aa-glow)" class="letter">E</text>
+  <text x="242" y="335" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Glu</text>
+  <text x="242" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Glutamic acid</text>
+  <text x="242" y="367" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#c43d62" letter-spacing="0.04em">Negative −</text>
+</g>
+
+<!-- K · Lysine  (+) -->
+<g class="c17 row-ch" style="transform-origin:356px 344px;">
+  <rect x="288" y="308" width="126" height="72" rx="7" fill="rgba(91,108,255,0.09)" stroke="#5b6cff" stroke-width="1.2"/>
+  <rect x="288" y="308" width="4"   height="72" rx="2" fill="#5b6cff" opacity="0.9"/>
+  <text x="324" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#5b6cff" filter="url(#aa-glow)" class="letter">K</text>
+  <text x="377" y="335" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Lys</text>
+  <text x="377" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Lysine</text>
+  <text x="377" y="367" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#5b6cff" letter-spacing="0.04em">Positive +</text>
+</g>
+
+<!-- R · Arginine  (+) -->
+<g class="c18 row-ch" style="transform-origin:491px 344px;">
+  <rect x="423" y="308" width="126" height="72" rx="7" fill="rgba(91,108,255,0.09)" stroke="#5b6cff" stroke-width="1.2"/>
+  <rect x="423" y="308" width="4"   height="72" rx="2" fill="#5b6cff" opacity="0.9"/>
+  <text x="459" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#5b6cff" filter="url(#aa-glow)" class="letter">R</text>
+  <text x="512" y="335" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">Arg</text>
+  <text x="512" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Arginine</text>
+  <text x="512" y="367" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#5b6cff" letter-spacing="0.04em">Positive +</text>
+</g>
+
+<!-- H · Histidine  (+) -->
+<g class="c19 row-ch" style="transform-origin:626px 344px;">
+  <rect x="558" y="308" width="144" height="72" rx="7" fill="rgba(91,108,255,0.09)" stroke="#5b6cff" stroke-width="1.2"/>
+  <rect x="558" y="308" width="4"   height="72" rx="2" fill="#5b6cff" opacity="0.9"/>
+  <text x="594" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#5b6cff" filter="url(#aa-glow)" class="letter">H</text>
+  <text x="648" y="335" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#e2e8f0">His</text>
+  <text x="648" y="352" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#94a3b8">Histidine</text>
+  <text x="648" y="367" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8" fill="#5b6cff" letter-spacing="0.04em">Positive +</text>
+</g>
+
+<!-- ═══════════════════════════════════════════
+     LEGEND
+════════════════════════════════════════════ -->
+<text x="360" y="406" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#334155" letter-spacing="0.06em">CHEMICAL PROPERTY</text>
+
+<!-- legend pills -->
+<rect x="18"  y="415" width="110" height="20" rx="10" fill="rgba(212,162,58,0.12)"  stroke="#d4a23a" stroke-width="0.8"/>
+<text x="73"  y="429" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#d4a23a" font-weight="600">Nonpolar aliphatic</text>
+
+<rect x="138" y="415" width="100" height="20" rx="10" fill="rgba(163,135,255,0.12)" stroke="#a387ff" stroke-width="0.8"/>
+<text x="188" y="429" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#a387ff" font-weight="600">Aromatic / special</text>
+
+<rect x="248" y="415" width="82"  height="20" rx="10" fill="rgba(38,194,201,0.12)"  stroke="#26c2c9" stroke-width="0.8"/>
+<text x="289" y="429" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#26c2c9" font-weight="600">Polar uncharged</text>
+
+<rect x="340" y="415" width="82"  height="20" rx="10" fill="rgba(196,61,98,0.12)"   stroke="#c43d62" stroke-width="0.8"/>
+<text x="381" y="429" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#c43d62" font-weight="600">Charged negative</text>
+
+<rect x="432" y="415" width="82"  height="20" rx="10" fill="rgba(91,108,255,0.12)"  stroke="#5b6cff" stroke-width="0.8"/>
+<text x="473" y="429" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#5b6cff" font-weight="600">Charged positive</text>
+
+<!-- row labels (left side) -->
+<text x="12" y="108" text-anchor="end" font-family="monospace" font-size="8" fill="#d4a23a" opacity="0.6" transform="rotate(-90,12,108)">ALIPHATIC</text>
+<text x="12" y="188" text-anchor="end" font-family="monospace" font-size="8" fill="#a387ff" opacity="0.6" transform="rotate(-90,12,188)">AROMATIC</text>
+<text x="12" y="268" text-anchor="end" font-family="monospace" font-size="8" fill="#26c2c9" opacity="0.6" transform="rotate(-90,12,268)">POLAR</text>
+<text x="12" y="348" text-anchor="end" font-family="monospace" font-size="8" fill="#94a3b8" opacity="0.6" transform="rotate(-90,12,348)">CHARGED</text>
+
+<!-- footer note -->
+<text x="360" y="465" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#1e293b">AlphaFold reads this 20-letter alphabet — sequence determines 3D structure</text>
+<text x="360" y="480" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#0f172a">Single letter · Three letter · Full name · Chemical property</text>
+</svg>
