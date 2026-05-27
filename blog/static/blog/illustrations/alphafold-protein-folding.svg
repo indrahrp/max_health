@@ -1,179 +1,278 @@
-<svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:16px;" role="img" aria-label="AlphaFold: from amino acid sequence to 3D protein structure">
+<svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:16px;" role="img" aria-label="AlphaFold: amino acid chain folding into a 3D protein structure">
   <defs>
-    <radialGradient id="af-bg" cx="50%" cy="40%" r="70%">
-      <stop offset="0%" stop-color="#0f1a2e" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#060c16" stop-opacity="1"/>
+    <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#0d1829"/>
+      <stop offset="100%" stop-color="#060c16"/>
     </radialGradient>
-    <radialGradient id="af-glow1" cx="30%" cy="50%" r="60%">
-      <stop offset="0%" stop-color="#c43d62" stop-opacity="0.18"/>
+    <radialGradient id="glow-pink" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c43d62" stop-opacity="0.35"/>
       <stop offset="100%" stop-color="#c43d62" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="af-glow2" cx="70%" cy="50%" r="60%">
-      <stop offset="0%" stop-color="#5b6cff" stop-opacity="0.18"/>
+    <radialGradient id="glow-blue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5b6cff" stop-opacity="0.3"/>
       <stop offset="100%" stop-color="#5b6cff" stop-opacity="0"/>
     </radialGradient>
-    <filter id="af-blur">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <radialGradient id="glow-teal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#26c2c9" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#26c2c9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft-glow">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <filter id="af-glow-soft">
-      <feGaussianBlur stdDeviation="5" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <filter id="strong-glow">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <marker id="af-arr" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/>
+    <marker id="arr" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+      <path d="M0,0 L6,2.5 L0,5 Z" fill="#475569"/>
     </marker>
-    <marker id="af-arr-pink" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 Z" fill="#c43d62"/>
-    </marker>
-    <linearGradient id="conf-grad" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0%" stop-color="#ef4444"/>
-      <stop offset="40%" stop-color="#f59e0b"/>
-      <stop offset="70%" stop-color="#3b82f6"/>
+  </defs>
+
+  <style>
+    /* chain unfolding → folding loop */
+    @keyframes chain-draw {
+      0%   { stroke-dashoffset: 600; opacity: 0.2; }
+      30%  { stroke-dashoffset: 0;   opacity: 1; }
+      70%  { stroke-dashoffset: 0;   opacity: 1; }
+      100% { stroke-dashoffset: 600; opacity: 0.2; }
+    }
+    @keyframes bead-pop {
+      0%,15%  { r: 0; opacity: 0; }
+      35%     { r: 9; opacity: 1; }
+      75%     { r: 9; opacity: 1; }
+      95%,100%{ r: 0; opacity: 0; }
+    }
+    @keyframes helix-spin {
+      0%   { transform: rotate(0deg)   scaleY(1);   }
+      50%  { transform: rotate(180deg) scaleY(0.6); }
+      100% { transform: rotate(360deg) scaleY(1);   }
+    }
+    @keyframes sheet-slide {
+      0%,20%  { transform: translateX(-20px); opacity: 0; }
+      40%,80% { transform: translateX(0);     opacity: 1; }
+      100%    { transform: translateX(-20px); opacity: 0; }
+    }
+    @keyframes pulse-ring {
+      0%   { r: 22; opacity: 0.7; }
+      100% { r: 44; opacity: 0;   }
+    }
+    @keyframes node-glow {
+      0%,100% { opacity: 0.35; }
+      50%     { opacity: 1;    }
+    }
+    @keyframes flow-dot {
+      0%   { offset-distance: 0%;   opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    @keyframes label-fade {
+      0%,20%  { opacity: 0; transform: translateY(6px); }
+      40%,80% { opacity: 1; transform: translateY(0); }
+      100%    { opacity: 0; transform: translateY(6px); }
+    }
+    @keyframes confidence-fill {
+      0%,25%  { width: 0; }
+      60%,85% { width: 140px; }
+      100%    { width: 0; }
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-6px); }
+    }
+    @keyframes shimmer {
+      0%   { stop-color: #c43d62; }
+      33%  { stop-color: #5b6cff; }
+      66%  { stop-color: #26c2c9; }
+      100% { stop-color: #c43d62; }
+    }
+
+    .chain { stroke-dasharray: 600; animation: chain-draw 6s ease-in-out infinite; }
+    .bead-1  { animation: bead-pop 6s ease-in-out infinite 0.1s; }
+    .bead-2  { animation: bead-pop 6s ease-in-out infinite 0.25s; }
+    .bead-3  { animation: bead-pop 6s ease-in-out infinite 0.4s; }
+    .bead-4  { animation: bead-pop 6s ease-in-out infinite 0.55s; }
+    .bead-5  { animation: bead-pop 6s ease-in-out infinite 0.7s; }
+    .bead-6  { animation: bead-pop 6s ease-in-out infinite 0.85s; }
+    .bead-7  { animation: bead-pop 6s ease-in-out infinite 1.0s; }
+    .bead-8  { animation: bead-pop 6s ease-in-out infinite 1.15s; }
+
+    .helix-group { transform-origin: 530px 210px; animation: helix-spin 6s ease-in-out infinite; }
+    .sheet-group { animation: sheet-slide 6s ease-in-out infinite 0.8s; }
+
+    .pulse-1 { animation: pulse-ring 2s ease-out infinite; }
+    .pulse-2 { animation: pulse-ring 2s ease-out infinite 0.7s; }
+
+    .n1 { animation: node-glow 2.4s ease-in-out infinite 0s; }
+    .n2 { animation: node-glow 2.4s ease-in-out infinite 0.3s; }
+    .n3 { animation: node-glow 2.4s ease-in-out infinite 0.6s; }
+    .n4 { animation: node-glow 2.4s ease-in-out infinite 0.9s; }
+    .n5 { animation: node-glow 2.4s ease-in-out infinite 1.2s; }
+    .n6 { animation: node-glow 2.4s ease-in-out infinite 1.5s; }
+
+    .lbl { animation: label-fade 6s ease-in-out infinite; }
+    .lbl2 { animation: label-fade 6s ease-in-out infinite 1s; }
+
+    .conf-bar { animation: confidence-fill 6s ease-in-out infinite 1s; }
+
+    .float-structure { animation: float 4s ease-in-out infinite; }
+  </style>
+
+  <!-- Background -->
+  <rect width="720" height="420" fill="url(#bg)" rx="16"/>
+
+  <!-- Ambient glows -->
+  <ellipse cx="150" cy="210" rx="140" ry="100" fill="url(#glow-pink)" opacity="0.5"/>
+  <ellipse cx="360" cy="210" rx="120" ry="90"  fill="url(#glow-blue)" opacity="0.4"/>
+  <ellipse cx="570" cy="210" rx="140" ry="100" fill="url(#glow-teal)" opacity="0.4"/>
+
+  <!-- ══ SECTION LABELS ══ -->
+  <text x="125" y="46" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#475569" letter-spacing="0.12em" text-transform="uppercase">AMINO ACID CHAIN</text>
+  <text x="360" y="46" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#475569" letter-spacing="0.12em">ALPHAFOLD ENGINE</text>
+  <text x="590" y="46" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#475569" letter-spacing="0.12em">FOLDED PROTEIN</text>
+
+  <!-- Divider lines -->
+  <line x1="245" y1="58" x2="245" y2="390" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="475" y1="58" x2="475" y2="390" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- ══ LEFT: AMINO ACID CHAIN ══ -->
+  <!-- Winding chain path -->
+  <path class="chain"
+    d="M 50 140 C 80 120, 120 120, 150 140
+       C 180 160, 200 180, 190 200
+       C 180 220, 150 225, 130 215
+       C 110 205, 95 190, 100 175
+       C 105 160, 130 155, 150 165
+       C 170 175, 180 195, 165 210
+       C 150 225, 120 228, 105 240
+       C 90 252, 80 270, 90 285
+       C 100 300, 130 305, 155 295
+       C 180 285, 195 265, 190 250"
+    fill="none" stroke="#334155" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Amino acid beads on chain -->
+  <circle class="bead-1" cx="50"  cy="140" r="9" fill="#c43d62" filter="url(#soft-glow)"/>
+  <circle class="bead-2" cx="100" cy="120" r="9" fill="#5b6cff" filter="url(#soft-glow)"/>
+  <circle class="bead-3" cx="155" cy="135" r="9" fill="#26c2c9" filter="url(#soft-glow)"/>
+  <circle class="bead-4" cx="190" cy="200" r="9" fill="#a387ff" filter="url(#soft-glow)"/>
+  <circle class="bead-5" cx="125" cy="220" r="9" fill="#2fbf7c" filter="url(#soft-glow)"/>
+  <circle class="bead-6" cx="100" cy="175" r="9" fill="#d4a23a" filter="url(#soft-glow)"/>
+  <circle class="bead-7" cx="155" cy="290" r="9" fill="#c43d62" filter="url(#soft-glow)"/>
+  <circle class="bead-8" cx="190" cy="250" r="9" fill="#5b6cff" filter="url(#soft-glow)"/>
+
+  <!-- Bead labels -->
+  <text class="bead-1" x="50"  y="143" text-anchor="middle" font-family="monospace" font-size="6.5" fill="white" font-weight="700">Met</text>
+  <text class="bead-2" x="100" y="123" text-anchor="middle" font-family="monospace" font-size="6.5" fill="white" font-weight="700">Ala</text>
+  <text class="bead-3" x="155" y="138" text-anchor="middle" font-family="monospace" font-size="6.5" fill="white" font-weight="700">Gly</text>
+  <text class="bead-4" x="190" y="203" text-anchor="middle" font-family="monospace" font-size="6.5" fill="white" font-weight="700">Leu</text>
+  <text class="bead-5" x="125" y="223" text-anchor="middle" font-family="monospace" font-size="6.5" fill="white" font-weight="700">Val</text>
+  <text class="bead-6" x="100" y="178" text-anchor="middle" font-family="monospace" font-size="6.5" fill="white" font-weight="700">Ser</text>
+  <text class="bead-7" x="155" y="293" text-anchor="middle" font-family="monospace" font-size="6.5" fill="white" font-weight="700">Arg</text>
+  <text class="bead-8" x="190" y="253" text-anchor="middle" font-family="monospace" font-size="6.5" fill="white" font-weight="700">Phe</text>
+
+  <text class="lbl" x="120" y="340" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#c43d62" font-weight="600">Unfolded chain</text>
+  <text class="lbl" x="120" y="357" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#64748b">50-year unsolved problem</text>
+
+  <!-- Arrow to center -->
+  <line x1="215" y1="210" x2="243" y2="210" stroke="#334155" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ══ CENTER: ALPHAFOLD ENGINE ══ -->
+  <!-- Neural network nodes — 3 layers -->
+  <!-- Layer 1 (input) -->
+  <circle class="n1" cx="290" cy="155" r="12" fill="#1e293b" stroke="#c43d62" stroke-width="1.5" filter="url(#soft-glow)"/>
+  <circle class="n2" cx="290" cy="195" r="12" fill="#1e293b" stroke="#c43d62" stroke-width="1.5" filter="url(#soft-glow)"/>
+  <circle class="n3" cx="290" cy="235" r="12" fill="#1e293b" stroke="#c43d62" stroke-width="1.5" filter="url(#soft-glow)"/>
+  <circle class="n4" cx="290" cy="275" r="12" fill="#1e293b" stroke="#c43d62" stroke-width="1.5" filter="url(#soft-glow)"/>
+
+  <!-- Layer 2 (hidden — Evoformer) -->
+  <circle class="n5" cx="360" cy="170" r="14" fill="#1e293b" stroke="#5b6cff" stroke-width="1.8" filter="url(#soft-glow)"/>
+  <circle class="n1" cx="360" cy="210" r="14" fill="#1e293b" stroke="#5b6cff" stroke-width="1.8" filter="url(#soft-glow)"/>
+  <circle class="n2" cx="360" cy="250" r="14" fill="#1e293b" stroke="#5b6cff" stroke-width="1.8" filter="url(#soft-glow)"/>
+
+  <!-- Layer 3 (output) -->
+  <circle class="n3" cx="430" cy="185" r="12" fill="#1e293b" stroke="#26c2c9" stroke-width="1.5" filter="url(#soft-glow)"/>
+  <circle class="n4" cx="430" cy="225" r="12" fill="#1e293b" stroke="#26c2c9" stroke-width="1.5" filter="url(#soft-glow)"/>
+  <circle class="n5" cx="430" cy="265" r="12" fill="#1e293b" stroke="#26c2c9" stroke-width="1.5" filter="url(#soft-glow)"/>
+
+  <!-- Connections layer 1→2 -->
+  <g stroke="#1e3a5f" stroke-width="0.8" opacity="0.6">
+    <line x1="302" y1="155" x2="346" y2="170"/><line x1="302" y1="155" x2="346" y2="210"/><line x1="302" y1="155" x2="346" y2="250"/>
+    <line x1="302" y1="195" x2="346" y2="170"/><line x1="302" y1="195" x2="346" y2="210"/><line x1="302" y1="195" x2="346" y2="250"/>
+    <line x1="302" y1="235" x2="346" y2="170"/><line x1="302" y1="235" x2="346" y2="210"/><line x1="302" y1="235" x2="346" y2="250"/>
+    <line x1="302" y1="275" x2="346" y2="170"/><line x1="302" y1="275" x2="346" y2="210"/><line x1="302" y1="275" x2="346" y2="250"/>
+  </g>
+  <!-- Connections layer 2→3 -->
+  <g stroke="#1e3a5f" stroke-width="0.8" opacity="0.6">
+    <line x1="374" y1="170" x2="418" y2="185"/><line x1="374" y1="170" x2="418" y2="225"/><line x1="374" y1="170" x2="418" y2="265"/>
+    <line x1="374" y1="210" x2="418" y2="185"/><line x1="374" y1="210" x2="418" y2="225"/><line x1="374" y1="210" x2="418" y2="265"/>
+    <line x1="374" y1="250" x2="418" y2="185"/><line x1="374" y1="250" x2="418" y2="225"/><line x1="374" y1="250" x2="418" y2="265"/>
+  </g>
+
+  <!-- Node labels -->
+  <text x="290" y="155" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="6" fill="#94a3b8">MSA</text>
+  <text x="360" y="210" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="6" fill="#94a3b8">Evo</text>
+  <text x="430" y="225" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="6" fill="#94a3b8">3D</text>
+
+  <!-- Center label -->
+  <text x="360" y="308" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#818cf8" font-weight="700">Evoformer</text>
+  <text x="360" y="324" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#475569">3.5 billion years of evolution</text>
+  <text x="360" y="340" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#475569">encoded as training data</text>
+
+  <!-- Nobel badge -->
+  <rect x="308" y="352" width="104" height="22" rx="11" fill="rgba(212,162,58,0.15)" stroke="#d4a23a" stroke-width="1"/>
+  <text x="360" y="367" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#d4a23a" font-weight="600">Nobel Prize · Chemistry 2024</text>
+
+  <!-- Arrow to right -->
+  <line x1="477" y1="210" x2="499" y2="210" stroke="#334155" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ══ RIGHT: FOLDED PROTEIN STRUCTURE ══ -->
+  <g class="float-structure">
+    <!-- Alpha helix — spinning ribbon -->
+    <g class="helix-group">
+      <!-- Helix coils -->
+      <path d="M 510 160 C 510 150, 545 150, 545 160 C 545 170, 510 170, 510 180 C 510 190, 545 190, 545 200 C 545 210, 510 210, 510 220 C 510 230, 545 230, 545 240 C 545 250, 510 250, 510 260"
+            fill="none" stroke="#c43d62" stroke-width="7" stroke-linecap="round" opacity="0.9" filter="url(#soft-glow)"/>
+      <!-- Helix highlight -->
+      <path d="M 513 162 C 513 153, 543 153, 543 162 C 543 171, 513 171, 513 181"
+            fill="none" stroke="#fb7185" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    </g>
+
+    <!-- Beta sheets -->
+    <g class="sheet-group">
+      <rect x="556" y="158" width="50" height="12" rx="3" fill="#5b6cff" opacity="0.85" filter="url(#soft-glow)"/>
+      <polygon points="606,154 620,164 606,174" fill="#5b6cff" opacity="0.85" filter="url(#soft-glow)"/>
+      <rect x="556" y="192" width="50" height="12" rx="3" fill="#5b6cff" opacity="0.75"/>
+      <polygon points="606,188 620,198 606,208" fill="#5b6cff" opacity="0.75"/>
+      <rect x="556" y="226" width="50" height="12" rx="3" fill="#5b6cff" opacity="0.65"/>
+      <polygon points="606,222 620,232 606,242" fill="#5b6cff" opacity="0.65"/>
+    </g>
+
+    <!-- Loop connectors -->
+    <path d="M 545 260 C 548 270, 556 272, 556 264" fill="none" stroke="#26c2c9" stroke-width="2.5" stroke-dasharray="3 2" opacity="0.8"/>
+    <path d="M 545 220 C 550 214, 556 212, 556 204" fill="none" stroke="#26c2c9" stroke-width="2.5" stroke-dasharray="3 2" opacity="0.7"/>
+
+    <!-- Pulse rings (folding complete) -->
+    <circle class="pulse-1" cx="575" cy="210" r="22" fill="none" stroke="#26c2c9" stroke-width="1.5"/>
+    <circle class="pulse-2" cx="575" cy="210" r="22" fill="none" stroke="#26c2c9" stroke-width="1"/>
+  </g>
+
+  <!-- Confidence bar -->
+  <text x="505" y="310" font-family="system-ui,sans-serif" font-size="10" fill="#64748b">Confidence</text>
+  <rect x="505" y="318" width="140" height="8" rx="4" fill="#1e293b"/>
+  <rect class="conf-bar" x="505" y="318" height="8" rx="4" fill="url(#conf-grad-h)"/>
+  <defs>
+    <linearGradient id="conf-grad-h" x1="0" x2="1">
+      <stop offset="0%"   stop-color="#ef4444"/>
+      <stop offset="50%"  stop-color="#3b82f6"/>
       <stop offset="100%" stop-color="#22c55e"/>
     </linearGradient>
   </defs>
+  <text x="505" y="340" font-family="monospace" font-size="9" fill="#22c55e">pLDDT 94.2 — very high</text>
 
-  <!-- Background -->
-  <rect width="720" height="420" fill="url(#af-bg)" rx="16"/>
-  <rect width="720" height="420" fill="url(#af-glow1)" rx="16"/>
-  <rect width="720" height="420" fill="url(#af-glow2)" rx="16"/>
+  <text class="lbl2" x="575" y="362" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#26c2c9" font-weight="600">Structure solved</text>
+  <text class="lbl2" x="575" y="378" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#64748b">minutes, not years</text>
 
-  <!-- Title -->
-  <text x="360" y="34" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="15" fill="#f1f5f9" font-weight="700" letter-spacing="-0.3">AlphaFold: Solving Biology's 50-Year Grand Challenge</text>
-  <text x="360" y="53" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10.5" fill="#475569">From amino acid sequence → 3D protein structure · DeepMind / Google</text>
-
-  <!-- LEFT PANEL: Amino Acid Sequence -->
-  <rect x="30" y="72" width="190" height="290" rx="12" fill="rgba(255,255,255,0.03)" stroke="#1e293b" stroke-width="1.2"/>
-  <text x="125" y="97" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#94a3b8" font-weight="600" letter-spacing="0.08em">INPUT</text>
-  <text x="125" y="113" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12.5" fill="#e2e8f0" font-weight="700">Amino Acid Sequence</text>
-
-  <g transform="translate(48, 130)">
-    <circle cx="0"   cy="0" r="11" fill="#c43d62" opacity="0.9" filter="url(#af-blur)"/>
-    <text x="0"  y="4" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Met</text>
-    <circle cx="28"  cy="0" r="11" fill="#5b6cff" opacity="0.85" filter="url(#af-blur)"/>
-    <text x="28" y="4" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Ala</text>
-    <circle cx="56"  cy="0" r="11" fill="#26c2c9" opacity="0.85" filter="url(#af-blur)"/>
-    <text x="56" y="4" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Gly</text>
-    <circle cx="84"  cy="0" r="11" fill="#a387ff" opacity="0.85" filter="url(#af-blur)"/>
-    <text x="84" y="4" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Leu</text>
-    <circle cx="112" cy="0" r="11" fill="#2fbf7c" opacity="0.85" filter="url(#af-blur)"/>
-    <text x="112" y="4" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Val</text>
-    <line x1="11" y1="0" x2="17" y2="0" stroke="#334155" stroke-width="1.5"/>
-    <line x1="39" y1="0" x2="45" y2="0" stroke="#334155" stroke-width="1.5"/>
-    <line x1="67" y1="0" x2="73" y2="0" stroke="#334155" stroke-width="1.5"/>
-    <line x1="95" y1="0" x2="101" y2="0" stroke="#334155" stroke-width="1.5"/>
-
-    <circle cx="0"   cy="32" r="11" fill="#d4a23a" opacity="0.85" filter="url(#af-blur)"/>
-    <text x="0"  y="36" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Ser</text>
-    <circle cx="28"  cy="32" r="11" fill="#c43d62" opacity="0.75" filter="url(#af-blur)"/>
-    <text x="28" y="36" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Thr</text>
-    <circle cx="56"  cy="32" r="11" fill="#5b6cff" opacity="0.8" filter="url(#af-blur)"/>
-    <text x="56" y="36" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Pro</text>
-    <circle cx="84"  cy="32" r="11" fill="#26c2c9" opacity="0.8" filter="url(#af-blur)"/>
-    <text x="84" y="36" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Asp</text>
-    <circle cx="112" cy="32" r="11" fill="#a387ff" opacity="0.8" filter="url(#af-blur)"/>
-    <text x="112" y="36" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Glu</text>
-    <line x1="11" y1="32" x2="17" y2="32" stroke="#334155" stroke-width="1.5"/>
-    <line x1="39" y1="32" x2="45" y2="32" stroke="#334155" stroke-width="1.5"/>
-    <line x1="67" y1="32" x2="73" y2="32" stroke="#334155" stroke-width="1.5"/>
-    <line x1="95" y1="32" x2="101" y2="32" stroke="#334155" stroke-width="1.5"/>
-
-    <circle cx="0"   cy="64" r="11" fill="#2fbf7c" opacity="0.8"/>
-    <text x="0"  y="68" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Arg</text>
-    <circle cx="28"  cy="64" r="11" fill="#d4a23a" opacity="0.8"/>
-    <text x="28" y="68" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Lys</text>
-    <circle cx="56"  cy="64" r="11" fill="#c43d62" opacity="0.75"/>
-    <text x="56" y="68" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">His</text>
-    <circle cx="84"  cy="64" r="11" fill="#5b6cff" opacity="0.75"/>
-    <text x="84" y="68" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Phe</text>
-    <circle cx="112" cy="64" r="11" fill="#26c2c9" opacity="0.75"/>
-    <text x="112" y="68" text-anchor="middle" font-family="monospace" font-size="9" fill="white" font-weight="700">Trp</text>
-    <line x1="11" y1="64" x2="17" y2="64" stroke="#334155" stroke-width="1.5"/>
-    <line x1="39" y1="64" x2="45" y2="64" stroke="#334155" stroke-width="1.5"/>
-    <line x1="67" y1="64" x2="73" y2="64" stroke="#334155" stroke-width="1.5"/>
-    <line x1="95" y1="64" x2="101" y2="64" stroke="#334155" stroke-width="1.5"/>
-
-    <circle cx="14"  cy="100" r="3" fill="#334155"/>
-    <circle cx="56"  cy="100" r="3" fill="#334155"/>
-    <circle cx="98"  cy="100" r="3" fill="#334155"/>
-  </g>
-
-  <text x="125" y="310" text-anchor="middle" font-family="monospace" font-size="10" fill="#475569">20 amino acid types</text>
-  <text x="125" y="325" text-anchor="middle" font-family="monospace" font-size="10" fill="#475569">100s–1000s of residues</text>
-  <rect x="55" y="335" width="140" height="18" rx="4" fill="rgba(196,61,98,0.12)" stroke="#c43d62" stroke-width="0.8"/>
-  <text x="125" y="348" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#c43d62" font-weight="600">Grand Challenge · 1972–2020</text>
-
-  <!-- CENTER: AlphaFold Neural Network -->
-  <rect x="255" y="72" width="210" height="290" rx="12" fill="rgba(91,108,255,0.07)" stroke="#5b6cff" stroke-width="1.2" opacity="0.8"/>
-  <text x="360" y="97" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#818cf8" font-weight="600" letter-spacing="0.08em">ALPHAFOLD 2 / 3</text>
-  <text x="360" y="113" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12.5" fill="#e2e8f0" font-weight="700">Deep Learning Engine</text>
-
-  <g transform="translate(275, 130)">
-    <rect x="10" y="0" width="170" height="32" rx="6" fill="rgba(91,108,255,0.2)" stroke="#5b6cff" stroke-width="0.8"/>
-    <text x="95" y="12" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#a5b4fc" font-weight="600">Multiple Sequence Alignment</text>
-    <text x="95" y="24" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8.5" fill="#6366f1">Evolution's memory — 3.5 bn years of data</text>
-
-    <line x1="95" y1="33" x2="95" y2="46" stroke="#334155" stroke-width="1.5" marker-end="url(#af-arr)"/>
-
-    <rect x="10" y="48" width="170" height="32" rx="6" fill="rgba(163,135,255,0.2)" stroke="#a387ff" stroke-width="0.8"/>
-    <text x="95" y="60" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#c4b5fd" font-weight="600">Evoformer / Diffusion Stack</text>
-    <text x="95" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8.5" fill="#7c3aed">48 transformer blocks · attention maps</text>
-
-    <line x1="95" y1="81" x2="95" y2="94" stroke="#334155" stroke-width="1.5" marker-end="url(#af-arr)"/>
-
-    <rect x="10" y="96" width="170" height="32" rx="6" fill="rgba(38,194,201,0.15)" stroke="#26c2c9" stroke-width="0.8"/>
-    <text x="95" y="108" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#67e8f9" font-weight="600">Pairwise Distance Matrix</text>
-    <text x="95" y="120" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8.5" fill="#0891b2">residue–residue contact prediction</text>
-
-    <line x1="95" y1="129" x2="95" y2="142" stroke="#334155" stroke-width="1.5" marker-end="url(#af-arr)"/>
-
-    <rect x="10" y="144" width="170" height="32" rx="6" fill="rgba(196,61,98,0.2)" stroke="#c43d62" stroke-width="0.8"/>
-    <text x="95" y="156" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#fb7185" font-weight="600">Structure Module</text>
-    <text x="95" y="168" text-anchor="middle" font-family="system-ui,sans-serif" font-size="8.5" fill="#be185d">3D coordinate prediction · atomic resolution</text>
-
-    <rect x="30" y="190" width="130" height="22" rx="5" fill="rgba(47,191,124,0.15)" stroke="#2fbf7c" stroke-width="0.8"/>
-    <text x="95" y="205" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#4ade80" font-weight="600">pLDDT confidence score · 0–100</text>
-  </g>
-
-  <text x="360" y="355" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#475569">Trained on PDB · 170,000 known structures</text>
-  <text x="360" y="370" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#475569">Inference: minutes · Lab: months–years</text>
-
-  <!-- RIGHT PANEL: Output + Impact -->
-  <rect x="500" y="72" width="190" height="290" rx="12" fill="rgba(255,255,255,0.03)" stroke="#1e293b" stroke-width="1.2"/>
-  <text x="595" y="97" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#94a3b8" font-weight="600" letter-spacing="0.08em">OUTPUT &amp; IMPACT</text>
-  <text x="595" y="113" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12.5" fill="#e2e8f0" font-weight="700">Protein 3D Structure</text>
-
-  <g transform="translate(510, 128)">
-    <path d="M 20 20 C 20 10, 50 10, 50 20 C 50 30, 20 30, 20 40 C 20 50, 50 50, 50 60 C 50 70, 20 70, 20 80"
-          fill="none" stroke="#c43d62" stroke-width="6" stroke-linecap="round" opacity="0.85" filter="url(#af-glow-soft)"/>
-    <path d="M 65 15 L 65 45 L 80 45 L 70 60 L 80 60 L 65 75 L 65 105"
-          fill="none" stroke="#5b6cff" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
-    <polygon points="55,42 75,42 65,55" fill="#5b6cff" opacity="0.75"/>
-    <polygon points="55,72 75,72 65,85" fill="#5b6cff" opacity="0.65"/>
-    <path d="M 50 60 C 58 65, 58 70, 65 75" fill="none" stroke="#26c2c9" stroke-width="2.5" stroke-dasharray="3 2" opacity="0.7"/>
-    <path d="M 50 20 C 55 12, 60 12, 65 15" fill="none" stroke="#26c2c9" stroke-width="2.5" stroke-dasharray="3 2" opacity="0.7"/>
-    <rect x="0" y="110" width="160" height="8" rx="4" fill="url(#conf-grad)"/>
-  </g>
-
-  <text x="515" y="252" font-family="system-ui,sans-serif" font-size="8" fill="#ef4444">Low</text>
-  <text x="637" y="252" font-family="system-ui,sans-serif" font-size="8" fill="#22c55e" text-anchor="end">High confidence</text>
-
-  <g transform="translate(510, 262)">
-    <rect x="0" y="0" width="160" height="18" rx="4" fill="rgba(196,61,98,0.12)"/>
-    <text x="80" y="13" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#fb7185" font-weight="600">200M+ structures in database</text>
-    <rect x="0" y="22" width="160" height="18" rx="4" fill="rgba(91,108,255,0.12)"/>
-    <text x="80" y="35" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#818cf8" font-weight="600">3M+ researchers · 190 countries</text>
-    <rect x="0" y="44" width="160" height="18" rx="4" fill="rgba(38,194,201,0.12)"/>
-    <text x="80" y="57" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#67e8f9" font-weight="600">35,000+ papers cite AlphaFold</text>
-    <rect x="0" y="66" width="160" height="18" rx="4" fill="rgba(47,191,124,0.12)"/>
-    <text x="80" y="79" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" fill="#4ade80" font-weight="600">Nobel Prize in Chemistry · 2024</text>
-  </g>
-
-  <!-- Arrows -->
-  <line x1="222" y1="210" x2="252" y2="210" stroke="#c43d62" stroke-width="2" marker-end="url(#af-arr-pink)"/>
-  <line x1="467" y1="210" x2="497" y2="210" stroke="#c43d62" stroke-width="2" marker-end="url(#af-arr-pink)"/>
-
-  <!-- Footer -->
-  <text x="360" y="398" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#334155">Based on Demis Hassabis · Google DeepMind · John Jumper · Nobel Laureate 2024</text>
+  <!-- ══ TITLE ══ -->
+  <text x="360" y="400" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#1e293b">─────────────────────────────────────────────────────────────────────</text>
 </svg>
