@@ -79,11 +79,12 @@ SECTION_CONFIG = {
         'type_weight': '400',
         'type_style': 'normal',
         'type_tracking': '-0.012em',
-        'pillar_slugs': ['biology', 'cancer', 'cancer-metabolic-health', 'life-of-a-cell'],
+        'pillar_slugs': ['biology', 'cancer', 'cancer-metabolic-health', 'life-of-a-cell', 'neuroscience'],
         'category_slugs': ['biology'],
         'subcategories': [
             {'id': 'origin-of-cancer', 'name': 'Origin of Cancer', 'short': 'Cancer',        'blurb': 'The metabolic theory of cancer, the Warburg effect, and the slow re-thinking of oncology.', 'accent': '#5cd2d8', 'match_slugs': ['cancer', 'cancer-metabolic-health']},
             {'id': 'life-of-a-cell',   'name': 'Life of a Cell',   'short': 'Cells',         'blurb': 'Mitochondria, signalling, autophagy, and the small economies inside every body.', 'accent': '#1ea5ad', 'match_slugs': ['life-of-a-cell']},
+            {'id': 'neuroscience',     'name': 'Neuroscience',     'short': 'Neuro',         'blurb': 'How the brain works, what consciousness is, and what neuroscience reveals about memory, perception, and the self.', 'accent': '#818cf8', 'match_slugs': ['neuroscience']},
         ],
     },
     'mindset': {
