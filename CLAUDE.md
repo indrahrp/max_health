@@ -14,7 +14,13 @@ Always deploy with: `railway up --detach` from `/Users/iharahap/claude-code-psn/
 Never use `git push` for deployment (wrong GitHub account causes 403).
 
 ## Articles
-Every article needs an SVG illustration embedded inline in the `content` field. Use `<figure><svg ...></svg></figure>` for non-scientific readers.
+Every article needs an SVG illustration. Save it as a file at `blog/static/blog/illustrations/<article-slug>.svg`, then reference it in the article `content` field as:
+```html
+<figure style="margin:1.5em 0 2.5em;">
+<img src="/static/blog/illustrations/<article-slug>.svg" alt="..." style="width:100%;border-radius:16px;display:block;">
+</figure>
+```
+Never inline the SVG code into the content field. Always place the figure at the top of the content.
 
 ## GitHub
 If push to indrahrp repos fails with 403, use the personal token stored at `~/claude-code-psn/.envrc`.

@@ -25,6 +25,10 @@ AI_PILLAR = {
     "order": 1,
 }
 
+ILLUSTRATION = """<figure style="margin:1.5em 0 2.5em;">
+<img src="/static/blog/illustrations/alphafold-protein-folding.svg" alt="AlphaFold: from amino acid sequence to 3D protein structure" style="width:100%;border-radius:16px;display:block;">
+</figure>"""
+
 SVG_ALPHAFOLD = """<figure style="margin:1.5em 0 2.5em;">
 <svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:16px;" role="img" aria-label="AlphaFold: from amino acid sequence to 3D protein structure">
   <defs>
@@ -237,7 +241,7 @@ SVG_ALPHAFOLD = """<figure style="margin:1.5em 0 2.5em;">
 </svg>
 </figure>"""
 
-ARTICLE_CONTENT = f"""{SVG_ALPHAFOLD}
+ARTICLE_CONTENT = f"""{ILLUSTRATION}
 
 <p>In 1972, Christian Anfinsen accepted the Nobel Prize in Chemistry with a prediction. His
 work had established that the three-dimensional shape of a protein is determined entirely by
