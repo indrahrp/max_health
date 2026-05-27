@@ -443,56 +443,42 @@ ARTICLE = {
 }
 
 
+def create_alphafold_article(apps, schema_editor):
+    if apps is None:
+        from topics.models import Pillar, Article
+    else:
+        Pillar = apps.get_model("topics", "Pillar")
+        Article = apps.get_model("topics", "Article")
+
+    dna_pillar, _ = Pillar.objects.get_or_create(
+        slug=DNA_AI_PILLAR["slug"], defaults=DNA_AI_PILLAR
+    )
+    ai_pillar, _ = Pillar.objects.get_or_create(
+        slug=AI_PILLAR["slug"], defaults=AI_PILLAR
+    )
+
+    Article.objects.get_or_create(
+        slug=ARTICLE["slug"],
+        defaults={**ARTICLE, "pillar": dna_pillar},
+    )
+
+    ai_slug = ARTICLE["slug"] + "-ai"
+    Article.objects.get_or_create(
+        slug=ai_slug,
+        defaults={**ARTICLE, "pillar": ai_pillar, "slug": ai_slug},
+    )
+
+
+def reverse_alphafold_article(apps, schema_editor):
+    Article = apps.get_model("topics", "Article")
+    Article.objects.filter(
+        slug__in=[ARTICLE["slug"], ARTICLE["slug"] + "-ai"]
+    ).delete()
+
+
 class Command(BaseCommand):
     help = "Load AlphaFold article into dna-ai-future and artificial-intelligence pillars"
 
     def handle(self, *args, **options):
-        # ── Pillar 1: DNA, AI, and the Future of Humanity ──
-        dna_pillar, created = Pillar.objects.get_or_create(
-            slug=DNA_AI_PILLAR["slug"],
-            defaults=DNA_AI_PILLAR,
-        )
-        if not created:
-            for k, v in DNA_AI_PILLAR.items():
-                setattr(dna_pillar, k, v)
-            dna_pillar.save()
-        self.stdout.write(f"{'Created' if created else 'Updated'} pillar: {dna_pillar.name}")
-
-        # ── Pillar 2: Artificial Intelligence ──
-        ai_pillar, created = Pillar.objects.get_or_create(
-            slug=AI_PILLAR["slug"],
-            defaults=AI_PILLAR,
-        )
-        if not created:
-            for k, v in AI_PILLAR.items():
-                setattr(ai_pillar, k, v)
-            ai_pillar.save()
-        self.stdout.write(f"{'Created' if created else 'Updated'} pillar: {ai_pillar.name}")
-
-        # ── Article in dna-ai-future ──
-        article, created = Article.objects.get_or_create(
-            slug=ARTICLE["slug"],
-            defaults={**ARTICLE, "pillar": dna_pillar},
-        )
-        if not created:
-            for k, v in ARTICLE.items():
-                setattr(article, k, v)
-            article.pillar = dna_pillar
-            article.save()
-        self.stdout.write(f"{'Created' if created else 'Updated'} article: {article.title}")
-
-        # ── Duplicate into artificial-intelligence pillar ──
-        ai_slug = ARTICLE["slug"] + "-ai"
-        ai_article, created = Article.objects.get_or_create(
-            slug=ai_slug,
-            defaults={**ARTICLE, "pillar": ai_pillar, "slug": ai_slug},
-        )
-        if not created:
-            for k, v in ARTICLE.items():
-                setattr(ai_article, k, v)
-            ai_article.slug = ai_slug
-            ai_article.pillar = ai_pillar
-            ai_article.save()
-        self.stdout.write(f"{'Created' if created else 'Updated'} AI-section article: {ai_article.title}")
-
+        create_alphafold_article(None, None)
         self.stdout.write(self.style.SUCCESS("Done."))
