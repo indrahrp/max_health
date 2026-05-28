@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg-deep" cx="50%" cy="50%" r="60%">
+    <stop offset="0%" stop-color="#100c1e"/>
+    <stop offset="100%" stop-color="#060408"/>
+  </radialGradient>
+  <radialGradient id="candle-glow" cx="50%" cy="70%" r="45%">
+    <stop offset="0%" stop-color="#c87820" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#c87820" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="portrait-glow" cx="50%" cy="40%" r="55%">
+    <stop offset="0%" stop-color="#8060a0" stop-opacity="0.25"/>
+    <stop offset="100%" stop-color="#8060a0" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="soft"><feGaussianBlur stdDeviation="3.5"/></filter>
+  <filter id="ink-jitter" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+    <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+  </filter>
+</defs>
+
+<style>
+@keyframes candle-flicker {
+  0%,100%{ transform: scaleY(1) translateY(0); opacity: 0.9; }
+  25%    { transform: scaleY(1.08) translateY(-2px); opacity: 1; }
+  50%    { transform: scaleY(0.9) translateY(1px); opacity: 0.75; }
+  75%    { transform: scaleY(1.05) translateY(-1px); opacity: 0.95; }
+}
+@keyframes glow-pulse {
+  0%,100%{ opacity: 0.3; }
+  50%    { opacity: 0.6; }
+}
+@keyframes ink-draw {
+  from{ stroke-dashoffset: 600; opacity: 0; }
+  to  { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes fade-rise {
+  from{ opacity: 0; transform: translateY(8px); }
+  to  { opacity: 1; transform: translateY(0); }
+}
+@keyframes book-in {
+  from{ opacity: 0; transform: translateX(-12px); }
+  to  { opacity: 1; transform: translateX(0); }
+}
+@keyframes quote-pulse {
+  0%,100%{ opacity: 0.6; }
+  50%    { opacity: 1; }
+}
+@keyframes pen-drift {
+  0%,100%{ transform: rotate(-5deg) translateY(0); }
+  50%    { transform: rotate(-3deg) translateY(-3px); }
+}
+
+.candle-flame { animation: candle-flicker 2.4s ease-in-out infinite; transform-origin: 0 100%; }
+.candle-glow  { animation: glow-pulse 2.4s ease-in-out infinite; }
+.title-in     { animation: fade-rise .9s ease-out 0.1s both; }
+.sub-in       { animation: fade-rise .8s ease-out 0.4s both; }
+.portrait-in  { animation: fade-rise 1s ease-out 0.3s both; }
+.book-1       { animation: book-in .6s ease-out 0.6s both; }
+.book-2       { animation: book-in .6s ease-out 0.85s both; }
+.book-3       { animation: book-in .6s ease-out 1.1s both; }
+.book-4       { animation: book-in .6s ease-out 1.35s both; }
+.quote-in     { animation: fade-rise .8s ease-out 1.6s both; }
+.quote-glow   { animation: quote-pulse 3s ease-in-out infinite 1.6s; }
+.pen          { animation: pen-drift 4s ease-in-out infinite; }
+.rule-in      { animation: fade-rise .7s ease-out 1.9s both; }
+</style>
+
+<!-- Background -->
+<rect width="720" height="420" fill="url(#bg-deep)"/>
+<rect width="720" height="420" fill="url(#candle-glow)"/>
+<rect width="720" height="420" fill="url(#portrait-glow)"/>
+
+<!-- Subtle grain texture -->
+<rect width="720" height="420" fill="none" opacity="0.04"
+  style="background-image: url('data:image/svg+xml,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;filter id=&quot;n&quot;&gt;&lt;feTurbulence baseFrequency=&quot;0.9&quot;/&gt;&lt;/filter&gt;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; filter=&quot;url(%23n)&quot;/&gt;&lt;/svg&gt;')"/>
+
+<!-- ─── TITLE ─── -->
+<g class="title-in">
+  <text x="360" y="32" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="9" letter-spacing="0.20em" fill="#3a2a18">
+    JORDAN PETERSON · ON LITERATURE · WHY IT MATTERS
+  </text>
+  <text x="360" y="58" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="21" font-style="italic" fill="#e0c898">
+    Dostoevsky: the writer who saw what was coming
+  </text>
+</g>
+
+<!-- ─── PORTRAIT AREA (centre-left) ─── -->
+<g class="portrait-in" transform="translate(180,230)">
+  <!-- background glow -->
+  <ellipse cx="0" cy="0" rx="80" ry="90" fill="#8060a0" opacity="0.08" filter="url(#soft)"/>
+
+  <!-- rough portrait silhouette of Dostoevsky (bearded, intense) -->
+  <!-- head -->
+  <ellipse cx="0" cy="-52" rx="34" ry="40" fill="#1a1028" stroke="#5a4060" stroke-width="1.2"/>
+  <!-- beard -->
+  <path d="M -24 -28 Q -28 -8 -20 8 Q 0 20 20 8 Q 28 -8 24 -28"
+        fill="#241830" stroke="#5a4060" stroke-width="1"/>
+  <!-- brow lines — intense -->
+  <path d="M -16 -60 Q -8 -65 0 -62" stroke="#7a5a80" stroke-width="1.2" fill="none"/>
+  <path d="M 0 -62 Q 8 -65 16 -60" stroke="#7a5a80" stroke-width="1.2" fill="none"/>
+  <!-- eyes — deep set -->
+  <ellipse cx="-11" cy="-56" rx="5" ry="4" fill="#0e0818" stroke="#6a4a70" stroke-width="1"/>
+  <ellipse cx="11" cy="-56" rx="5" ry="4" fill="#0e0818" stroke="#6a4a70" stroke-width="1"/>
+  <!-- pupils reflecting candlelight -->
+  <circle cx="-11" cy="-56" r="2" fill="#c87820" opacity="0.5"/>
+  <circle cx="11" cy="-56" r="2" fill="#c87820" opacity="0.5"/>
+  <!-- body / shoulders -->
+  <path d="M -34 -28 Q -44 0 -40 50 Q 0 62 40 50 Q 44 0 34 -28 Z"
+        fill="#120e1c" stroke="#4a3858" stroke-width="1.2"/>
+  <!-- collar -->
+  <path d="M -14 -26 L -8 -10 L 0 -4 L 8 -10 L 14 -26" stroke="#6a5070" stroke-width="1" fill="none"/>
+
+  <!-- name label -->
+  <text x="0" y="76" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="9" letter-spacing="0.14em" fill="#5a4060">
+    FYODOR DOSTOEVSKY
+  </text>
+  <text x="0" y="90" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#3a2848">
+    1821 – 1881
+  </text>
+</g>
+
+<!-- ─── CANDLE (right of portrait) ─── -->
+<g transform="translate(280,298)">
+  <rect x="-5" y="0" width="10" height="36" rx="2" fill="#d4c090" opacity="0.7"/>
+  <g class="candle-flame">
+    <path d="M 0 0 Q -7 -18 0 -28 Q 7 -18 0 0 Z" fill="#f0a020" opacity="0.9"/>
+    <path d="M 0 -2 Q -3 -14 0 -22 Q 3 -14 0 -2 Z" fill="#fff0a0" opacity="0.8"/>
+  </g>
+  <ellipse class="candle-glow" cx="0" cy="-20" rx="40" ry="50" fill="#c87820" opacity="0.2" filter="url(#soft)"/>
+</g>
+
+<!-- ─── BOOKS (right side) ─── -->
+<g transform="translate(460,130)">
+
+  <!-- Crime and Punishment -->
+  <g class="book-1">
+    <rect x="0" y="0" width="14" height="88" rx="2" fill="#8b2020" stroke="#a03030" stroke-width="0.8"/>
+    <text x="7" y="55" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif"
+      font-size="7.5" fill="#e8c0c0" transform="rotate(90,7,55)" letter-spacing="0.05em">Crime and Punishment</text>
+  </g>
+
+  <!-- The Brothers Karamazov -->
+  <g class="book-2" transform="translate(18,0)">
+    <rect x="0" y="0" width="16" height="100" rx="2" fill="#1a3060" stroke="#2a4878" stroke-width="0.8"/>
+    <text x="8" y="62" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif"
+      font-size="7.5" fill="#b0c8e8" transform="rotate(90,8,62)" letter-spacing="0.05em">The Brothers Karamazov</text>
+  </g>
+
+  <!-- The Devils / Possessed -->
+  <g class="book-3" transform="translate(38,12)">
+    <rect x="0" y="0" width="14" height="80" rx="2" fill="#2a1a08" stroke="#5a3818" stroke-width="0.8"/>
+    <text x="7" y="48" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif"
+      font-size="7.5" fill="#c8a870" transform="rotate(90,7,48)" letter-spacing="0.05em">The Devils</text>
+  </g>
+
+  <!-- Notes from Underground -->
+  <g class="book-4" transform="translate(56,20)">
+    <rect x="0" y="0" width="12" height="68" rx="2" fill="#183018" stroke="#285028" stroke-width="0.8"/>
+    <text x="6" y="42" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif"
+      font-size="7.5" fill="#90c890" transform="rotate(90,6,42)" letter-spacing="0.05em">Notes from Underground</text>
+  </g>
+
+  <!-- shelf line -->
+  <line x1="-4" y1="106" x2="80" y2="106" stroke="#3a2818" stroke-width="1.5"/>
+</g>
+
+<!-- ─── KEY QUOTES floating ─── -->
+<g class="quote-in">
+  <!-- Quote 1 -->
+  <text x="490" y="262" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11.5" font-style="italic" fill="#b09070" class="quote-glow">
+    "If God does not exist,
+  </text>
+  <text x="490" y="278" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11.5" font-style="italic" fill="#b09070">
+    everything is permitted."
+  </text>
+
+  <text x="490" y="308" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11.5" font-style="italic" fill="#8878a0">
+    "Beauty will save the world."
+  </text>
+</g>
+
+<!-- ─── PEN / WRITING ─── -->
+<g class="pen" transform="translate(340,310)">
+  <path d="M 0 0 L 60 -30" stroke="#5a4030" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 60 -30 L 58 -26 L 54 -28 Z" fill="#7a5840"/>
+  <path d="M 0 0 L -4 4" stroke="#3a2820" stroke-width="1.2" stroke-linecap="round"/>
+</g>
+
+<!-- ─── BOTTOM RULE ─── -->
+<g class="rule-in">
+  <rect x="60" y="386" width="600" height="28" rx="6" fill="#0e0808" stroke="#2a1810" stroke-width="1"/>
+  <text x="360" y="404" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11.5" font-style="italic" fill="#7a6040">
+    "I live inside a Dostoevsky novel as a clinician. People tell me things absolutely beyond belief." — Peterson
+  </text>
+</g>
+</svg>
