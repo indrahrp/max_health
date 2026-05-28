@@ -4,5 +4,6 @@ cmds = [
   "python manage.py migrate",
   "python manage.py load_autoimmune_diseases",
   "python manage.py load_eagleman_brain_mind",
-  "python manage.py load_gabor_mate_autoimmune_trauma"
+  "python manage.py load_gabor_mate_autoimmune_trauma",
+  "python manage.py load_nietzsche_beyond_good_evil"
 ]
