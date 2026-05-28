@@ -49,6 +49,12 @@
 }
 .ab-note-inner p { margin: 0 0 22px; }
 .ab-note-inner p:last-child { margin: 0; font-style: italic; color: var(--fg-3); }
+.ab-portrait {
+  width: 96px; height: 96px; border-radius: 50%;
+  object-fit: cover; object-position: center top;
+  border: 2px solid var(--hairline);
+  display: block; margin-bottom: 22px;
+}
 
 /* ─── Curve divider ─── */
 .ab-divider { display: flex; justify-content: center; padding: 48px 0; opacity: 0.5; }
@@ -154,6 +160,7 @@
 <section class="ab-note">
   <div class="wrap">
     <div class="ab-note-inner">
+      <img src="{% static 'blog/profile-photo.jpeg' %}" alt="Author portrait" class="ab-portrait">
       <div class="eyebrow" style="margin-bottom:22px;">A note from me</div>
       <p>I started keeping notes during a long stretch of being unwell. The autoimmune condition I have is one that affects the brain — it quietly disrupts how I think, regulate, and adapt, in ways that are hard to point at and harder to explain. On paper it was not the worst thing in the world. In practice it took years to understand the shape of the suffering, and longer to begin to live with it calmly.</p>
       <p>Most of what I read in the early years was either written for doctors or written to alarm me. What I needed was somewhere in between — careful and specific and unhurried, but in plain language. This site is my attempt at that. The pieces here are summaries of things I have read and found useful: studies, books, essays, sometimes a single careful paragraph from someone who knew more than I did.</p>
