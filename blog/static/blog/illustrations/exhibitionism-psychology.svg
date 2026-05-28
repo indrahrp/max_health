@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<style>
+  @keyframes mask-breathe { 0%,100%{opacity:0.55;transform:scale(1)} 50%{opacity:0.85;transform:scale(1.03)} }
+  @keyframes gaze-pulse { 0%,100%{opacity:0.2;r:38} 50%{opacity:0.5;r:48} }
+  @keyframes iris-contract { 0%,100%{r:5} 50%{r:3.5} }
+  @keyframes layer-rise { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes line-in { from{stroke-dashoffset:200} to{stroke-dashoffset:0} }
+  @keyframes shimmer { 0%,100%{opacity:0.3} 50%{opacity:0.65} }
+  @keyframes word-in { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes shadow-pulse { 0%,100%{opacity:0.15} 50%{opacity:0.3} }
+
+  .title-in   { animation: layer-rise .8s ease-out 0.1s both; }
+  .layer-1    { animation: layer-rise .7s ease-out 0.4s both; }
+  .layer-2    { animation: layer-rise .7s ease-out 0.7s both; }
+  .layer-3    { animation: layer-rise .7s ease-out 1.0s both; }
+  .layer-4    { animation: layer-rise .7s ease-out 1.3s both; }
+  .layer-5    { animation: layer-rise .7s ease-out 1.6s both; }
+  .mask-anim  { animation: mask-breathe 4s ease-in-out infinite; }
+  .gaze-ring  { animation: gaze-pulse 3.5s ease-in-out infinite 0.5s; }
+  .iris       { animation: iris-contract 3.5s ease-in-out infinite 0.5s; }
+  .connector  { stroke-dasharray:200; animation: line-in 1.4s cubic-bezier(.6,.05,.2,1) 0.6s both; }
+  .shimmer-1  { animation: shimmer 3s ease-in-out infinite; }
+  .shimmer-2  { animation: shimmer 3s ease-in-out infinite 1s; }
+  .shimmer-3  { animation: shimmer 3s ease-in-out infinite 2s; }
+  .shadow-bg  { animation: shadow-pulse 4s ease-in-out infinite; }
+</style>
+
+<!-- Dark artistic background -->
+<rect width="720" height="420" fill="#040810"/>
+
+<!-- Deep shadow wash — left dark, right slightly lighter -->
+<linearGradient id="bg-grad" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0%" stop-color="#08060f"/>
+  <stop offset="100%" stop-color="#0a0c18"/>
+</linearGradient>
+<rect width="720" height="420" fill="url(#bg-grad)"/>
+
+<!-- Soft violet wash centred on mask figure -->
+<radialGradient id="violet-wash" cx="50%" cy="55%" r="42%">
+  <stop offset="0%" stop-color="#6b4fa0" stop-opacity="0.18"/>
+  <stop offset="100%" stop-color="#6b4fa0" stop-opacity="0"/>
+</radialGradient>
+<rect width="720" height="420" fill="url(#violet-wash)"/>
+
+<!-- Horizontal mood line -->
+<line class="connector" x1="0" y1="210" x2="720" y2="210" stroke="#1e1a2e" stroke-width="1"/>
+
+<!-- TITLE -->
+<g class="title-in">
+  <text x="360" y="38" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9.5" letter-spacing="0.20em" fill="#3d3558" text-transform="uppercase">CLINICAL PSYCHOLOGY · PARAPHILIAS · DEVELOPMENTAL ORIGINS</text>
+  <text x="360" y="68" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="21" fill="#d8d0f0" font-style="italic">Exhibitionism: the Compulsion to Be Seen</text>
+</g>
+
+<!-- ─── CENTRAL MASK FIGURE ─── -->
+<g class="mask-anim" transform="translate(360,235)">
+  <!-- shadow -->
+  <ellipse class="shadow-bg" cx="0" cy="72" rx="60" ry="12" fill="#000"/>
+
+  <!-- body outline (facing forward) -->
+  <ellipse cx="0" cy="-10" rx="36" ry="46" fill="#0d0b18" stroke="#4a3d6e" stroke-width="1.2"/>
+
+  <!-- face oval -->
+  <ellipse cx="0" cy="-18" rx="22" ry="28" fill="#0f0c20" stroke="#5a4a80" stroke-width="1"/>
+
+  <!-- mask — the covering layer -->
+  <path d="M -22 -28 Q -26 -10 -22 8 Q 0 20 22 8 Q 26 -10 22 -28 Q 10 -38 0 -38 Q -10 -38 -22 -28 Z"
+        fill="#1a1430" stroke="#7c60b0" stroke-width="1.4" opacity="0.9"/>
+  <!-- mask eye holes -->
+  <ellipse cx="-9" cy="-20" rx="5" ry="4" fill="#060810"/>
+  <ellipse cx="9" cy="-20" rx="5" ry="4" fill="#060810"/>
+  <!-- iris glow -->
+  <circle class="iris" cx="-9" cy="-20" r="5" fill="none" stroke="#8b6fcc" stroke-width="0.8" opacity="0.7"/>
+  <circle class="iris" cx="9" cy="-20" r="5" fill="none" stroke="#8b6fcc" stroke-width="0.8" opacity="0.7"/>
+
+  <!-- gaze rings radiating outward -->
+  <circle class="gaze-ring" cx="0" cy="-18" r="38" fill="none" stroke="#6b4fa0" stroke-width="0.8" opacity="0.2"/>
+  <circle cx="0" cy="-18" r="55" fill="none" stroke="#6b4fa0" stroke-width="0.5" opacity="0.1"/>
+  <circle cx="0" cy="-18" r="72" fill="none" stroke="#6b4fa0" stroke-width="0.4" opacity="0.07"/>
+</g>
+
+<!-- ─── LEFT COLUMN — Origins ─── -->
+<g class="layer-1">
+  <text x="32" y="120" font-family="'IBM Plex Mono',monospace" font-size="9" letter-spacing="0.16em" fill="#4a3d6e">DEVELOPMENTAL ORIGINS</text>
+  <line x1="32" y1="126" x2="200" y2="126" stroke="#2a2040" stroke-width="1"/>
+</g>
+<g class="layer-2">
+  <text x="32" y="148" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">· Early shame &amp; humiliation</text>
+  <text x="32" y="166" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">· Attachment disruption</text>
+  <text x="32" y="184" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">· Distorted mirroring</text>
+  <text x="32" y="202" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">· Covert narcissistic wound</text>
+</g>
+
+<!-- ─── LEFT COLUMN bottom — The compulsion ─── -->
+<g class="layer-3">
+  <text x="32" y="248" font-family="'IBM Plex Mono',monospace" font-size="9" letter-spacing="0.16em" fill="#4a3d6e">THE COMPULSION LOOP</text>
+  <line x1="32" y1="254" x2="200" y2="254" stroke="#2a2040" stroke-width="1"/>
+  <text x="32" y="274" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">Anxiety → exposure urge</text>
+  <text x="32" y="292" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">Shock response → relief</text>
+  <text x="32" y="310" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">Shame → renewed tension</text>
+  <text x="32" y="328" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">Cycle tightens over time</text>
+</g>
+
+<!-- ─── RIGHT COLUMN — Psychological structure ─── -->
+<g class="layer-1">
+  <text x="520" y="120" font-family="'IBM Plex Mono',monospace" font-size="9" letter-spacing="0.16em" fill="#4a3d6e">PSYCHOLOGICAL STRUCTURE</text>
+  <line x1="520" y1="126" x2="688" y2="126" stroke="#2a2040" stroke-width="1"/>
+</g>
+<g class="layer-4">
+  <text x="520" y="148" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">· Unmet need for recognition</text>
+  <text x="520" y="166" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">· Splitting: seen vs unseen</text>
+  <text x="520" y="184" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">· Power via shock / reaction</text>
+  <text x="520" y="202" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">· Fantasy control, real chaos</text>
+</g>
+
+<!-- ─── RIGHT COLUMN bottom — Resolution ─── -->
+<g class="layer-5">
+  <text x="520" y="248" font-family="'IBM Plex Mono',monospace" font-size="9" letter-spacing="0.16em" fill="#4a3d6e">THERAPEUTIC PATHWAY</text>
+  <line x1="520" y1="254" x2="688" y2="254" stroke="#2a2040" stroke-width="1"/>
+  <text x="520" y="274" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">Integrate the unseen self</text>
+  <text x="520" y="292" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">Recognise genuine intimacy</text>
+  <text x="520" y="310" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">Tolerate ordinary visibility</text>
+  <text x="520" y="328" font-family="'IBM Plex Serif',Georgia,serif" font-size="12.5" fill="#a090c8">Address narcissistic core</text>
+</g>
+
+<!-- Bottom caption -->
+<g class="layer-5">
+  <text x="360" y="398" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#3d3558">
+    "To be seen without consent is a violation. To need to be seen is its own kind of wound."
+  </text>
+</g>
+</svg>
