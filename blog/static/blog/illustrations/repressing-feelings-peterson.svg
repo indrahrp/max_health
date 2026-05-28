@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg-deep" cx="50%" cy="50%" r="65%">
+    <stop offset="0%" stop-color="#0c0a18"/>
+    <stop offset="100%" stop-color="#04030a"/>
+  </radialGradient>
+  <radialGradient id="inner-glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#6020a0" stop-opacity="0.7"/>
+    <stop offset="60%" stop-color="#3010608" stop-opacity="0.3"/>
+    <stop offset="100%" stop-color="#6020a0" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="crack-glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#e08030" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#e08030" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="release-glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#80c0f0" stop-opacity="0.6"/>
+    <stop offset="100%" stop-color="#80c0f0" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="blur-soft"><feGaussianBlur stdDeviation="3"/></filter>
+  <filter id="blur-med"><feGaussianBlur stdDeviation="7"/></filter>
+  <filter id="blur-heavy"><feGaussianBlur stdDeviation="14"/></filter>
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="2" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+
+<style>
+@keyframes inner-pulse {
+  0%,100%{ opacity:0.5; transform:scale(1); }
+  50%    { opacity:0.9; transform:scale(1.08); }
+}
+@keyframes crack-glow-anim {
+  0%,100%{ opacity:0.4; }
+  50%    { opacity:1; }
+}
+@keyframes swirl {
+  from{ transform: rotate(0deg); }
+  to  { transform: rotate(360deg); }
+}
+@keyframes swirl-rev {
+  from{ transform: rotate(0deg); }
+  to  { transform: rotate(-360deg); }
+}
+@keyframes pressure-build {
+  0%  { opacity:0.3; transform:scale(0.9); }
+  70% { opacity:0.8; transform:scale(1.12); }
+  100%{ opacity:0.3; transform:scale(0.9); }
+}
+@keyframes float-up {
+  0%,100%{ transform:translateY(0) rotate(0deg); opacity:0.6; }
+  50%    { transform:translateY(-12px) rotate(8deg); opacity:0.9; }
+}
+@keyframes float-r {
+  0%,100%{ transform:translateY(0) rotate(0deg); opacity:0.5; }
+  50%    { transform:translateY(-8px) rotate(-5deg); opacity:0.85; }
+}
+@keyframes title-in {
+  from{ opacity:0; transform:translateY(-8px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+@keyframes label-in-l {
+  from{ opacity:0; transform:translateX(-12px); }
+  to  { opacity:1; transform:translateX(0); }
+}
+@keyframes label-in-r {
+  from{ opacity:0; transform:translateX(12px); }
+  to  { opacity:1; transform:translateX(0); }
+}
+@keyframes quote-in {
+  from{ opacity:0; }
+  to  { opacity:1; }
+}
+@keyframes release-expand {
+  0%,100%{ rx:38; ry:38; opacity:0.3; }
+  50%    { rx:52; ry:52; opacity:0.15; }
+}
+@keyframes arrow-pulse {
+  0%,100%{ opacity:0.4; }
+  50%    { opacity:0.9; }
+}
+
+.title-in { animation: title-in .9s ease-out 0.1s both; }
+.lbl-l    { animation: label-in-l .7s ease-out 0.6s both; }
+.lbl-r    { animation: label-in-r .7s ease-out 0.6s both; }
+.quote-in { animation: quote-in .8s ease-out 1.4s both; }
+.inner    { animation: inner-pulse 3s ease-in-out infinite; transform-origin: 230px 218px; }
+.swirl-1  { animation: swirl 8s linear infinite; transform-origin: 230px 218px; }
+.swirl-2  { animation: swirl-rev 11s linear infinite; transform-origin: 230px 218px; }
+.pressure { animation: pressure-build 3s ease-in-out infinite; transform-origin: 230px 218px; }
+.crack-1  { animation: crack-glow-anim 2.2s ease-in-out infinite; }
+.crack-2  { animation: crack-glow-anim 2.8s ease-in-out infinite 0.5s; }
+.crack-3  { animation: crack-glow-anim 3.1s ease-in-out infinite 1s; }
+.fp-1     { animation: float-up 4s ease-in-out infinite; }
+.fp-2     { animation: float-r 5.2s ease-in-out infinite 1s; }
+.fp-3     { animation: float-up 3.6s ease-in-out infinite 0.6s; }
+.release  { animation: release-expand 4.5s ease-in-out infinite; }
+.arrow    { animation: arrow-pulse 2s ease-in-out infinite; }
+</style>
+
+<!-- Background -->
+<rect width="720" height="420" fill="url(#bg-deep)"/>
+
+<!-- ─── LEFT SIDE: REPRESSED ─── -->
+<!-- Ambient glow -->
+<ellipse cx="230" cy="218" rx="140" ry="140" fill="#5010802" opacity="0.12" filter="url(#blur-heavy)"/>
+<ellipse cx="230" cy="218" rx="80" ry="80" fill="#6020a0" opacity="0.10" filter="url(#blur-heavy)"/>
+
+<!-- Figure body (hunched silhouette) -->
+<path d="M 195 320 Q 185 290 188 268 Q 186 250 192 235 Q 198 215 210 200 Q 222 185 230 175 Q 238 185 250 200 Q 262 215 268 235 Q 274 250 272 268 Q 275 290 265 320 Z"
+  fill="#14101e" stroke="#2a1840" stroke-width="1.2"/>
+<!-- Head -->
+<ellipse cx="230" cy="163" rx="26" ry="28" fill="#14101e" stroke="#2a1840" stroke-width="1.2"/>
+<!-- Shoulder slump -->
+<path d="M 183 240 Q 175 248 170 262" stroke="#2a1840" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<path d="M 277 240 Q 285 248 290 262" stroke="#2a1840" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+<!-- Swirling dark mass inside figure -->
+<g class="swirl-1">
+  <ellipse cx="230" cy="248" rx="32" ry="22" fill="none" stroke="#7030b0" stroke-width="1.2" opacity="0.5" stroke-dasharray="4 3"/>
+  <ellipse cx="230" cy="248" rx="22" ry="32" fill="none" stroke="#9040d0" stroke-width="0.8" opacity="0.4" stroke-dasharray="3 4"/>
+</g>
+<g class="swirl-2">
+  <ellipse cx="230" cy="248" rx="18" ry="28" fill="none" stroke="#c060f0" stroke-width="0.8" opacity="0.35" stroke-dasharray="2 5"/>
+</g>
+<ellipse class="inner" cx="230" cy="248" rx="26" ry="26" fill="#5020802" opacity="0.4" filter="url(#blur-soft)"/>
+<ellipse class="pressure" cx="230" cy="248" rx="20" ry="20" fill="#8030c0" opacity="0.5" filter="url(#blur-soft)"/>
+
+<!-- Cracks in the body with glow leaking out -->
+<g class="crack-1">
+  <path d="M 215 240 L 210 228 L 218 220" stroke="#e08030" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="213" cy="229" rx="8" ry="5" fill="#e08030" opacity="0.25" filter="url(#blur-soft)" transform="rotate(-30,213,229)"/>
+</g>
+<g class="crack-2">
+  <path d="M 248 245 L 256 238 L 250 228" stroke="#e08030" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <ellipse cx="253" cy="237" rx="7" ry="4" fill="#e08030" opacity="0.2" filter="url(#blur-soft)" transform="rotate(20,253,237)"/>
+</g>
+<g class="crack-3">
+  <path d="M 225 268 L 220 278 L 230 282" stroke="#e08030" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+  <ellipse cx="224" cy="276" rx="7" ry="4" fill="#e08030" opacity="0.2" filter="url(#blur-soft)" transform="rotate(-15,224,276)"/>
+</g>
+
+<!-- Floating dark particles from pressure -->
+<circle class="fp-1" cx="200" cy="210" r="3" fill="#9040c0" opacity="0.5"/>
+<circle class="fp-2" cx="252" cy="218" r="2.5" fill="#b050e0" opacity="0.45"/>
+<circle class="fp-3" cx="215" cy="295" r="2" fill="#8030b0" opacity="0.4"/>
+
+<!-- Down arrows (suppression force) -->
+<g class="arrow">
+  <line x1="230" y1="128" x2="230" y2="145" stroke="#5a3080" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 224 140 L 230 148 L 236 140" fill="none" stroke="#5a3080" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="213" y1="130" x2="213" y2="143" stroke="#4a2870" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+  <line x1="247" y1="130" x2="247" y2="143" stroke="#4a2870" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+</g>
+
+<!-- ─── DIVIDER ─── -->
+<line x1="360" y1="75" x2="360" y2="370" stroke="#201830" stroke-width="1.5" stroke-dasharray="5 5"/>
+
+<!-- ─── RIGHT SIDE: EXPRESSED/INTEGRATED ─── -->
+<!-- Calmer ambient glow -->
+<ellipse cx="490" cy="218" rx="130" ry="130" fill="#1040702" opacity="0.12" filter="url(#blur-heavy)"/>
+<ellipse cx="490" cy="218" rx="70" ry="70" fill="#2060a0" opacity="0.08" filter="url(#blur-heavy)"/>
+
+<!-- Figure body (upright silhouette) -->
+<path d="M 458 320 Q 452 290 453 268 Q 452 250 456 235 Q 462 215 472 200 Q 482 185 490 175 Q 498 185 508 200 Q 518 215 524 235 Q 528 250 527 268 Q 528 290 522 320 Z"
+  fill="#0e1420" stroke="#182840" stroke-width="1.2"/>
+<!-- Head -->
+<ellipse cx="490" cy="163" rx="26" ry="28" fill="#0e1420" stroke="#182840" stroke-width="1.2"/>
+<!-- Shoulders level / relaxed -->
+<path d="M 448 238 Q 440 242 436 252" stroke="#182840" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+<path d="M 532 238 Q 540 242 544 252" stroke="#182840" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+<!-- Integrated / released energy — flows outward as gentle light rings -->
+<ellipse class="release" cx="490" cy="248" rx="38" ry="38" fill="none" stroke="#4090d0" stroke-width="1" opacity="0.3"/>
+<ellipse cx="490" cy="248" rx="28" ry="28" fill="none" stroke="#60a0e0" stroke-width="1.2" opacity="0.25"/>
+<ellipse cx="490" cy="248" rx="16" ry="16" fill="#3080c0" opacity="0.12" filter="url(#blur-soft)"/>
+
+<!-- Upward flowing light particles — energy now useful -->
+<circle class="fp-1" cx="468" cy="200" r="2.5" fill="#4090d0" opacity="0.5" style="animation-delay:0.4s"/>
+<circle class="fp-2" cx="514" cy="215" r="2" fill="#60b0e0" opacity="0.4" style="animation-delay:1.6s"/>
+<circle class="fp-3" cx="480" cy="175" r="1.8" fill="#80c0f0" opacity="0.5" style="animation-delay:0.9s"/>
+<circle class="fp-1" cx="500" cy="192" r="2.2" fill="#50a0d8" opacity="0.45" style="animation-delay:2.1s"/>
+
+<!-- Upward arrows (expression / release) -->
+<g class="arrow" style="animation-delay:0.8s">
+  <line x1="490" y1="148" x2="490" y2="128" stroke="#3070b0" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 484 134 L 490 125 L 496 134" fill="none" stroke="#3070b0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="473" y1="145" x2="473" y2="130" stroke="#2860a0" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+  <line x1="507" y1="145" x2="507" y2="130" stroke="#2860a0" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+</g>
+
+<!-- ─── TITLE ─── -->
+<g class="title-in">
+  <text x="360" y="28" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="8.5" letter-spacing="0.18em" fill="#2a1838">
+    JORDAN PETERSON · PSYCHOLOGY · EMOTION
+  </text>
+  <text x="360" y="56" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="20" font-style="italic" fill="#b898d0">
+    What you push down grows in the dark
+  </text>
+</g>
+
+<!-- Labels -->
+<g class="lbl-l">
+  <text x="230" y="350" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11.5" font-style="italic" fill="#8040b0">suppressed</text>
+  <text x="230" y="367" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="8" letter-spacing="0.12em" fill="#4a2860">BUILDS · PRESSURISES · BREAKS</text>
+</g>
+<g class="lbl-r">
+  <text x="490" y="350" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11.5" font-style="italic" fill="#3080b8">expressed</text>
+  <text x="490" y="367" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="8" letter-spacing="0.12em" fill="#1a4060">RELEASED · INTEGRATED · USEFUL</text>
+</g>
+
+<!-- Bottom quote -->
+<g class="quote-in">
+  <rect x="80" y="383" width="560" height="28" rx="5" fill="#07050e" stroke="#18102a" stroke-width="1" opacity="0.9"/>
+  <text x="360" y="401" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#7060902">
+    "Pay attention to your resentment. It is telling you something." — Peterson
+  </text>
+</g>
+</svg>
