@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg-vignette" cx="50%" cy="50%" r="65%">
+    <stop offset="0%" stop-color="#100818"/>
+    <stop offset="100%" stop-color="#04030a"/>
+  </radialGradient>
+  <radialGradient id="warm-glow" cx="36%" cy="46%" r="38%">
+    <stop offset="0%" stop-color="#c88040" stop-opacity="0.28"/>
+    <stop offset="100%" stop-color="#c88040" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="cold-glow" cx="64%" cy="54%" r="38%">
+    <stop offset="0%" stop-color="#204878" stop-opacity="0.28"/>
+    <stop offset="100%" stop-color="#204878" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="blur-soft"><feGaussianBlur stdDeviation="3"/></filter>
+  <filter id="blur-med"><feGaussianBlur stdDeviation="6"/></filter>
+  <filter id="blur-heavy"><feGaussianBlur stdDeviation="12"/></filter>
+  <clipPath id="left-half"><rect x="0" y="0" width="360" height="420"/></clipPath>
+  <clipPath id="right-half"><rect x="360" y="0" width="360" height="420"/></clipPath>
+  <linearGradient id="divider-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#c8a060" stop-opacity="0"/>
+    <stop offset="30%" stop-color="#c8a060" stop-opacity="0.7"/>
+    <stop offset="70%" stop-color="#3060a0" stop-opacity="0.7"/>
+    <stop offset="100%" stop-color="#3060a0" stop-opacity="0"/>
+  </linearGradient>
+</defs>
+
+<style>
+@keyframes crack-pulse {
+  0%,100%{ opacity: 0.6; }
+  50%    { opacity: 1; }
+}
+@keyframes eye-left-glow {
+  0%,100%{ fill: #c87820; opacity: 0.65; }
+  50%    { fill: #f0a030; opacity: 1; }
+}
+@keyframes eye-right-glow {
+  0%,100%{ fill: #2a5090; opacity: 0.6; }
+  50%    { fill: #4080d0; opacity: 0.9; }
+}
+@keyframes title-in {
+  from{ opacity: 0; transform: translateY(-8px); }
+  to  { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from{ opacity: 0; }
+  to  { opacity: 1; }
+}
+@keyframes label-in {
+  from{ opacity: 0; transform: translateX(-10px); }
+  to  { opacity: 1; transform: translateX(0); }
+}
+@keyframes label-in-r {
+  from{ opacity: 0; transform: translateX(10px); }
+  to  { opacity: 1; transform: translateX(0); }
+}
+@keyframes mask-shimmer {
+  0%,100%{ opacity: 0.7; }
+  50%    { opacity: 1; }
+}
+@keyframes dark-breathe {
+  0%,100%{ opacity: 0.8; }
+  50%    { opacity: 0.5; }
+}
+@keyframes particle-float {
+  0%  { transform: translateY(0) translateX(0); opacity: 0.6; }
+  50% { transform: translateY(-8px) translateX(3px); opacity: 0.9; }
+  100%{ transform: translateY(0) translateX(0); opacity: 0.6; }
+}
+
+.title-in  { animation: title-in .9s ease-out 0.1s both; }
+.sub-in    { animation: fade-in .8s ease-out 0.5s both; }
+.label-l   { animation: label-in .7s ease-out 0.8s both; }
+.label-r   { animation: label-in-r .7s ease-out 0.8s both; }
+.crack     { animation: crack-pulse 3s ease-in-out infinite; }
+.eye-l     { animation: eye-left-glow 2.5s ease-in-out infinite; }
+.eye-r     { animation: eye-right-glow 3.1s ease-in-out infinite 0.5s; }
+.mask-face { animation: mask-shimmer 4s ease-in-out infinite; }
+.dark-face { animation: dark-breathe 3.5s ease-in-out infinite 1s; }
+.p1 { animation: particle-float 4.2s ease-in-out infinite; }
+.p2 { animation: particle-float 5s ease-in-out infinite 1.2s; }
+.p3 { animation: particle-float 3.8s ease-in-out infinite 0.6s; }
+.p4 { animation: particle-float 4.6s ease-in-out infinite 2s; }
+.quote-in  { animation: fade-in .8s ease-out 1.3s both; }
+</style>
+
+<!-- Background -->
+<rect width="720" height="420" fill="url(#bg-vignette)"/>
+<rect width="720" height="420" fill="url(#warm-glow)"/>
+<rect width="720" height="420" fill="url(#cold-glow)"/>
+
+<!-- Title -->
+<g class="title-in">
+  <text x="360" y="28" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="8.5" letter-spacing="0.18em" fill="#3a2a18">
+    JORDAN PETERSON · PERSONALITY · DARK TETRAD
+  </text>
+  <text x="360" y="56" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="20" font-style="italic" fill="#c8a868">
+    The face they show you — and the one they hide
+  </text>
+</g>
+
+<!-- Warm ambient left -->
+<ellipse cx="250" cy="220" rx="160" ry="130" fill="#c87820" opacity="0.08" filter="url(#blur-heavy)"/>
+<!-- Cold ambient right -->
+<ellipse cx="470" cy="230" rx="160" ry="130" fill="#204878" opacity="0.10" filter="url(#blur-heavy)"/>
+
+<!-- ─── FACE — left half (warm, charming, smiling) ─── -->
+<g class="mask-face" clip-path="url(#left-half)">
+  <!-- Head shape -->
+  <ellipse cx="360" cy="220" rx="110" ry="130" fill="#1c1220" stroke="#6a4830" stroke-width="1.5"/>
+  <!-- Warm skin tones -->
+  <ellipse cx="360" cy="210" rx="95" ry="112" fill="#2a1a10" opacity="0.7"/>
+  <!-- Forehead highlight -->
+  <ellipse cx="320" cy="165" rx="45" ry="30" fill="#c87820" opacity="0.06" filter="url(#blur-soft)"/>
+  <!-- Left eye — warm, open, charming -->
+  <ellipse cx="320" cy="210" rx="20" ry="14" fill="#180e08" stroke="#7a5030" stroke-width="1.2"/>
+  <circle cx="320" cy="210" r="9" fill="#2a1808"/>
+  <circle class="eye-l" cx="320" cy="210" r="5" fill="#c87820" opacity="0.7"/>
+  <circle cx="315" cy="206" r="2.5" fill="#f0e0c0" opacity="0.5"/>
+  <!-- Smile lines -->
+  <path d="M 295 260 Q 315 278 338 266" stroke="#7a5030" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <!-- Cheek warmth -->
+  <ellipse cx="300" cy="248" rx="22" ry="14" fill="#c87820" opacity="0.08" filter="url(#blur-soft)"/>
+  <!-- Left eyebrow — relaxed -->
+  <path d="M 298 193 Q 312 187 328 191" stroke="#8a6040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Nose bridge left -->
+  <path d="M 350 195 Q 346 220 350 235" stroke="#6a4020" stroke-width="1" fill="none" opacity="0.5"/>
+  <!-- Lip left - curved up (smile) -->
+  <path d="M 338 266 Q 354 280 360 275" stroke="#9a6040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</g>
+
+<!-- ─── FACE — right half (cold, controlled, calculating) ─── -->
+<g class="dark-face" clip-path="url(#right-half)">
+  <!-- Head shape right -->
+  <ellipse cx="360" cy="220" rx="110" ry="130" fill="#0e1020" stroke="#283858" stroke-width="1.5"/>
+  <!-- Cold skin tones -->
+  <ellipse cx="360" cy="210" rx="95" ry="112" fill="#0c1018" opacity="0.8"/>
+  <!-- Forehead cold highlight -->
+  <ellipse cx="400" cy="165" rx="40" ry="28" fill="#204878" opacity="0.08" filter="url(#blur-soft)"/>
+  <!-- Right eye — cold, calculating, piercing -->
+  <ellipse cx="400" cy="210" rx="20" ry="12" fill="#08080e" stroke="#283858" stroke-width="1.2"/>
+  <circle cx="400" cy="210" r="9" fill="#080810"/>
+  <circle class="eye-r" cx="400" cy="210" r="5" fill="#2a5090" opacity="0.7"/>
+  <circle cx="396" cy="207" r="2" fill="#c0d0f0" opacity="0.4"/>
+  <!-- Flat mouth right — no smile -->
+  <path d="M 360 271 Q 380 269 400 271" stroke="#283858" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <!-- Right eyebrow — slightly raised/calculating -->
+  <path d="M 382 188 Q 398 183 416 188" stroke="#304060" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Nose bridge right -->
+  <path d="M 360 195 Q 364 220 360 235" stroke="#283048" stroke-width="1" fill="none" opacity="0.5"/>
+  <!-- Lip right - flat -->
+  <path d="M 360 275 Q 370 273 386 271" stroke="#304060" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Cold shadow under cheek -->
+  <ellipse cx="415" cy="248" rx="22" ry="14" fill="#204878" opacity="0.06" filter="url(#blur-soft)"/>
+</g>
+
+<!-- ─── DIVIDING CRACK ─── -->
+<g class="crack">
+  <!-- Main crack line -->
+  <line x1="360" y1="80" x2="360" y2="370" stroke="url(#divider-grad)" stroke-width="1.5"/>
+  <!-- Crack hairlines -->
+  <line x1="360" y1="145" x2="352" y2="162" stroke="#c8a060" stroke-width="0.7" opacity="0.5"/>
+  <line x1="360" y1="195" x2="368" y2="208" stroke="#3060a0" stroke-width="0.7" opacity="0.5"/>
+  <line x1="360" y1="255" x2="351" y2="268" stroke="#c8a060" stroke-width="0.6" opacity="0.4"/>
+  <line x1="360" y1="300" x2="370" y2="315" stroke="#3060a0" stroke-width="0.6" opacity="0.4"/>
+</g>
+
+<!-- Floating particles left — warmth/charm signals -->
+<circle class="p1" cx="170" cy="180" r="2.5" fill="#c87820" opacity="0.5"/>
+<circle class="p2" cx="195" cy="250" r="2" fill="#e0a040" opacity="0.4"/>
+<circle class="p3" cx="148" cy="300" r="1.8" fill="#c87820" opacity="0.45"/>
+<circle class="p4" cx="230" cy="150" r="2" fill="#e8b860" opacity="0.35"/>
+
+<!-- Floating particles right — cold signals -->
+<circle class="p2" cx="550" cy="175" r="2.5" fill="#3060a0" opacity="0.5"/>
+<circle class="p1" cx="530" cy="270" r="2" fill="#4080d0" opacity="0.4"/>
+<circle class="p3" cx="575" cy="310" r="1.8" fill="#204878" opacity="0.45"/>
+<circle class="p4" cx="500" cy="145" r="2" fill="#3870c0" opacity="0.35"/>
+
+<!-- Labels -->
+<g class="label-l">
+  <text x="155" y="108" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#c8a060">
+    The charm
+  </text>
+  <text x="155" y="124" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="8.5" letter-spacing="0.1em" fill="#7a5830">
+    WHAT THEY SHOW
+  </text>
+</g>
+<g class="label-r">
+  <text x="565" y="108" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#4878b0">
+    The calculation
+  </text>
+  <text x="565" y="124" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="8.5" letter-spacing="0.1em" fill="#304868">
+    WHAT THEY HIDE
+  </text>
+</g>
+
+<!-- Bottom quote -->
+<g class="quote-in">
+  <rect x="80" y="383" width="560" height="28" rx="5" fill="#07050e" stroke="#201828" stroke-width="1" opacity="0.9"/>
+  <text x="360" y="401" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#786050">
+    "Sadism is positive delight in the unnecessary suffering of others." — Peterson
+  </text>
+</g>
+</svg>
