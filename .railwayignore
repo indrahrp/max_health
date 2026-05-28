@@ -1,0 +1,16 @@
+ai/
+biology/
+carn/
+pschy/
+psychdl/
+tumor/
+venv/
+.venv/
+db.sqlite3
+staticfiles/
+.env
+__pycache__/
+*.pyc
+.vscode/
+.claude/
+.git/
