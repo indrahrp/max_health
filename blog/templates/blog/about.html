@@ -2,23 +2,18 @@
 {% load static %}
 
 {% block title %}About — Cogitra{% endblock %}
-{% block meta_description %}Cogitra is an independent science publication built on the assumption that the most interesting work is the work that takes time to read.{% endblock %}
+{% block meta_description %}A reading log kept by one person, organised around the intersections of health, genetics, AI, and the mind.{% endblock %}
 {% block og_title %}About Cogitra{% endblock %}
-{% block og_description %}A magazine for the slow reader — covering AI, health, biology, genetics, and the long sciences.{% endblock %}
+{% block og_description %}A reading log, kept by one person — on health, the mind, genetics, and AI.{% endblock %}
 {% block og_url %}https://cogitra.com/about/{% endblock %}
 
 {% block content %}
 <style>
 /* ─── About header ─── */
 .ab-header {
-  padding: 40px 0 64px;
-  border-bottom: 1px solid var(--hairline);
-  position: relative; overflow: hidden;
-}
-.ab-header::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(60% 100% at 12% 30%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 70%);
-  pointer-events: none;
+  position: relative; padding: 40px 0 64px;
+  background: radial-gradient(800px 360px at 20% 0%, color-mix(in oklab, var(--accent) 14%, transparent), transparent 70%);
+  border-bottom: 1px solid var(--hairline); overflow: hidden;
 }
 .ab-back {
   display: inline-flex; align-items: center; gap: 6px;
@@ -26,172 +21,119 @@
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
   padding: 8px 14px; border: 1px solid var(--hairline);
   border-radius: 999px; transition: color .2s, border-color .2s;
+  text-decoration: none;
 }
 .ab-back:hover { color: var(--fg); border-color: var(--hairline-strong); }
-
-.ab-head-grid {
-  display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px;
-  align-items: center; margin-top: 32px; position: relative;
-}
-.ab-flag { width: 64px; height: 3px; background: var(--accent); margin-bottom: 18px; display: block; }
-.ab-eyebrows { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 24px; }
-
+.ab-flag { width: 64px; height: 3px; background: var(--accent); margin-bottom: 22px; display: block; }
 .ab-h1 {
   font-family: var(--font-sans); font-weight: 500;
-  font-size: clamp(48px, 6vw, 92px); line-height: 0.95;
-  letter-spacing: -0.028em; color: var(--fg); margin: 0 0 24px;
-  text-wrap: balance;
+  font-size: clamp(44px, 5.4vw, 84px); line-height: 1.0;
+  letter-spacing: -0.028em; color: var(--fg);
+  margin: 0 0 28px; text-wrap: balance;
 }
 .ab-h1 .italic { font-family: var(--font-serif); font-style: italic; font-weight: 400; color: var(--fg-2); }
-.ab-h1 .accent { color: var(--accent); }
-
-.ab-blurb {
-  font-family: var(--font-serif); font-size: 21px; line-height: 1.55;
-  color: var(--fg-2); max-width: 580px;
+.ab-h1 .accent-period { color: var(--accent); }
+.ab-subtitle {
+  font-family: var(--font-serif); font-size: 21px; line-height: 1.5;
+  color: var(--fg-2); max-width: 720px; margin: 0;
 }
 
-/* Facts card */
-.ab-facts {
-  background: rgba(255,255,255,0.012);
-  border: 1px solid var(--hairline);
-  border-radius: 14px;
-  padding: 22px 24px 8px;
-  max-width: 360px;
+/* ─── Note section ─── */
+.ab-note {
+  padding: 64px 0 8px;
 }
-.ab-facts .head {
-  font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3);
-  margin-bottom: 14px;
+.ab-note-inner {
+  max-width: 760px;
+  font-family: var(--font-serif); font-size: 19.5px; line-height: 1.7;
+  color: var(--fg-2);
 }
-.ab-fact {
-  display: flex; justify-content: space-between; align-items: baseline;
-  padding: 12px 0; border-top: 1px solid var(--hairline);
-}
-.ab-fact .label {
-  font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.10em; text-transform: uppercase; color: var(--fg-3);
-}
-.ab-fact .value {
-  font-family: var(--font-sans); font-weight: 500; font-size: 15px;
-  color: var(--fg); letter-spacing: -0.005em;
-  text-align: right; font-variant-numeric: tabular-nums;
-}
-
-/* ─── Editor's letter ─── */
-.ab-letter {
-  max-width: 880px; margin: 0 auto; padding: 64px 0 24px;
-  display: grid; grid-template-columns: 160px 1fr; gap: 32px;
-  align-items: start;
-}
-.ab-letter .who { }
-.ab-letter .who .portrait {
-  width: 120px; height: 120px; border-radius: 50%;
-  object-fit: cover; object-position: center top;
-  display: block; margin-bottom: 14px;
-  border: 2px solid var(--hairline);
-}
-.ab-letter .who .label {
-  font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
-  margin-bottom: 8px;
-}
-.ab-letter .who .name { font-family: var(--font-sans); font-weight: 500; font-size: 15px; color: var(--fg); margin-bottom: 4px; }
-.ab-letter .who .role { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--fg-3); }
-.ab-letter .body p {
-  font-family: var(--font-serif); font-size: 19px;
-  line-height: 1.65; color: var(--fg-2); margin-bottom: 1.2em;
-}
-.ab-letter .body p:last-child {
-  font-style: italic; color: var(--fg-3);
-}
+.ab-note-inner p { margin: 0 0 22px; }
+.ab-note-inner p:last-child { margin: 0; font-style: italic; color: var(--fg-3); }
 
 /* ─── Curve divider ─── */
-.ab-divider {
-  display: flex; justify-content: center; padding: 32px 0; opacity: 0.5;
-}
+.ab-divider { display: flex; justify-content: center; padding: 48px 0; opacity: 0.5; }
 .ab-divider svg { width: 200px; height: 24px; }
 
-/* ─── Principles ─── */
-.ab-principles { padding: 40px 0 24px; }
-.ab-section-head {
-  display: flex; justify-content: space-between; align-items: center;
+/* ─── What this is / is not ─── */
+.ab-is { padding: 40px 0 24px; }
+.ab-is-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.ab-is-col { border-top: 1px solid var(--hairline-strong); padding-top: 22px; }
+.ab-is-eyebrow {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px;
+}
+.ab-is-eyebrow.pos { color: var(--accent); }
+.ab-is-eyebrow.neg { color: var(--fg-4); }
+.ab-is-list { margin: 0; padding: 0; list-style: none; }
+.ab-is-list li {
+  display: grid; grid-template-columns: 14px 1fr; gap: 14px;
+  padding: 10px 0; border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-serif); font-size: 16.5px; line-height: 1.6;
+}
+.ab-is-list.pos li { color: var(--fg-2); }
+.ab-is-list.neg li { color: var(--fg-3); }
+.ab-is-stub { margin-top: 10px; height: 1px; align-self: start; }
+.ab-is-stub.pos { background: var(--accent); }
+.ab-is-stub.neg { background: var(--fg-4); }
+
+/* ─── Intersections ─── */
+.ab-intersections { padding: 64px 0 24px; }
+.ab-intersections-head {
+  display: flex; align-items: baseline; justify-content: space-between;
   margin-bottom: 28px; flex-wrap: wrap; gap: 10px;
 }
-.ab-section-head .eyebrow.label { color: var(--fg); }
-.ab-principles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.ab-principle {
-  padding-top: 18px; border-top: 1px solid var(--hairline-strong);
-}
-.ab-principle .num {
-  font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.14em; color: var(--fg-4); margin-bottom: 12px;
-}
-.ab-principle .title {
-  font-family: var(--font-sans); font-weight: 500; font-size: 19px;
-  letter-spacing: -0.014em; color: var(--fg); margin-bottom: 12px;
-}
-.ab-principle .body { font-family: var(--font-serif); font-size: 14.5px; line-height: 1.55; color: var(--fg-3); }
-
-/* ─── Masthead ─── */
-.ab-masthead { padding: 64px 0 24px; }
-.ab-masthead-card {
-  background: rgba(255,255,255,0.012);
+.ab-intersections-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.ab-ix-card {
+  position: relative; padding: 24px 26px 26px;
   border: 1px solid var(--hairline); border-radius: 14px;
-  overflow: hidden;
-}
-.ab-mast-row {
-  display: grid; grid-template-columns: 8px 200px 1fr 1fr 24px;
-  gap: 24px; padding: 18px 24px;
-  border-top: 1px solid var(--hairline); align-items: center;
-  text-decoration: none; transition: background .2s;
-}
-.ab-mast-row:first-child { border-top: none; }
-.ab-mast-row:hover { background: rgba(255,255,255,0.02); }
-.ab-mast-row.eic:hover { background: transparent; cursor: default; }
-.ab-mast-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--row-color); }
-.ab-mast-role { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-4); }
-.ab-mast-name { font-family: var(--font-sans); font-weight: 500; font-size: 16px; letter-spacing: -0.012em; color: var(--fg); }
-.ab-mast-section { font-family: var(--font-serif); font-size: 14px; color: var(--fg-3); }
-.ab-mast-arrow { font-family: var(--font-mono); font-size: 14px; color: var(--fg-4); text-align: right; transition: color .2s; }
-.ab-mast-row:hover .ab-mast-arrow { color: var(--fg); }
-
-/* ─── Practical matters ─── */
-.ab-practical { padding: 56px 0 96px; }
-.ab-practical-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.ab-practical-card {
-  background: rgba(255,255,255,0.012);
-  border: 1px solid var(--hairline); border-radius: 14px;
-  padding: 24px 26px 26px;
+  background: rgba(255,255,255,0.012); overflow: hidden;
   transition: border-color .2s, background .2s, transform .2s;
-  text-decoration: none; display: block;
 }
-.ab-practical-card:hover {
+.ab-ix-card:hover {
   border-color: var(--hairline-strong);
   background: rgba(255,255,255,0.025);
   transform: translateY(-2px);
 }
-.ab-practical-card .eyebrow { display: block; margin-bottom: 10px; }
-.ab-practical-card .title {
-  font-family: var(--font-sans); font-weight: 500; font-size: 20px;
-  letter-spacing: -0.014em; color: var(--fg); margin-bottom: 12px;
+.ab-ix-flag { position: absolute; top: 0; left: 0; right: 0; height: 2px; opacity: 0.9; }
+.ab-ix-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px; margin-top: 4px;
 }
-.ab-practical-card .body { font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--fg-3); margin-bottom: 14px; }
-.ab-practical-card .cta {
-  font-family: var(--font-mono); font-size: 12px;
-  letter-spacing: 0.06em; color: var(--accent);
+.ab-ix-idx {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-4);
+}
+.ab-ix-chips { display: flex; align-items: center; gap: 6px; }
+.ab-ix-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px 4px; border-radius: 999px;
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.10em; text-transform: uppercase; color: var(--fg-2);
+  text-decoration: none; border: 1px solid transparent;
+  transition: border-color .2s, background .2s, color .2s;
+}
+.ab-ix-chip:hover { color: var(--fg); }
+.ab-ix-dot { width: 6px; height: 6px; border-radius: 999px; display: inline-block; }
+.ab-ix-sep { font-family: var(--font-mono); font-size: 11px; color: var(--fg-4); }
+.ab-ix-title {
+  font-family: var(--font-sans); font-weight: 500; font-size: 22px;
+  letter-spacing: -0.018em; line-height: 1.2; color: var(--fg);
+  margin: 0 0 10px; text-wrap: balance;
+}
+.ab-ix-body { font-family: var(--font-serif); font-size: 15px; line-height: 1.6; color: var(--fg-3); }
+
+/* ─── Closing note ─── */
+.ab-closing { padding: 64px 0 96px; }
+.ab-closing-inner {
+  max-width: 760px;
+  border-top: 1px solid var(--hairline); padding-top: 28px;
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 17px; line-height: 1.6; color: var(--fg-3);
 }
 
 @media (max-width: 900px) {
-  .ab-head-grid { grid-template-columns: 1fr; gap: 28px; }
-  .ab-facts { max-width: 100%; }
-  .ab-letter { grid-template-columns: 1fr; gap: 18px; }
-  .ab-principles-grid { grid-template-columns: 1fr 1fr; }
-  .ab-practical-grid { grid-template-columns: 1fr; }
-  .ab-mast-row { grid-template-columns: 8px 1fr 1fr; }
-  .ab-mast-role, .ab-mast-arrow { display: none; }
-}
-@media (max-width: 560px) {
-  .ab-principles-grid { grid-template-columns: 1fr; }
+  .ab-is-grid { grid-template-columns: 1fr; }
+  .ab-intersections-grid { grid-template-columns: 1fr; }
 }
 </style>
 
@@ -199,44 +141,24 @@
 <section class="ab-header">
   <div class="wrap">
     <a href="{% url 'blog:home' %}" class="ab-back">← Back to Cogitra</a>
-
-    <div class="ab-head-grid">
-      <div>
-        <div class="ab-flag"></div>
-        <div class="ab-eyebrows">
-          <span class="eyebrow">Colophon</span>
-          <span class="eyebrow">Vol. 04 · Spring 2026</span>
-        </div>
-        <h1 class="ab-h1">A magazine<br><span class="italic">for the slow</span> reader<span class="accent">.</span></h1>
-        <p class="ab-blurb">Cogitra is an independent science publication built on the assumption that the most interesting work is the work that takes time to read.</p>
-      </div>
-
-      <div class="ab-facts">
-        <div class="head">The publication</div>
-        <div class="ab-fact"><span class="label">Founded</span><span class="value">2023</span></div>
-        <div class="ab-fact"><span class="label">Frequency</span><span class="value">Weekly · Friday</span></div>
-        <div class="ab-fact"><span class="label">Issue</span><span class="value">Vol. 04 · Spring 2026</span></div>
-        <div class="ab-fact"><span class="label">Essays this year</span><span class="value">{{ essays_this_year }}</span></div>
-        <div class="ab-fact"><span class="label">Sections</span><span class="value">09</span></div>
-        <div class="ab-fact"><span class="label">Readers</span><span class="value">92,000</span></div>
-      </div>
+    <div style="max-width:880px; margin-top:28px;">
+      <div class="ab-flag"></div>
+      <div class="eyebrow" style="color:var(--fg-3);margin-bottom:18px;">About</div>
+      <h1 class="ab-h1">A reading log, <span class="italic">kept</span> by one person<span class="accent-period">.</span></h1>
+      <p class="ab-subtitle">This is not a magazine. It is a quiet collection of what I have read, looked up, and slowly put together while learning to live well with an autoimmune condition I have had for a long time.</p>
     </div>
   </div>
 </section>
 
-<!-- ─── Editor's letter ─── -->
-<section class="wrap">
-  <div class="ab-letter">
-    <div class="who">
-      <img src="{% static 'blog/profile-photo.jpeg' %}" alt="Editor portrait" class="portrait">
-      <div class="label">Editor's letter</div>
-      <div class="name">Sasha Lin</div>
-      <div class="role">Editor-in-chief</div>
-    </div>
-    <div class="body">
-      <p>Cogitra was started in 2023 because we believed that the fastest way to understand the frontier of a science is, paradoxically, the slowest. The frontier is not the headline. It is the patient work that arrives after the headline cycle has moved on.</p>
-      <p>We publish across nine sections — Artificial Intelligence, Physical Health, Mental Health, Biology, Mindset, Genetics, Longevity, Physics, and Book Review. They are not separate magazines. They are connected by a common assumption: that the interesting questions are usually at the boundaries between fields, and that the only way to write across boundaries is slowly.</p>
-      <p>Thank you for reading.</p>
+<!-- ─── A note from me ─── -->
+<section class="ab-note">
+  <div class="wrap">
+    <div class="ab-note-inner">
+      <div class="eyebrow" style="margin-bottom:22px;">A note from me</div>
+      <p>I started keeping notes during a long stretch of being unwell. The autoimmune condition I have is one that affects the brain — it quietly disrupts how I think, regulate, and adapt, in ways that are hard to point at and harder to explain. On paper it was not the worst thing in the world. In practice it took years to understand the shape of the suffering, and longer to begin to live with it calmly.</p>
+      <p>Most of what I read in the early years was either written for doctors or written to alarm me. What I needed was somewhere in between — careful and specific and unhurried, but in plain language. This site is my attempt at that. The pieces here are summaries of things I have read and found useful: studies, books, essays, sometimes a single careful paragraph from someone who knew more than I did.</p>
+      <p>My real interest is in the intersections — where physical health meets mental health, where genetics meets longevity, where what we now know about AI meets what we are slowly learning to do with our bodies. The sections of this site reflect that. They are organised the way I think about the problem, not the way a journal would.</p>
+      <p>This is for the reader who is not a scientist, who wants to understand, and who has the time.</p>
     </div>
   </div>
 </section>
@@ -248,91 +170,131 @@
   </svg>
 </div>
 
-<!-- ─── Principles ─── -->
-<section class="wrap">
-  <div class="ab-principles">
-    <div class="ab-section-head">
-      <span class="eyebrow">Principles</span>
-      <span class="eyebrow">04 commitments</span>
-    </div>
-    <div class="ab-principles-grid">
-      <div class="ab-principle">
-        <div class="num">01</div>
-        <div class="title">Slow over fast</div>
-        <div class="body">We will not file a piece to beat a news cycle. The interesting story is almost always the one that takes another week.</div>
+<!-- ─── What this is, and is not ─── -->
+<section class="ab-is">
+  <div class="wrap">
+    <div class="eyebrow" style="margin-bottom:28px;">What this is, and is not</div>
+    <div class="ab-is-grid">
+      <div class="ab-is-col">
+        <div class="ab-is-eyebrow pos">This site is</div>
+        <ul class="ab-is-list pos">
+          <li><span class="ab-is-stub pos"></span><span>A reading log, written in plain language for a non-specialist reader.</span></li>
+          <li><span class="ab-is-stub pos"></span><span>Organised around the intersections of subjects, not the silos.</span></li>
+          <li><span class="ab-is-stub pos"></span><span>Slow, careful, and updated when something new is actually worth saying.</span></li>
+          <li><span class="ab-is-stub pos"></span><span>Honest about what is still uncertain.</span></li>
+        </ul>
       </div>
-      <div class="ab-principle">
-        <div class="num">02</div>
-        <div class="title">Specific over broad</div>
-        <div class="body">The body of an essay is a list of specific things. We chase the specific, even when it costs us the headline.</div>
-      </div>
-      <div class="ab-principle">
-        <div class="num">03</div>
-        <div class="title">Patient over clever</div>
-        <div class="body">The trick is rarely the trick. We prefer the slow accumulation of evidence over the elegant single-paragraph case.</div>
-      </div>
-      <div class="ab-principle">
-        <div class="num">04</div>
-        <div class="title">Edited, not generated</div>
-        <div class="body">Every essay is written by a person, edited by another person, fact-checked by a third. We do not publish synthetic copy.</div>
+      <div class="ab-is-col">
+        <div class="ab-is-eyebrow neg">This site is not</div>
+        <ul class="ab-is-list neg">
+          <li><span class="ab-is-stub neg"></span><span>Medical advice. Please see a clinician you trust.</span></li>
+          <li><span class="ab-is-stub neg"></span><span>A news outlet. There is no schedule, no breaking coverage.</span></li>
+          <li><span class="ab-is-stub neg"></span><span>A magazine, with editors and a staff and a masthead.</span></li>
+          <li><span class="ab-is-stub neg"></span><span>Exhaustive. It is a personal selection, with its blind spots.</span></li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── Masthead ─── -->
-<section class="wrap">
-  <div class="ab-masthead">
-    <div class="ab-section-head">
-      <span class="eyebrow">Masthead</span>
-      <span class="eyebrow">9 section editors · 1 editor-in-chief</span>
+<!-- ─── Where the subjects meet ─── -->
+<section class="ab-intersections">
+  <div class="wrap">
+    <div class="ab-intersections-head">
+      <span class="eyebrow">Where the subjects meet</span>
+      <span class="eyebrow" style="color:var(--fg-4);">The real shape of this site</span>
     </div>
-    <div class="ab-masthead-card">
-      <div class="ab-mast-row eic" style="--row-color: var(--accent);">
-        <div class="ab-mast-dot"></div>
-        <div class="ab-mast-role">Editor-in-chief</div>
-        <div class="ab-mast-name">Sasha Lin</div>
-        <div class="ab-mast-section">The whole magazine</div>
-        <div class="ab-mast-arrow"></div>
+    <div class="ab-intersections-grid">
+
+      {% with s1=sections.health s2=sections.mental %}
+      <div class="ab-ix-card">
+        <div class="ab-ix-flag" style="background: linear-gradient(90deg, {{ s1.accent_hex }}, {{ s2.accent_hex }});"></div>
+        <div class="ab-ix-head">
+          <span class="ab-ix-idx">Intersection · 01</span>
+          <span class="ab-ix-chips">
+            <a class="ab-ix-chip" href="/health/" style="border-color: color-mix(in oklab, {{ s1.accent_hex }} 33%, transparent); background: color-mix(in oklab, {{ s1.accent_hex }} 8%, transparent);">
+              <span class="ab-ix-dot" style="background:{{ s1.accent_hex }};"></span>Physical
+            </a>
+            <span class="ab-ix-sep">×</span>
+            <a class="ab-ix-chip" href="/mental/" style="border-color: color-mix(in oklab, {{ s2.accent_hex }} 33%, transparent); background: color-mix(in oklab, {{ s2.accent_hex }} 8%, transparent);">
+              <span class="ab-ix-dot" style="background:{{ s2.accent_hex }};"></span>Mental
+            </a>
+          </span>
+        </div>
+        <div class="ab-ix-title">Body × Mind</div>
+        <div class="ab-ix-body">I read about autoimmune disease and depression in the same week and stopped pretending they were separate problems. A lot of what I have learned lives in the overlap.</div>
       </div>
-      {% for k, s in sections.items %}
-      <a href="/{{ k }}/" class="ab-mast-row" style="--row-color: {{ s.accent_hex }};">
-        <div class="ab-mast-dot"></div>
-        <div class="ab-mast-role">Section editor</div>
-        <div class="ab-mast-name">{{ s.editor }}</div>
-        <div class="ab-mast-section">{{ s.title }}</div>
-        <div class="ab-mast-arrow">→</div>
-      </a>
-      {% endfor %}
+      {% endwith %}
+
+      {% with s1=sections.health s2=sections.longevity %}
+      <div class="ab-ix-card">
+        <div class="ab-ix-flag" style="background: linear-gradient(90deg, {{ s1.accent_hex }}, {{ s2.accent_hex }});"></div>
+        <div class="ab-ix-head">
+          <span class="ab-ix-idx">Intersection · 02</span>
+          <span class="ab-ix-chips">
+            <a class="ab-ix-chip" href="/health/" style="border-color: color-mix(in oklab, {{ s1.accent_hex }} 33%, transparent); background: color-mix(in oklab, {{ s1.accent_hex }} 8%, transparent);">
+              <span class="ab-ix-dot" style="background:{{ s1.accent_hex }};"></span>Physical
+            </a>
+            <span class="ab-ix-sep">×</span>
+            <a class="ab-ix-chip" href="/longevity/" style="border-color: color-mix(in oklab, {{ s2.accent_hex }} 33%, transparent); background: color-mix(in oklab, {{ s2.accent_hex }} 8%, transparent);">
+              <span class="ab-ix-dot" style="background:{{ s2.accent_hex }};"></span>Longevity
+            </a>
+          </span>
+        </div>
+        <div class="ab-ix-title">Disease × Long life</div>
+        <div class="ab-ix-body">Most of the work on living longer is, in practice, work on living with chronic illness. The two literatures are slowly becoming one.</div>
+      </div>
+      {% endwith %}
+
+      {% with s1=sections.genetics s2=sections.health %}
+      <div class="ab-ix-card">
+        <div class="ab-ix-flag" style="background: linear-gradient(90deg, {{ s1.accent_hex }}, {{ s2.accent_hex }});"></div>
+        <div class="ab-ix-head">
+          <span class="ab-ix-idx">Intersection · 03</span>
+          <span class="ab-ix-chips">
+            <a class="ab-ix-chip" href="/genetics/" style="border-color: color-mix(in oklab, {{ s1.accent_hex }} 33%, transparent); background: color-mix(in oklab, {{ s1.accent_hex }} 8%, transparent);">
+              <span class="ab-ix-dot" style="background:{{ s1.accent_hex }};"></span>Genetics
+            </a>
+            <span class="ab-ix-sep">×</span>
+            <a class="ab-ix-chip" href="/health/" style="border-color: color-mix(in oklab, {{ s2.accent_hex }} 33%, transparent); background: color-mix(in oklab, {{ s2.accent_hex }} 8%, transparent);">
+              <span class="ab-ix-dot" style="background:{{ s2.accent_hex }};"></span>Physical
+            </a>
+          </span>
+        </div>
+        <div class="ab-ix-title">Genes × Inheritance</div>
+        <div class="ab-ix-body">Autoimmune conditions run in families in a way the textbooks understate. What the new genetics tells us about that has changed how I think about my own.</div>
+      </div>
+      {% endwith %}
+
+      {% with s1=sections.ai s2=sections.health %}
+      <div class="ab-ix-card">
+        <div class="ab-ix-flag" style="background: linear-gradient(90deg, {{ s1.accent_hex }}, {{ s2.accent_hex }});"></div>
+        <div class="ab-ix-head">
+          <span class="ab-ix-idx">Intersection · 04</span>
+          <span class="ab-ix-chips">
+            <a class="ab-ix-chip" href="/ai/" style="border-color: color-mix(in oklab, {{ s1.accent_hex }} 33%, transparent); background: color-mix(in oklab, {{ s1.accent_hex }} 8%, transparent);">
+              <span class="ab-ix-dot" style="background:{{ s1.accent_hex }};"></span>AI
+            </a>
+            <span class="ab-ix-sep">×</span>
+            <a class="ab-ix-chip" href="/health/" style="border-color: color-mix(in oklab, {{ s2.accent_hex }} 33%, transparent); background: color-mix(in oklab, {{ s2.accent_hex }} 8%, transparent);">
+              <span class="ab-ix-dot" style="background:{{ s2.accent_hex }};"></span>Physical
+            </a>
+          </span>
+        </div>
+        <div class="ab-ix-title">AI × Patient</div>
+        <div class="ab-ix-body">I am more patient than expert. The new tools have, quietly, made it easier to find the paper that actually answers the question.</div>
+      </div>
+      {% endwith %}
+
     </div>
   </div>
 </section>
 
-<!-- ─── Practical matters ─── -->
-<section class="wrap">
-  <div class="ab-practical">
-    <div class="ab-section-head">
-      <span class="eyebrow">Practical matters</span>
-    </div>
-    <div class="ab-practical-grid">
-      <a href="mailto:pitches@cogitra.press" class="ab-practical-card">
-        <span class="eyebrow">Submissions</span>
-        <div class="title">We read everything.</div>
-        <div class="body">Pitches and draft essays are welcome from staff and contributors alike. Expect a substantive response within ten working days. We are slow correspondents; we read everything.</div>
-        <div class="cta">pitches@cogitra.press →</div>
-      </a>
-      <a href="mailto:letters@cogitra.press" class="ab-practical-card">
-        <span class="eyebrow">Contact</span>
-        <div class="title">Write to the editors.</div>
-        <div class="body">Corrections, disagreements, story ideas, and the occasional kind word. Corrections are published openly; the rest stay between us unless you say otherwise.</div>
-        <div class="cta">letters@cogitra.press →</div>
-      </a>
-      <a href="#" class="ab-practical-card">
-        <span class="eyebrow">Ethics</span>
-        <div class="title">Our commitments.</div>
-        <div class="body">Conflicts of interest are disclosed. We do not publish anonymously sourced scientific claims. No synthetic copy is published under a contributor's byline.</div>
-        <div class="cta">Read the policy →</div>
-      </a>
+<!-- ─── Closing note ─── -->
+<section class="ab-closing">
+  <div class="wrap">
+    <div class="ab-closing-inner">
+      If something here helps you the way the original sources helped me, it has earned its place. If it does not, ignore it. Either way, thank you for reading.
     </div>
   </div>
 </section>

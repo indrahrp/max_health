@@ -199,6 +199,34 @@
     border-radius: 8px;
   }
 
+  /* Mobile nav (hamburger) */
+  .nav-burger {
+    display: none; width: 36px; height: 36px; border-radius: 8px;
+    background: transparent; border: 1px solid var(--hairline-strong);
+    color: var(--fg-2); cursor: pointer; padding: 0;
+    align-items: center; justify-content: center;
+    transition: color .2s, border-color .2s, background .2s;
+  }
+  .nav-burger:hover { color: var(--fg); border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.03); }
+  .mobile-menu {
+    display: none; position: absolute; top: 64px; left: 0; right: 0;
+    background: rgba(7,7,13,0.97);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--hairline);
+    max-height: calc(100vh - 64px); overflow-y: auto;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu ul { list-style: none; margin: 0; padding: 6px 0; }
+  .mobile-menu a {
+    display: block; padding: 13px 24px; font-size: 15px;
+    color: var(--fg-2); border-bottom: 1px solid var(--hairline);
+    transition: color .2s, background .2s;
+  }
+  .mobile-menu li:last-child a { border-bottom: none; }
+  .mobile-menu a:hover, .mobile-menu a.active { color: var(--fg); background: rgba(255,255,255,0.03); }
+  .mobile-menu a.active { box-shadow: inset 3px 0 0 var(--accent); }
+
   /* ─── Curve divider ─── */
   .curve-divider {
     display: flex; justify-content: center; padding: 48px 0;
@@ -309,6 +337,8 @@
   /* Responsive */
   @media (max-width: 980px) {
     .nav-links { display: none; }
+    .nav-burger { display: inline-flex; }
+    .nav-about, .nav-divider, .nav-search { display: none; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   }
   @media (max-width: 560px) {
@@ -363,7 +393,25 @@
         </button>
       </form>
       <a class="btn btn-primary btn-sm" href="#subscribe">Subscribe</a>
+      <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="{% url 'blog:section_ai' %}">AI</a></li>
+      <li><a href="{% url 'blog:section_health' %}">Physical Health</a></li>
+      <li><a href="{% url 'blog:section_mental' %}">Mental Health</a></li>
+      <li><a href="{% url 'blog:section_biology' %}">Biology</a></li>
+      <li><a href="{% url 'blog:section_mindset' %}">Mindset</a></li>
+      <li><a href="{% url 'blog:section_genetics' %}">Genetics</a></li>
+      <li><a href="{% url 'blog:section_longevity' %}">Longevity</a></li>
+      <li><a href="{% url 'blog:section_physics' %}">Physics</a></li>
+      <li><a href="{% url 'blog:section_books' %}">Books</a></li>
+      <li><a href="{% url 'blog:archive' %}">Archive</a></li>
+      <li><a href="{% url 'blog:about' %}">About</a></li>
+    </ul>
   </div>
 </nav>
 
@@ -409,11 +457,9 @@
     <div class="footer-col">
       <h4>About</h4>
       <ul>
-        <li><a href="{% url 'blog:about' %}">About Cogitra</a></li>
-        <li><a href="{% url 'blog:about' %}">Masthead</a></li>
-        <li><a href="{% url 'blog:about' %}">Submissions</a></li>
-        <li><a href="{% url 'blog:about' %}">Ethics</a></li>
-        <li><a href="{% url 'blog:about' %}">Contact</a></li>
+        <li><a href="{% url 'blog:about' %}">About this site</a></li>
+        <li><a href="{% url 'blog:about' %}">How it's organised</a></li>
+        <li><a href="{% url 'blog:about' %}">Where the subjects meet</a></li>
       </ul>
     </div>
   </div>
@@ -456,12 +502,28 @@
 </div>
 
 <script>
-  // Active nav underline (both .nav-links a and .nav-about)
+  // Active nav underline (desktop links, About, and mobile menu)
   const p = window.location.pathname;
-  document.querySelectorAll('.nav-links a, .nav-about').forEach(a => {
+  document.querySelectorAll('.nav-links a, .nav-about, .mobile-menu a').forEach(a => {
     const href = a.getAttribute('href');
     if (href === p || (href !== '/' && p.startsWith(href))) a.classList.add('active');
   });
+
+  // Mobile hamburger toggle
+  const navBurger = document.getElementById('navBurger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (navBurger && mobileMenu) {
+    navBurger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      navBurger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navBurger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      navBurger.setAttribute('aria-expanded', 'false');
+      navBurger.setAttribute('aria-label', 'Open menu');
+    }));
+  }
 
   // Curve draw-in animation on mount for any .draw-curve path
   function drawCurves() {
