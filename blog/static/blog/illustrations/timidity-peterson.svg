@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg-wash" cx="50%" cy="60%" r="55%">
+    <stop offset="0%" stop-color="#0e1020"/>
+    <stop offset="100%" stop-color="#060810"/>
+  </radialGradient>
+  <radialGradient id="light-cone" cx="50%" cy="0%" r="80%">
+    <stop offset="0%" stop-color="#c4a030" stop-opacity="0.22"/>
+    <stop offset="100%" stop-color="#c4a030" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="fig-glow-strong" cx="50%" cy="40%" r="50%">
+    <stop offset="0%" stop-color="#c4a030" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#c4a030" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="fig-glow-weak" cx="50%" cy="40%" r="50%">
+    <stop offset="0%" stop-color="#5060a0" stop-opacity="0.25"/>
+    <stop offset="100%" stop-color="#5060a0" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="soft-blur"><feGaussianBlur stdDeviation="4"/></filter>
+  <filter id="glow-filter">
+    <feGaussianBlur stdDeviation="3" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+
+<style>
+@keyframes stand-tall {
+  0%,40%  { transform: scaleY(0.72) scaleX(1.1) translateY(18px); }
+  60%,100%{ transform: scaleY(1) scaleX(1) translateY(0); }
+}
+@keyframes spine-straighten {
+  0%,40%  { d: path("M 0 -38 C -12 -20, -14 10, -10 42"); }
+  60%,100%{ d: path("M 0 -38 C 2 -10, 2 10, 0 42"); }
+}
+@keyframes shoulders-back {
+  0%,40%  { transform: scaleX(0.75); }
+  60%,100%{ transform: scaleX(1); }
+}
+@keyframes light-expand {
+  0%,40%  { opacity: 0.1; }
+  60%,100%{ opacity: 1; }
+}
+@keyframes shadow-shrink {
+  0%,40%  { transform: scaleX(1.4); opacity: 0.6; }
+  60%,100%{ transform: scaleX(1); opacity: 0.25; }
+}
+@keyframes word-rise {
+  0%,35% { opacity: 0; transform: translateY(6px); }
+  55%,100%{ opacity: 1; transform: translateY(0); }
+}
+@keyframes word-fade {
+  0%,35% { opacity: 1; }
+  55%,100%{ opacity: 0.18; }
+}
+@keyframes bar-grow {
+  0%,40%  { width: 18px; }
+  60%,100%{ width: 88px; }
+}
+@keyframes pulse-gold {
+  0%,100%{ opacity: 0.7; filter: drop-shadow(0 0 4px #c4a030); }
+  50%    { opacity: 1;   filter: drop-shadow(0 0 16px #c4a030); }
+}
+@keyframes title-in { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes sub-in   { from{opacity:0} to{opacity:1} }
+@keyframes rise-left  { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:translateX(0)} }
+@keyframes rise-right { from{opacity:0;transform:translateX(10px)} to{opacity:1;transform:translateX(0)} }
+
+/* All on a 6s loop */
+.fig-strong { animation: stand-tall 6s ease-in-out infinite; transform-origin: 0 42px; }
+.light-gold { animation: light-expand 6s ease-in-out infinite; }
+.shadow-el  { animation: shadow-shrink 6s ease-in-out infinite; }
+.word-appear{ animation: word-rise 6s ease-in-out infinite; }
+.word-gone  { animation: word-fade 6s ease-in-out infinite; }
+.bar-expand { animation: bar-grow 6s ease-in-out infinite; }
+.gold-pulse { animation: pulse-gold 3s ease-in-out infinite; }
+
+.title-in  { animation: title-in .9s ease-out 0.1s both; }
+.sub-in    { animation: sub-in .8s ease-out 0.5s both; }
+.left-in   { animation: rise-left .7s ease-out 0.7s both; }
+.right-in  { animation: rise-right .7s ease-out 0.9s both; }
+</style>
+
+<!-- Background -->
+<rect width="720" height="420" fill="url(#bg-wash)"/>
+
+<!-- Light cone from above (the opportunity you step into) -->
+<ellipse class="light-gold" cx="360" cy="0" rx="280" ry="320" fill="url(#light-cone)"/>
+
+<!-- Title -->
+<g class="title-in">
+  <text x="360" y="34" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="9.5" letter-spacing="0.20em" fill="#4a3a20">
+    JORDAN PETERSON · STANDING UP · DOMINANCE HIERARCHIES
+  </text>
+  <text x="360" y="62" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="20" font-style="italic" fill="#e8d8a0">
+    A harmless man is not good — he is merely weak.
+  </text>
+</g>
+
+<!-- ─── LEFT PANEL: timid figure ─── -->
+<g class="left-in" transform="translate(148,260)">
+  <!-- glow behind -->
+  <ellipse cx="0" cy="0" rx="60" ry="60" fill="url(#fig-glow-weak)" filter="url(#soft-blur)"/>
+
+  <!-- shadow on ground -->
+  <ellipse cx="0" cy="60" rx="32" ry="8" fill="#000" opacity="0.5"/>
+
+  <!-- hunched figure -->
+  <g transform="scale(1,0.78) translate(0,20)">
+    <!-- body — hunched forward -->
+    <path d="M -14 -8 Q -4 -22 0 -26 Q 4 -22 14 -8 L 10 36 Q 0 42 -10 36 Z"
+          fill="#1a1828" stroke="#4a4070" stroke-width="1.2"/>
+    <!-- head tilted down -->
+    <circle cx="-4" cy="-36" r="14" fill="#1a1828" stroke="#4a4070" stroke-width="1.2"/>
+    <!-- arms close to body, inward -->
+    <path d="M -14 0 L -22 14" stroke="#4a4070" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M 14 0 L 20 14" stroke="#4a4070" stroke-width="1.4" stroke-linecap="round"/>
+    <!-- spine curved -->
+    <path d="M 0 -26 C -10 -8 -12 16 -8 36" stroke="#3a3060" stroke-width="1" fill="none" stroke-dasharray="3 2"/>
+  </g>
+
+  <text x="0" y="80" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="9" letter-spacing="0.12em" fill="#5a5088">TIMID</text>
+
+  <!-- trait list fading -->
+  <g class="word-gone">
+    <text x="0" y="100" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6860a8">Shrinks from conflict</text>
+    <text x="0" y="116" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6860a8">Can't say no</text>
+    <text x="0" y="132" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#6860a8">Mistake for kindness</text>
+  </g>
+</g>
+
+<!-- ─── CENTRE ARROW ─── -->
+<g transform="translate(360,260)">
+  <!-- arrow body that grows -->
+  <rect class="bar-expand" x="-44" y="-2" width="88" height="4" rx="2" fill="#c4a030" opacity="0.7"/>
+  <!-- arrow head -->
+  <path class="gold-pulse" d="M 50 0 L 36 -9 L 36 9 Z" fill="#c4a030"/>
+
+  <text x="0" y="-14" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="9" letter-spacing="0.14em" fill="#8a7030">
+    THE CHOICE
+  </text>
+  <text x="0" y="22" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#6a5828">
+    voluntary courage
+  </text>
+</g>
+
+<!-- ─── RIGHT PANEL: upright figure ─── -->
+<g class="right-in" transform="translate(572,245)">
+  <!-- glow behind — gold -->
+  <ellipse cx="0" cy="0" rx="65" ry="65" fill="url(#fig-glow-strong)" filter="url(#soft-blur)"/>
+
+  <!-- shadow -->
+  <ellipse class="shadow-el" cx="0" cy="72" rx="32" ry="8" fill="#000" opacity="0.25"/>
+
+  <!-- upright figure -->
+  <g class="fig-strong">
+    <!-- body -->
+    <path d="M -18 -6 Q 0 -20 18 -6 L 14 42 Q 0 50 -14 42 Z"
+          fill="#221a08" stroke="#c4a030" stroke-width="1.4"/>
+    <!-- head upright -->
+    <circle cx="0" cy="-32" r="16" fill="#221a08" stroke="#c4a030" stroke-width="1.4"/>
+    <!-- eyes forward -->
+    <circle cx="-5" cy="-33" r="2.5" fill="#c4a030" opacity="0.8"/>
+    <circle cx="5" cy="-33" r="2.5" fill="#c4a030" opacity="0.8"/>
+    <!-- arms wide, open -->
+    <path d="M -18 4 L -40 -8" stroke="#c4a030" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 18 4 L 40 -8" stroke="#c4a030" stroke-width="1.6" stroke-linecap="round"/>
+    <!-- straight spine -->
+    <path d="M 0 -20 L 0 42" stroke="#b49028" stroke-width="0.8" fill="none" stroke-dasharray="3 2" opacity="0.6"/>
+    <!-- legs planted -->
+    <path d="M -8 42 L -12 70" stroke="#c4a030" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 8 42 L 12 70" stroke="#c4a030" stroke-width="1.6" stroke-linecap="round"/>
+  </g>
+
+  <text x="0" y="92" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="9" letter-spacing="0.12em" fill="#c4a030">UPRIGHT</text>
+
+  <!-- traits appearing -->
+  <g class="word-appear">
+    <text x="0" y="112" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#a08828">Speaks the truth</text>
+    <text x="0" y="128" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#a08828">Can say no</text>
+    <text x="0" y="144" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#a08828">Formidable, not cruel</text>
+  </g>
+</g>
+
+<!-- ─── Bottom quote bar ─── -->
+<rect x="60" y="386" width="600" height="28" rx="6" fill="#100e06" stroke="#3a2e10" stroke-width="1"/>
+<text x="360" y="404" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="11.5" font-style="italic" fill="#907020">
+  "If you can't say no, your yes means nothing. Stand up straight with your shoulders back."
+</text>
+</svg>
