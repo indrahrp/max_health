@@ -6,5 +6,6 @@ cmds = [
   "python manage.py load_eagleman_brain_mind",
   "python manage.py load_gabor_mate_autoimmune_trauma",
   "python manage.py load_nietzsche_beyond_good_evil",
-  "python manage.py load_psychedelics_guide"
+  "python manage.py load_psychedelics_guide",
+  "python manage.py load_peterson_be_a_monster"
 ]
