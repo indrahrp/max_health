@@ -1,0 +1,259 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg-deep" cx="50%" cy="50%" r="70%">
+    <stop offset="0%" stop-color="#080c14"/>
+    <stop offset="100%" stop-color="#030508"/>
+  </radialGradient>
+  <!-- Normal brain glow -->
+  <radialGradient id="normal-glow" cx="50%" cy="45%" r="52%">
+    <stop offset="0%" stop-color="#3870c0" stop-opacity="0.22"/>
+    <stop offset="100%" stop-color="#3870c0" stop-opacity="0"/>
+  </radialGradient>
+  <!-- Depressed brain glow -->
+  <radialGradient id="stress-glow" cx="50%" cy="45%" r="52%">
+    <stop offset="0%" stop-color="#9030202" stop-opacity="0.22"/>
+    <stop offset="100%" stop-color="#903020" stop-opacity="0"/>
+  </radialGradient>
+  <!-- Dopamine pathway gradient -->
+  <linearGradient id="dopamine-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#40d080" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#80f0b0" stop-opacity="0.5"/>
+  </linearGradient>
+  <!-- Cortisol flood gradient -->
+  <linearGradient id="cortisol-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#d06020" stop-opacity="0.8"/>
+    <stop offset="100%" stop-color="#d06020" stop-opacity="0.1"/>
+  </linearGradient>
+  <filter id="blur-soft"><feGaussianBlur stdDeviation="3"/></filter>
+  <filter id="blur-med"><feGaussianBlur stdDeviation="6"/></filter>
+  <filter id="blur-heavy"><feGaussianBlur stdDeviation="12"/></filter>
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="2" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+
+<style>
+@keyframes neuron-fire {
+  0%,100%{ opacity:0.3; r:2.5; }
+  50%    { opacity:1;   r:4; }
+}
+@keyframes signal-pulse {
+  0%  { stroke-dashoffset: 80; opacity:0.8; }
+  100%{ stroke-dashoffset: 0;  opacity:0.2; }
+}
+@keyframes dopamine-flow {
+  0%  { stroke-dashoffset: 120; opacity:0.9; }
+  100%{ stroke-dashoffset: 0;   opacity:0.3; }
+}
+@keyframes cortisol-drip {
+  0%,100%{ opacity:0.2; transform:translateY(0); }
+  50%    { opacity:0.6; transform:translateY(4px); }
+}
+@keyframes hippocampus-shrink {
+  0%,100%{ transform:scale(1);   opacity:0.7; }
+  50%    { transform:scale(0.88); opacity:0.4; }
+}
+@keyframes dim-pulse {
+  0%,100%{ opacity:0.18; }
+  50%    { opacity:0.08; }
+}
+@keyframes fade-in {
+  from{ opacity:0; transform:translateY(-6px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+@keyframes label-l {
+  from{ opacity:0; transform:translateX(-10px); }
+  to  { opacity:1; transform:translateX(0); }
+}
+@keyframes label-r {
+  from{ opacity:0; transform:translateX(10px); }
+  to  { opacity:1; transform:translateX(0); }
+}
+@keyframes sunset-pulse {
+  0%,100%{ opacity:0.7; }
+  50%    { opacity:1; }
+}
+@keyframes sunset-dim {
+  0%,100%{ opacity:0.15; }
+  50%    { opacity:0.08; }
+}
+
+.title-in { animation: fade-in .9s ease-out 0.1s both; }
+.lbl-l    { animation: label-l .7s ease-out 0.7s both; }
+.lbl-r    { animation: label-r .7s ease-out 0.7s both; }
+.quote-in { animation: fade-in .8s ease-out 1.3s both; }
+
+/* Normal brain neurons */
+.n-a { animation: neuron-fire 1.8s ease-in-out infinite; }
+.n-b { animation: neuron-fire 2.2s ease-in-out infinite 0.4s; }
+.n-c { animation: neuron-fire 1.5s ease-in-out infinite 0.8s; }
+.n-d { animation: neuron-fire 2.5s ease-in-out infinite 1.2s; }
+.n-e { animation: neuron-fire 1.9s ease-in-out infinite 0.6s; }
+.n-f { animation: neuron-fire 2.1s ease-in-out infinite 1.5s; }
+.sig-1 { animation: dopamine-flow 1.8s linear infinite; }
+.sig-2 { animation: dopamine-flow 2.0s linear infinite 0.5s; }
+.sig-3 { animation: dopamine-flow 1.6s linear infinite 0.9s; }
+
+/* Depressed brain */
+.nd-a { animation: dim-pulse 3.2s ease-in-out infinite; }
+.nd-b { animation: dim-pulse 4s ease-in-out infinite 0.8s; }
+.nd-c { animation: dim-pulse 2.8s ease-in-out infinite 1.4s; }
+.cortisol { animation: cortisol-drip 2.5s ease-in-out infinite; }
+.hippo    { animation: hippocampus-shrink 4s ease-in-out infinite; transform-origin: 530px 240px; }
+.sunset-n { animation: sunset-pulse 3s ease-in-out infinite; }
+.sunset-d { animation: sunset-dim 3s ease-in-out infinite; }
+</style>
+
+<!-- Background -->
+<rect width="720" height="420" fill="url(#bg-deep)"/>
+
+<!-- Title -->
+<g class="title-in">
+  <text x="360" y="28" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="8.5" letter-spacing="0.18em" fill="#1a2030">
+    ROBERT SAPOLSKY · BIOLOGY · DEPRESSION
+  </text>
+  <text x="360" y="56" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="19" font-style="italic" fill="#8ab0d8">
+    A disease whose defining symptom is the inability to feel pleasure
+  </text>
+</g>
+
+<!-- Divider -->
+<line x1="360" y1="72" x2="360" y2="370" stroke="#141c28" stroke-width="1.5" stroke-dasharray="4 5"/>
+
+<!-- ════ LEFT: NORMAL BRAIN ════ -->
+<ellipse cx="185" cy="218" rx="130" ry="120" fill="#101828" opacity="0.06" filter="url(#blur-heavy)"/>
+
+<!-- Brain outline — left (normal) -->
+<path d="M 130 195 Q 115 170 120 150 Q 128 128 150 120 Q 170 112 190 118 Q 208 112 225 120 Q 245 132 248 150 Q 255 170 245 195 Q 258 212 255 235 Q 252 258 238 270 Q 225 282 210 283 Q 198 290 185 286 Q 172 290 160 283 Q 142 274 130 258 Q 115 240 118 218 Q 118 205 130 195 Z"
+  fill="#101828" stroke="#2a4060" stroke-width="1.5"/>
+
+<!-- Dopamine mesolimbic pathway — glowing normal -->
+<path class="sig-1"
+  d="M 148 260 Q 160 248 175 238 Q 192 228 205 218 Q 218 205 228 192"
+  stroke="url(#dopamine-grad)" stroke-width="2" fill="none"
+  stroke-dasharray="8 4" stroke-linecap="round"/>
+<path class="sig-2"
+  d="M 152 255 Q 165 245 180 235 Q 196 224 208 213"
+  stroke="#50e090" stroke-width="1.2" fill="none" opacity="0.5"
+  stroke-dasharray="6 5" stroke-linecap="round"/>
+
+<!-- Hippocampus (left brain — healthy) -->
+<path d="M 152 252 Q 148 264 155 272 Q 164 278 175 272 Q 182 266 180 255 Q 174 248 165 249 Q 157 250 152 252 Z"
+  fill="#204060" stroke="#3870c0" stroke-width="1.2" opacity="0.8"/>
+<text x="163" y="285" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="7" fill="#3870a0" letter-spacing="0.05em">hippocampus</text>
+
+<!-- Frontal cortex region (left brain) -->
+<ellipse cx="195" cy="145" rx="30" ry="18" fill="#182838" stroke="#2a5080" stroke-width="1" opacity="0.7"/>
+<text x="195" y="143" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" fill="#4878a8" letter-spacing="0.04em">frontal</text>
+<text x="195" y="152" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" fill="#4878a8" letter-spacing="0.04em">cortex</text>
+
+<!-- Active neurons (normal brain) -->
+<circle class="n-a" cx="182" cy="195" r="2.5" fill="#50d080"/>
+<circle class="n-b" cx="208" cy="188" r="2.5" fill="#60e090"/>
+<circle class="n-c" cx="170" cy="218" r="2.5" fill="#40c070"/>
+<circle class="n-d" cx="220" cy="215" r="2.5" fill="#50d080"/>
+<circle class="n-e" cx="195" cy="230" r="2.5" fill="#60e090"/>
+<circle class="n-f" cx="175" cy="165" r="2" fill="#70e0a0"/>
+
+<!-- Sunset — visible (normal) -->
+<g class="sunset-n" transform="translate(100, 315)">
+  <rect x="0" y="0" width="70" height="40" rx="5" fill="#0c1420" stroke="#1a3050" stroke-width="0.8"/>
+  <!-- sunset sky gradient fill -->
+  <rect x="2" y="2" width="66" height="36" rx="4" fill="#0a1828"/>
+  <ellipse cx="35" cy="38" rx="22" ry="12" fill="#e07020" opacity="0.7"/>
+  <rect x="2" y="28" width="66" height="10" rx="0" fill="#0a1828"/>
+  <line x1="2" y1="28" x2="68" y2="28" stroke="#1a3050" stroke-width="0.5"/>
+  <!-- Sun -->
+  <circle cx="35" cy="28" r="7" fill="#f0a030" opacity="0.9"/>
+  <ellipse cx="35" cy="28" rx="10" ry="10" fill="#f0a030" opacity="0.2" filter="url(#blur-soft)"/>
+  <!-- Sky glow bands -->
+  <rect x="2" y="10" width="66" height="8" rx="0" fill="#4060a0" opacity="0.3"/>
+  <rect x="2" y="18" width="66" height="8" rx="0" fill="#e06820" opacity="0.25"/>
+</g>
+<text x="135" y="325" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="8.5" font-style="italic" fill="#4878a0">can feel</text>
+
+<!-- ════ RIGHT: DEPRESSED BRAIN ════ -->
+<!-- Brain outline — right (depressed) -->
+<path d="M 400 195 Q 385 170 390 150 Q 398 128 420 120 Q 440 112 460 118 Q 478 112 495 120 Q 515 132 518 150 Q 525 170 515 195 Q 528 212 525 235 Q 522 258 508 270 Q 495 282 480 283 Q 468 290 455 286 Q 442 290 430 283 Q 412 274 400 258 Q 385 240 388 218 Q 388 205 400 195 Z"
+  fill="#0e1018" stroke="#2a1820" stroke-width="1.5"/>
+
+<!-- Cortisol flooding (top of right brain) -->
+<g class="cortisol">
+  <ellipse cx="455" cy="135" rx="60" ry="30" fill="#c84020" opacity="0.08" filter="url(#blur-med)"/>
+  <text x="455" y="132" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.08em" fill="#a03018" opacity="0.8">CORTISOL ↑</text>
+  <!-- Drip dots -->
+  <circle cx="430" cy="145" r="2" fill="#c84020" opacity="0.4"/>
+  <circle cx="455" cy="148" r="2.5" fill="#d05020" opacity="0.35"/>
+  <circle cx="478" cy="143" r="1.8" fill="#c84020" opacity="0.3"/>
+</g>
+
+<!-- Hippocampus (right brain — atrophied) -->
+<g class="hippo">
+  <path d="M 422 252 Q 418 264 425 272 Q 434 278 445 272 Q 452 266 450 255 Q 444 248 435 249 Q 427 250 422 252 Z"
+    fill="#1a1010" stroke="#603020" stroke-width="1" opacity="0.6"/>
+</g>
+<text x="433" y="285" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="7" fill="#603020" letter-spacing="0.05em">atrophied</text>
+
+<!-- Frontal cortex (right brain — underactive) -->
+<ellipse cx="465" cy="145" rx="30" ry="18" fill="#100e10" stroke="#3a1818" stroke-width="1" opacity="0.5"/>
+<text x="465" y="143" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" fill="#503030" letter-spacing="0.04em">frontal</text>
+<text x="465" y="152" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" fill="#503030" letter-spacing="0.04em">cortex</text>
+
+<!-- Dimmed neurons (depressed brain) -->
+<circle class="nd-a" cx="452" cy="195" r="2.5" fill="#603030"/>
+<circle class="nd-b" cx="478" cy="188" r="2.5" fill="#503030"/>
+<circle class="nd-c" cx="440" cy="218" r="2.5" fill="#604040"/>
+<circle cx="490" cy="215" r="2" fill="#402020" opacity="0.15"/>
+<circle cx="465" cy="230" r="2" fill="#503030" opacity="0.12"/>
+
+<!-- Dopamine pathway dimmed -->
+<path d="M 418 260 Q 430 248 445 238 Q 462 228 475 218 Q 488 205 498 192"
+  stroke="#503030" stroke-width="1.5" fill="none" opacity="0.15"
+  stroke-dasharray="6 6" stroke-linecap="round"/>
+
+<!-- Sunset — cannot appreciate (grey/dark) -->
+<g class="sunset-d" transform="translate(370, 315)">
+  <rect x="0" y="0" width="70" height="40" rx="5" fill="#080808" stroke="#1a1010" stroke-width="0.8"/>
+  <rect x="2" y="2" width="66" height="36" rx="4" fill="#060606"/>
+  <ellipse cx="35" cy="38" rx="22" ry="12" fill="#303030" opacity="0.3"/>
+  <rect x="2" y="28" width="66" height="10" rx="0" fill="#060606"/>
+  <line x1="2" y1="28" x2="68" y2="28" stroke="#1a1010" stroke-width="0.5"/>
+  <circle cx="35" cy="28" r="7" fill="#303030" opacity="0.4"/>
+</g>
+<text x="405" y="325" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="8.5" font-style="italic" fill="#503030">can't feel</text>
+
+<!-- Labels -->
+<g class="lbl-l">
+  <text x="185" y="350" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="12" font-style="italic" fill="#4878b0">healthy brain</text>
+  <text x="185" y="365" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.1em" fill="#283850">DOPAMINE · REWARD · PLEASURE</text>
+</g>
+<g class="lbl-r">
+  <text x="455" y="350" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="12" font-style="italic" fill="#904040">major depression</text>
+  <text x="455" y="365" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.1em" fill="#502828">CORTISOL · ATROPHY · ANHEDONIA</text>
+</g>
+
+<!-- Bottom quote -->
+<g class="quote-in">
+  <rect x="70" y="382" width="580" height="28" rx="5" fill="#050810" stroke="#121c28" stroke-width="1" opacity="0.95"/>
+  <text x="360" y="400" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#607090">
+    "Depression is a biochemical disorder where somebody can't appreciate sunsets." — Sapolsky
+  </text>
+</g>
+</svg>
