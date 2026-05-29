@@ -1,3 +1,4 @@
+# build 2026-05-29
 [phases.build]
 cmds = [
   "python manage.py collectstatic --noinput",
