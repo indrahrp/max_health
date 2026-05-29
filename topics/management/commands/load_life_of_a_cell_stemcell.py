@@ -258,7 +258,8 @@ answer may reveal the biology of healthy aging — and the targets that could ex
 
 <h2>Summary: From Bench to Clinic</h2>
 
-<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-top:1em;">
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2em 0;">
+<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-top:0;">
   <thead>
     <tr style="background:#1e293b;">
       <th style="padding:8px 12px;text-align:left;border-bottom:1px solid #334155;">Technology</th>
@@ -304,6 +305,7 @@ answer may reveal the biology of healthy aging — and the targets that could ex
     </tr>
   </tbody>
 </table>
+</div>
 """
 
 

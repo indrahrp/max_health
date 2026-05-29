@@ -55,7 +55,7 @@
   font-weight: {{ config.type_weight }};
   font-style: {{ config.type_style }};
   letter-spacing: {{ config.type_tracking }};
-  font-size: clamp(48px, 6vw, 92px); line-height: 0.95;
+  font-size: clamp(32px, 6vw, 92px); line-height: 0.95;
   color: var(--fg); margin: 0 0 24px; text-wrap: balance;
 }
 .sec-h1 .accent-period { color: var(--cat-accent); }
@@ -264,6 +264,12 @@
   .editor-note { grid-template-columns: 1fr; gap: 16px; }
   .more-list { grid-template-columns: 1fr; }
   .other-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .sec-h1 { font-size: clamp(28px, 8vw, 48px); line-height: 1.05; }
+  .sec-blurb { font-size: 17px; }
+  .feat-hero-section .body { padding: 22px 20px; }
+  .feat-hero-section h3 { font-size: 24px; }
 }
 </style>
 

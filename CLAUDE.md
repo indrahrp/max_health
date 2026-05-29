@@ -10,40 +10,64 @@ Operate fully autonomously on this entire project. No need to ask for permission
 Complete every task end-to-end: implement → commit → deploy. Do not stop mid-task to ask the user to verify or confirm steps.
 
 ## Mobile compatibility (required)
-The site (cogitra.com) MUST render and read well on both **iPhone (Safari)** and **Android (Chrome)**. Mobile is a first-class target, not an afterthought.
+The site (cogitra.com) MUST render and read well on **iPhone (Safari)**, **iPad (Safari)**, and **Android (Chrome)**. Mobile is a first-class target, not an afterthought.
 
 - Every page must be usable on a phone: navigation reachable (hamburger menu at ≤980px — do not hide nav links without a mobile replacement), text legible without zoom, images fluid (`width:100%`, never fixed pixel widths that overflow), nothing clipped off-screen or requiring horizontal scroll.
 - Keep the `<meta name="viewport" content="width=device-width, initial-scale=1.0">` tag in `base.html`.
 - Illustrations/figures must scale down cleanly and keep labels readable at ~360px width.
 - After any change to layout, nav, or templates, sanity-check the responsive behavior (media queries at 980px and 560px) before deploying.
 
-### Tablet & phone layout — best patterns
+### Breakpoints (use consistently across all templates and article content)
 
-**Breakpoints we use (consistently):**
-- **≥981px — desktop:** full multi-column layouts, nav links visible inline.
-- **≤980px — tablet:** desktop nav links collapse to hamburger; multi-column grids may stay 2-up but should not require horizontal scroll.
-- **≤760px — phone (key breakpoint for content layout):** multi-column figures and side-by-side blocks should **stack to a single column** here. Use this breakpoint for in-article responsive grids.
-- **≤560px — small phone:** outer wrapper padding tightens (already set globally); footer collapses to one column.
+| Breakpoint | Target | Required behavior |
+|---|---|---|
+| ≥981px | Desktop | Full multi-column layouts, nav links visible inline |
+| ≤980px | Tablet (iPad) | Hamburger nav; grids may stay 2-up but no horizontal scroll |
+| ≤760px | Phone | Multi-column article figures, side-by-side blocks → **single column** |
+| ≤560px | Small phone (iPhone SE) | Tighter padding (`0 16px`), 1-column for all grids, smaller heading sizes |
 
-**Stacking patterns (use CSS grid with `1fr` columns):**
+### Article reader template — current mobile rules (article_detail.html)
+
+The reader template already has these responsive rules. Do not remove them:
+- **≤700px**: `reader-body` padding → `28px 24px 40px`; `reader-h1` → 28px; `reader-dek` → 17px; drop cap → 48px
+- **≤560px**: `reader` outer padding → `0 16px 48px`; `reader-body` → `22px 18px 36px`; `reader-h1` → 24px; `other-articles-grid` → 1 column
+
+### Article content rules (HTML stored in the DB)
+
+Article content is raw HTML injected via `{{ article.content|safe }}`. It cannot reach template CSS, so all responsive styles must be inline or in a scoped `<style>` block inside the content.
+
+**SVG illustrations** — always use `style="width:100%;border-radius:16px;display:block;"`. Never set a fixed pixel width. `viewBox="0 0 720 420"` is the standard canvas.
+
+**HTML tables** — always wrap in an overflow container:
 ```html
-<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">…</div>
-<style>@media (max-width:760px){ /* override the wrapper */ }</style>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2em 0;">
+  <table>…</table>
+</div>
 ```
-For content inside the article body (which is rendered as raw HTML and can't reach template CSS), use a **scoped `<style>` block inside the `<figure>`** with a unique class name. Example: see the `anx-infographic` pattern in the Anxiety/GABA article (`anxiety-gaba-amygdala-physiological-origin`) — 3-up panels on desktop, single column at ≤760px.
+Without this, wide tables cause horizontal scroll on phones.
 
-**Wide infographics & dense composed images:**
-A single composed wide infographic (e.g. 3 panels side-by-side baked into one image) does not stack — it just shrinks until the text is unreadable. For phones, **split the infographic into pieces** (one per panel, plus header/footer if present) and reassemble with a responsive grid:
-- Crop pieces with PIL: title strip, each panel, footer strip(s).
-- Upload each piece to Cloudinary under `cogitra/<article-slug>-<piece>` (the project's Cloudinary cloud is `dxmrrtzha`).
-- Build the figure with a CSS grid that drops to `1fr` at ≤760px.
-- Keep readable labels at phone width (~360px); if a panel is text-dense, prefer stacking over shrinking.
+**Multi-column grids inside articles** — use a scoped `<style>` block with a unique class name:
+```html
+<style>
+.my-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+@media (max-width:760px) { .my-grid { grid-template-columns:1fr; } }
+</style>
+<div class="my-grid">…</div>
+```
+Example reference: `anxiety-gaba-amygdala-physiological-origin` — 3-up panels on desktop, single column at ≤760px.
 
-**Things to avoid:**
-- A wide composed image displayed full-width on phones with no fallback — small phones (~360px) reduce a 1500px-wide infographic by ~4× and the labels become unreadable.
-- Fixed pixel widths on figures (`width:720px`) — always use `width:100%` and let the column govern.
-- `min-width` on any block inside an article (causes horizontal scroll on phones).
-- Hiding nav links with `display:none` at a mobile breakpoint without an accessible replacement (hamburger, drawer, accordion).
+**Wide infographics & dense composed images** — a single wide image shrinks to unreadable at 360px. Split into pieces and use a responsive grid:
+- Crop with PIL: title strip, each panel, footer strips.
+- Upload each piece to Cloudinary under `cogitra/<article-slug>-<piece>` (cloud: `dxmrrtzha`).
+- Use CSS grid with `1fr` at ≤760px.
+
+### Things to never do
+- Fixed pixel widths on figures (`width:720px`) — always `width:100%`.
+- `min-width` on any block inside an article body — causes horizontal scroll.
+- `<table>` without an `overflow-x:auto` wrapper.
+- Multi-column grid in article content without a `@media (max-width:760px)` stacking fallback.
+- Hiding nav links with `display:none` at mobile without a hamburger/drawer replacement.
+- `font-size: clamp(Xpx, ...)` where X is larger than ~32px — the clamp minimum applies on phones and can still be too large (e.g. `clamp(48px,...)` stays at 48px on a 375px screen).
 
 ## Deployment
 Always deploy with: `railway up --detach` from `/Users/iharahap/claude-code-psn/max_health/`

@@ -33,6 +33,7 @@ ARTICLES = [
 <p>The transcripts across four major carnivore channels (Anthony Chaffee MD, Shawn Baker MD, ZeroCarb community, Metabolic Mind) reveal a clear spectrum:</p>
 
 <h3>The Carnivore Spectrum on Seafood</h3>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2em 0;">
 <table>
 <thead><tr><th>Approach</th><th>Who</th><th>Seafood Role</th></tr></thead>
 <tbody>
@@ -43,6 +44,7 @@ ARTICLES = [
 <tr><td><strong>Therapeutic carnivore</strong></td><td>Metabolic Mind clinical</td><td>Meat + fish + eggs as standard patient menu</td></tr>
 </tbody>
 </table>
+</div>
 
 <h3>Why People Add Seafood to Carnivore</h3>
 <ul>
@@ -327,6 +329,7 @@ ARTICLES = [
 
 <h3>Best Seafood Choices for Carnivore</h3>
 <p>Based on what practitioners and community members actually eat and recommend:</p>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2em 0;">
 <table>
 <thead><tr><th>Seafood</th><th>Why It Works</th><th>Best Form</th></tr></thead>
 <tbody>
@@ -339,6 +342,7 @@ ARTICLES = [
 <tr><td><strong>Anchovies</strong></td><td>High omega-3, calcium, natural glutamates; concentrated nutrition</td><td>Canned in olive oil; use as a flavor base</td></tr>
 </tbody>
 </table>
+</div>
 
 <h3>When to Add Seafood to Your Carnivore Protocol</h3>
 <ul>
@@ -385,6 +389,7 @@ ARTICLES = [
 </ol>
 
 <h3>Notable n=1 Experiments from Transcripts</h3>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.2em 0;">
 <table>
 <thead><tr><th>Experimenter</th><th>Experiment</th><th>Finding</th></tr></thead>
 <tbody>
@@ -395,6 +400,7 @@ ARTICLES = [
 <tr><td>MetabolicMind clinical</td><td>Meat + fish + eggs for memory care residents (grocery store fish)</td><td>Positive outcomes; premium sourcing not required</td></tr>
 </tbody>
 </table>
+</div>
 
 <p><strong>Sources:</strong> Compiled from Anthony Chaffee MD, Shawn Baker MD, ZeroCarb community, and Metabolic Mind transcripts</p>""",
         "order": 6,
