@@ -307,42 +307,56 @@ answer may reveal the biology of healthy aging — and the targets that could ex
 """
 
 
+def create_stemcell_article(apps=None, schema_editor=None):
+    if apps:
+        PillarModel = apps.get_model('topics', 'Pillar')
+        ArticleModel = apps.get_model('topics', 'Article')
+    else:
+        PillarModel = Pillar
+        ArticleModel = Article
+
+    biology_pillar, _ = PillarModel.objects.get_or_create(
+        slug="biology",
+        defaults={
+            "name": "Cancer Biology",
+            "description": "The biology of cancer and cellular disease.",
+            "icon": "🔬",
+            "color": "teal",
+            "order": 6,
+        },
+    )
+
+    ArticleModel.objects.update_or_create(
+        slug="stem-cells-how-they-arise",
+        defaults={
+            "title": "Stem Cells: How They Arise and the Technologies That Harness Them",
+            "summary": (
+                "Siddhartha Mukherjee explains how stem cells originate in every tissue, "
+                "why their numbers decline with age, and how CRISPR editing, CAR-T therapy, "
+                "and bone marrow transplantation are transforming cellular medicine."
+            ),
+            "content": ARTICLE_CONTENT,
+            "pillar": biology_pillar,
+            "order": 5,
+            "published": True,
+            "ai_summary": (
+                "Covers stem cell biology (hematopoietic, skeletal, neural), "
+                "Mukherjee's discovery of skeletal stem cells, and the full technology "
+                "stack: bone marrow transplant, cord blood, CRISPR/VOR platform, "
+                "base editing, CAR-T + edited graft, iPSC reprogramming."
+            ),
+        },
+    )
+
+
+def reverse_stemcell_article(apps, schema_editor):
+    ArticleModel = apps.get_model('topics', 'Article')
+    ArticleModel.objects.filter(slug="stem-cells-how-they-arise").delete()
+
+
 class Command(BaseCommand):
-    help = "Load Life of a Cell pillar and stem cell article from Siddhartha Mukherjee talks"
+    help = "Load stem cell article under biology pillar (from Siddhartha Mukherjee talks)"
 
     def handle(self, *args, **options):
-        pillar, created = Pillar.objects.update_or_create(
-            slug=PILLAR["slug"],
-            defaults={
-                "name": PILLAR["name"],
-                "description": PILLAR["description"],
-                "icon": PILLAR["icon"],
-                "color": PILLAR["color"],
-                "order": PILLAR["order"],
-            },
-        )
-        self.stdout.write(f"{'Created' if created else 'Updated'} pillar: {pillar.name}")
-
-        article, created = Article.objects.update_or_create(
-            slug="stem-cells-how-they-arise",
-            defaults={
-                "title": "Stem Cells: How They Arise and the Technologies That Harness Them",
-                "summary": (
-                    "Siddhartha Mukherjee explains how stem cells originate in every tissue, "
-                    "why their numbers decline with age, and how CRISPR editing, CAR-T therapy, "
-                    "and bone marrow transplantation are transforming cellular medicine."
-                ),
-                "content": ARTICLE_CONTENT,
-                "pillar": pillar,
-                "order": 1,
-                "published": True,
-                "ai_summary": (
-                    "Covers stem cell biology (hematopoietic, skeletal, neural), "
-                    "Mukherjee's discovery of skeletal stem cells, and the full technology "
-                    "stack: bone marrow transplant, cord blood, CRISPR/VOR platform, "
-                    "base editing, CAR-T + edited graft, iPSC reprogramming."
-                ),
-            },
-        )
-        self.stdout.write(f"{'Created' if created else 'Updated'} article: {article.title}")
+        create_stemcell_article()
         self.stdout.write(self.style.SUCCESS("Done."))

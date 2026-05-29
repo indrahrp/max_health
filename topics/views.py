@@ -17,6 +17,15 @@ def pillar_detail(request, slug):
     from blog.views import _section_for_slug
     pillar = get_object_or_404(Pillar, slug=slug)
     articles = Article.objects.filter(pillar=pillar, published=True)
+    topic = request.GET.get('topic', '').strip()
+    if topic:
+        keyword = topic.replace('-', ' ')
+        articles = articles.filter(
+            Q(slug__icontains=topic) |
+            Q(title__icontains=keyword) |
+            Q(summary__icontains=keyword) |
+            Q(ai_summary__icontains=keyword)
+        )
     all_pillars = Pillar.objects.all()
     section_key, section = _section_for_slug(pillar.slug)
     return render(request, 'topics/pillar_detail.html', {
@@ -25,6 +34,7 @@ def pillar_detail(request, slug):
         'all_pillars': all_pillars,
         'section_key': section_key,
         'section': section,
+        'active_topic': topic,
     })
 
 

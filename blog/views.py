@@ -60,11 +60,12 @@ SECTION_CONFIG = {
         'type_weight': '400',
         'type_style': 'normal',
         'type_tracking': '-0.01em',
-        'pillar_slugs': ['mental-health', 'physiological-origin', 'psychological-origin'],
+        'pillar_slugs': ['mental-health', 'physiological-origin', 'psychological-origin', 'psychedelics'],
         'category_slugs': ['mental'],
         'subcategories': [
             {'id': 'physiological-origin', 'name': 'Mental Illness · Physiological Origin', 'short': 'Physiological', 'blurb': 'The metabolic, inflammatory, and structural roots of mental illness — mitochondria, gut, sleep, hormones.', 'accent': '#7ec0b0', 'match_slugs': ['physiological-origin']},
             {'id': 'psychological-origin', 'name': 'Mental Illness · Psychological Origin', 'short': 'Psychological', 'blurb': 'Trauma, attachment, cognition, and what the clinical literature still calls the talking cure.', 'accent': '#3d8576', 'match_slugs': ['psychological-origin']},
+            {'id': 'psychedelics',         'name': 'Psychedelics',                          'short': 'Psychedelics',  'blurb': 'Psilocybin, MDMA, ketamine, and the renewed clinical research into psychedelic-assisted therapy for depression, PTSD, addiction, and end-of-life distress.', 'accent': '#c89ce8', 'match_slugs': ['psychedelics']},
         ],
     },
     'biology': {

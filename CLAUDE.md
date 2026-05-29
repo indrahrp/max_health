@@ -69,6 +69,59 @@ If `railway up` times out with `operation timed out` on the upload step, the fir
 ### Migration writing rule
 Do not target articles by pillar alone — the `physiological-origin` pillar (and others) contain many articles, so `Article.objects.get(pillar__slug=...)` will crash with `MultipleObjectsReturned` and abort the migration. Always filter by `slug`, or by `pillar__slug` AND `slug` together. Use `.filter(...).first()` + `if not article: return` for defensive idempotency.
 
+### Management-command writing rule (CRITICAL)
+Commands in `nixpacks.toml` (currently `load_autoimmune_diseases`, `load_eagleman_brain_mind`) **run on every deploy**. They MUST NOT overwrite `Article.content` on existing rows, or any manual edit (e.g. swapping in a Cloudinary or static illustration) gets wiped on the next `railway up`.
+
+The bug pattern to avoid:
+```python
+Article.objects.update_or_create(
+    slug=data['slug'],
+    defaults={'content': data['content'], ...},  # ← wipes manual edits every deploy
+)
+```
+
+The correct pattern (used by `load_autoimmune_diseases` and `load_eagleman_brain_mind` after the 2026-05-28 fix):
+```python
+obj, created = Article.objects.get_or_create(
+    slug=data['slug'],
+    defaults={'content': data['content'], 'title': ..., 'summary': ..., 'pillar': pillar, 'published': True},
+)
+if not created:
+    # Preserve content on existing rows. Update other safe fields explicitly.
+    obj.title = data['title']
+    obj.summary = data['summary']
+    obj.pillar = pillar
+    obj.published = True
+    obj.save(update_fields=['title', 'summary', 'pillar', 'published'])
+```
+
+If you add a new bootstrap command to `nixpacks.toml`, audit it for this pattern first. If a command is one-shot (run by hand to seed a new article), it can safely overwrite — but don't put it in the build phase.
+
+### Image-storage workflow (CRITICAL)
+**Never rely on ChatGPT / DALL-E / temporary AI-host URLs** (e.g. `chatgpt.com/backend-api/estuary/...`, `files.oaiusercontent.com`, `sdmntp...openai.com`) for production article illustrations. Those URLs are auth-gated and/or expire within hours; the image vanishes.
+
+**The default rule, no exceptions:** whenever the user hands you an image to put on an article — whether by **pasted image**, **ChatGPT/AI-host URL**, **public URL**, or **local file path** — upload it to Cloudinary first, then reference the Cloudinary `secure_url` in the article HTML. Do not paste a temporary URL into the article content even "for now."
+
+**Storage options (Cloudinary is the default):**
+1. **Cloudinary (default)** — upload to `cogitra/<article-slug>` (cloud: `dxmrrtzha`). Use the article's slug as the `public_id` so it's discoverable later. For multi-piece infographics, use `cogitra/<article-slug>-<piece>`. Survives deploys; no static rebuild needed.
+2. **`blog/static/blog/illustrations/`** — commit the image to the repo; reference as `/static/blog/illustrations/<filename>`. Requires a deploy to publish, and survives deploys after that. Use this when the user explicitly wants the image in version control.
+
+**Standard pipeline for user-provided images:**
+```
+1. Save/copy the image locally (optimize with PIL: width ≤ 1400, JPEG quality 88).
+2. Base64-chunk and ship to prod (~90KB per chunk via `railway ssh "printf '%s' '$DATA' >> /tmp/x.b64"`).
+3. Decode and upload via cloudinary.uploader.upload(path, folder='cogitra',
+       public_id=<article-slug>, overwrite=True, resource_type='image').
+4. Swap the article's <figure>...</figure> to <img src="<secure_url>"> via regex on `content`.
+5. Verify both article URL and image URL return 200.
+6. macOS-tar note: use `COPYFILE_DISABLE=1 tar --no-xattrs` to avoid AppleDouble (._) files.
+```
+
+When a user says "I uploaded an image and it disappeared," check three things in order:
+1. Is the article's content field still pointing to the image URL? (DB inspect)
+2. Is the image URL still live? (`curl -I`; AI-host URLs return 403/404 after expiry)
+3. Is the article being overwritten by a `load_*` command in `nixpacks.toml` on every deploy?
+
 ## Articles — Source transparency
 
 When asked to write an article, **always state the source** before writing:

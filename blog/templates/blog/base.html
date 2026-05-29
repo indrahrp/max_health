@@ -8,20 +8,27 @@
 <link rel="icon" type="image/svg+xml" href="{% static 'blog/favicon-v2.svg' %}?v=2026-05">
 <link rel="shortcut icon" type="image/svg+xml" href="{% static 'blog/favicon-v2.svg' %}?v=2026-05">
 {% block meta %}
-<meta name="description" content="{% block meta_description %}Cogitra — an editorial publication covering the frontiers of artificial intelligence, health, biology, genetics, and the long sciences.{% endblock %}">
+<meta name="description" content="{% block meta_description %}A personal reading log on autoimmune health, mental health, longevity, genetics, AI, and the slow sciences in between. Written in plain language for the non-specialist reader.{% endblock %}">
+<meta name="author" content="Cogitra">
+<meta name="theme-color" content="#07070d">
+<link rel="canonical" href="{% block canonical %}https://cogitra.com{{ request.path }}{% endblock %}">
+<!-- Open Graph -->
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
 <meta property="og:site_name" content="Cogitra">
-<meta property="og:title" content="{% block og_title %}Cogitra — The sciences that shape what comes next{% endblock %}">
-<meta property="og:description" content="{% block og_description %}An editorial publication covering the frontiers of AI, Health, Biology, Genetics, and the long sciences.{% endblock %}">
-<meta property="og:image" content="{% block og_image %}https://cogitra.com{% static 'blog/og-image-v2.png' %}{% endblock %}">
+<meta property="og:title" content="{% block og_title %}Cogitra — a reading log on health, mind, and the long sciences{% endblock %}">
+<meta property="og:description" content="{% block og_description %}A personal reading log on autoimmune health, mental health, longevity, genetics, AI, and the slow sciences in between. Written in plain language for the non-specialist reader.{% endblock %}">
+<meta property="og:url" content="{% block og_url %}https://cogitra.com{{ request.path }}{% endblock %}">
+<meta property="og:image" content="{% block og_image %}https://cogitra.com{% static 'blog/og/og-image.png' %}{% endblock %}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="{% block og_url %}https://cogitra.com{{ request.path }}{% endblock %}">
-<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:image:alt" content="{% block og_image_alt %}Cogitra — a slow reading log on the sciences of being well.{% endblock %}">
 <meta property="og:locale" content="en_US">
+<!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{% block twitter_title %}Cogitra{% endblock %}">
-<meta name="twitter:description" content="{% block twitter_description %}The sciences that shape what comes next.{% endblock %}">
-<meta name="twitter:image" content="{% block twitter_image %}https://cogitra.com{% static 'blog/og-image-v2.png' %}{% endblock %}">
+<meta name="twitter:title" content="{% block twitter_title %}Cogitra — a reading log on health, mind, and the long sciences{% endblock %}">
+<meta name="twitter:description" content="{% block twitter_description %}A personal reading log on autoimmune health, mental health, longevity, genetics, AI, and the slow sciences in between.{% endblock %}">
+<meta name="twitter:image" content="{% block twitter_image %}https://cogitra.com{% static 'blog/og/og-image.png' %}{% endblock %}">
+<meta name="twitter:image:alt" content="{% block twitter_image_alt %}Cogitra — a slow reading log on the sciences of being well.{% endblock %}">
 {% endblock %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

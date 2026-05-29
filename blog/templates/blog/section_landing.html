@@ -5,6 +5,11 @@
 {% block og_title %}{{ config.title }} — Cogitra{% endblock %}
 {% block og_description %}{{ config.tagline }}{% endblock %}
 {% block og_url %}https://cogitra.com/{{ key }}/{% endblock %}
+{% block canonical %}https://cogitra.com/{{ key }}/{% endblock %}
+{% block og_image %}https://cogitra.com/static/blog/og/sections/og-{{ key }}.png{% endblock %}
+{% block twitter_image %}https://cogitra.com/static/blog/og/sections/og-{{ key }}.png{% endblock %}
+{% block og_image_alt %}{{ config.title }} — Cogitra{% endblock %}
+{% block twitter_image_alt %}{{ config.title }} — Cogitra{% endblock %}
 
 {% block content %}
 <style>
@@ -308,7 +313,7 @@
   <div class="topics-wrap">
     <div class="topics-head">
       <span class="eyebrow section-color">Topics in {{ config.title|lower }}</span>
-      <span class="eyebrow">{{ subcategories|length }} ongoing</span>
+      <span class="eyebrow">{{ subcategories|length|stringformat:"02d" }} ongoing</span>
     </div>
     <div class="topics-grid">
       {% for s in subcategories %}

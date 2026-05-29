@@ -181,10 +181,15 @@ class Command(BaseCommand):
             defaults={**ARTICLE, "pillar": pillar},
         )
         if not created:
+            # IMPORTANT: do NOT overwrite `content`. This command runs on every
+            # deploy (nixpacks build phase); preserving content lets manual edits
+            # (e.g. swapping in a real illustration) survive future deploys.
             for k, v in ARTICLE.items():
+                if k == "content":
+                    continue
                 setattr(article, k, v)
             article.pillar = pillar
             article.save()
-        action = "Created" if created else "Updated"
+        action = "Created" if created else "Updated (content preserved)"
         self.stdout.write(f"{action} article: {article.title}")
         self.stdout.write(self.style.SUCCESS("Done."))

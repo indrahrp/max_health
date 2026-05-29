@@ -1235,7 +1235,12 @@ class Command(BaseCommand):
         )
 
         for data in ARTICLES:
-            obj, created = Article.objects.update_or_create(
+            # IMPORTANT: do NOT overwrite `content` on existing articles.
+            # This command runs on every deploy (nixpacks build phase). If we set
+            # content in update_or_create's defaults, any manual edit a user makes
+            # to the article body (e.g. swapping in a real illustration) gets
+            # wiped on the next deploy. Set content only on create.
+            obj, created = Article.objects.get_or_create(
                 slug=data['slug'],
                 defaults={
                     'title': data['title'],
@@ -1245,7 +1250,13 @@ class Command(BaseCommand):
                     'published': True,
                 }
             )
-            verb = 'Created' if created else 'Updated'
+            if not created:
+                obj.title = data['title']
+                obj.summary = data['summary']
+                obj.pillar = pillar
+                obj.published = True
+                obj.save(update_fields=['title', 'summary', 'pillar', 'published'])
+            verb = 'Created' if created else 'Updated (content preserved)'
             self.stdout.write(f'{verb}: {data["title"]}')
 
         self.stdout.write(self.style.SUCCESS(

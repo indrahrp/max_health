@@ -12,19 +12,23 @@ NEW_FIGURE = (
 
 def replace_illustration(apps, schema_editor):
     Article = apps.get_model("topics", "Article")
-    try:
-        article = Article.objects.get(pillar__slug="physiological-origin")
-        # Replace the opening <figure>…</figure> block (inline SVG)
-        article.content = re.sub(
-            r'<figure[^>]*>.*?</figure>',
-            NEW_FIGURE,
-            article.content,
-            count=1,
-            flags=re.DOTALL,
-        )
-        article.save()
-    except Article.DoesNotExist:
-        pass
+    # Filter by both pillar AND slug. Pillar-only .get() crashes with
+    # MultipleObjectsReturned now that this pillar holds many articles.
+    # Migration 0019 re-applies this targeted by slug, so it's safe if this is a no-op.
+    article = Article.objects.filter(
+        pillar__slug="physiological-origin",
+        slug="depression-metabolic-physiological-origin",
+    ).first()
+    if not article:
+        return
+    article.content = re.sub(
+        r'<figure[^>]*>.*?</figure>',
+        NEW_FIGURE,
+        article.content,
+        count=1,
+        flags=re.DOTALL,
+    )
+    article.save()
 
 
 def reverse_illustration(apps, schema_editor):

@@ -1,0 +1,205 @@
+
+  Extracting cookies from chrome (may prompt for keychain access)...
+  Cookies extracted successfully.
+  Loaded 3722 cookies.
+
+Fetching transcripts for 60 video(s)...
+
+  Progress saved to: psychdl/paul_stamets/transcripts.progress.json
+  If interrupted, re-run with --resume to continue where you left off.
+
+  [1/60] gNOZCtnD5K0
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 10,947 words  (saved to progress file)
+  [2/60] hwRD0NvAnbs
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 28,213 words  (saved to progress file)
+  [3/60] lHIzBFmyPIM
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 2,400 words  (saved to progress file)
+  [4/60] 24sEFphn4F4
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 12,848 words  (saved to progress file)
+  [5/60] zqZCzoX53RI
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 7,551 words  (saved to progress file)
+  [6/60] xFRZuh0f9Ys
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 781 words  (saved to progress file)
+  [7/60] DAR4yH6TbtA
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,006 words  (saved to progress file)
+  [8/60] LN4_701xXCo
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 149 words  (saved to progress file)
+  [9/60] XwCA1Vo23F8
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 18,387 words  (saved to progress file)
+  [10/60] mPqWstVnRjQ
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 23,062 words  (saved to progress file)
+  [11/60] 2ncriJF1hzQ
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,486 words  (saved to progress file)
+  [12/60] ix8NNDZkHZM
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 6,553 words  (saved to progress file)
+  [13/60] qry8K7KPHIQ
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 9,536 words  (saved to progress file)
+  [14/60] r7Vg8zD6VR8
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 5,369 words  (saved to progress file)
+  [15/60] UAsQgZe9vYw
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,460 words  (saved to progress file)
+  [16/60] QwV3qXeLfzM
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    Retrying library method in 3s (attempt 1/3)...
+    Retrying library method in 8s (attempt 2/3)...
+    Could not retrieve transcript — skipping.
+  [16/60] vFWxWq0Fv0U
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 5,024 words  (saved to progress file)
+  [17/60] Ztan0IYjUd0
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 6,936 words  (saved to progress file)
+  [18/60] -4zsJAADuxY
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 6,601 words  (saved to progress file)
+  [19/60] smBMn-CV9KE
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 2,716 words  (saved to progress file)
+  [20/60] fpwDi8f6TLQ
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 2,538 words  (saved to progress file)
+  [21/60] z64gho0yL3k
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 12,469 words  (saved to progress file)
+  [22/60] HGqFxjQI3is
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,489 words  (saved to progress file)
+  [23/60] XNWcn9-e3o4
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 461 words  (saved to progress file)
+  [24/60] YjmaUv9rRIk
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 5,024 words  (saved to progress file)
+  [25/60] 7agK0nkiZpA
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 5,282 words  (saved to progress file)
+  [26/60] mXvomNV7u9I
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 2,036 words  (saved to progress file)
+  [27/60] fVlDA5GGT_Q
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 3,605 words  (saved to progress file)
+  [28/60] sYshrnJnugc
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,268 words  (saved to progress file)
+  [29/60] XI5frPV58tY
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 2,806 words  (saved to progress file)
+  [30/60] mmKmWsNztsw
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,051 words  (saved to progress file)
+  [31/60] HJIh0u_wWhE
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 7,771 words  (saved to progress file)
+  [32/60] Nxn2LlBJDl0
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,703 words  (saved to progress file)
+  [33/60] PA0KA4YWCpU
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 4,728 words  (saved to progress file)
+  [34/60] nM8zPpgYAds
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 2,900 words  (saved to progress file)
+  [35/60] M9joL8spvS8
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 14,426 words  (saved to progress file)
+  [36/60] eOGG_5FzlJ4
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 2,238 words  (saved to progress file)
+  [37/60] ZAPYZNiLL3U
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 8,805 words  (saved to progress file)
+  [38/60] qGynr1mB2ds
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,547 words  (saved to progress file)
+  [39/60] 27Rlcu1C9HE
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,027 words  (saved to progress file)
+  [40/60] oW-fpacI1Z0
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,582 words  (saved to progress file)
+  [41/60] D5zDIVkygcM
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 4,451 words  (saved to progress file)
+  [42/60] 5bTq3j6zPsw
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,774 words  (saved to progress file)
+  [43/60] vQuuY9xmzjg
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,728 words  (saved to progress file)
+  [44/60] w5iB0AQ24r4
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 6,197 words  (saved to progress file)
+  [45/60] eIxVfln02Ss
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 22,435 words  (saved to progress file)
+  [46/60] V6aQ7bpdIIo
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,009 words  (saved to progress file)
+  [47/60] 81-v8ePXPd4
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,943 words  (saved to progress file)
+  [48/60] TuL42bCIgp4
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 261 words  (saved to progress file)
+  [49/60] qW11jXC01Wo
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,542 words  (saved to progress file)
+  [50/60] QqH3LKKMrwA
+    No captions on this video — skipping.
+  [50/60] 1apjnIW17LA
+    No captions on this video — skipping.
+  [50/60] 6LbLo99qFVY
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 126 words  (saved to progress file)
+  [51/60] ZPgH5JsCIH0
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 559 words  (saved to progress file)
+  [52/60] Y70yLIXp1Xs
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,127 words  (saved to progress file)
+  [53/60] kxBSuwRXynE
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 2,254 words  (saved to progress file)
+  [54/60] 5zWyL1wZIus
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 529 words  (saved to progress file)
+  [55/60] fqkpdUXzI08
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 2,747 words  (saved to progress file)
+  [56/60] UegFjMih7Zk
+    No captions on this video — skipping.
+  [56/60] oxdcgHSwa3w
+    Direct API: Expecting value: line 1 column 1 (char 0) — trying yt-dlp...
+    OK — 1,777 words  (saved to progress file)
+
+Done. 56/60 transcripts saved to: psychdl/paul_stamets/transcripts.txt
+
+Next step:
+  Open  prompts/01-extract-strategy.md  in Claude Code.
+  Paste the contents of  psychdl/paul_stamets/transcripts.txt  below the dashed line at the bottom.
+  Claude will extract the strategy and save it to rules.json.
+
+  Searching YouTube: 'Paul Stamets mushrooms psilocybin fungi psychedelic' (max 60)
+  Found 60 videos
+  Fetching transcripts for 60 videos → psychdl/paul_stamets/transcripts.txt
+
+DONE [paul_stamets] — psychdl/paul_stamets/transcripts.txt (1,617,186 bytes)
+  Searching YouTube: 'Paul Stamets mushrooms psilocybin fungi psychedelic' (max 60)
+  Found 0 videos
+No videos found for paul_stamets

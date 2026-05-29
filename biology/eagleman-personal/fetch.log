@@ -1,0 +1,5 @@
+  yt-dlp error: ERROR: [youtube:tab] @DavidEagleman: Unable to download API page: HTTP Error 404: Not Found (caused by <HTTPError 404: Not Found>)
+No videos found. Check the channel URL.
+
+Channel mode: https://www.youtube.com/@DavidEagleman
+  Fetching video list from: https://www.youtube.com/@DavidEagleman/videos (up to 1700 videos)...
