@@ -27,7 +27,7 @@ SECTION_CONFIG = {
         'index': 2, 'short': 'Physical',
         'title': 'Physical Health',
         'tagline': 'The body, its diseases, the medicine, and the institutions around them.',
-        'note': 'The body is, properly understood, mostly other people’s problem. We report on disease, medicine, public policy, and the long argument about what the body owes the world.',
+        'note': "The body is, properly understood, mostly other people's problem. We report on disease, medicine, public policy, and the long argument about what the body owes the world.",
         'editor': 'Priya Shah',
         'accent_hex': '#2fbf7c',
         'curve': 'M 30 100 L 70 100 L 80 70 L 95 130 L 110 60 L 125 120 L 150 100 L 175 100',
@@ -35,17 +35,57 @@ SECTION_CONFIG = {
         'type_weight': '500',
         'type_style': 'normal',
         'type_tracking': '-0.02em',
-        'pillar_slugs': ['species-appropriate-diet', 'carnivore-diet', 'autoimmune', 'autoimmune-disease'],
+        'pillar_slugs': [
+            'species-appropriate-diet', 'carnivore-diet',
+            'autoimmune', 'autoimmune-disease',
+            'heart-disease', 'diabetes', 'type-1-diabetes',
+            'weight', 'obesity', 'liver-disease', 'kidney-disease',
+            'alzheimers', 'dementia',
+            'cholesterol', 'biological-drugs', 'biologics',
+            'medical-mishaps', 'mishaps',
+        ],
         'category_slugs': ['health'],
         'subcategories': [
-            {'id': 'autoimmune',     'name': 'Autoimmune Disease',     'short': 'Autoimmune',      'blurb': 'When the immune system mistakes home for elsewhere — lupus, MS, RA, and the long bench of the chronically misread.', 'accent': '#4cc995', 'match_slugs': ['autoimmune', 'autoimmune-disease']},
-            {'id': 'heart-disease',  'name': 'Heart Disease',          'short': 'Heart',           'blurb': 'The most common killer in the developed world — and the most often misframed. Lipids, inflammation, and the metabolic argument.', 'accent': '#34a366', 'match_slugs': ['heart-disease']},
-            {'id': 'diabetes',       'name': 'Diabetes',               'short': 'Diabetes',        'blurb': 'Type 1, type 2, type 1.5 — a family of metabolic diseases whose lines keep moving. The clinical and the dietary literature.', 'accent': '#5ecf86', 'match_slugs': ['diabetes', 'type-1-diabetes']},
-            {'id': 'weight',         'name': 'Weight',                 'short': 'Weight',          'blurb': 'Obesity, GLP-1 drugs, set-point theory, and the long contest over what makes a body store and shed.', 'accent': '#43b878', 'match_slugs': ['weight', 'obesity']},
-            {'id': 'alzheimers',     'name': 'Alzheimer’s Disease','short': 'Alzheimer’s','blurb': 'Amyloid, tau, ApoE, and the slow re-thinking of dementia as a disease of brain metabolism.', 'accent': '#9bdcb6', 'match_slugs': ['alzheimers', 'dementia']},
-            {'id': 'liver-disease',  'name': 'Liver Disease',          'short': 'Liver',           'blurb': 'Fatty liver, fibrosis, and the silent organ that bears the brunt of modern eating.', 'accent': '#2a8a52', 'match_slugs': ['liver-disease']},
-            {'id': 'kidney-disease', 'name': 'Kidney Disease',         'short': 'Kidney',          'blurb': 'Diabetic nephropathy, hypertension, and the slow strangling of the body’s filtration system.', 'accent': '#74d49d', 'match_slugs': ['kidney-disease']},
-            {'id': 'mishaps',        'name': 'Medical System Mishaps', 'short': 'Mishaps',         'blurb': 'When medicine gets it wrong — misdiagnosis, overtreatment, and the institutions that resist correction.', 'accent': '#86d3a6', 'match_slugs': ['medical-mishaps', 'mishaps']},
+            {
+                'id': 'diseases', 'name': 'Diseases', 'short': 'Diseases',
+                'blurb': 'The conditions themselves — what is known, what is being researched, and what remains uncertain.',
+                'accent': '#34a366', 'is_group': True,
+                'subcategories': [
+                    {
+                        'id': 'autoimmune', 'name': 'Autoimmune Disease', 'short': 'Autoimmune',
+                        'blurb': 'When the immune system mistakes home for elsewhere — lupus, MS, RA, and the long bench of the chronically misread.',
+                        'accent': '#4cc995', 'match_slugs': ['autoimmune', 'autoimmune-disease'],
+                    },
+                    {
+                        'id': 'metabolic', 'name': 'Metabolic Disease', 'short': 'Metabolic',
+                        'blurb': 'Heart disease, diabetes, weight, liver and kidney conditions — sharing a common root in broken metabolism.',
+                        'accent': '#3aab6b', 'is_group': True,
+                        'subcategories': [
+                            {'id': 'heart-disease',  'name': 'Heart Disease',        'short': 'Heart',       'blurb': 'The most common killer in the developed world — and the most often misframed. Lipids, inflammation, and the metabolic argument.', 'accent': '#34a366', 'match_slugs': ['heart-disease']},
+                            {'id': 'diabetes',       'name': 'Diabetes',             'short': 'Diabetes',    'blurb': 'Type 1, type 2, type 1.5 — a family of metabolic diseases whose lines keep moving.', 'accent': '#5ecf86', 'match_slugs': ['diabetes', 'type-1-diabetes']},
+                            {'id': 'weight',         'name': 'Weight',               'short': 'Weight',      'blurb': 'Obesity, GLP-1 drugs, set-point theory, and the long contest over what makes a body store and shed.', 'accent': '#43b878', 'match_slugs': ['weight', 'obesity']},
+                            {'id': 'liver-disease',  'name': 'Liver Disease',        'short': 'Liver',       'blurb': 'Fatty liver, fibrosis, and the silent organ that bears the brunt of modern eating.', 'accent': '#2a8a52', 'match_slugs': ['liver-disease']},
+                            {'id': 'kidney-disease', 'name': 'Kidney Disease',       'short': 'Kidney',      'blurb': "Diabetic nephropathy, hypertension, and the slow strangling of the body's filtration system.", 'accent': '#74d49d', 'match_slugs': ['kidney-disease']},
+                            {'id': 'alzheimers',     'name': "Alzheimer's Disease",  'short': "Alzheimer's", 'blurb': 'Amyloid, tau, ApoE, and the slow re-thinking of dementia as a disease of brain metabolism.', 'accent': '#9bdcb6', 'match_slugs': ['alzheimers', 'dementia']},
+                        ],
+                    },
+                ],
+            },
+            {
+                'id': 'controversies', 'name': 'Medical Controversies', 'short': 'Controversies',
+                'blurb': 'The arguments medicine keeps having with itself — cholesterol, biologics, and the system that resists correction.',
+                'accent': '#86d3a6', 'is_group': True,
+                'subcategories': [
+                    {'id': 'cholesterol', 'name': 'The Cholesterol Debate', 'short': 'Cholesterol', 'blurb': 'Saturated fat, LDL, statins, and the seventy-year argument that shaped cardiovascular medicine.', 'accent': '#7bc99c', 'match_slugs': ['cholesterol']},
+                    {'id': 'biologics',   'name': 'Biological Drugs',       'short': 'Biologics',   'blurb': 'Monoclonal antibodies, TNF inhibitors, and the pharmaceutical engineering that changed autoimmune care.', 'accent': '#92d4ad', 'match_slugs': ['biological-drugs', 'biologics']},
+                    {'id': 'mishaps',     'name': 'Medical System Mishaps', 'short': 'Mishaps',     'blurb': 'When medicine gets it wrong — misdiagnosis, overtreatment, and the institutions that resist correction.', 'accent': '#a3deb9', 'match_slugs': ['medical-mishaps', 'mishaps']},
+                ],
+            },
+            {
+                'id': 'path-to-health', 'name': 'Path Toward Health', 'short': 'Path',
+                'blurb': 'The practical interventions with actual evidence — diet, sleep, movement, and the slow reconstruction of function.',
+                'accent': '#5cc191', 'match_slugs': ['species-appropriate-diet', 'carnivore-diet'],
+            },
         ],
     },
     'mental': {
@@ -176,21 +216,60 @@ SECTION_CONFIG = {
 }
 
 
+def _item_slug(it):
+    if hasattr(it, 'pillar') and it.pillar:
+        return it.pillar.slug
+    if hasattr(it, 'category') and it.category:
+        return it.category.slug
+    return None
+
+
+def _collect_leaf_slugs(node):
+    """Return all match_slugs from leaf descendants of node."""
+    if node.get('is_group') and node.get('subcategories'):
+        result = []
+        for child in node['subcategories']:
+            result.extend(_collect_leaf_slugs(child))
+        return result
+    return list(node.get('match_slugs', []))
+
+
+def _find_topic(subs, target_id, ancestors=None):
+    """Return (node, ancestors_list) for the node with id==target_id."""
+    if ancestors is None:
+        ancestors = []
+    for s in subs:
+        if s['id'] == target_id:
+            return s, ancestors
+        if s.get('subcategories'):
+            found, path = _find_topic(s['subcategories'], target_id, ancestors + [s])
+            if found:
+                return found, path
+    return None, []
+
+
+def _count_node(node, all_items):
+    """Set node['count'] = total essay count for this node (recursive for groups). Returns count."""
+    if node.get('is_group') and node.get('subcategories'):
+        total = sum(_count_node(child, all_items) for child in node['subcategories'])
+        node['count'] = total
+        return total
+    slugs = set(node.get('match_slugs', []))
+    count = sum(1 for it in all_items if _item_slug(it) in slugs)
+    node['count'] = count
+    return count
+
+
 def section_landing(request, key):
+    import copy
     from topics.models import Article
     config = SECTION_CONFIG.get(key)
     if not config:
         raise Http404('Unknown section')
 
     active_topic_id = request.GET.get('topic')
-    # Make a shallow copy so we can attach 'count' without mutating SECTION_CONFIG
-    subcategories = [dict(s) for s in config.get('subcategories', [])]
-    active_topic = None
-    if active_topic_id:
-        for s in subcategories:
-            if s['id'] == active_topic_id:
-                active_topic = s
-                break
+    # Deep copy so we can mutate 'count' on nested nodes without touching SECTION_CONFIG
+    subcategories = copy.deepcopy(config.get('subcategories', []))
 
     if config.get('is_books'):
         books = list(BookReview.objects.filter(published=True).select_related('category'))
@@ -206,27 +285,42 @@ def section_landing(request, key):
         ).select_related('category'))
         all_items = articles + posts
 
-    # Compute essay count per subcategory (always, regardless of filter)
+    # Compute essay counts on every node in the tree (always, before filtering)
     for s in subcategories:
-        match = set(s.get('match_slugs', []))
-        n = 0
-        for it in all_items:
-            slug = getattr(it.pillar, 'slug', None) if hasattr(it, 'pillar') and it.pillar else (
-                getattr(it.category, 'slug', None) if hasattr(it, 'category') and it.category else None
-            )
-            if slug in match:
-                n += 1
-        s['count'] = n
+        _count_node(s, all_items)
 
-    # Apply topic filter to displayed items
+    # Resolve active topic and its ancestor chain
+    active_topic, ancestors = (None, [])
+    if active_topic_id:
+        active_topic, ancestors = _find_topic(subcategories, active_topic_id)
+
+    # Determine chip_parent (deepest group "in view") and breadcrumb chain
+    chip_parent = None
+    breadcrumb_chain = []
+    child_chips = []
     if active_topic:
-        match = set(active_topic.get('match_slugs', []))
-        def _match(it):
-            slug = getattr(it.pillar, 'slug', None) if hasattr(it, 'pillar') and it.pillar else (
-                getattr(it.category, 'slug', None) if hasattr(it, 'category') and it.category else None
-            )
-            return slug in match
-        items = [it for it in all_items if _match(it)]
+        if active_topic.get('is_group'):
+            chip_parent = active_topic
+            chip_parent_ancestors = list(ancestors)
+        elif ancestors:
+            chip_parent = ancestors[-1]   # leaf's direct parent group
+            chip_parent_ancestors = ancestors[:-1]
+        else:
+            chip_parent = None
+            chip_parent_ancestors = []
+
+        if chip_parent:
+            child_chips = chip_parent.get('subcategories', [])
+            # Breadcrumb only when chip_parent itself has ancestors (depth ≥ 2)
+            if chip_parent_ancestors:
+                breadcrumb_chain = chip_parent_ancestors + [chip_parent]
+
+    ancestor_id_list = [a['id'] for a in ancestors]
+
+    # Apply topic filter: collect all leaf slugs under active_topic
+    if active_topic:
+        match_slugs = set(_collect_leaf_slugs(active_topic))
+        items = [it for it in all_items if _item_slug(it) in match_slugs]
     else:
         items = all_items
 
@@ -241,6 +335,10 @@ def section_landing(request, key):
         'config': config,
         'subcategories': subcategories,
         'active_topic': active_topic,
+        'ancestor_id_list': ancestor_id_list,
+        'child_chips': child_chips,
+        'chip_parent_id': chip_parent['id'] if chip_parent else '',
+        'breadcrumb_chain': breadcrumb_chain,
         'hero_item': hero_item,
         'grid_items': grid_items,
         'item_count': item_count,

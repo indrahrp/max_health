@@ -152,6 +152,48 @@
 }
 .topic-clear:hover { color: var(--fg); border-color: var(--hairline-strong); }
 
+/* ─── Chip row + breadcrumb (3-level drill-down) ─── */
+.chip-section { margin-top: 18px; }
+.chip-breadcrumb {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 12px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-4);
+}
+.chip-breadcrumb .crumb-label { color: var(--fg-4); }
+.chip-breadcrumb a {
+  color: var(--fg-4); transition: color .2s; text-decoration: none;
+}
+.chip-breadcrumb a:hover { color: var(--fg); }
+.chip-breadcrumb .crumb-current { color: var(--fg-2); }
+.chip-breadcrumb .crumb-sep { color: var(--fg-4); }
+
+.child-chips {
+  display: flex; flex-wrap: wrap; gap: 10px;
+}
+.child-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px 9px; border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: rgba(255,255,255,0.012);
+  text-decoration: none; transition: border-color .2s, background .2s, color .2s;
+}
+.child-chip:hover:not(.active) {
+  border-color: color-mix(in oklab, var(--chip-accent) 55%, transparent);
+  color: var(--fg);
+}
+.child-chip.active {
+  border-color: color-mix(in oklab, var(--chip-accent) 80%, transparent);
+  background: color-mix(in oklab, var(--chip-accent) 14%, transparent);
+}
+.child-chip .chip-dot { width: 7px; height: 7px; border-radius: 999px; flex-shrink: 0; }
+.child-chip .chip-name { font-family: var(--font-sans); font-size: 13px; color: var(--fg-2); }
+.child-chip.active .chip-name { color: var(--fg); }
+.child-chip .chip-count {
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.06em; color: var(--fg-4);
+}
+
 @media (max-width: 980px) { .topics-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .topics-grid { grid-template-columns: 1fr; } }
 
@@ -323,18 +365,60 @@
     </div>
     <div class="topics-grid">
       {% for s in subcategories %}
-      <a href="?topic={{ s.id }}" class="topic-card {% if active_topic.id == s.id %}active{% endif %}" style="--topic-accent: {{ s.accent }};">
+      <a href="?topic={{ s.id }}" class="topic-card {% if active_topic.id == s.id or s.id in ancestor_id_list %}active{% endif %}" style="--topic-accent: {{ s.accent }};">
         <div class="topic-flag"></div>
         <div class="topic-card-head">
-          <span class="topic-idx">Topic · {{ forloop.counter|stringformat:"02d" }}</span>
-          <span class="topic-count">{% if s.count %}{{ s.count }} essay{{ s.count|pluralize }}{% else %}—{% endif %}</span>
+          <span class="topic-idx">{% if s.is_group %}Group{% else %}Topic{% endif %} · {{ forloop.counter|stringformat:"02d" }}</span>
+          <span class="topic-count">
+            {% if s.is_group %}
+              {{ s.subcategories|length }} topic{{ s.subcategories|length|pluralize }}
+            {% elif s.count %}
+              {{ s.count }} essay{{ s.count|pluralize }}
+            {% else %}—{% endif %}
+          </span>
         </div>
         <h3 class="topic-name">{{ s.name }}</h3>
         <p class="topic-blurb">{{ s.blurb }}</p>
-        <span class="topic-cta">{% if active_topic.id == s.id %}Showing only this ·{% else %}Browse this topic →{% endif %}</span>
+        <span class="topic-cta">
+          {% if active_topic.id == s.id or s.id in ancestor_id_list %}
+            {% if s.is_group %}Showing this group ·{% else %}Showing only this ·{% endif %}
+          {% else %}
+            {% if s.is_group %}Open this group →{% else %}Browse this topic →{% endif %}
+          {% endif %}
+        </span>
       </a>
       {% endfor %}
     </div>
+
+    {% if child_chips %}
+    <div class="chip-section">
+      {% if breadcrumb_chain %}
+      <div class="chip-breadcrumb">
+        <span class="crumb-label">IN</span>
+        {% for crumb in breadcrumb_chain %}
+        <a href="?topic={{ crumb.id }}" {% if forloop.last %}class="crumb-current"{% endif %}>{{ crumb.name }}</a>
+        {% if not forloop.last %}<span class="crumb-sep">›</span>{% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="child-chips">
+        {% for chip in child_chips %}
+        <a href="{% if active_topic.id == chip.id %}?topic={{ chip_parent_id }}{% else %}?topic={{ chip.id }}{% endif %}"
+           class="child-chip {% if active_topic.id == chip.id %}active{% endif %}"
+           style="--chip-accent: {{ chip.accent }};">
+          <span class="chip-dot" style="background:{{ chip.accent }};"></span>
+          <span class="chip-name">{{ chip.name }}</span>
+          <span class="chip-count">
+            {% if chip.is_group %}{{ chip.subcategories|length }} topic{{ chip.subcategories|length|pluralize }}
+            {% elif chip.count %}{{ chip.count|stringformat:"02d" }}
+            {% else %}—{% endif %}
+          </span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
     {% if active_topic %}
     <a href="/{{ key }}/" class="topic-clear">← Show all topics</a>
     {% endif %}
