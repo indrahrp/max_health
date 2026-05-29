@@ -142,6 +142,33 @@ SECTION_CONFIG = {
         'type_tracking': '-0.008em',
         'pillar_slugs': ['mindset-success', 'mindset'],
         'category_slugs': ['mindset'],
+        'subcategories': [
+            {
+                'id': 'peterson', 'name': 'Jordan Peterson', 'short': 'Peterson',
+                'blurb': 'On responsibility, meaning, and the long argument for getting your own house in order before you take aim at the world.',
+                'accent': '#b9a3ff',
+                'match_article_keywords': ['peterson'],
+            },
+            {
+                'id': 'greene', 'name': 'Robert Greene', 'short': 'Greene',
+                'blurb': 'Power, mastery, and human nature — the slow study of how people actually behave, drawn from a long shelf of history.',
+                'accent': '#8e6ff5',
+                'match_article_keywords': ['greene'],
+            },
+            {
+                'id': 'mate', 'name': 'Gabor Maté', 'short': 'Maté',
+                'blurb': 'Trauma, attachment, and addiction — the case that the body keeps a score the mind would rather not read.',
+                'accent': '#c8b3ff',
+                'match_article_keywords': ['gabor'],
+            },
+            {
+                'id': 'general', 'name': 'General', 'short': 'General',
+                'blurb': 'Everything else — essays, books, and ideas that shaped how I think but did not fit one author.',
+                'accent': '#7b5ce8',
+                'match_slugs': ['mindset-success', 'mindset'],
+                'exclude_article_keywords': ['peterson', 'greene', 'gabor'],
+            },
+        ],
     },
     'genetics': {
         'index': 6, 'short': 'Genetics',
@@ -248,14 +275,27 @@ def _find_topic(subs, target_id, ancestors=None):
     return None, []
 
 
+def _item_matches_node(it, node):
+    """Return True if item matches this leaf node's pillar slugs, article keywords, and exclusions."""
+    slugs = set(node.get('match_slugs', []))
+    keywords = node.get('match_article_keywords', [])
+    exclude_kws = node.get('exclude_article_keywords', [])
+    article_slug = getattr(it, 'slug', '')
+    basic = _item_slug(it) in slugs or (keywords and any(kw in article_slug for kw in keywords))
+    if not basic:
+        return False
+    if exclude_kws and any(kw in article_slug for kw in exclude_kws):
+        return False
+    return True
+
+
 def _count_node(node, all_items):
     """Set node['count'] = total essay count for this node (recursive for groups). Returns count."""
     if node.get('is_group') and node.get('subcategories'):
         total = sum(_count_node(child, all_items) for child in node['subcategories'])
         node['count'] = total
         return total
-    slugs = set(node.get('match_slugs', []))
-    count = sum(1 for it in all_items if _item_slug(it) in slugs)
+    count = sum(1 for it in all_items if _item_matches_node(it, node))
     node['count'] = count
     return count
 
@@ -317,10 +357,17 @@ def section_landing(request, key):
 
     ancestor_id_list = [a['id'] for a in ancestors]
 
-    # Apply topic filter: collect all leaf slugs under active_topic
+    # Apply topic filter using leaf matching (supports match_slugs, match_article_keywords, exclude_article_keywords)
     if active_topic:
-        match_slugs = set(_collect_leaf_slugs(active_topic))
-        items = [it for it in all_items if _item_slug(it) in match_slugs]
+        def _leaves(node):
+            if node.get('is_group') and node.get('subcategories'):
+                result = []
+                for child in node['subcategories']:
+                    result.extend(_leaves(child))
+                return result
+            return [node]
+        leaf_nodes = _leaves(active_topic)
+        items = [it for it in all_items if any(_item_matches_node(it, leaf) for leaf in leaf_nodes)]
     else:
         items = all_items
 
