@@ -1,6 +1,6 @@
-# build 2026-05-29
 [phases.build]
 cmds = [
+  "echo 'cogitra-build-20260529-v2'",
   "python manage.py collectstatic --noinput",
   "python manage.py migrate",
   "python manage.py load_autoimmune_diseases",
