@@ -206,7 +206,7 @@
     border-radius: 8px;
   }
 
-  /* Mobile nav (hamburger) */
+  /* Mobile nav (hamburger + slide-in drawer) */
   .nav-burger {
     display: none; width: 36px; height: 36px; border-radius: 8px;
     background: transparent; border: 1px solid var(--hairline-strong);
@@ -215,24 +215,72 @@
     transition: color .2s, border-color .2s, background .2s;
   }
   .nav-burger:hover { color: var(--fg); border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.03); }
-  .mobile-menu {
-    display: none; position: absolute; top: 64px; left: 0; right: 0;
-    background: rgba(7,7,13,0.97);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    border-bottom: 1px solid var(--hairline);
-    max-height: calc(100vh - 64px); overflow-y: auto;
+
+  /* Scrim */
+  .nav-scrim {
+    display: none; position: fixed; inset: 0; z-index: 98;
+    background: rgba(7,7,13,0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 0; transition: opacity 220ms ease;
   }
-  .mobile-menu.open { display: block; }
-  .mobile-menu ul { list-style: none; margin: 0; padding: 6px 0; }
-  .mobile-menu a {
-    display: block; padding: 13px 24px; font-size: 15px;
-    color: var(--fg-2); border-bottom: 1px solid var(--hairline);
+  .nav-scrim.open { display: block; opacity: 1; }
+
+  /* Slide-in drawer */
+  .mobile-menu {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 99;
+    width: min(86vw, 380px);
+    background: var(--bg-elev);
+    border-left: 1px solid var(--hairline);
+    display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 280ms cubic-bezier(.2,.7,.2,1);
+    overflow-y: auto;
+  }
+  .mobile-menu.open { transform: translateX(0); }
+
+  .mobile-menu-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px; border-bottom: 1px solid var(--hairline);
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3);
+    flex-shrink: 0;
+  }
+  .mobile-menu-close {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: transparent; border: 1px solid var(--hairline-strong);
+    color: var(--fg-2); cursor: pointer; padding: 0;
+    display: flex; align-items: center; justify-content: center;
     transition: color .2s, background .2s;
   }
+  .mobile-menu-close:hover { color: var(--fg); background: rgba(255,255,255,0.05); }
+
+  .mobile-menu ul { list-style: none; margin: 0; padding: 6px 0; flex: 1; }
+  .mobile-menu a {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 20px; font-size: 15px;
+    color: var(--fg-2); border-bottom: 1px solid var(--hairline);
+    transition: color .2s, background .2s;
+    text-decoration: none;
+  }
   .mobile-menu li:last-child a { border-bottom: none; }
-  .mobile-menu a:hover, .mobile-menu a.active { color: var(--fg); background: rgba(255,255,255,0.03); }
-  .mobile-menu a.active { box-shadow: inset 3px 0 0 var(--accent); }
+  .mobile-menu a:hover { color: var(--fg); background: rgba(255,255,255,0.03); }
+  .mobile-menu a.active { color: var(--fg); background: rgba(255,255,255,0.03); box-shadow: inset 3px 0 0 var(--accent); }
+  .mobile-menu .menu-dot {
+    width: 7px; height: 7px; border-radius: 999px; flex-shrink: 0;
+  }
+  .mobile-menu .menu-idx {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.12em; color: var(--fg-4); flex-shrink: 0;
+  }
+  .mobile-menu .menu-sep { height: 1px; background: var(--hairline); margin: 6px 0; }
+  .mobile-menu-subscribe {
+    padding: 16px 20px; flex-shrink: 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .mobile-menu-subscribe .btn { width: 100%; justify-content: center; }
+
+  body.nav-open { overflow: hidden; }
 
   /* ─── Curve divider ─── */
   .curve-divider {
@@ -405,22 +453,35 @@
       </button>
     </div>
   </div>
-  <div class="mobile-menu" id="mobileMenu">
-    <ul>
-      <li><a href="{% url 'blog:section_ai' %}">AI</a></li>
-      <li><a href="{% url 'blog:section_health' %}">Physical Health</a></li>
-      <li><a href="{% url 'blog:section_mental' %}">Mental Health</a></li>
-      <li><a href="{% url 'blog:section_biology' %}">Biology</a></li>
-      <li><a href="{% url 'blog:section_mindset' %}">Mindset</a></li>
-      <li><a href="{% url 'blog:section_genetics' %}">Genetics</a></li>
-      <li><a href="{% url 'blog:section_longevity' %}">Longevity</a></li>
-      <li><a href="{% url 'blog:section_physics' %}">Physics</a></li>
-      <li><a href="{% url 'blog:section_books' %}">Books</a></li>
-      <li><a href="{% url 'blog:archive' %}">Archive</a></li>
-      <li><a href="{% url 'blog:about' %}">About</a></li>
-    </ul>
-  </div>
 </nav>
+
+<!-- Mobile nav scrim (sibling of nav — outside backdrop-filter context) -->
+<div class="nav-scrim" id="navScrim"></div>
+<div class="mobile-menu" id="mobileMenu" aria-label="Navigation menu">
+  <div class="mobile-menu-header">
+    <span>Menu</span>
+    <button class="mobile-menu-close" id="navClose" aria-label="Close menu">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <ul>
+    <li><a href="{% url 'blog:section_ai' %}"><span class="menu-dot" style="background:#5d6cf2;"></span><span class="menu-idx">01</span>AI</a></li>
+    <li><a href="{% url 'blog:section_health' %}"><span class="menu-dot" style="background:#2fbf7c;"></span><span class="menu-idx">02</span>Physical Health</a></li>
+    <li><a href="{% url 'blog:section_mental' %}"><span class="menu-dot" style="background:#5ba896;"></span><span class="menu-idx">03</span>Mental Health</a></li>
+    <li><a href="{% url 'blog:section_biology' %}"><span class="menu-dot" style="background:#26c2c9;"></span><span class="menu-idx">04</span>Biology</a></li>
+    <li><a href="{% url 'blog:section_mindset' %}"><span class="menu-dot" style="background:#a387ff;"></span><span class="menu-idx">05</span>Mindset</a></li>
+    <li><a href="{% url 'blog:section_genetics' %}"><span class="menu-dot" style="background:#e0567a;"></span><span class="menu-idx">06</span>Genetics</a></li>
+    <li><a href="{% url 'blog:section_longevity' %}"><span class="menu-dot" style="background:#d4a23a;"></span><span class="menu-idx">07</span>Longevity</a></li>
+    <li><a href="{% url 'blog:section_physics' %}"><span class="menu-dot" style="background:#f5a623;"></span><span class="menu-idx">08</span>Physics</a></li>
+    <li><a href="{% url 'blog:section_books' %}"><span class="menu-dot" style="background:#c4422a;"></span><span class="menu-idx">09</span>Books</a></li>
+    <div class="menu-sep"></div>
+    <li><a href="{% url 'blog:archive' %}"><span class="menu-dot" style="background:var(--fg-4);"></span><span class="menu-idx">—</span>Archive</a></li>
+    <li><a href="{% url 'blog:about' %}"><span class="menu-dot" style="background:var(--fg-4);"></span><span class="menu-idx">—</span>About</a></li>
+  </ul>
+  <div class="mobile-menu-subscribe">
+    <a href="#subscribe" class="btn btn-primary">Subscribe</a>
+  </div>
+</div>
 
 {% block content %}{% endblock %}
 
@@ -516,21 +577,31 @@
     if (href === p || (href !== '/' && p.startsWith(href))) a.classList.add('active');
   });
 
-  // Mobile hamburger toggle
+  // Mobile slide-in drawer
   const navBurger = document.getElementById('navBurger');
+  const navClose  = document.getElementById('navClose');
   const mobileMenu = document.getElementById('mobileMenu');
-  if (navBurger && mobileMenu) {
-    navBurger.addEventListener('click', () => {
-      const open = mobileMenu.classList.toggle('open');
-      navBurger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      navBurger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    });
-    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      navBurger.setAttribute('aria-expanded', 'false');
-      navBurger.setAttribute('aria-label', 'Open menu');
-    }));
+  const navScrim   = document.getElementById('navScrim');
+
+  function openDrawer() {
+    mobileMenu.classList.add('open');
+    navScrim.classList.add('open');
+    document.body.classList.add('nav-open');
+    navBurger.setAttribute('aria-expanded', 'true');
+    navBurger.setAttribute('aria-label', 'Close menu');
   }
+  function closeDrawer() {
+    mobileMenu.classList.remove('open');
+    navScrim.classList.remove('open');
+    document.body.classList.remove('nav-open');
+    navBurger.setAttribute('aria-expanded', 'false');
+    navBurger.setAttribute('aria-label', 'Open menu');
+  }
+
+  if (navBurger) navBurger.addEventListener('click', openDrawer);
+  if (navClose)  navClose.addEventListener('click', closeDrawer);
+  if (navScrim)  navScrim.addEventListener('click', closeDrawer);
+  if (mobileMenu) mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
 
   // Curve draw-in animation on mount for any .draw-curve path
   function drawCurves() {
