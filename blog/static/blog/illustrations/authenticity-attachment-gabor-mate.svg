@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+    <stop offset="0%" stop-color="#080e18"/>
+    <stop offset="100%" stop-color="#040810"/>
+  </radialGradient>
+  <radialGradient id="glow-auth" cx="50%" cy="50%" r="60%">
+    <stop offset="0%" stop-color="#30b8f0" stop-opacity="0.3"/>
+    <stop offset="100%" stop-color="#30b8f0" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="glow-comp" cx="50%" cy="50%" r="60%">
+    <stop offset="0%" stop-color="#909090" stop-opacity="0.15"/>
+    <stop offset="100%" stop-color="#909090" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="glow-s"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+  <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+</defs>
+
+<style>
+@keyframes auth-glow {
+  0%,100%{ opacity:0.7; }
+  50%    { opacity:1; }
+}
+@keyframes comp-fade {
+  0%,100%{ opacity:0.35; }
+  50%    { opacity:0.2; }
+}
+@keyframes chain-pulse {
+  0%,100%{ stroke-opacity:0.5; }
+  50%    { stroke-opacity:0.9; }
+}
+@keyframes light-drift {
+  0%  { transform:translateY(0); opacity:0.8; }
+  50% { transform:translateY(-4px); opacity:1; }
+  100%{ transform:translateY(0); opacity:0.8; }
+}
+@keyframes crack-appear {
+  0%,40%{ opacity:0; }
+  60%,100%{ opacity:0.6; }
+}
+@keyframes fade-in {
+  from{ opacity:0; transform:translateY(-7px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+@keyframes arrow-flow {
+  0%  { stroke-dashoffset:30; opacity:0.4; }
+  100%{ stroke-dashoffset:0;  opacity:0.9; }
+}
+
+.heading { animation: fade-in 0.8s ease-out 0.1s both; }
+.auth    { animation: auth-glow 3s ease-in-out infinite; }
+.comp    { animation: comp-fade 4s ease-in-out infinite; }
+.chains  { animation: chain-pulse 2.5s ease-in-out infinite; }
+.light-f { animation: light-drift 3.5s ease-in-out infinite; }
+.crack   { animation: crack-appear 4s ease-in-out infinite 2s; }
+.arrow1  { animation: arrow-flow 2s linear infinite; }
+.arrow2  { animation: arrow-flow 2s linear infinite 0.5s; }
+.quote   { animation: fade-in 0.8s ease-out 1.4s both; }
+</style>
+
+<!-- BG -->
+<rect width="720" height="420" fill="url(#bg)"/>
+
+<!-- left glow (authentic) -->
+<ellipse cx="200" cy="220" rx="140" ry="120" fill="url(#glow-auth)" filter="url(#blur8)"/>
+<!-- right glow (compliant) -->
+<ellipse cx="520" cy="220" rx="130" ry="110" fill="url(#glow-comp)" filter="url(#blur8)"/>
+
+<!-- divider line -->
+<line x1="360" y1="80" x2="360" y2="375" stroke="#1a2030" stroke-width="1" stroke-dasharray="4 6"/>
+
+<!-- heading -->
+<g class="heading">
+  <text x="360" y="28" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.16em" fill="#1e3050">
+    GABOR MATÉ · CHILDHOOD · AUTHENTICITY vs ATTACHMENT
+  </text>
+  <text x="360" y="54" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="17" font-style="italic" fill="#4090c8">
+    The choice children are forced to make
+  </text>
+  <text x="360" y="73" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#2a5878">
+    be yourself — or be loved
+  </text>
+</g>
+
+<!-- ═══ LEFT: AUTHENTIC SELF ═══ -->
+<g class="auth">
+  <!-- aura -->
+  <ellipse cx="200" cy="220" rx="72" ry="82" fill="#1060a0" opacity="0.12"/>
+
+  <!-- figure body - upright, open posture -->
+  <!-- legs -->
+  <rect x="189" y="298" width="10" height="48" rx="5" fill="#2060a0" opacity="0.85"/>
+  <rect x="205" y="298" width="10" height="48" rx="5" fill="#2060a0" opacity="0.85"/>
+  <!-- torso — glowing chest, open -->
+  <path d="M 178 245 Q 176 278 186 298 L 218 298 Q 228 278 226 245 Z" fill="#2060a0" opacity="0.9"/>
+  <!-- glowing heart/core -->
+  <ellipse cx="202" cy="272" rx="16" ry="18" fill="#1080d0" opacity="0.25" filter="url(#blur4)"/>
+  <circle cx="202" cy="272" r="8" fill="#40b0f0" opacity="0.7" filter="url(#glow-s)"/>
+  <circle cx="202" cy="272" r="4" fill="#80d0ff" opacity="0.9" filter="url(#glow-s)"/>
+  <!-- neck/shoulders -->
+  <rect x="184" y="236" width="36" height="12" rx="6" fill="#2060a0" opacity="0.9"/>
+  <rect x="195" y="222" width="14" height="16" rx="7" fill="#2060a0" opacity="0.9"/>
+  <!-- head — upright, looking forward -->
+  <ellipse cx="202" cy="208" rx="21" ry="22" fill="#2060a0" opacity="0.9"/>
+  <!-- eyes open, forward -->
+  <ellipse cx="195" cy="204" rx="3.5" ry="3" fill="#0a1828"/>
+  <ellipse cx="209" cy="204" rx="3.5" ry="3" fill="#0a1828"/>
+  <circle cx="196" cy="203" r="1.5" fill="#40b0f0" opacity="0.8"/>
+  <circle cx="210" cy="203" r="1.5" fill="#40b0f0" opacity="0.8"/>
+  <!-- arms open, relaxed outward -->
+  <path d="M 180 252 Q 162 262 154 278" stroke="#2060a0" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M 224 252 Q 242 262 250 278" stroke="#2060a0" stroke-width="9" fill="none" stroke-linecap="round"/>
+
+  <!-- light particles around figure -->
+  <g class="light-f">
+    <circle cx="158" cy="200" r="3" fill="#60c0ff" filter="url(#glow-s)"/>
+    <circle cx="246" cy="215" r="2.5" fill="#40b0ff" filter="url(#glow-s)"/>
+    <circle cx="180" cy="175" r="2" fill="#80d0ff" filter="url(#glow-s)"/>
+    <circle cx="228" cy="178" r="2.5" fill="#60c0ff" filter="url(#glow-s)"/>
+    <circle cx="170" cy="240" r="2" fill="#50b8ff" filter="url(#glow-s)"/>
+  </g>
+</g>
+
+<text x="202" y="360" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="13" font-style="italic" fill="#3090c0">authentic self</text>
+<text x="202" y="375" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.1em" fill="#204060">CONNECTED · WHOLE · ALIVE</text>
+
+<!-- ═══ RIGHT: COMPLIANT/SUPPRESSED SELF ═══ -->
+<g class="comp">
+  <!-- figure — rigid posture, arms pressed in -->
+  <!-- legs together, stiff -->
+  <rect x="511" y="298" width="10" height="48" rx="5" fill="#404048" opacity="0.7"/>
+  <rect x="523" y="298" width="10" height="48" rx="5" fill="#404048" opacity="0.7"/>
+  <!-- torso — grey, closed in -->
+  <path d="M 502 245 Q 500 278 508 298 L 538 298 Q 548 278 546 245 Z" fill="#383840" opacity="0.8"/>
+  <!-- dark, hollow chest -->
+  <ellipse cx="520" cy="272" rx="14" ry="16" fill="#1a1a22" opacity="0.8"/>
+  <ellipse cx="520" cy="272" rx="8" ry="10" fill="#101018" opacity="0.9"/>
+  <!-- neck/shoulders -->
+  <rect x="506" y="236" width="28" height="11" rx="5" fill="#404048" opacity="0.75"/>
+  <rect x="513" y="222" width="14" height="16" rx="7" fill="#404048" opacity="0.8"/>
+  <!-- head — slightly bowed -->
+  <ellipse cx="520" cy="207" rx="21" ry="22" fill="#3a3a48" opacity="0.85"/>
+  <!-- eyes downcast -->
+  <ellipse cx="513" cy="207" rx="3.5" ry="2.5" fill="#0c0c14"/>
+  <ellipse cx="527" cy="207" rx="3.5" ry="2.5" fill="#0c0c14"/>
+  <circle cx="514" cy="208" r="1" fill="#606070" opacity="0.5"/>
+  <circle cx="528" cy="208" r="1" fill="#606070" opacity="0.5"/>
+
+  <!-- arms pressed to sides (suppressed) -->
+  <path d="M 504 252 Q 494 268 492 285" stroke="#404048" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 544 252 Q 554 268 556 285" stroke="#404048" stroke-width="9" fill="none" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- emotional chains / strings attached -->
+  <g class="chains">
+    <line x1="520" y1="185" x2="520" y2="155" stroke="#506080" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <line x1="500" y1="192" x2="476" y2="170" stroke="#506080" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <line x1="540" y1="192" x2="564" y2="170" stroke="#506080" stroke-width="1.2" stroke-dasharray="3 3"/>
+    <!-- parent figure anchors (abstract) -->
+    <circle cx="520" cy="150" r="5" fill="#304050" opacity="0.6"/>
+    <circle cx="472" cy="166" r="5" fill="#304050" opacity="0.6"/>
+    <circle cx="568" cy="166" r="5" fill="#304050" opacity="0.6"/>
+    <text x="520" y="142" text-anchor="middle"
+      font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#3a5060" letter-spacing="0.06em">attachment</text>
+  </g>
+
+  <!-- crack in face -->
+  <g class="crack">
+    <path d="M 518 195 Q 521 202 519 208 Q 521 214 518 220"
+      stroke="#5060a0" stroke-width="1" fill="none" opacity="0.5"/>
+  </g>
+</g>
+
+<text x="520" y="360" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="13" font-style="italic" fill="#506070">compliant self</text>
+<text x="520" y="375" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.1em" fill="#303840">SUPPRESSED · EMPTY · LOST</text>
+
+<!-- ═══ CENTER: the choice ═══ -->
+<text x="360" y="195" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#304060">the child must choose</text>
+<path class="arrow1" d="M 310 202 L 275 218" stroke="#204060" stroke-width="1.5" fill="none"
+  stroke-dasharray="5 3" stroke-linecap="round"/>
+<path d="M 278 213 L 274 219 L 281 220" fill="none" stroke="#304870" stroke-width="1.3"/>
+<path class="arrow2" d="M 410 202 L 445 218" stroke="#304050" stroke-width="1.5" fill="none"
+  stroke-dasharray="5 3" stroke-linecap="round"/>
+<path d="M 442 213 L 446 219 L 439 220" fill="none" stroke="#304858" stroke-width="1.3"/>
+
+<!-- quote strip -->
+<g class="quote">
+  <rect x="0" y="390" width="720" height="30" fill="#03060e"/>
+  <text x="360" y="409" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="10.5" font-style="italic" fill="#3878a0">
+    "We lose connection to ourselves — and then we wonder whose life this is." — Gabor Maté
+  </text>
+</g>
+</svg>
