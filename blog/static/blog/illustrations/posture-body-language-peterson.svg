@@ -1,0 +1,221 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+    <stop offset="0%" stop-color="#090d18"/>
+    <stop offset="100%" stop-color="#050810"/>
+  </radialGradient>
+  <radialGradient id="glow-up" cx="50%" cy="40%" r="60%">
+    <stop offset="0%" stop-color="#3080e0" stop-opacity="0.28"/>
+    <stop offset="100%" stop-color="#3080e0" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="glow-down" cx="50%" cy="60%" r="55%">
+    <stop offset="0%" stop-color="#604080" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#604080" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="glow-s"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="glow-m"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+  <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+</defs>
+
+<style>
+@keyframes serotonin-high {
+  0%,100%{ height:58px; y:148px; opacity:0.9; }
+  50%    { height:66px; y:140px; opacity:1; }
+}
+@keyframes serotonin-low {
+  0%,100%{ height:22px; y:184px; opacity:0.5; }
+  50%    { height:18px; y:188px; opacity:0.35; }
+}
+@keyframes upright-glow {
+  0%,100%{ opacity:0.8; }
+  50%    { opacity:1; }
+}
+@keyframes slouch-fade {
+  0%,100%{ opacity:0.45; }
+  50%    { opacity:0.3; }
+}
+@keyframes arrow-up {
+  0%  { transform:translateY(4px); opacity:0.4; }
+  100%{ transform:translateY(-4px); opacity:1; }
+}
+@keyframes particle-rise {
+  0%  { transform:translateY(0); opacity:0.8; }
+  50% { transform:translateY(-12px); opacity:0.5; }
+  100%{ transform:translateY(-24px); opacity:0; }
+}
+@keyframes fade-in {
+  from{ opacity:0; transform:translateY(-8px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+@keyframes bar-fill {
+  from{ width:0; }
+  to  { width:var(--w); }
+}
+@keyframes label-slide {
+  from{ opacity:0; transform:translateX(-10px); }
+  to  { opacity:1; transform:translateX(0); }
+}
+@keyframes label-slide-r {
+  from{ opacity:0; transform:translateX(10px); }
+  to  { opacity:1; transform:translateX(0); }
+}
+
+.heading  { animation: fade-in 0.8s ease-out 0.1s both; }
+.upright  { animation: upright-glow 3s ease-in-out infinite; }
+.slouched { animation: slouch-fade 3.5s ease-in-out infinite; }
+.lbl-l    { animation: label-slide 0.7s ease-out 0.8s both; }
+.lbl-r    { animation: label-slide-r 0.7s ease-out 0.9s both; }
+.quote    { animation: fade-in 0.8s ease-out 1.4s both; }
+
+.p1 { animation: particle-rise 2.4s ease-out infinite 0s; }
+.p2 { animation: particle-rise 2.4s ease-out infinite 0.6s; }
+.p3 { animation: particle-rise 2.4s ease-out infinite 1.2s; }
+
+.bar-high { animation: serotonin-high 2.8s ease-in-out infinite; }
+.bar-low  { animation: serotonin-low  3.2s ease-in-out infinite; }
+
+.arr { animation: arrow-up 1.6s ease-in-out infinite alternate; }
+</style>
+
+<!-- BG -->
+<rect width="720" height="420" fill="url(#bg)"/>
+
+<!-- ambient glows -->
+<ellipse cx="520" cy="210" rx="150" ry="140" fill="url(#glow-up)"/>
+<ellipse cx="200" cy="230" rx="130" ry="120" fill="url(#glow-down)"/>
+
+<!-- divider -->
+<line x1="360" y1="78" x2="360" y2="390" stroke="#141e30" stroke-width="1" stroke-dasharray="4 6"/>
+
+<!-- ─── HEADING ─── -->
+<g class="heading">
+  <text x="360" y="26" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.16em" fill="#20304a">
+    JORDAN PETERSON · RULE 1 · BODY · SEROTONIN · HIERARCHY
+  </text>
+  <text x="360" y="52" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="18" font-style="italic" fill="#5090d8">
+    Stand Up Straight With Your Shoulders Back
+  </text>
+  <text x="360" y="70" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#2a4868">
+    posture, serotonin, and the hierarchy your body broadcasts
+  </text>
+</g>
+
+<!-- ══════════ LEFT: SLOUCHED ══════════ -->
+<g class="slouched">
+  <!-- figure: slouched, curved spine -->
+  <!-- legs -->
+  <path d="M 182 315 Q 178 340 176 360" stroke="#403050" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M 198 315 Q 200 340 202 360" stroke="#403050" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- torso: curved forward -->
+  <path d="M 168 248 Q 162 275 172 315 L 208 315 Q 210 278 200 248 Z" fill="#383048" opacity="0.85"/>
+  <!-- neck: angled forward -->
+  <rect x="180" y="238" width="28" height="14" rx="7" fill="#383048" opacity="0.85" transform="rotate(8,194,245)"/>
+  <!-- head: bowed down -->
+  <ellipse cx="194" cy="218" rx="22" ry="22" fill="#383048" opacity="0.9" transform="translate(6,0)"/>
+  <!-- eyes downcast -->
+  <ellipse cx="196" cy="217" rx="3.5" ry="2.5" fill="#0c0a14"/>
+  <ellipse cx="208" cy="217" rx="3.5" ry="2.5" fill="#0c0a14"/>
+  <!-- shoulders hunched forward -->
+  <path d="M 170 255 Q 155 260 148 272" stroke="#383048" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M 208 252 Q 222 258 226 268" stroke="#383048" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- spine curve indicator -->
+  <path d="M 189 248 Q 183 270 187 300" stroke="#5040a0" stroke-width="1.2" fill="none" stroke-dasharray="4 3" opacity="0.4"/>
+</g>
+
+<!-- serotonin bar LEFT (low) -->
+<rect x="148" y="140" width="18" height="72" rx="4" fill="#1a1428" stroke="#302048" stroke-width="1"/>
+<rect class="bar-low" x="149" y="184" width="16" rx="3" fill="#6040a0" opacity="0.6"/>
+<text x="157" y="135" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6" letter-spacing="0.06em" fill="#5040a0">5HT</text>
+<text x="157" y="222" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6" fill="#4030a0" opacity="0.6">low</text>
+
+<!-- labels left -->
+<g class="lbl-l">
+  <text x="192" y="378" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="13" font-style="italic" fill="#604880">slouched</text>
+  <text x="192" y="392" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="6.2" letter-spacing="0.1em" fill="#3a2858">LOW SEROTONIN · DEFEATED · SHRINKING</text>
+</g>
+
+<!-- ══════════ RIGHT: UPRIGHT ══════════ -->
+<g class="upright">
+  <!-- aura -->
+  <ellipse cx="524" cy="235" rx="80" ry="95" fill="#2060c0" opacity="0.07" filter="url(#blur8)"/>
+  <!-- legs: straight -->
+  <rect x="511" y="315" width="11" height="48" rx="5" fill="#2060b8" opacity="0.9"/>
+  <rect x="527" y="315" width="11" height="48" rx="5" fill="#2060b8" opacity="0.9"/>
+  <!-- torso: straight -->
+  <path d="M 500 248 Q 498 278 508 315 L 540 315 Q 550 278 548 248 Z" fill="#1e5ab0" opacity="0.9"/>
+  <!-- chest glow -->
+  <ellipse cx="524" cy="278" rx="16" ry="18" fill="#3080e0" opacity="0.15" filter="url(#blur4)"/>
+  <!-- neck: upright -->
+  <rect x="512" y="234" width="24" height="16" rx="8" fill="#2060b8" opacity="0.9"/>
+  <!-- head: upright -->
+  <ellipse cx="524" cy="214" rx="22" ry="22" fill="#2060b8" opacity="0.95"/>
+  <!-- eyes: forward, bright -->
+  <ellipse cx="517" cy="210" rx="3.5" ry="3" fill="#061428"/>
+  <ellipse cx="531" cy="210" rx="3.5" ry="3" fill="#061428"/>
+  <circle cx="518" cy="209" r="1.5" fill="#50b0ff" opacity="0.9" filter="url(#glow-s)"/>
+  <circle cx="532" cy="209" r="1.5" fill="#50b0ff" opacity="0.9" filter="url(#glow-s)"/>
+  <!-- shoulders: back and level -->
+  <path d="M 502 258 Q 484 256 474 264" stroke="#2060b8" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M 546 258 Q 564 256 574 264" stroke="#2060b8" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- spine straight indicator -->
+  <path d="M 524 248 L 524 305" stroke="#4090e0" stroke-width="1.2" fill="none" stroke-dasharray="4 3" opacity="0.35"/>
+
+  <!-- rising particles -->
+  <g class="p1"><circle cx="500" cy="195" r="3" fill="#50b0ff" filter="url(#glow-s)"/></g>
+  <g class="p2"><circle cx="548" cy="188" r="2.5" fill="#40a8ff" filter="url(#glow-s)"/></g>
+  <g class="p3"><circle cx="524" cy="180" r="2" fill="#60b8ff" filter="url(#glow-s)"/></g>
+</g>
+
+<!-- serotonin bar RIGHT (high) -->
+<rect x="582" y="140" width="18" height="72" rx="4" fill="#0a1428" stroke="#183060" stroke-width="1"/>
+<rect class="bar-high" x="583" y="148" width="16" rx="3" fill="#4090e0"/>
+<text x="591" y="135" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6" letter-spacing="0.06em" fill="#4090d0">5HT</text>
+<text x="591" y="222" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6" fill="#3080d0">high</text>
+
+<!-- up arrow between bars -->
+<g class="arr">
+  <path d="M 362 155 L 362 120" stroke="#3080d0" stroke-width="1.5" fill="none" stroke-dasharray="3 4" opacity="0.5"/>
+  <path d="M 357 124 L 362 118 L 367 124" fill="none" stroke="#3080d0" stroke-width="1.5" opacity="0.5"/>
+</g>
+
+<!-- labels right -->
+<g class="lbl-r">
+  <text x="524" y="378" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="13" font-style="italic" fill="#4090d8">upright</text>
+  <text x="524" y="392" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="6.2" letter-spacing="0.1em" fill="#204868">HIGH SEROTONIN · CONFIDENT · PRESENT</text>
+</g>
+
+<!-- ─── CENTER: hierarchy ladder ─── -->
+<rect x="338" y="155" width="44" height="130" rx="6" fill="#0a1020" stroke="#182030" stroke-width="1" opacity="0.8"/>
+<text x="360" y="170" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="5.5" letter-spacing="0.08em" fill="#203040">HIERARCHY</text>
+<!-- rungs -->
+<line x1="342" y1="182" x2="378" y2="182" stroke="#2a4060" stroke-width="1.5"/>
+<line x1="342" y1="198" x2="378" y2="198" stroke="#2a4060" stroke-width="1.5"/>
+<line x1="342" y1="214" x2="378" y2="214" stroke="#2a4060" stroke-width="1.5"/>
+<line x1="342" y1="230" x2="378" y2="230" stroke="#2a4060" stroke-width="1.5"/>
+<line x1="342" y1="246" x2="378" y2="246" stroke="#2a4060" stroke-width="1.5"/>
+<!-- figure on top rung -->
+<circle cx="360" cy="175" r="5" fill="#3080d0" filter="url(#glow-s)"/>
+<line x1="360" y1="180" x2="360" y2="260" stroke="#182030" stroke-width="1" stroke-dasharray="2 4" opacity="0.4"/>
+
+<!-- quote strip -->
+<g class="quote">
+  <rect x="0" y="400" width="720" height="20" fill="#04060e"/>
+  <text x="360" y="414" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="10.5" font-style="italic" fill="#4878b0">
+    "Stand up straight with your shoulders back — and voluntarily accept the onslaught of being." — Peterson
+  </text>
+</g>
+</svg>
