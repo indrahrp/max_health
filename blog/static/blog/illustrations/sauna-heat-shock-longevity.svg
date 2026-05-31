@@ -1,0 +1,311 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+    <stop offset="0%" stop-color="#120608"/>
+    <stop offset="100%" stop-color="#060c10"/>
+  </radialGradient>
+  <radialGradient id="sauna-glow" cx="50%" cy="60%" r="55%">
+    <stop offset="0%" stop-color="#e05010" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#e05010" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="hsp-glow" cx="50%" cy="50%" r="60%">
+    <stop offset="0%" stop-color="#40d090" stop-opacity="0.25"/>
+    <stop offset="100%" stop-color="#40d090" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="glow-s"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="glow-m"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="blur4"><feGaussianBlur stdDeviation="4"/></filter>
+  <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+  <filter id="blur14"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+
+<style>
+@keyframes heat-wave {
+  0%   { transform: translateY(0) scaleX(1); opacity:0.5; }
+  50%  { transform: translateY(-18px) scaleX(1.08); opacity:0.9; }
+  100% { transform: translateY(-38px) scaleX(1); opacity:0; }
+}
+@keyframes hsp-wrap {
+  0%,100% { transform: rotate(0deg); opacity:0.6; }
+  50%     { transform: rotate(12deg); opacity:1; }
+}
+@keyframes hsp-pulse {
+  0%,100% { opacity:0.5; r:7; }
+  50%     { opacity:1;   r:9; }
+}
+@keyframes protein-fold {
+  0%,100% { transform: translateY(0); opacity:0.7; }
+  50%     { transform: translateY(-3px); opacity:1; }
+}
+@keyframes aggregate-drift {
+  0%   { transform: translate(0,0); opacity:0.6; }
+  50%  { transform: translate(3px,-4px); opacity:0.9; }
+  100% { transform: translate(0,0); opacity:0.6; }
+}
+@keyframes stat-glow {
+  0%,100% { opacity:0.6; }
+  50%     { opacity:1; }
+}
+@keyframes figure-breathe {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-3px); }
+}
+@keyframes temp-rise {
+  0%,100% { height:32px; y:232px; opacity:0.7; }
+  50%     { height:48px; y:216px; opacity:1; }
+}
+@keyframes star-twinkle {
+  0%,100% { opacity:0.12; }
+  50%     { opacity:0.55; }
+}
+@keyframes badge-pulse {
+  0%,100% { opacity:0.7; }
+  50%     { opacity:1; }
+}
+@keyframes sweat-drip {
+  0%   { transform: translateY(0); opacity:0.8; }
+  100% { transform: translateY(22px); opacity:0; }
+}
+
+.hw1 { animation: heat-wave 2.2s ease-in-out infinite 0s; transform-origin: 340px 195px; }
+.hw2 { animation: heat-wave 2.2s ease-in-out infinite 0.4s; transform-origin: 360px 195px; }
+.hw3 { animation: heat-wave 2.2s ease-in-out infinite 0.8s; transform-origin: 380px 195px; }
+.hw4 { animation: heat-wave 2.2s ease-in-out infinite 1.2s; transform-origin: 355px 195px; }
+.hw5 { animation: heat-wave 2.2s ease-in-out infinite 1.6s; transform-origin: 370px 195px; }
+
+.hsp1 { animation: hsp-wrap 3s ease-in-out infinite 0s;   transform-origin: 120px 255px; }
+.hsp2 { animation: hsp-wrap 3s ease-in-out infinite 0.7s; transform-origin: 120px 255px; }
+.hsp3 { animation: hsp-wrap 3s ease-in-out infinite 1.4s; transform-origin: 120px 255px; }
+
+.node1 { animation: hsp-pulse 2.4s ease-in-out infinite 0s; }
+.node2 { animation: hsp-pulse 2.4s ease-in-out infinite 0.5s; }
+.node3 { animation: hsp-pulse 2.4s ease-in-out infinite 1.0s; }
+.node4 { animation: hsp-pulse 2.4s ease-in-out infinite 1.5s; }
+
+.prot { animation: protein-fold 2.8s ease-in-out infinite; transform-origin: 120px 255px; }
+.agg  { animation: aggregate-drift 3.2s ease-in-out infinite; }
+
+.figure { animation: figure-breathe 3.5s ease-in-out infinite; transform-origin: 360px 280px; }
+.sweat1 { animation: sweat-drip 2s ease-in 0.3s infinite; }
+.sweat2 { animation: sweat-drip 2s ease-in 1.1s infinite; }
+
+.stat1 { animation: stat-glow 2.6s ease-in-out infinite 0s; }
+.stat2 { animation: stat-glow 2.6s ease-in-out infinite 0.6s; }
+.stat3 { animation: stat-glow 2.6s ease-in-out infinite 1.2s; }
+.badge { animation: badge-pulse 2s ease-in-out infinite; }
+
+.s1 { animation: star-twinkle 2.5s ease-in-out infinite 0s; }
+.s2 { animation: star-twinkle 3.0s ease-in-out infinite 0.8s; }
+.s3 { animation: star-twinkle 2.2s ease-in-out infinite 1.5s; }
+</style>
+
+<!-- BG -->
+<rect width="720" height="420" fill="url(#bg)"/>
+<rect width="720" height="420" fill="url(#sauna-glow)"/>
+
+<!-- stars -->
+<circle class="s1" cx="80"  cy="30" r="1.1" fill="#e08040"/>
+<circle class="s2" cx="640" cy="40" r="1.0" fill="#40d090"/>
+<circle class="s3" cx="200" cy="22" r="0.9" fill="#e0a040"/>
+<circle class="s1" cx="500" cy="28" r="1.2" fill="#40c0d0"/>
+
+<!-- ═══════════════════════════════════════════
+     HEADING
+════════════════════════════════════════════ -->
+<text x="360" y="26" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="7" letter-spacing="0.15em" fill="#4a2010">
+  RHONDA PATRICK · SAUNA · HEAT SHOCK PROTEINS · LONGEVITY
+</text>
+<text x="360" y="50" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="18" font-style="italic" fill="#e07030">
+  The Biology of Heat: Why Sauna Rewires Your Cells
+</text>
+
+<!-- ═══════════════════════════════════════════
+     LEFT PANEL: HEAT SHOCK PROTEIN MECHANISM
+════════════════════════════════════════════ -->
+<rect x="20" y="68" width="185" height="222" rx="10" fill="#0e0a04" stroke="#3a1808" stroke-width="1.2" opacity="0.9"/>
+<text x="113" y="86" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="7" letter-spacing="0.12em" fill="#c06020">HEAT SHOCK PROTEINS</text>
+
+<!-- HSP glow background -->
+<ellipse cx="113" cy="185" rx="65" ry="60" fill="url(#hsp-glow)" filter="url(#blur8)"/>
+
+<!-- Well-folded protein (center) -->
+<g class="prot">
+  <!-- folded protein body — correct 3D shape -->
+  <path d="M 95 160 Q 105 145 120 150 Q 138 145 145 160 Q 152 178 140 190 Q 130 200 120 197 Q 108 200 100 190 Q 88 178 95 160 Z"
+    fill="#1a3a20" stroke="#40c070" stroke-width="1.5" opacity="0.9"/>
+  <path d="M 104 163 Q 115 155 128 160 Q 138 168 132 180 Q 124 192 115 189 Q 104 186 100 176 Q 96 168 104 163 Z"
+    fill="#204a28" stroke="#50d080" stroke-width="1" opacity="0.7"/>
+  <!-- alpha helix symbol inside -->
+  <path d="M 108 174 Q 114 168 120 172 Q 126 176 132 170" stroke="#60e090" stroke-width="1.8" fill="none" opacity="0.8"/>
+  <text x="113" y="203" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#40c070">FOLDED ✓</text>
+</g>
+
+<!-- HSP chaperone arms wrapping around protein -->
+<g class="hsp1">
+  <path d="M 80 165 Q 70 175 78 188 Q 86 200 96 192" stroke="#f07028" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="80" cy="165" r="4" fill="#f07028" opacity="0.6" filter="url(#glow-s)"/>
+</g>
+<g class="hsp2">
+  <path d="M 148 165 Q 158 175 150 188 Q 142 200 132 192" stroke="#f07028" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="148" cy="165" r="4" fill="#f07028" opacity="0.6" filter="url(#glow-s)"/>
+</g>
+<g class="hsp3">
+  <path d="M 90 148 Q 104 138 120 140 Q 136 138 148 148" stroke="#f09040" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+</g>
+
+<!-- HSP label -->
+<text x="66" y="212" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" fill="#f07028">HSP70</text>
+<text x="160" y="212" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" fill="#f07028">HSP90</text>
+
+<!-- Misfolded aggregated protein (small, grey, bottom) -->
+<g class="agg">
+  <circle cx="75" cy="238" r="7" fill="#2a1a0e" stroke="#604030" stroke-width="1" opacity="0.7"/>
+  <circle cx="88" cy="243" r="5" fill="#2a1a0e" stroke="#604030" stroke-width="1" opacity="0.6"/>
+  <circle cx="68" cy="248" r="4" fill="#2a1a0e" stroke="#604030" stroke-width="1" opacity="0.5"/>
+</g>
+<text x="80" y="262" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#704020">AGGREGATE</text>
+<text x="80" y="270" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#704020">(prevented by HSP)</text>
+
+<!-- No-aggregate shield -->
+<line x1="55" y1="230" x2="105" y2="270" stroke="#c04820" stroke-width="1.5" opacity="0.5"/>
+<line x1="55" y1="270" x2="105" y2="230" stroke="#c04820" stroke-width="1.5" opacity="0.5"/>
+
+<!-- HSP stat -->
+<rect x="30" y="274" width="165" height="30" rx="5" fill="#140a04" stroke="#3a1808" stroke-width="1"/>
+<text x="113" y="288" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="9" font-style="italic" fill="#e07030">+50% HSP after 30 min</text>
+<text x="113" y="298" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#804020" letter-spacing="0.06em">at 163°F · stays active 48h</text>
+
+<!-- ═══════════════════════════════════════════
+     CENTRE: SAUNA FIGURE
+════════════════════════════════════════════ -->
+<!-- sauna box walls -->
+<rect x="268" y="100" width="185" height="210" rx="12" fill="#100808" stroke="#4a1808" stroke-width="1.5" opacity="0.85"/>
+<!-- wooden slat lines -->
+<line x1="268" y1="130" x2="453" y2="130" stroke="#2a1208" stroke-width="1" opacity="0.5"/>
+<line x1="268" y1="155" x2="453" y2="155" stroke="#2a1208" stroke-width="1" opacity="0.5"/>
+<line x1="268" y1="180" x2="453" y2="180" stroke="#2a1208" stroke-width="1" opacity="0.45"/>
+
+<!-- heat glow inside sauna -->
+<ellipse cx="360" cy="250" rx="80" ry="70" fill="#e04010" opacity="0.07" filter="url(#blur14)"/>
+
+<!-- heat waves rising from sauna rocks (bottom) -->
+<ellipse cx="360" cy="295" rx="40" ry="8" fill="#c03010" opacity="0.3" filter="url(#blur4)"/>
+<!-- rocks -->
+<ellipse cx="340" cy="297" rx="10" ry="6" fill="#301008" stroke="#603020" stroke-width="1"/>
+<ellipse cx="358" cy="299" rx="8"  ry="5" fill="#2a0e06" stroke="#603020" stroke-width="1"/>
+<ellipse cx="374" cy="297" rx="9"  ry="6" fill="#301008" stroke="#603020" stroke-width="1"/>
+
+<!-- heat wave paths -->
+<path class="hw1" d="M 330 292 Q 327 278 332 268 Q 336 258 330 248" stroke="#e06030" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+<path class="hw2" d="M 348 292 Q 345 275 350 262 Q 354 250 349 238" stroke="#e07020" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+<path class="hw3" d="M 362 292 Q 364 276 360 264 Q 358 252 364 240" stroke="#e06030" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+<path class="hw4" d="M 375 292 Q 378 277 374 265 Q 371 253 376 242" stroke="#d05020" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.55"/>
+<path class="hw5" d="M 388 292 Q 390 278 386 267 Q 382 257 388 246" stroke="#e06020" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+<!-- Central human figure in sauna -->
+<g class="figure">
+  <!-- legs -->
+  <rect x="350" y="262" width="9" height="28" rx="4" fill="#3a1810" opacity="0.9"/>
+  <rect x="363" y="262" width="9" height="28" rx="4" fill="#3a1810" opacity="0.9"/>
+  <!-- torso -->
+  <path d="M 342 228 Q 340 248 348 262 L 374 262 Q 382 248 380 228 Z" fill="#341408" opacity="0.9"/>
+  <!-- warm chest glow -->
+  <circle cx="361" cy="244" r="10" fill="#e06030" opacity="0.12" filter="url(#blur4)"/>
+  <circle cx="361" cy="244" r="4" fill="#f08040" opacity="0.4" filter="url(#glow-s)"/>
+  <!-- shoulders/neck -->
+  <rect x="348" y="216" width="26" height="14" rx="6" fill="#3a1810" opacity="0.9"/>
+  <rect x="355" y="203" width="12" height="15" rx="6" fill="#3a1810" opacity="0.9"/>
+  <!-- head -->
+  <ellipse cx="361" cy="192" rx="19" ry="19" fill="#3a1810" opacity="0.95"/>
+  <!-- sweat drops -->
+  <ellipse class="sweat1" cx="376" cy="196" rx="2.5" ry="4" fill="#4080c0" opacity="0.7"/>
+  <ellipse class="sweat2" cx="348" cy="200" rx="2" ry="3.5" fill="#4080c0" opacity="0.6"/>
+  <!-- arms raised/relaxed -->
+  <path d="M 344 238 Q 326 233 318 230" stroke="#3a1810" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M 378 238 Q 396 233 404 230" stroke="#3a1810" stroke-width="8" fill="none" stroke-linecap="round"/>
+</g>
+
+<!-- temperature gauge -->
+<rect x="438" y="200" width="12" height="72" rx="6" fill="#0a0806" stroke="#402010" stroke-width="1"/>
+<rect class="badge" x="439" y="217" width="10" height="54" rx="5" fill="#c03010" opacity="0.7"/>
+<text x="444" y="196" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" fill="#c05020">°F</text>
+<text x="444" y="280" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#804020">180</text>
+
+<!-- sauna label -->
+<text x="360" y="118" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.12em" fill="#603020">FINNISH SAUNA · 174–180°F</text>
+
+<!-- ═══════════════════════════════════════════
+     RIGHT PANEL: LONGEVITY / OUTCOME STATS
+════════════════════════════════════════════ -->
+<rect x="515" y="68" width="185" height="222" rx="10" fill="#04100c" stroke="#0c3020" stroke-width="1.2" opacity="0.9"/>
+<text x="608" y="86" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="7" letter-spacing="0.12em" fill="#30c080">LONGEVITY OUTCOMES</text>
+
+<!-- stat rows -->
+<!-- Row 1: all-cause mortality -->
+<g class="stat1">
+  <rect x="527" y="94" width="161" height="38" rx="6" fill="#061a10" stroke="#0e3820" stroke-width="1"/>
+  <text x="538" y="109" font-family="'IBM Plex Serif',Georgia,serif" font-size="20" font-style="italic" fill="#30e090">−40%</text>
+  <text x="538" y="120" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#1a6040" letter-spacing="0.05em">all-cause mortality</text>
+  <text x="538" y="128" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#104030">4–7× / week vs 1×</text>
+</g>
+
+<!-- Row 2: sudden cardiac death -->
+<g class="stat2">
+  <rect x="527" y="138" width="161" height="38" rx="6" fill="#061a10" stroke="#0e3820" stroke-width="1"/>
+  <text x="538" y="153" font-family="'IBM Plex Serif',Georgia,serif" font-size="20" font-style="italic" fill="#30d0c0">−63%</text>
+  <text x="538" y="164" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#1a5060" letter-spacing="0.05em">sudden cardiac death</text>
+  <text x="538" y="172" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#104030">4–7× / week</text>
+</g>
+
+<!-- Row 3: Alzheimer's -->
+<g class="stat3">
+  <rect x="527" y="182" width="161" height="38" rx="6" fill="#061a10" stroke="#0e3820" stroke-width="1"/>
+  <text x="538" y="197" font-family="'IBM Plex Serif',Georgia,serif" font-size="20" font-style="italic" fill="#a0d050">−65%</text>
+  <text x="538" y="208" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#3a5010" letter-spacing="0.05em">Alzheimer's disease risk</text>
+  <text x="538" y="216" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#104030">4–7× / week · Laukkanen</text>
+</g>
+
+<!-- Row 4: Growth Hormone -->
+<g class="stat1">
+  <rect x="527" y="226" width="161" height="38" rx="6" fill="#061a10" stroke="#0e3820" stroke-width="1"/>
+  <text x="538" y="241" font-family="'IBM Plex Serif',Georgia,serif" font-size="20" font-style="italic" fill="#e0c040">5×</text>
+  <text x="538" y="252" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#504010" letter-spacing="0.05em">growth hormone surge</text>
+  <text x="538" y="260" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#104030">2×15 min at 100°C</text>
+</g>
+
+<!-- Source note -->
+<text x="608" y="284" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#0c3020">Finnish cohort · Laukkanen et al. · FoundMyFitness</text>
+
+<!-- ═══════════════════════════════════════════
+     BOTTOM: INFRARED vs TRADITIONAL
+════════════════════════════════════════════ -->
+<rect x="20" y="305" width="680" height="75" rx="10" fill="#08060c" stroke="#201828" stroke-width="1.2" opacity="0.9"/>
+<text x="360" y="320" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.12em" fill="#5040a0">INFRARED vs TRADITIONAL SAUNA</text>
+
+<!-- IR column -->
+<rect x="32" y="328" width="290" height="44" rx="6" fill="#0c0a14" stroke="#281840" stroke-width="1"/>
+<text x="38" y="342" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#7060c0" letter-spacing="0.08em">INFRARED</text>
+<text x="38" y="354" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#403060">~130–145°F · longer sessions (40–60 min)</text>
+<text x="38" y="364" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#403060">heats tissue directly · needs 2× time for same effect</text>
+
+<!-- divider -->
+<line x1="360" y1="312" x2="360" y2="372" stroke="#201828" stroke-width="1.2" stroke-dasharray="3 4"/>
+
+<!-- Traditional column -->
+<rect x="398" y="328" width="290" height="44" rx="6" fill="#0e0804" stroke="#301408" stroke-width="1"/>
+<text x="404" y="342" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#e07030" letter-spacing="0.08em">TRADITIONAL (FINNISH)</text>
+<text x="404" y="354" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#603020">174–180°F · 20 min sessions · 20–30% humidity</text>
+<text x="404" y="364" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#603020">matches mod-intensity exercise · all studies use this type</text>
+
+<!-- quote strip -->
+<rect x="0" y="397" width="720" height="23" fill="#030408"/>
+<text x="360" y="413" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="10.5" font-style="italic" fill="#605080">
+  "People sitting in a 163°F sauna for 30 min increased heat shock proteins by 50% over baseline." — Rhonda Patrick
+</text>
+</svg>
