@@ -292,6 +292,82 @@ ARTICLE = {
 
 <p>What followed the publication of these results, however, was immediate exploitation. "Right from the time when these scientists at Stanford published their first finding, they started getting creepy phone calls from rich people about where could they get blood. And companies started sprouting up getting blood from young donors and selling them at a huge markup to rich old people." The transfusions, Ramakrishnan notes, had almost no effect — because the mechanism requires an actual shared circulation over time, not a single infusion.</p>
 
+<h2>IGF-1, Insulin Signaling, and the AMPK Axis</h2>
+
+<p>Caloric restriction and mTOR are part of a broader nutrient-sensing network. Ramakrishnan points to <strong>IGF-1 (insulin-like growth factor 1)</strong> as another major arm of the same system: "There are many important biochemical pathways affected by caloric restriction. One of them is the IGF-1, insulin growth hormone factor."</p>
+
+<p>IGF-1 and insulin signal abundance — they push cells toward growth, division, and protein synthesis. When they are chronically elevated (as in the modern high-calorie diet), they keep the cellular machinery in a growth-forward state that accelerates aging. In worms and mice, mutations that reduce IGF-1 signaling reliably extend lifespan — among the most reproducible findings in all of aging biology.</p>
+
+<p>On the opposite side of this axis sits <strong>AMPK</strong> (AMP-activated protein kinase) — the cell's low-energy sensor. When glucose is scarce (during fasting, caloric restriction, or exercise), AMP levels rise and AMPK activates. It directly inhibits mTOR and switches the cell into a conserving, repair-oriented mode: turning on autophagy, improving mitochondrial biogenesis, reducing inflammation. AMPK is also one of the main targets of metformin, which partly explains why the diabetes drug keeps appearing in longevity discussions. While Ramakrishnan does not mention AMPK by name in his lectures, it is the molecular engine underneath several interventions he does discuss — fasting, exercise, and metformin — all of which converge on this same energy-sensing switch.</p>
+
+<div class="longevity-pull">
+<p>"The whole point is not to fast just to restrict calories. Intermittent fasting — that's the starvation mechanism biochemically. You hijack what would be the starvation mechanism... so you can have your cake and eat it."</p>
+</div>
+
+<h2>Proteostasis: When the Protein Factory Fails</h2>
+
+<p>This is the pathway most directly connected to Ramakrishnan's own Nobel Prize work. The ribosome is the machine that builds every protein in every living cell — and ribosome function is central to what he calls <em>proteostasis</em>: the cell's ability to maintain a clean, correctly-folded inventory of proteins.</p>
+
+<div class="longevity-pull">
+<p>"This phenomenon of proteostasis — preserving the correct expression of proteins in the cell and maintenance of the orchestra of proteins in the cell — being connected with aging... the evidence built up over years, and you would just sort of watch it happen."</p>
+</div>
+
+<p>As cells age, several things go wrong with protein quality control simultaneously. Ribosomes become less accurate — they make more errors during translation, producing malformed proteins. The proteasome (the cell's protein-recycling machinery) becomes less efficient at tagging and destroying defective proteins. The unfolded protein response — a stress system that senses misfolded proteins and triggers repair — becomes chronically activated rather than episodically activated.</p>
+
+<p>The result is a slow accumulation of damaged, misfolded proteins that clog cellular machinery and generate toxic aggregates. This is not just abstract biology: the amyloid plaques of Alzheimer's disease and the protein aggregates of Parkinson's are the clinical endpoint of proteostasis failure.</p>
+
+<div class="longevity-grid">
+  <div class="longevity-card" style="--accent:#a78bfa;">
+    <h4>The proteasome</h4>
+    <p>Senses defective proteins via ubiquitin tags and destroys them. Slows with age. Caloric restriction and exercise both help maintain proteasome activity — another reason those interventions keep showing up in longevity data.</p>
+  </div>
+  <div class="longevity-card" style="--accent:#a78bfa;">
+    <h4>The ribosome connection</h4>
+    <p>Ramakrishnan's career was built on ribosome structure. His pivot to longevity was not a departure — it was a continuation. Ribosome error rates rise with age, and accurate translation is foundational to proteostasis.</p>
+  </div>
+</div>
+
+<h2>Reactive Oxygen Species: The Mitochondrial Exhaust</h2>
+
+<p>Mitochondria are the source of most cellular energy — and most cellular damage. Because they handle oxygen chemistry at scale, they inevitably produce <strong>reactive oxygen species (ROS)</strong>: partially reduced oxygen molecules that are chemically aggressive and will damage whatever they encounter — proteins, lipids, DNA.</p>
+
+<div class="longevity-pull">
+<p>"Mitochondria are a center for oxygen usage, and they can create what are called free radicals or reactive oxygen species — these are partially reduced oxygen atoms which are chemically very reactive. They can cause a lot of damage."</p>
+</div>
+
+<p>For decades, the prevailing theory was that ROS accumulation was the primary driver of aging (the "free radical theory of aging"), and that antioxidants were the answer. That theory has largely not held up. Supplementing with antioxidants does not reliably extend lifespan in humans, and in some trials it has made things worse — possibly because low-level ROS also serve as signaling molecules that stimulate the cell's own repair systems. The relationship between oxidative stress and aging is real but more complex than simple accumulation.</p>
+
+<p>What does work is maintaining mitochondrial quality — through mitophagy (the recycling of damaged mitochondria), regular exercise (which stimulates new mitochondrial biogenesis), and caloric restriction (which reduces the metabolic load and ROS production rate).</p>
+
+<h2>Cellular Reprogramming: The Yamanaka Frontier</h2>
+
+<p>The most speculative but genuinely exciting pathway Ramakrishnan discusses is <strong>cellular reprogramming</strong> — the ability to reset a cell's epigenetic age without changing its identity.</p>
+
+<div class="longevity-pull">
+<p>"Yamanaka showed that if you were to introduce just four factors — these are genes for proteins that regulate other genes — you could take a fully differentiated cell like a skin cell or liver cell or heart cell and make it go backwards in development all the way back to what's called a pluripotent stem cell. Pluripotent means it can make any tissue."</p>
+</div>
+
+<p>The four Yamanaka factors (Oct4, Sox2, Klf4, c-Myc) don't change the DNA sequence — they reset the epigenetic modifications layered on top of it. A fully differentiated adult cell, when exposed to these factors, loses its identity and returns to an embryonic-like state. The epigenetic clock, which normally only moves forward, gets wound back.</p>
+
+<p>The therapeutic insight is that you might not need full reprogramming — just partial, transient reprogramming that resets the epigenetic age of cells without erasing their identity. This is called <em>partial reprogramming</em>, and several biotech companies (including one backed by Jeff Bezos) are now pursuing it as a therapeutic strategy. The risks are significant — full reprogramming can trigger cancer — but the target is clear: reset the clock without losing the function.</p>
+
+<div class="caution-box">
+<strong>The cancer risk</strong>
+<p>Yamanaka factor reprogramming in living organisms can cause teratomas — tumors that grow hair, teeth, and other tissues. The challenge of partial reprogramming is applying enough of a reset to reverse aging without triggering uncontrolled cell proliferation. This is the central engineering problem the field is working on.</p>
+</div>
+
+<h2>Exercise: The One Thing That Actually Works Right Now</h2>
+
+<p>After walking through every cutting-edge pharmaceutical pathway, Ramakrishnan keeps returning to something that requires no clinical trial and costs nothing:</p>
+
+<div class="longevity-pull">
+<p>"The sort of Trinity for health — which is something possibly our grandparents told us — which is to eat more moderately and eat healthy diets, to get enough sleep, and to get exercise. It turns out that each of those affects the other two. This Trinity, if you do all of them at once, works better than any medicine on the market and has no side effects and it's free."</p>
+</div>
+
+<p>He is not being folksy. He is making a precise scientific claim: the combination of moderate diet, sleep, and exercise activates more longevity pathways simultaneously than any single drug being studied. Exercise alone activates AMPK, stimulates mitophagy, promotes new mitochondrial biogenesis, reduces chronic inflammation, clears senescent cells, improves proteostasis, and maintains stem cell pools. No pharmaceutical can currently match that profile.</p>
+
+<p>The irony he notes: he does all three himself, and he still developed high blood pressure and high cholesterol requiring medication. The Trinity reduces risk; it does not eliminate it. But as a baseline before pharmaceutical interventions, nothing else comes close.</p>
+
 <h2>What Ramakrishnan Actually Believes</h2>
 
 <p>After surveying all of this, the question is: what does a careful scientist make of it?</p>
@@ -315,6 +391,10 @@ ARTICLE = {
 class Command(BaseCommand):
     help = "Seed Venki Ramakrishnan — Longevity Pathways article"
 
+    def add_arguments(self, parser):
+        parser.add_argument("--force-content", action="store_true",
+                            help="Also overwrite content on existing rows")
+
     def handle(self, *args, **options):
         pillar, _ = Pillar.objects.get_or_create(
             slug="longevity",
@@ -328,11 +408,15 @@ class Command(BaseCommand):
             defaults=data,
         )
         if not created:
+            update_fields = ["title", "summary", "pillar", "published"]
             obj.title = data["title"]
             obj.summary = data["summary"]
             obj.pillar = pillar
             obj.published = True
-            obj.save(update_fields=["title", "summary", "pillar", "published"])
+            if options["force_content"]:
+                obj.content = data["content"]
+                update_fields.append("content")
+            obj.save(update_fields=update_fields)
 
         self.stdout.write(f"{'Created' if created else 'Updated'}: {obj.title}")
         self.stdout.write("Done.")
