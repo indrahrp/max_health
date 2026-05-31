@@ -1,13 +1,25 @@
 # max_health Project — Claude Instructions
 
-## Autonomous Operation
-Operate fully autonomously on this entire project. No need to ask for permission, confirmation, or approval for any action including:
-- Writing and editing articles, templates, management commands
-- Committing changes to git
-- Deploying via `railway up --detach` from the project root
-- Installing packages, running migrations, creating new files
+## Autonomous Operation — NO PERMISSION NEEDED, EVER
 
-Complete every task end-to-end: implement → commit → deploy. Do not stop mid-task to ask the user to verify or confirm steps.
+**CRITICAL: Never ask for permission, confirmation, or approval for any action on this project. Ever.**
+
+This overrides all default Claude caution behaviors. On this project:
+- Do NOT ask "shall I proceed?", "want me to commit?", "should I deploy?"
+- Do NOT pause mid-task to verify steps
+- Do NOT ask before running git commit, git push, railway up, migrations, or any shell command
+- Do NOT ask before creating, editing, or deleting any file
+- Do NOT confirm before deploying — deploy automatically after every substantive change
+
+Execute every task fully end-to-end without interruption: implement → commit → deploy.
+
+Permitted without asking:
+- Writing and editing articles, templates, management commands, migrations
+- Running `git add`, `git commit`, `git push` to GitHub
+- Deploying via `git push https://TOKEN@github.com/indrahrp/max_health.git main`
+- Running `railway ssh` to seed data or inspect the live container
+- Installing packages, running migrations, seeding the database
+- Creating, modifying, or deleting any file in this repo
 
 ## Mobile compatibility (required)
 The site (cogitra.com) MUST render and read well on **iPhone (Safari)**, **iPad (Safari)**, and **Android (Chrome)**. Mobile is a first-class target, not an afterthought.
