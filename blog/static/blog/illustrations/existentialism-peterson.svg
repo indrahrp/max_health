@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg" cx="50%" cy="60%" r="70%">
+    <stop offset="0%" stop-color="#0a080e"/>
+    <stop offset="100%" stop-color="#04040a"/>
+  </radialGradient>
+  <radialGradient id="void-glow" cx="50%" cy="70%" r="50%">
+    <stop offset="0%" stop-color="#1a0828" stop-opacity="0.8"/>
+    <stop offset="100%" stop-color="#04040a" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="light-glow" cx="50%" cy="15%" r="55%">
+    <stop offset="0%" stop-color="#d0a040" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#d0a040" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="glow-s"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="glow-m"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+  <filter id="blur14"><feGaussianBlur stdDeviation="14"/></filter>
+  <filter id="blur20"><feGaussianBlur stdDeviation="20"/></filter>
+</defs>
+
+<style>
+@keyframes void-breathe {
+  0%,100% { opacity:0.5; transform:scaleY(1); }
+  50%     { opacity:0.85; transform:scaleY(1.06); }
+}
+@keyframes light-pulse {
+  0%,100% { opacity:0.6; r:22; }
+  50%     { opacity:1;   r:28; }
+}
+@keyframes figure-lean {
+  0%,100% { transform:translateX(0) rotate(0deg); }
+  50%     { transform:translateX(2px) rotate(1.5deg); }
+}
+@keyframes name-fade {
+  0%,100% { opacity:0.18; }
+  50%     { opacity:0.55; }
+}
+@keyframes particle-rise {
+  0%   { transform:translateY(0); opacity:0.6; }
+  100% { transform:translateY(-40px); opacity:0; }
+}
+@keyframes abyss-ripple {
+  0%   { r:18; opacity:0.3; }
+  100% { r:90; opacity:0; }
+}
+@keyframes star-twinkle {
+  0%,100% { opacity:0.1; }
+  50%     { opacity:0.5; }
+}
+@keyframes crack-glow {
+  0%,100% { stroke-opacity:0.2; }
+  50%     { stroke-opacity:0.6; }
+}
+
+.void     { animation: void-breathe 5s ease-in-out infinite; transform-origin:360px 310px; }
+.beacon   { animation: light-pulse 3s ease-in-out infinite; transform-origin:360px 90px; }
+.figure   { animation: figure-lean 4s ease-in-out infinite; transform-origin:360px 280px; }
+.n1 { animation: name-fade 3.5s ease-in-out infinite 0s; }
+.n2 { animation: name-fade 3.5s ease-in-out infinite 0.8s; }
+.n3 { animation: name-fade 3.5s ease-in-out infinite 1.6s; }
+.n4 { animation: name-fade 3.5s ease-in-out infinite 2.4s; }
+.p1 { animation: particle-rise 3s ease-in 0s infinite; transform-origin:360px 270px; }
+.p2 { animation: particle-rise 3s ease-in 1s infinite; transform-origin:355px 265px; }
+.p3 { animation: particle-rise 3s ease-in 2s infinite; transform-origin:365px 268px; }
+.rip1 { animation: abyss-ripple 4s ease-out 0s infinite; transform-origin:360px 340px; }
+.rip2 { animation: abyss-ripple 4s ease-out 1.3s infinite; transform-origin:360px 340px; }
+.rip3 { animation: abyss-ripple 4s ease-out 2.6s infinite; transform-origin:360px 340px; }
+.s1 { animation: star-twinkle 2.8s ease-in-out infinite 0s; }
+.s2 { animation: star-twinkle 3.4s ease-in-out infinite 1s; }
+.s3 { animation: star-twinkle 2.2s ease-in-out infinite 1.8s; }
+.crack { animation: crack-glow 3s ease-in-out infinite; }
+</style>
+
+<!-- BG -->
+<rect width="720" height="420" fill="url(#bg)"/>
+<rect width="720" height="420" fill="url(#void-glow)"/>
+<rect width="720" height="420" fill="url(#light-glow)"/>
+
+<!-- stars -->
+<circle class="s1" cx="80"  cy="40" r="1.0" fill="#c0a060"/>
+<circle class="s2" cx="200" cy="22" r="0.9" fill="#d0b070"/>
+<circle class="s3" cx="540" cy="35" r="1.1" fill="#c8a858"/>
+<circle class="s1" cx="650" cy="60" r="0.8" fill="#c09040"/>
+<circle class="s2" cx="420" cy="18" r="1.2" fill="#d0b060"/>
+<circle class="s3" cx="130" cy="70" r="0.9" fill="#b89040"/>
+
+<!-- heading -->
+<text x="360" y="26" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="7" letter-spacing="0.15em" fill="#2a1e0a">
+  JORDAN PETERSON · EXISTENTIALISM · MEANING · THE ABSURD
+</text>
+<text x="360" y="50" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="18" font-style="italic" fill="#b09050">
+  The Abyss and the Leap: Peterson on Existentialism
+</text>
+
+<!-- ── VOID at bottom ── -->
+<ellipse class="void" cx="360" cy="340" rx="260" ry="55" fill="#0e0418" opacity="0.9"/>
+<ellipse cx="360" cy="340" rx="220" ry="40" fill="#08020e" opacity="0.95" filter="url(#blur6)"/>
+<ellipse cx="360" cy="342" rx="140" ry="24" fill="#060010" opacity="1"/>
+<!-- abyss ripples -->
+<ellipse class="rip1" cx="360" cy="340" rx="18" ry="7" fill="none" stroke="#3a1050" stroke-width="1.2"/>
+<ellipse class="rip2" cx="360" cy="340" rx="18" ry="7" fill="none" stroke="#2a0840" stroke-width="1"/>
+<ellipse class="rip3" cx="360" cy="340" rx="18" ry="7" fill="none" stroke="#200630" stroke-width="0.8"/>
+<text x="360" y="360" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="9" font-style="italic" fill="#2a1040">the void</text>
+
+<!-- ground crack under figure -->
+<path class="crack" d="M 300 305 Q 330 310 360 308 Q 390 306 420 305" stroke="#3a1848" stroke-width="1.5" fill="none" stroke-dasharray="3 5"/>
+
+<!-- ── LIGHT BEACON (aim / meaning) ── -->
+<ellipse cx="360" cy="88" rx="100" ry="55" fill="#d0a030" opacity="0.05" filter="url(#blur20)"/>
+<g class="beacon">
+  <circle cx="360" cy="88" r="22" fill="#d0a030" opacity="0.08" filter="url(#blur14)"/>
+  <circle cx="360" cy="88" r="12" fill="#c8980a" opacity="0.25" filter="url(#glow-m)"/>
+  <circle cx="360" cy="88" r="6"  fill="#e0b020" opacity="0.7"  filter="url(#glow-s)"/>
+  <circle cx="360" cy="88" r="3"  fill="#ffd040" opacity="0.95" filter="url(#glow-s)"/>
+</g>
+<text x="360" y="72" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6" letter-spacing="0.12em" fill="#806010">MEANING</text>
+
+<!-- dashed path: figure to beacon -->
+<path d="M 360 268 Q 360 200 360 104"
+  stroke="#806010" stroke-width="1.2" fill="none" stroke-dasharray="5 5" opacity="0.4"/>
+
+<!-- rising particles from figure toward light -->
+<circle class="p1" cx="360" cy="268" r="2.2" fill="#d0a030" opacity="0.6" filter="url(#glow-s)"/>
+<circle class="p2" cx="355" cy="262" r="1.8" fill="#c09020" opacity="0.5" filter="url(#glow-s)"/>
+<circle class="p3" cx="366" cy="265" r="1.5" fill="#e0b040" opacity="0.4" filter="url(#glow-s)"/>
+
+<!-- ── CENTRAL FIGURE at edge of void ── -->
+<g class="figure">
+  <!-- legs -->
+  <rect x="352" y="282" width="9"  height="28" rx="4" fill="#1c1228" opacity="0.92"/>
+  <rect x="365" y="282" width="9"  height="28" rx="4" fill="#1c1228" opacity="0.92"/>
+  <!-- torso -->
+  <path d="M 342 248 Q 341 268 350 282 L 376 282 Q 385 268 382 248 Z" fill="#18102a" opacity="0.92"/>
+  <!-- inner glow — confronting the void -->
+  <circle cx="363" cy="264" r="9" fill="#d0a030" opacity="0.1" filter="url(#blur6)"/>
+  <circle cx="363" cy="264" r="4" fill="#c09020" opacity="0.3" filter="url(#glow-s)"/>
+  <!-- shoulders/neck -->
+  <rect x="350" y="237" width="28" height="13" rx="6" fill="#1c1228" opacity="0.92"/>
+  <rect x="357" y="225" width="13" height="14" rx="6" fill="#1c1228" opacity="0.92"/>
+  <!-- head — tilted slightly upward -->
+  <ellipse cx="363" cy="213" rx="20" ry="20" fill="#1c1228" opacity="0.95"/>
+  <!-- eyes looking toward beacon -->
+  <ellipse cx="356" cy="208" rx="2.8" ry="3.2" fill="#080414"/>
+  <ellipse cx="370" cy="208" rx="2.8" ry="3.2" fill="#080414"/>
+  <circle  cx="357" cy="207" r="1.4" fill="#e0b030" opacity="0.6" filter="url(#glow-s)"/>
+  <circle  cx="371" cy="207" r="1.4" fill="#e0b030" opacity="0.6" filter="url(#glow-s)"/>
+  <!-- arm reaching toward light -->
+  <path d="M 344 257 Q 320 244 308 236" stroke="#1c1228" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M 382 257 Q 400 250 408 246" stroke="#1c1228" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <!-- outstretched hand toward beacon (left arm raised) -->
+  <path d="M 344 255 Q 328 238 316 225" stroke="#1c1228" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <circle cx="312" cy="221" r="5" fill="#1c1228" opacity="0.85"/>
+</g>
+
+<!-- shadow on void -->
+<ellipse cx="363" cy="311" rx="32" ry="6" fill="#060010" opacity="0.5" filter="url(#blur6)"/>
+
+<!-- ── PHILOSOPHER NAMES (fading, atmospheric) ── -->
+<text class="n1" x="88"  y="185" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="13" font-style="italic" fill="#6040a0">Nietzsche</text>
+<text class="n2" x="628" y="210" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="12" font-style="italic" fill="#5050a0">Kierkegaard</text>
+<text class="n3" x="108" y="290" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#604090">Sartre</text>
+<text class="n4" x="618" y="278" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#5848a0">Camus</text>
+
+<!-- ── LEFT CONCEPT: THE ABSURD ── -->
+<rect x="20" y="155" width="128" height="78" rx="8" fill="#0a0614" stroke="#1e1030" stroke-width="1" opacity="0.85"/>
+<text x="84" y="172" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.1em" fill="#5030a0">THE ABSURD</text>
+<text x="84" y="185" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="8.5" font-style="italic" fill="#8060c0">"Calling out for meaning</text>
+<text x="84" y="196" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="8.5" font-style="italic" fill="#8060c0">from a universe that</text>
+<text x="84" y="207" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="8.5" font-style="italic" fill="#8060c0">is indifferent to us"</text>
+<text x="84" y="224" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#2a1848">— Peterson</text>
+
+<!-- ── RIGHT CONCEPT: THE LEAP ── -->
+<rect x="572" y="155" width="128" height="78" rx="8" fill="#0a0614" stroke="#1e1030" stroke-width="1" opacity="0.85"/>
+<text x="636" y="172" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.1em" fill="#5848a0">THE LEAP</text>
+<text x="636" y="185" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="8.5" font-style="italic" fill="#8070c0">"There are truths you</text>
+<text x="636" y="196" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="8.5" font-style="italic" fill="#8070c0">cannot discover — you</text>
+<text x="636" y="207" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="8.5" font-style="italic" fill="#8070c0">have to live them"</text>
+<text x="636" y="224" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#2a1848">— Peterson</text>
+
+<!-- quote strip -->
+<rect x="0" y="397" width="720" height="23" fill="#030208"/>
+<text x="360" y="413" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="10.5" font-style="italic" fill="#50408a">
+  "You have to make the experiment — you have to live it." — Jordan Peterson
+</text>
+</svg>
