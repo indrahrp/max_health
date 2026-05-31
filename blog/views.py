@@ -204,7 +204,7 @@ SECTION_CONFIG = {
         'pillar_slugs': ['longevity'],
         'category_slugs': ['longevity'],
         'subcategories': [
-            {'id': 'supporting-biochemistry', 'name': 'Supporting Biochemistry', 'short': 'Biochemistry', 'blurb': 'NAD+, autophagy, mTOR, senolytics — the molecular knobs and what we know about turning them.', 'accent': '#e6b85e', 'match_slugs': ['supporting-biochemistry']},
+            {'id': 'supporting-biochemistry', 'name': 'Supporting Biochemistry', 'short': 'Biochemistry', 'blurb': 'NAD+, autophagy, mTOR, senolytics — the molecular knobs and what we know about turning them.', 'accent': '#e6b85e', 'match_slugs': ['supporting-biochemistry'], 'match_article_keywords': ['mtor', 'nad', 'senescen', 'longevity-pathway', 'venki']},
             {'id': 'lifestyle',               'name': 'Lifestyle',              'short': 'Lifestyle',    'blurb': 'Sleep, exercise, fasting, sun. The boring interventions that actually have data behind them.',     'accent': '#b8861f', 'match_slugs': ['lifestyle']},
             {'id': 'longevity-research',      'name': 'Longevity Research',     'short': 'Research',     'blurb': 'The labs, the clinical trials, the strange new industries the field has started.',                'accent': '#c89530', 'match_slugs': ['longevity-research']},
         ],
