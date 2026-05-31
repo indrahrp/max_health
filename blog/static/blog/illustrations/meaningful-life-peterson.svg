@@ -1,0 +1,216 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg" cx="50%" cy="55%" r="75%">
+    <stop offset="0%" stop-color="#080c18"/>
+    <stop offset="100%" stop-color="#04060e"/>
+  </radialGradient>
+  <radialGradient id="light-top" cx="50%" cy="0%" r="80%">
+    <stop offset="0%" stop-color="#f0c060" stop-opacity="0.22"/>
+    <stop offset="100%" stop-color="#f0c060" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="chaos-glow" cx="50%" cy="50%" r="55%">
+    <stop offset="0%" stop-color="#2040a0" stop-opacity="0.25"/>
+    <stop offset="100%" stop-color="#2040a0" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="glow-s"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="glow-m"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="blur5"><feGaussianBlur stdDeviation="5"/></filter>
+  <filter id="blur12"><feGaussianBlur stdDeviation="12"/></filter>
+</defs>
+
+<style>
+@keyframes path-glow {
+  0%,100%{ stroke-opacity:0.5; }
+  50%    { stroke-opacity:1; }
+}
+@keyframes figure-rise {
+  0%,100%{ transform:translateY(0); }
+  50%    { transform:translateY(-4px); }
+}
+@keyframes beacon-pulse {
+  0%,100%{ opacity:0.7; r:14; }
+  50%    { opacity:1;   r:18; }
+}
+@keyframes star-twinkle {
+  0%,100%{ opacity:0.15; }
+  50%    { opacity:0.7; }
+}
+@keyframes chaos-swirl {
+  0%  { transform:rotate(0deg); }
+  100%{ transform:rotate(360deg); }
+}
+@keyframes order-pulse {
+  0%,100%{ opacity:0.6; }
+  50%    { opacity:1; }
+}
+@keyframes load-lift {
+  0%,100%{ transform:translateY(0); }
+  50%    { transform:translateY(-3px); }
+}
+@keyframes fade-in {
+  from{ opacity:0; transform:translateY(-8px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+@keyframes pillar-glow {
+  0%,100%{ opacity:0.4; }
+  50%    { opacity:0.8; }
+}
+
+.heading { animation: fade-in 0.9s ease-out 0.1s both; }
+.quote   { animation: fade-in 0.8s ease-out 1.5s both; }
+.figure  { animation: figure-rise 4s ease-in-out infinite; transform-origin: 360px 300px; }
+.beacon  { animation: beacon-pulse 2.8s ease-in-out infinite; transform-origin: 360px 95px; }
+.path    { animation: path-glow 2.2s ease-in-out infinite; }
+.load    { animation: load-lift 4s ease-in-out infinite; transform-origin: 360px 270px; }
+
+.s1 { animation: star-twinkle 2.5s ease-in-out infinite 0s; }
+.s2 { animation: star-twinkle 3.2s ease-in-out infinite 0.6s; }
+.s3 { animation: star-twinkle 2.0s ease-in-out infinite 1.1s; }
+.s4 { animation: star-twinkle 3.8s ease-in-out infinite 0.3s; }
+.s5 { animation: star-twinkle 2.7s ease-in-out infinite 1.8s; }
+
+.chaos { animation: chaos-swirl 18s linear infinite; transform-origin: 135px 250px; }
+.order { animation: order-pulse 3s ease-in-out infinite; }
+
+.p1 { animation: pillar-glow 2.4s ease-in-out infinite 0s; }
+.p2 { animation: pillar-glow 3.0s ease-in-out infinite 0.5s; }
+.p3 { animation: pillar-glow 2.7s ease-in-out infinite 1.0s; }
+</style>
+
+<!-- BG -->
+<rect width="720" height="420" fill="url(#bg)"/>
+<rect width="720" height="420" fill="url(#light-top)"/>
+
+<!-- stars -->
+<circle class="s1" cx="90"  cy="45"  r="1.2" fill="#d0c090"/>
+<circle class="s2" cx="200" cy="30"  r="0.9" fill="#e0d0a0"/>
+<circle class="s3" cx="520" cy="40"  r="1.1" fill="#d0c890"/>
+<circle class="s4" cx="650" cy="55"  r="1.3" fill="#c8c080"/>
+<circle class="s5" cx="310" cy="25"  r="0.8" fill="#e0d090"/>
+<circle class="s1" cx="440" cy="35"  r="1.0" fill="#d8c888"/>
+<circle class="s3" cx="70"  cy="80"  r="0.9" fill="#c0b870"/>
+<circle class="s2" cx="680" cy="90"  r="1.1" fill="#d0c080"/>
+
+<!-- ─── BEACON / GOAL at top (the aim) ─── -->
+<ellipse cx="360" cy="95" rx="80" ry="50" fill="#f0c040" opacity="0.06" filter="url(#blur12)"/>
+<g class="beacon">
+  <circle cx="360" cy="95" r="14" fill="#f0c040" opacity="0.15" filter="url(#blur5)"/>
+  <circle cx="360" cy="95" r="9"  fill="#f0b820" opacity="0.5" filter="url(#glow-s)"/>
+  <circle cx="360" cy="95" r="5"  fill="#ffd040" opacity="0.9" filter="url(#glow-s)"/>
+</g>
+<text x="360" y="78" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.1em" fill="#c09820">AIM UP</text>
+
+<!-- path from figure to beacon -->
+<path class="path"
+  d="M 360 270 Q 360 200 360 112"
+  stroke="#c09020" stroke-width="1.5" fill="none"
+  stroke-dasharray="6 5" stroke-linecap="round" opacity="0.6"/>
+
+<!-- ─── LEFT SIDE: CHAOS ─── -->
+<ellipse cx="135" cy="250" rx="90" ry="85" fill="url(#chaos-glow)" filter="url(#blur5)"/>
+<g class="chaos">
+  <ellipse cx="135" cy="250" rx="55" ry="35" fill="none" stroke="#2848b8" stroke-width="1.2" stroke-dasharray="8 5" opacity="0.4"/>
+  <ellipse cx="135" cy="250" rx="38" ry="55" fill="none" stroke="#3050c0" stroke-width="1" stroke-dasharray="6 6" opacity="0.35"/>
+  <ellipse cx="135" cy="250" rx="25" ry="20" fill="none" stroke="#4060d0" stroke-width="0.8" stroke-dasharray="4 7" opacity="0.3"/>
+</g>
+<text x="135" y="245" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#3858a8">chaos</text>
+<text x="135" y="260" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6" letter-spacing="0.08em" fill="#283870">THE UNKNOWN</text>
+<text x="135" y="271" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6" letter-spacing="0.08em" fill="#283870">POTENTIAL · RISK</text>
+
+<!-- ─── RIGHT SIDE: ORDER ─── -->
+<g class="order">
+  <rect x="545" y="198" width="90" height="100" rx="8" fill="#0e1828" stroke="#2a3850" stroke-width="1.2" opacity="0.7"/>
+  <line x1="555" y1="220" x2="625" y2="220" stroke="#2a4060" stroke-width="1.2"/>
+  <line x1="555" y1="236" x2="625" y2="236" stroke="#2a4060" stroke-width="1.2"/>
+  <line x1="555" y1="252" x2="625" y2="252" stroke="#2a4060" stroke-width="1.2"/>
+  <line x1="555" y1="268" x2="625" y2="268" stroke="#2a4060" stroke-width="1.2"/>
+  <line x1="555" y1="284" x2="625" y2="284" stroke="#2a4060" stroke-width="1.2"/>
+</g>
+<text x="590" y="248" text-anchor="middle"
+  font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#4878a0">order</text>
+<text x="590" y="263" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6" letter-spacing="0.08em" fill="#2a4060">THE KNOWN</text>
+<text x="590" y="274" text-anchor="middle"
+  font-family="'IBM Plex Mono',monospace" font-size="6" letter-spacing="0.08em" fill="#2a4060">STRUCTURE · SAFETY</text>
+
+<!-- arrows from chaos and order toward center figure -->
+<path d="M 192 250 Q 255 258 318 268" stroke="#2848a8" stroke-width="1" fill="none" stroke-dasharray="4 5" opacity="0.4"/>
+<path d="M 546 248 Q 490 256 402 268" stroke="#2a4870" stroke-width="1" fill="none" stroke-dasharray="4 5" opacity="0.4"/>
+
+<!-- ─── CENTRAL FIGURE WITH LOAD ─── -->
+<g class="figure">
+  <!-- legs -->
+  <rect x="352" y="300" width="10" height="46" rx="5" fill="#2a3858" opacity="0.9"/>
+  <rect x="368" y="300" width="10" height="46" rx="5" fill="#2a3858" opacity="0.9"/>
+  <!-- torso upright -->
+  <path d="M 342 250 Q 340 278 350 300 L 380 300 Q 390 278 388 250 Z" fill="#243260" opacity="0.9"/>
+  <!-- glowing chest core — meaning/purpose -->
+  <circle cx="365" cy="273" r="10" fill="#f0b820" opacity="0.12" filter="url(#blur5)"/>
+  <circle cx="365" cy="273" r="5"  fill="#f0c040" opacity="0.5" filter="url(#glow-s)"/>
+  <!-- neck/shoulders -->
+  <rect x="350" y="238" width="30" height="14" rx="7" fill="#2a3858" opacity="0.9"/>
+  <rect x="358" y="224" width="14" height="16" rx="7" fill="#2a3858" opacity="0.9"/>
+  <!-- head upright -->
+  <ellipse cx="365" cy="210" rx="21" ry="21" fill="#2a3858" opacity="0.95"/>
+  <!-- eyes looking up toward beacon -->
+  <ellipse cx="358" cy="205" rx="3" ry="3.5" fill="#060c18"/>
+  <ellipse cx="372" cy="205" rx="3" ry="3.5" fill="#060c18"/>
+  <circle cx="359" cy="204" r="1.5" fill="#f0c040" opacity="0.7" filter="url(#glow-s)"/>
+  <circle cx="373" cy="204" r="1.5" fill="#f0c040" opacity="0.7" filter="url(#glow-s)"/>
+  <!-- arms bearing load/responsibility -->
+  <path d="M 344 258 Q 328 252 318 248" stroke="#2a3858" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M 386 258 Q 402 252 412 248" stroke="#2a3858" stroke-width="9" fill="none" stroke-linecap="round"/>
+</g>
+
+<!-- load/responsibility on shoulders -->
+<g class="load">
+  <rect x="306" y="232" width="118" height="22" rx="5" fill="#1a2840" stroke="#2a4060" stroke-width="1.2" opacity="0.9"/>
+  <text x="365" y="247" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="7" letter-spacing="0.1em" fill="#4878a8">RESPONSIBILITY</text>
+</g>
+
+<!-- ground -->
+<ellipse cx="365" cy="348" rx="44" ry="7" fill="#141c2c" opacity="0.6" filter="url(#blur5)"/>
+
+<!-- ─── THREE PILLARS below ─── -->
+<g class="p1">
+  <rect x="45"  y="335" width="90" height="44" rx="6" fill="#0a1020" stroke="#1a2838" stroke-width="1"/>
+  <text x="90"  y="354" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="9" font-style="italic" fill="#4878a8">Meaning</text>
+  <text x="90"  y="367" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#2a4060" letter-spacing="0.06em">over comfort</text>
+</g>
+<g class="p2">
+  <rect x="315" y="335" width="90" height="44" rx="6" fill="#0a1020" stroke="#1a2838" stroke-width="1"/>
+  <text x="360" y="354" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="9" font-style="italic" fill="#c09020">Aim Up</text>
+  <text x="360" y="367" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#806010" letter-spacing="0.06em">set a direction</text>
+</g>
+<g class="p3">
+  <rect x="585" y="335" width="90" height="44" rx="6" fill="#0a1020" stroke="#1a2838" stroke-width="1"/>
+  <text x="630" y="354" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="9" font-style="italic" fill="#40a870">Sacrifice</text>
+  <text x="630" y="367" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#285838" letter-spacing="0.06em">choose your load</text>
+</g>
+
+<!-- heading -->
+<g class="heading">
+  <text x="360" y="26" text-anchor="middle"
+    font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.16em" fill="#1e2c40">
+    JORDAN PETERSON · MEANING · PURPOSE · RESPONSIBILITY
+  </text>
+  <text x="360" y="52" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="18" font-style="italic" fill="#8090b8">
+    How to Live a Meaningful Life
+  </text>
+</g>
+
+<!-- quote strip -->
+<g class="quote">
+  <rect x="0" y="397" width="720" height="23" fill="#03060c"/>
+  <text x="360" y="413" text-anchor="middle"
+    font-family="'IBM Plex Serif',Georgia,serif" font-size="10.5" font-style="italic" fill="#6070a0">
+    "Worthwhile meaning is found in the voluntary adoption of responsibility." — Peterson
+  </text>
+</g>
+</svg>
