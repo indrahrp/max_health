@@ -8,6 +8,10 @@
 {% block og_type %}article{% endblock %}
 {% block twitter_title %}{{ article.title }} — Cogitra{% endblock %}
 {% block twitter_description %}{{ article.summary }}{% endblock %}
+{% block og_image %}{% if article.og_image_url %}{{ article.og_image_url }}{% else %}https://cogitra.com/static/blog/og/og-image.png{% endif %}{% endblock %}
+{% block twitter_image %}{% if article.og_image_url %}{{ article.og_image_url }}{% else %}https://cogitra.com/static/blog/og/og-image.png{% endif %}{% endblock %}
+{% block og_image_alt %}{{ article.title }} — illustration{% endblock %}
+{% block twitter_image_alt %}{{ article.title }} — illustration{% endblock %}
 
 {% block content %}
 <style>

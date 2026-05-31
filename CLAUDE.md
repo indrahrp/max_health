@@ -141,6 +141,16 @@ If you add a new bootstrap command to `nixpacks.toml`, audit it for this pattern
 6. macOS-tar note: use `COPYFILE_DISABLE=1 tar --no-xattrs` to avoid AppleDouble (._) files.
 ```
 
+### SVG illustrations & social previews (Open Graph)
+WhatsApp, Facebook, X, and LinkedIn **do not render SVG as an `og:image`** — they drop the preview thumbnail entirely. For any article whose lead illustration is an SVG (animated SVGs in `blog/static/blog/illustrations/<name>.svg` are common), the SVG must also be uploaded to Cloudinary so social previews work.
+
+The `Article.og_image_url` property handles the URL rewrite automatically — but only if the Cloudinary asset exists. The required convention:
+- A local SVG at `blog/static/blog/illustrations/<basename>.svg` MUST have a matching Cloudinary asset uploaded at `cogitra/<basename>.svg` (cloud: `dxmrrtzha`, `resource_type='image'`).
+- Cloudinary natively rasterises uploaded SVGs when requested in a raster format; the property serves them at `c_fill,w_1200,h_630,f_jpg,b_rgb:060c16/cogitra/<basename>.svg` for OG.
+- **Do not use Cloudinary's `image/fetch` delivery type** — it's disabled by default on the project's Cloudinary plan and returns 401. Use `image/upload` with a pre-uploaded asset instead.
+
+When you add a new SVG to `blog/static/blog/illustrations/`, also upload it to Cloudinary with the matching public_id, or the OG preview will fall back to the site default.
+
 When a user says "I uploaded an image and it disappeared," check three things in order:
 1. Is the article's content field still pointing to the image URL? (DB inspect)
 2. Is the image URL still live? (`curl -I`; AI-host URLs return 403/404 after expiry)
