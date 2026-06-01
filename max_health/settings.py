@@ -7,7 +7,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-v^%nx7-ox*)u648h9n@5v
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',') if not DEBUG else ['*']
+ALLOWED_HOSTS = (
+    ['*'] if DEBUG
+    else list({
+        *os.environ.get('ALLOWED_HOSTS', '').split(','),
+        'cogitra.com', 'www.cogitra.com',
+    } - {''})
+)
 
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-765b8.up.railway.app',
