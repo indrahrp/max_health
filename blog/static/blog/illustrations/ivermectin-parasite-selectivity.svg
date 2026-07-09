@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg-p" cx="50%" cy="40%" r="70%">
+    <stop offset="0%" stop-color="#0c1220"/>
+    <stop offset="100%" stop-color="#060c16"/>
+  </radialGradient>
+  <radialGradient id="parasite-fill" cx="45%" cy="35%" r="65%">
+    <stop offset="0%" stop-color="#c04040"/>
+    <stop offset="60%" stop-color="#902828"/>
+    <stop offset="100%" stop-color="#601414"/>
+  </radialGradient>
+  <radialGradient id="mammal-fill" cx="45%" cy="35%" r="65%">
+    <stop offset="0%" stop-color="#3878c0"/>
+    <stop offset="60%" stop-color="#245090"/>
+    <stop offset="100%" stop-color="#142c58"/>
+  </radialGradient>
+  <radialGradient id="mol-fill-p" cx="40%" cy="35%" r="65%">
+    <stop offset="0%" stop-color="#ffd868"/>
+    <stop offset="60%" stop-color="#e0a838"/>
+    <stop offset="100%" stop-color="#a87418"/>
+  </radialGradient>
+  <filter id="glow-p1"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="glow-p2"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+
+<style>
+@keyframes gate-open { 0%,20%{d:path("M 226 200 Q 236 200 236 210 Q 236 220 226 220");} 50%,80%{d:path("M 226 195 Q 250 195 250 210 Q 250 225 226 225");} 100%{d:path("M 226 200 Q 236 200 236 210 Q 236 220 226 220");} }
+@keyframes cl-flow { 0%{transform:translate(0,0);opacity:0;} 30%{opacity:1;} 100%{transform:translate(70px,0);opacity:0;} }
+@keyframes limp { 0%,100%{transform:rotate(0deg);} 50%{transform:rotate(4deg);} }
+@keyframes bounce-off { 0%,100%{transform:translate(0,0);} 50%{transform:translate(-10px,-6px);} }
+@keyframes wall-pulse { 0%,100%{opacity:0.6;} 50%{opacity:1;} }
+.gate { animation: gate-open 3s ease-in-out infinite; }
+.cl-1 { animation: cl-flow 1.6s linear infinite 0s; }
+.cl-2 { animation: cl-flow 1.6s linear infinite 0.5s; }
+.cl-3 { animation: cl-flow 1.6s linear infinite 1.0s; }
+.limp-body { animation: limp 2.4s ease-in-out infinite; transform-origin: 150px 260px; }
+.bounce { animation: bounce-off 2.2s ease-in-out infinite; }
+.bbb { animation: wall-pulse 3s ease-in-out infinite; }
+</style>
+
+<rect width="720" height="420" fill="url(#bg-p)"/>
+
+<text x="360" y="26" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.16em" fill="#304870">SELECTIVITY · BEN BIKMAN · METABOLIC CLASSROOM</text>
+<text x="360" y="49" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="15.5" font-style="italic" fill="#8ab0d8">Why a parasite dies and a mammal doesn't</text>
+
+<line x1="360" y1="70" x2="360" y2="350" stroke="#141e30" stroke-width="1.5"/>
+
+<!-- LEFT: parasite neuron -->
+<text x="180" y="90" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" letter-spacing="0.06em" fill="#e07070">PARASITE NEURON</text>
+
+<g class="limp-body">
+  <ellipse cx="150" cy="260" rx="46" ry="30" fill="url(#parasite-fill)" filter="url(#glow-p1)"/>
+  <path d="M 108 258 Q 60 250 40 270" stroke="#902828" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M 192 258 Q 240 268 258 250" stroke="#902828" stroke-width="6" fill="none" stroke-linecap="round"/>
+</g>
+<text x="150" y="264" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="#ffd8d8">neuron + muscle</text>
+
+<!-- glutamate-gated Cl- channel -->
+<rect x="212" y="185" width="30" height="50" rx="6" fill="#3a1414" stroke="#a04040" stroke-width="1.5"/>
+<path class="gate" d="M 226 200 Q 236 200 236 210 Q 236 220 226 220" fill="none" stroke="#e07070" stroke-width="2.5"/>
+<text x="227" y="180" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#c86868">Cl⁻ channel</text>
+
+<!-- ivermectin docking on parasite channel -->
+<circle cx="227" cy="150" r="16" fill="url(#mol-fill-p)" filter="url(#glow-p1)"/>
+<text x="227" y="153" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" font-weight="bold" fill="#3a2408">IVM</text>
+<path d="M 227 166 L 227 184" stroke="#e0a838" stroke-width="1.5" stroke-dasharray="3 2"/>
+<text x="227" y="130" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.2" fill="#c8a030">forces gate open</text>
+
+<!-- Cl- ions flooding in -->
+<g class="cl-1"><circle cx="245" cy="205" r="5" fill="#98d8f0" filter="url(#glow-p1)"/><text x="245" y="208" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5" fill="#0a3040">Cl⁻</text></g>
+<g class="cl-2"><circle cx="245" cy="215" r="5" fill="#98d8f0" filter="url(#glow-p1)"/><text x="245" y="218" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5" fill="#0a3040">Cl⁻</text></g>
+<g class="cl-3"><circle cx="245" cy="225" r="5" fill="#98d8f0" filter="url(#glow-p1)"/><text x="245" y="228" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5" fill="#0a3040">Cl⁻</text></g>
+
+<text x="180" y="320" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="10.5" font-style="italic" fill="#e08080">Chloride floods in</text>
+<text x="180" y="333" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.04em" fill="#a05050">PARALYSIS → DEATH</text>
+
+<!-- RIGHT: mammal neuron -->
+<text x="545" y="90" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" letter-spacing="0.06em" fill="#70a8e0">MAMMALIAN NEURON</text>
+
+<ellipse cx="520" cy="260" rx="46" ry="30" fill="url(#mammal-fill)" filter="url(#glow-p1)"/>
+<path d="M 478 255 Q 430 245 410 260" stroke="#245090" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M 562 255 Q 610 262 628 248" stroke="#245090" stroke-width="6" fill="none" stroke-linecap="round"/>
+<text x="520" y="264" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="#c0e0f8">unaffected</text>
+
+<!-- no matching channel -->
+<rect x="582" y="185" width="30" height="50" rx="6" fill="#0e2038" stroke="#2860a0" stroke-width="1.5" opacity="0.5"/>
+<line x1="588" y1="192" x2="606" y2="228" stroke="#4880c0" stroke-width="1.5"/>
+<line x1="606" y1="192" x2="588" y2="228" stroke="#4880c0" stroke-width="1.5"/>
+<text x="597" y="180" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#5088c0">channel type absent</text>
+
+<!-- ivermectin bouncing off -->
+<g class="bounce">
+  <circle cx="597" cy="145" r="16" fill="url(#mol-fill-p)" filter="url(#glow-p1)"/>
+  <text x="597" y="148" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" font-weight="bold" fill="#3a2408">IVM</text>
+</g>
+
+<!-- blood-brain barrier -->
+<g class="bbb">
+  <rect x="470" y="150" width="8" height="190" fill="#1a3860" opacity="0.6"/>
+  <rect x="474" y="150" width="4" height="190" fill="#3878c0" opacity="0.4"/>
+</g>
+<text x="474" y="358" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" letter-spacing="0.04em" fill="#4878a8">blood–brain barrier</text>
+
+<text x="545" y="320" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="10.5" font-style="italic" fill="#78b0e8">No matching receptor</text>
+<text x="545" y="333" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.04em" fill="#4878a8">SAFE THERAPEUTIC WINDOW</text>
+
+<line x1="30" y1="368" x2="690" y2="368" stroke="#141e30" stroke-width="1"/>
+<text x="360" y="392" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#4a6890">Glutamate-gated chloride channels exist in invertebrate parasites but not in the mammalian nervous system.</text>
+</svg>

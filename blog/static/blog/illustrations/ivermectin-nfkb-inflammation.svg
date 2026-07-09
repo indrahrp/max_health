@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg-i" cx="50%" cy="40%" r="70%">
+    <stop offset="0%" stop-color="#0c1220"/>
+    <stop offset="100%" stop-color="#060c16"/>
+  </radialGradient>
+  <radialGradient id="nucleus-fill" cx="45%" cy="35%" r="65%">
+    <stop offset="0%" stop-color="#3858a0"/>
+    <stop offset="60%" stop-color="#204070"/>
+    <stop offset="100%" stop-color="#102040"/>
+  </radialGradient>
+  <radialGradient id="mol-fill-i" cx="40%" cy="35%" r="65%">
+    <stop offset="0%" stop-color="#ffd868"/>
+    <stop offset="60%" stop-color="#e0a838"/>
+    <stop offset="100%" stop-color="#a87418"/>
+  </radialGradient>
+  <filter id="glow-i1"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+
+<style>
+@keyframes blocked-shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-1.5px);} 75%{transform:translateX(1.5px);} }
+@keyframes cytokine-fade { 0%{transform:translate(0,0) scale(1);opacity:0.5;} 100%{transform:translate(14px,-10px) scale(0.7);opacity:0.1;} }
+@keyframes cell-pulse { 0%,100%{opacity:0.85;} 50%{opacity:1;} }
+.blocked-i { animation: blocked-shake 2.4s ease-in-out infinite; }
+.cyt-1 { animation: cytokine-fade 2.6s ease-out infinite 0s; }
+.cyt-2 { animation: cytokine-fade 2.6s ease-out infinite 0.7s; }
+.cyt-3 { animation: cytokine-fade 2.6s ease-out infinite 1.4s; }
+.cell-pulse-i { animation: cell-pulse 3s ease-in-out infinite; }
+</style>
+
+<rect width="720" height="420" fill="url(#bg-i)"/>
+
+<text x="360" y="26" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.16em" fill="#304870">INFLAMMATION · BEN BIKMAN · METABOLIC CLASSROOM</text>
+<text x="360" y="49" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="15.5" font-style="italic" fill="#8ab0d8">Suppressing NF-κB, the master inflammatory switch</text>
+
+<!-- cell outline with nucleus -->
+<g class="cell-pulse-i">
+  <rect x="90" y="120" width="300" height="220" rx="20" fill="#0e1830" stroke="#2a4468" stroke-width="1.6"/>
+  <circle cx="180" cy="230" r="70" fill="url(#nucleus-fill)" filter="url(#glow-i1)"/>
+  <text x="180" y="233" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" letter-spacing="0.04em" fill="#a0c0f0">NUCLEUS</text>
+</g>
+<text x="240" y="140" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.05em" fill="#4870a0">CELL</text>
+
+<!-- NF-kB protein blocked at nuclear membrane -->
+<g class="blocked-i">
+  <rect x="266" y="212" width="40" height="36" rx="8" fill="#3a1414" stroke="#c04040" stroke-width="2"/>
+  <text x="286" y="228" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" font-weight="bold" fill="#ff9898">NF-κB</text>
+  <text x="286" y="240" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5" fill="#e08080">blocked</text>
+  <line x1="270" y1="216" x2="302" y2="244" stroke="#ff6060" stroke-width="2"/>
+  <line x1="302" y1="216" x2="270" y2="244" stroke="#ff6060" stroke-width="2"/>
+</g>
+
+<!-- ivermectin -->
+<circle cx="286" cy="180" r="15" fill="url(#mol-fill-i)" filter="url(#glow-i1)"/>
+<text x="286" y="183" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" font-weight="bold" fill="#3a2408">IVM</text>
+<path d="M 286 195 L 286 208" stroke="#e0a838" stroke-width="1.5" stroke-dasharray="2 2"/>
+
+<!-- fading cytokines -->
+<g class="cyt-1"><circle cx="340" cy="210" r="6" fill="#e88060" filter="url(#glow-i1)"/></g>
+<g class="cyt-2"><circle cx="345" cy="230" r="5" fill="#e08858" filter="url(#glow-i1)"/></g>
+<g class="cyt-3"><circle cx="335" cy="250" r="5.5" fill="#e88060" filter="url(#glow-i1)"/></g>
+<text x="360" y="185" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" fill="#a06848">cytokines ↓</text>
+
+<!-- AMPK reinforcing arrow, off to the right -->
+<rect x="440" y="180" width="90" height="60" rx="10" fill="#0a2818" stroke="#40c090" stroke-width="1.8"/>
+<text x="485" y="205" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" font-weight="bold" fill="#70e0b0">AMPK</text>
+<text x="485" y="219" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#50b090">also suppresses</text>
+<text x="485" y="230" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#50b090">NF-κB directly</text>
+<path d="M 400 220 Q 420 210 438 210" stroke="#4a9070" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+
+<!-- results panel -->
+<rect x="440" y="260" width="220" height="80" rx="10" fill="#0e1424" stroke="#3a4868" stroke-width="1.2"/>
+<text x="550" y="284" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="10.5" font-style="italic" fill="#d0d8e8">Less systemic inflammation</text>
+<text x="550" y="302" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.2" fill="#7088a8">reduced markers after LPS challenge ·</text>
+<text x="550" y="315" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.2" fill="#7088a8">lower immune-cell recruitment &amp; IgE</text>
+<text x="550" y="328" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.2" fill="#7088a8">in allergic-asthma models</text>
+
+<line x1="30" y1="358" x2="690" y2="358" stroke="#141e30" stroke-width="1"/>
+<text x="360" y="382" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#4a6890">Chronic low-grade inflammation is a primary driver of insulin resistance — so NF-κB suppression connects here too.</text>
+</svg>

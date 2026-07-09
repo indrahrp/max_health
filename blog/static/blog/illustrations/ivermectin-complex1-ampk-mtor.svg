@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg-m" cx="50%" cy="40%" r="70%">
+    <stop offset="0%" stop-color="#0c1220"/>
+    <stop offset="100%" stop-color="#060c16"/>
+  </radialGradient>
+  <linearGradient id="mito-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#2a1860"/>
+    <stop offset="100%" stop-color="#140c30"/>
+  </linearGradient>
+  <radialGradient id="mol-fill-m" cx="40%" cy="35%" r="65%">
+    <stop offset="0%" stop-color="#ffd868"/>
+    <stop offset="60%" stop-color="#e0a838"/>
+    <stop offset="100%" stop-color="#a87418"/>
+  </radialGradient>
+  <filter id="glow-m1"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="glow-m2"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+
+<style>
+@keyframes pulse { 0%,100%{opacity:0.7;} 50%{opacity:1;} }
+@keyframes block-shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-1.5px);} 75%{transform:translateX(1.5px);} }
+@keyframes gauge-drop { 0%,100%{transform:scaleY(1);} 50%{transform:scaleY(0.35);} }
+@keyframes sensor-glow { 0%,100%{opacity:0.5;} 50%{opacity:1;} }
+@keyframes arrow-flow { 0%{stroke-dashoffset:30;opacity:0.3;} 100%{stroke-dashoffset:0;opacity:0.9;} }
+.mito-pulse { animation: pulse 3.2s ease-in-out infinite; }
+.blocked { animation: block-shake 2.4s ease-in-out infinite; }
+.gauge { animation: gauge-drop 2.8s ease-in-out infinite; transform-origin: bottom; }
+.sensor { animation: sensor-glow 2s ease-in-out infinite; }
+.flow-x { animation: arrow-flow 1.6s linear infinite; }
+</style>
+
+<rect width="720" height="420" fill="url(#bg-m)"/>
+
+<text x="360" y="24" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.16em" fill="#304870">MITOCHONDRIA · BEN BIKMAN · METABOLIC CLASSROOM</text>
+<text x="360" y="47" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="15.5" font-style="italic" fill="#8ab0d8">Complex I inhibition sets off an energy-sensing cascade</text>
+
+<!-- Mitochondrion outline -->
+<g class="mito-pulse">
+  <ellipse cx="200" cy="220" rx="150" ry="95" fill="url(#mito-fill)" stroke="#5028a0" stroke-width="1.8"/>
+  <path d="M 90 180 Q 130 160 170 180 Q 210 160 250 182" stroke="#4020880" stroke-width="0" fill="none"/>
+  <path d="M 80 175 Q 120 155 160 176 M 100 210 Q 145 190 190 212 M 90 245 Q 135 225 178 246 M 110 270 Q 150 252 190 272"
+    stroke="#3a1c80" stroke-width="6" fill="none" opacity="0.55" stroke-linecap="round"/>
+</g>
+<text x="200" y="130" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.5" letter-spacing="0.06em" fill="#6040a0">MITOCHONDRION · INNER MEMBRANE</text>
+
+<!-- NADH entering -->
+<text x="65" y="200" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#a090d0">NADH</text>
+<path class="flow-x" d="M 78 205 L 108 205" stroke="#8060c0" stroke-width="1.6" fill="none" stroke-dasharray="5 3"/>
+
+<!-- Complex I -->
+<g class="blocked">
+  <rect x="112" y="185" width="42" height="42" rx="8" fill="#3a1414" stroke="#c04040" stroke-width="2"/>
+  <text x="133" y="203" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" font-weight="bold" fill="#ff9898">I</text>
+  <text x="133" y="216" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5" fill="#e08080">blocked</text>
+  <line x1="118" y1="191" x2="148" y2="221" stroke="#ff6060" stroke-width="2.5"/>
+  <line x1="148" y1="191" x2="118" y2="221" stroke="#ff6060" stroke-width="2.5"/>
+</g>
+
+<!-- Ivermectin docking -->
+<circle cx="133" cy="160" r="15" fill="url(#mol-fill-m)" filter="url(#glow-m1)"/>
+<text x="133" y="163" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" font-weight="bold" fill="#3a2408">IVM</text>
+<path d="M 133 175 L 133 184" stroke="#e0a838" stroke-width="1.5" stroke-dasharray="2 2"/>
+
+<!-- Complex II-IV faded, chain stalls -->
+<rect x="170" y="192" width="30" height="30" rx="6" fill="#1a1030" stroke="#3a2870" stroke-width="1.2" opacity="0.4"/>
+<text x="185" y="211" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#584898" opacity="0.6">II</text>
+<rect x="216" y="192" width="30" height="30" rx="6" fill="#1a1030" stroke="#3a2870" stroke-width="1.2" opacity="0.4"/>
+<text x="231" y="211" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#584898" opacity="0.6">III</text>
+<rect x="262" y="192" width="30" height="30" rx="6" fill="#1a1030" stroke="#3a2870" stroke-width="1.2" opacity="0.4"/>
+<text x="277" y="211" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#584898" opacity="0.6">IV</text>
+
+<text x="200" y="270" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="10" font-style="italic" fill="#a888d0">Electron transport chain stalls</text>
+<text x="200" y="285" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.2" fill="#6a56a0">membrane potential + ATP output fall</text>
+
+<!-- ATP gauge -->
+<text x="330" y="150" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" letter-spacing="0.04em" fill="#a0a8c0">ATP</text>
+<rect x="318" y="160" width="24" height="70" rx="4" fill="none" stroke="#3a4868" stroke-width="1.2"/>
+<rect class="gauge" x="320" y="162" width="20" height="66" rx="3" fill="#e07050"/>
+
+<!-- AMPK sensor -->
+<g class="sensor">
+  <circle cx="420" cy="200" r="34" fill="#0a2818" stroke="#40c090" stroke-width="2"/>
+  <text x="420" y="197" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="9" font-weight="bold" fill="#70e0b0">AMPK</text>
+  <text x="420" y="210" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#50b090">energy sensor</text>
+</g>
+<path class="flow-x" d="M 348 195 Q 380 190 388 197" stroke="#4a9070" stroke-width="1.6" fill="none" stroke-dasharray="5 3"/>
+<text x="380" y="178" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5.8" fill="#5a9878">AMP:ATP ratio ↑</text>
+
+<!-- mTOR suppressed -->
+<g>
+  <rect x="500" y="176" width="70" height="48" rx="8" fill="#1c1418" stroke="#a06868" stroke-width="1.6" opacity="0.85"/>
+  <text x="535" y="196" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" font-weight="bold" fill="#e0a0a0">mTOR</text>
+  <text x="535" y="209" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="#c08080">suppressed</text>
+  <path d="M 512 182 L 558 218 M 558 182 L 512 218" stroke="#a06868" stroke-width="1.5" opacity="0.7"/>
+</g>
+<path class="flow-x" d="M 454 200 Q 478 195 498 197" stroke="#a06868" stroke-width="1.6" fill="none" stroke-dasharray="5 3"/>
+
+<!-- Growth arrest / apoptosis -->
+<path d="M 535 224 L 535 250" stroke="#a06868" stroke-width="1.6" stroke-dasharray="4 3"/>
+<path d="M 531 246 L 535 252 L 539 246" fill="none" stroke="#a06868" stroke-width="1.5"/>
+<rect x="480" y="256" width="110" height="46" rx="8" fill="#0e1424" stroke="#3a4868" stroke-width="1.2"/>
+<text x="535" y="276" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="9.5" font-style="italic" fill="#d0d8e8">Growth arrest,</text>
+<text x="535" y="291" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="9.5" font-style="italic" fill="#d0d8e8">then cell death</text>
+
+<line x1="30" y1="330" x2="690" y2="330" stroke="#141e30" stroke-width="1"/>
+<text x="360" y="354" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#4a6890">Complex I slows → ATP drops → AMPK activates → mTOR is suppressed —</text>
+<text x="360" y="368" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#4a6890">a cascade documented in glioblastoma, leukemia, and renal cancer cell studies.</text>
+</svg>

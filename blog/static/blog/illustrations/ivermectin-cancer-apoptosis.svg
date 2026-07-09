@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+<defs>
+  <radialGradient id="bg-a" cx="50%" cy="40%" r="70%">
+    <stop offset="0%" stop-color="#0c1220"/>
+    <stop offset="100%" stop-color="#060c16"/>
+  </radialGradient>
+  <radialGradient id="cell-fill-a" cx="45%" cy="35%" r="65%">
+    <stop offset="0%" stop-color="#c04040"/>
+    <stop offset="55%" stop-color="#8a2828"/>
+    <stop offset="100%" stop-color="#501414"/>
+  </radialGradient>
+  <filter id="glow-a1"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="glow-a2"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+
+<style>
+@keyframes voltage-collapse { 0%,20%{transform:scaleY(1);} 60%,100%{transform:scaleY(0.15);} }
+@keyframes ros-spark { 0%{transform:scale(0.4);opacity:0;} 50%{transform:scale(1);opacity:1;} 100%{transform:scale(1.6);opacity:0;} }
+@keyframes bleb { 0%,100%{transform:translate(0,0);} 50%{transform:translate(3px,-3px);} }
+@keyframes cell-shrink { 0%,30%{transform:scale(1);opacity:1;} 70%{transform:scale(0.9);opacity:0.9;} 100%{transform:scale(0.82);opacity:0.75;} }
+.voltage { animation: voltage-collapse 3.4s ease-in-out infinite; transform-origin: bottom; }
+.ros-1 { animation: ros-spark 1.8s ease-out infinite 0s; }
+.ros-2 { animation: ros-spark 1.8s ease-out infinite 0.4s; }
+.ros-3 { animation: ros-spark 1.8s ease-out infinite 0.8s; }
+.ros-4 { animation: ros-spark 1.8s ease-out infinite 1.2s; }
+.bleb-1 { animation: bleb 2.2s ease-in-out infinite; }
+.bleb-2 { animation: bleb 2.6s ease-in-out infinite 0.3s; }
+.cell-a { animation: cell-shrink 4s ease-in-out infinite; transform-origin: 260px 220px; }
+</style>
+
+<rect width="720" height="420" fill="url(#bg-a)"/>
+
+<text x="360" y="26" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" letter-spacing="0.16em" fill="#304870">CANCER CELLS · BEN BIKMAN · METABOLIC CLASSROOM</text>
+<text x="360" y="49" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="15.5" font-style="italic" fill="#8ab0d8">Membrane collapse triggers the cell's own death signal</text>
+
+<!-- Cancer cell -->
+<g class="cell-a">
+  <circle cx="260" cy="220" r="95" fill="url(#cell-fill-a)" filter="url(#glow-a1)"/>
+  <g class="bleb-1"><circle cx="200" cy="170" r="18" fill="#8a2828" opacity="0.85"/></g>
+  <g class="bleb-2"><circle cx="320" cy="180" r="14" fill="#902828" opacity="0.8"/></g>
+  <g class="bleb-1" style="animation-delay:0.6s"><circle cx="310" cy="270" r="16" fill="#8a2828" opacity="0.8"/></g>
+  <g class="bleb-2" style="animation-delay:1s"><circle cx="205" cy="265" r="13" fill="#902828" opacity="0.75"/></g>
+  <text x="260" y="224" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="8" letter-spacing="0.05em" fill="#ffd0d0">CANCER CELL</text>
+</g>
+
+<!-- ROS sparks -->
+<g class="ros-1"><circle cx="215" cy="160" r="4" fill="#ffcc70" filter="url(#glow-a1)"/></g>
+<g class="ros-2"><circle cx="330" cy="165" r="4" fill="#ffcc70" filter="url(#glow-a1)"/></g>
+<g class="ros-3"><circle cx="335" cy="280" r="4" fill="#ffcc70" filter="url(#glow-a1)"/></g>
+<g class="ros-4"><circle cx="200" cy="285" r="4" fill="#ffcc70" filter="url(#glow-a1)"/></g>
+<text x="260" y="140" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6" letter-spacing="0.05em" fill="#d0a050">reactive oxygen species ↑</text>
+
+<!-- membrane potential gauge -->
+<text x="450" y="150" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="#a0a8c0">MEMBRANE</text>
+<text x="450" y="162" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="#a0a8c0">POTENTIAL</text>
+<rect x="436" y="172" width="28" height="90" rx="4" fill="none" stroke="#3a4868" stroke-width="1.2"/>
+<rect class="voltage" x="438" y="174" width="24" height="86" rx="3" fill="#e07050"/>
+
+<!-- arrow to apoptosis label -->
+<path d="M 355 220 Q 470 210 470 268" stroke="#a06868" stroke-width="1.6" fill="none" stroke-dasharray="5 3" opacity="0.75"/>
+<path d="M 466 264 L 470 270 L 474 264" fill="none" stroke="#a06868" stroke-width="1.5"/>
+
+<rect x="520" y="240" width="150" height="70" rx="8" fill="#0e1424" stroke="#3a4868" stroke-width="1.2"/>
+<text x="595" y="264" text-anchor="middle" font-family="'IBM Plex Serif',Georgia,serif" font-size="11" font-style="italic" fill="#d0d8e8">Intrinsic apoptosis</text>
+<text x="595" y="280" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.2" fill="#7088a8">the death signal comes</text>
+<text x="595" y="292" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="6.2" fill="#7088a8">from inside the cell</text>
+
+<line x1="30" y1="340" x2="690" y2="340" stroke="#141e30" stroke-width="1"/>
+<text x="360" y="364" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#4a6890">Documented in cervical, esophageal, leukemia, and glioblastoma cell studies —</text>
+<text x="360" y="378" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#4a6890">cancer cells' higher metabolic demand makes them disproportionately sensitive.</text>
+</svg>
